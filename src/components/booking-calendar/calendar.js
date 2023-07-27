@@ -22,27 +22,68 @@ import { DayCellFooter } from './day-cell-footer';
 // Space Time Frame
 import SpaceTimeFrame from './space-time-frame';
 
-const reserved = [
-    {
-        startDate: new Date(2030, 3, 22),
-        endDate: new Date(2016, 4, 5),
-    },
-];
-
-function ReactBookingCalendar({ activeDate }) {
+// let reserved = [
+//     {
+//         startDate: new Date(),
+//         endDate: new Date(2023, 12, 5),
+//     },
+// ];
+function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate }) {
     const [selectedDates, setSelectedDates] = useState([]);
+    console.log(reserved);
 
     return (
-        <>
-            <div>Day 1</div>
-            <div>Day 2</div>
-            <SpaceTimeFrame></SpaceTimeFrame>
-        </>
+        <section>
+            <h2>Calendar</h2>
+
+            <Calendar
+                selected={selectedDates}
+                onChange={(value) => {
+                    console.log(value);
+                    setSelectedDates(value);
+                }}
+                onOverbook={(e, error) => {
+                    console.log(e);
+                    console.log(error);
+                }}
+                components={{
+                    CalendarContainer: ({ innerProps, children }) => {
+                        return (
+                            <div
+                                style={{
+                                    width: '680px',
+                                }}
+                                {...innerProps}
+                            >
+                                {children}
+                            </div>
+                        );
+                    },
+                }}
+                // disabled={(date, state) => {
+                //     console.log(date);
+                //     console.log(state);
+                //     return !state.isPast;
+                // }}
+                reserved={reserved}
+                variant="booking"
+                dateFnsOptions={{ weekStartsOn: 1 }}
+                range={true}
+            ></Calendar>
+        </section>
     );
 }
 
 ReactBookingCalendar.propTypes = {
+    initialDate: PropTypes.objectOf(Date),
     activeDate: PropTypes.objectOf(Date).isRequired,
+    reserved: PropTypes.arrayOf(
+        PropTypes.shape({
+            startDate: PropTypes.objectOf(Date).isRequired,
+            endDate: PropTypes.objectOf(Date).isRequired,
+        }),
+    ),
+    onChangeDate: PropTypes.func.isRequired,
 };
 
 export default ReactBookingCalendar;

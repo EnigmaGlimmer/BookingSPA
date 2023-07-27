@@ -17,7 +17,7 @@ function TextEditor({ onChange }) {
     return (
         <section>
             <EditorContent editor={editor} />
-            <h2 class="test-iframe">This is a simple heading outside of iframe</h2>
+            <h2 className="test-iframe">This is a simple heading outside of iframe</h2>
             <iframe
                 srcDoc={htmlCode}
                 width="100%"
