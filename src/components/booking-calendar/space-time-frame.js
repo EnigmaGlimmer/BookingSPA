@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SpaceTimeFrame({ timeFrames: [['1:00am', '2:00pm']] }) {
+function SpaceTimeFrame({ timeFrames: [] }) {
     return <div>SpaceTimeFrame</div>;
 }
 
