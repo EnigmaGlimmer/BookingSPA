@@ -1,39 +1,57 @@
-import React from 'react';
-// React TextEditor
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
+import * as React from 'react';
+
+// In-Page Styles
 import './style/text-editor.css';
 
-function TextEditor({ onChange }) {
-    const editor = useEditor({
-        extensions: [StarterKit],
-        content: '<p>Hello World!</p>',
-    });
+// Types of Component
+import { moduleTypes } from './modules/module-types';
 
-    const htmlCode = `<h2 class="test-iframe">
-        This is a simple iframe with srcDoc
-    </h2>`;
+const TextEditor = ({ onChange }) => {
+    const [output, setOutput] = React.useState([]);
+
+    // Catch onChange
+    React.useEffect(() => {
+        onChange(output);
+    }, [output]);
+
+    function addLine(newOpt) {
+        setOutput((output) => {
+            return [...output, newOpt];
+        });
+    }
+
+    function addMedia() {}
 
     return (
         <section>
-            <EditorContent editor={editor} />
             <h2 className="test-iframe">This is a simple heading outside of iframe</h2>
-            <iframe
-                srcDoc={htmlCode}
-                width="100%"
-                height="300"
+            <button
+                onClick={() =>
+                    addLine({
+                        message: 'Edit this text',
+                        breaks: 0,
+                        indent: 0,
+                        link: '',
+                        type: 'heading1',
+                    })
+                }
+            >
+                Add Line
+            </button>
+            <button onClick={() => addMedia()}>Add Media</button>
+            <div
                 style={{
-                    border: '1px solid black',
+                    border: '1px solid #010101',
+                    borderRadius: '1rem',
+                    padding: '0.5rem',
                 }}
-            ></iframe>
-            <input
-                onChange={() => {
-                    let c = 4;
-                    onChange(4);
-                }}
-            ></input>
+            >
+                {output.map((opt) => {
+                    return <div>{opt.message}</div>;
+                })}
+            </div>
         </section>
     );
-}
+};
 
 export default TextEditor;

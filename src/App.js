@@ -1,7 +1,8 @@
 import './App.css';
 import logo from './logo.svg';
 import React from 'react';
-import { Booking, TextEditor } from './components';
+import { Booking } from './components';
+import { TextEditor } from './components/index.tsx';
 
 // WhatsApp Widgets
 import { WhatsAppWidget } from 'react-whatsapp-widget';
@@ -36,6 +37,7 @@ function App() {
             }}
         >
             <Booking
+                initialTimeRange={[['', '']]}
                 activeDate={formValue.date}
                 onChangeDate={(date) => {
                     setFormValue({
@@ -56,11 +58,7 @@ function App() {
                     }));
                 }}
             ></Booking>
-            <TextEditor></TextEditor>
-            {/* <WhatsAppWidget
-                CompanyIcon={Logo}
-                phoneNumber="84398866140"
-            ></WhatsAppWidget> */}
+            <TextEditor onChange={(output) => {}}></TextEditor>
         </div>
     );
 }
