@@ -2,32 +2,38 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // Calendar
-import { Calendar } from './calendar';
+import { default as Calendar } from './calendar';
 
-const Booking = ({ onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
-    useEffect(() => {
-        setTimeout(() => {
-            let date = new Date();
+// Space Time Frame
+import { default as SpaceTimeFrame } from './space-time-frame';
 
-            onChangeDate(date);
-        }, 4000);
-
-        setTimeout(() => {
-            let startTime = '11:00pm';
-
-            onChangeTimeStart(startTime);
-        }, 7000);
-
-        setTimeout(() => {
-            let endTime = '12:30pm';
-
-            onChangeTimeEnd(endTime);
-        }, 10000);
-
-        return () => {};
-    }, []);
-
-    return <div>Booking</div>;
+const Booking = ({ initialTimeRange = ['', ''], activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
+    return (
+        <div>
+            <h2>Booking</h2>
+            <Calendar
+                reserved={[
+                    {
+                        startDate: new Date(),
+                        endDate: new Date(2023, 6, 31),
+                    },
+                ]}
+                onChangeDate={onChangeDate}
+            ></Calendar>
+            {!!activeDate && (
+                <SpaceTimeFrame
+                    reserved={[
+                        {
+                            startDate: '1:00pm',
+                            endDate: '2:00pm',
+                        },
+                    ]}
+                    onChangeTimeStart={onChangeTimeStart}
+                    onChangeTimeEnd={onChangeTimeEnd}
+                ></SpaceTimeFrame>
+            )}
+        </div>
+    );
 };
 
 Booking.propTypes = {
