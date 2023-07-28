@@ -20,8 +20,8 @@ export type ModuleTypes =
     | 'redo';
 
 export type Output = {
+    type: Array<ModuleTypes>;
     message: string;
-    type: ModuleTypes;
     indent: number;
     breaks: number;
     link: string;

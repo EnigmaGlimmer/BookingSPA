@@ -1,8 +1,7 @@
 import './App.css';
 import logo from './logo.svg';
 import React from 'react';
-import { Booking } from './components';
-import { TextEditor } from './components/index.tsx';
+import { Booking, TextEditor } from './components';
 
 // WhatsApp Widgets
 import { WhatsAppWidget } from 'react-whatsapp-widget';
