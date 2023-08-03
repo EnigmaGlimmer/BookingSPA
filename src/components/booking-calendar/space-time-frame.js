@@ -19,9 +19,10 @@ const SpaceTimeFrame = ({
     return (
         <div>
             <h2>Space Time Frame</h2>
-            {spaces.map((space) => {
+            {spaces.map((space, key) => {
                 return (
                     <button
+                        key={key}
                         onClick={() => {
                             let startTime = space[0];
 
@@ -41,12 +42,7 @@ const SpaceTimeFrame = ({
 };
 
 SpaceTimeFrame.propTypes = {
-    reserved: PropTypes.arrayOf(
-        PropTypes.shape({
-            startDate: PropTypes.objectOf(Date).isRequired,
-            endDate: PropTypes.objectOf(Date).isRequired,
-        }),
-    ),
+    // reserved: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired, PropTypes.string.isRequired)),
 };
 
 export default SpaceTimeFrame;

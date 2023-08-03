@@ -1,20 +1,30 @@
 import * as React from 'react';
 
+// React Bootstrap
+import {} from 'react-bootstrap';
+
 // In-Page Styles
 import './style/text-editor.css';
 
 // Types of Component
-import { moduleTypes } from './modules/module-types';
+import { ModuleTypes } from './modules';
+import Line from './line';
+
+// React-Icons
+import { AiFillPlusCircle } from 'react-icons/ai';
 
 const TextEditor = ({ onChange }) => {
     const [output, setOutput] = React.useState([]);
 
+    // line ref
+    const lineRef = React.useRef(null);
+
     // Catch onChange
     React.useEffect(() => {
-        onChange(output);
+        onChange();
     }, [output]);
 
-    function addLine(newOpt) {
+    function insertNewLine(newOpt) {
         setOutput((output) => {
             return [...output, newOpt];
         });
@@ -23,32 +33,48 @@ const TextEditor = ({ onChange }) => {
     function addMedia() {}
 
     return (
-        <section>
+        <section className="w-100">
             <h2 className="test-iframe">This is a simple heading outside of iframe</h2>
-            <button
-                onClick={() =>
-                    addLine({
-                        message: 'Edit this text',
-                        breaks: 0,
-                        indent: 0,
-                        link: '',
-                        type: 'heading1',
-                    })
-                }
-            >
-                Add Line
-            </button>
+
             <button onClick={() => addMedia()}>Add Media</button>
             <div
+                className="text-center"
                 style={{
                     border: '1px solid #010101',
                     borderRadius: '1rem',
-                    padding: '0.5rem',
+                    padding: '1.2rem',
+                    minHeight: '380px',
                 }}
             >
-                {output.map((opt) => {
-                    return <div>{opt.message}</div>;
+                {/**
+                 *** the list of output
+                 **/}
+                {output.map((opt, index) => {
+                    return (
+                        <Line
+                            key={index}
+                            ref={lineRef.current}
+                            types={['bold']}
+                            initialValue={''}
+                            tag={'heading 1'}
+                        ></Line>
+                    );
                 })}
+
+                <AiFillPlusCircle
+                    className="mx-auto"
+                    style={{
+                        fontSize: '2rem',
+                    }}
+                    onClick={() =>
+                        insertNewLine({
+                            type: ModuleTypes.Paragraph,
+                            message: '',
+                            indent: 0,
+                            breaks: 0,
+                        })
+                    }
+                ></AiFillPlusCircle>
             </div>
         </section>
     );

@@ -1,12 +1,14 @@
 import React from 'react';
 
 export type ModuleTypes =
-    | 'heading1'
-    | 'heading2'
+    | 'heading 1'
+    | 'heading 2'
     | 'heading 3'
     | 'italic'
     | 'bold'
     | 'underline'
+    | 'indent'
+    | 'paragraph'
     | 'font-size'
     | 'emoji'
     | 'image'

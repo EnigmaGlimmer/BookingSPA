@@ -75,7 +75,6 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
 
 ReactBookingCalendar.propTypes = {
     initialDate: PropTypes.objectOf(Date),
-    activeDate: PropTypes.objectOf(Date).isRequired,
     reserved: PropTypes.arrayOf(
         PropTypes.shape({
             startDate: PropTypes.objectOf(Date).isRequired,
