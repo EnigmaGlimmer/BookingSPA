@@ -8,8 +8,6 @@ import { default as Calendar } from './calendar';
 import { default as SpaceTimeFrame } from './space-time-frame';
 
 const Booking = ({ initialTimeRange, activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
-    const [] = useState();
-
     return (
         <div>
             <h2>Booking</h2>

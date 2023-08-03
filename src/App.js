@@ -1,15 +1,8 @@
-import './App.css';
-import logo from './logo.svg';
 import React from 'react';
-import { Booking, TextEditor } from './components';
+import './App.css';
 
-// WhatsApp Widgets
-import { WhatsAppWidget } from 'react-whatsapp-widget';
-import 'react-whatsapp-widget/dist/index.css';
-
-function Logo() {
-    return <img src={logo}></img>;
-}
+// App Router Component
+import AppRouter from './router';
 
 function App() {
     const [formValue, setFormValue] = React.useState({
@@ -25,41 +18,11 @@ function App() {
         return () => {};
     }, [formValue]);
 
-    return (
-        <div
-            className="container"
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <Booking
-                initialTimeRange={[['', '']]}
-                activeDate={formValue.date}
-                onChangeDate={(date) => {
-                    setFormValue({
-                        ...formValue,
-                        date: date,
-                    });
-                }}
-                onChangeTimeStart={(startTime) => {
-                    setFormValue((i) => ({
-                        ...i,
-                        timestart: startTime,
-                    }));
-                }}
-                onChangeTimeEnd={(endTime) => {
-                    setFormValue((i) => ({
-                        ...i,
-                        timeend: endTime,
-                    }));
-                }}
-            ></Booking>
-            <TextEditor onChange={(output) => {}}></TextEditor>
-        </div>
-    );
+    return <AppRouter></AppRouter>;
 }
 
 export default App;
+
+// WhatsApp Widgets
+// import { WhatsAppWidget } from 'react-whatsapp-widget';
+// import 'react-whatsapp-widget/dist/index.css';
