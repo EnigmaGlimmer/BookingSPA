@@ -30,7 +30,6 @@ import SpaceTimeFrame from './space-time-frame';
 // ];
 function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate }) {
     const [selectedDates, setSelectedDates] = useState([]);
-    console.log(reserved);
 
     return (
         <section>

@@ -36,6 +36,7 @@ function App() {
             }}
         >
             <Booking
+                initialTimeRange={[['', '']]}
                 activeDate={formValue.date}
                 onChangeDate={(date) => {
                     setFormValue({
@@ -56,11 +57,7 @@ function App() {
                     }));
                 }}
             ></Booking>
-            <TextEditor></TextEditor>
-            {/* <WhatsAppWidget
-                CompanyIcon={Logo}
-                phoneNumber="84398866140"
-            ></WhatsAppWidget> */}
+            <TextEditor onChange={(output) => {}}></TextEditor>
         </div>
     );
 }

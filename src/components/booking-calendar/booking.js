@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // Calendar
@@ -7,7 +7,9 @@ import { default as Calendar } from './calendar';
 // Space Time Frame
 import { default as SpaceTimeFrame } from './space-time-frame';
 
-const Booking = ({ initialTimeRange = ['', ''], activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
+const Booking = ({ initialTimeRange, activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
+    const [] = useState();
+
     return (
         <div>
             <h2>Booking</h2>
@@ -34,12 +36,6 @@ const Booking = ({ initialTimeRange = ['', ''], activeDate, onChangeDate, onChan
             )}
         </div>
     );
-};
-
-Booking.propTypes = {
-    onChangeDate: PropTypes.func.isRequired,
-    onChangeTimeStart: PropTypes.func.isRequired,
-    onChangeTimeEnd: PropTypes.func.isRequired,
 };
 
 export default Booking;
