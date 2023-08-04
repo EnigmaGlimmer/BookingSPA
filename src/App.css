@@ -1,13 +1,32 @@
+/* @font-face {
+    font-family: Montserrat;
+    src: url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
+    --clr-primary: #fff8d3;
+    --clr-background: #fffde6;
     --clr-heading-1: red;
-    --clr-heading-2: #121212;
+    --clr-heading-2: #000000;
     --clr-heading-3: #525050;
     --clr-paragraph: #010101;
     --clr-subtitle: #010101;
+    --clr-link: #000000;
+    --clr-border: #545452;
     --fs-primary: 14px;
     --fs-heading-1: 1.6rem;
     --fs-heading-2: 1.4rem;
     --fs-heading-3: 1.2rem;
+    --ff-primary: 'Montserrat', san-serif;
+    --ff-secondary: 'Playfair Display', san-serif;
+}
+
+* {
+    font-family: var(--ff-primary);
 }
 
 html {
@@ -15,13 +34,22 @@ html {
 }
 
 h1 {
-    font-size: var(--clr-heading-1);
+    /* font-size: var(--clr-heading-1); */
 }
 
 h2 {
-    font-size: var(--clr-heading-2);
+    /* font-size: var(--clr-heading-2); */
 }
 
 h3 {
-    font-size: var(--clr-heading-3);
+    /* font-size: var(--clr-heading-3); */
+    font-family: var(--ff-secondary);
+}
+
+p {
+    font-weight: 400;
+}
+
+.btn-primary-outline {
+    border: 1px solid var(--clr-border);
 }

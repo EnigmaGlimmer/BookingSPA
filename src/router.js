@@ -1,37 +1,44 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // List of pages
-import { Home, Contact, Coupon, Service, NotFound } from './pages';
+import { Home, Contact, Coupon, Service, NotFound, About } from './pages';
+
+// List of layout
+import { Footer, Navbar } from './layout';
 
 // React Icons
-import { Spinner } from 'react-bootstrap';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Outlet />,
+        element: (
+            <>
+                <Navbar></Navbar>
+                <Outlet />
+                <Footer></Footer>
+            </>
+        ),
         errorElement: <NotFound></NotFound>,
-        // loader: Spinner,
         children: [
             {
                 path: '',
                 element: <Home />,
-                // loader: <Spinner></Spinner>,
+            },
+            {
+                path: 'about',
+                element: <About />,
             },
             {
                 path: 'contact',
                 element: <Contact />,
-                // loader: <Spinner></Spinner>,
             },
             {
                 path: 'voucher',
                 element: <Coupon />,
-                // loader: <Spinner></Spinner>,
             },
             {
                 path: 'service',
                 element: <Service />,
-                // loader: <Spinner></Spinner>,
             },
         ],
     },

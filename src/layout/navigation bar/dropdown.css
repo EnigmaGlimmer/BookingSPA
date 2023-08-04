@@ -1,0 +1,27 @@
+#nav-drop-down {
+    margin: 0;
+    background-color: var(--clr-primary);
+    overflow: hidden;
+    list-style-type: none;
+    width: 220px;
+}
+
+#nav-drop-down[data-display='true'] {
+    max-height: 220px;
+    transition: max-height 1.5s ease-out, opacity 300ms 300ms ease-out;
+    opacity: 1;
+}
+
+#nav-drop-down[data-display='false'] {
+    max-height: 0;
+    transition: max-height 300ms ease-out, opacity 300ms 300ms ease-out;
+    opacity: 1;
+}
+
+#nav-drop-down li {
+    padding: 0.75rem 0;
+}
+
+#nav-drop-down li a {
+    text-decoration: none;
+}
