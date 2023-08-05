@@ -1,5 +1,8 @@
 import React from 'react';
 import './App.css';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
 
 // App Router Component
 import AppRouter from './router';
