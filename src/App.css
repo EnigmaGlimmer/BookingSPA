@@ -9,7 +9,9 @@
 
 :root {
     --clr-primary: #fff8d3;
+    --clr-primary-2: #212121;
     --clr-background: #fffde6;
+    --clr-darker-background: #fdf2cb;
     --clr-heading-1: red;
     --clr-heading-2: #000000;
     --clr-heading-3: #525050;
@@ -39,6 +41,7 @@ h1 {
 
 h2 {
     /* font-size: var(--clr-heading-2); */
+    font-family: var(--ff-secondary);
 }
 
 h3 {
@@ -46,10 +49,16 @@ h3 {
     font-family: var(--ff-secondary);
 }
 
-p {
-    font-weight: 400;
+p,
+li {
+    font-weight: 500;
 }
 
 .btn-primary-outline {
     border: 1px solid var(--clr-border);
+}
+
+.list-style-none {
+    list-style: none;
+    padding-left: 0.6rem;
 }

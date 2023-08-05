@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // List of pages
-import { Home, Contact, Coupon, Service, NotFound, About } from './pages';
+import { Home, Contact, Coupon, Service, NotFound, About, Promotion } from './pages';
 
 // List of layout
 import { Footer, Navbar } from './layout';
@@ -35,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: 'voucher',
                 element: <Coupon />,
+            },
+            {
+                path: 'promotion',
+                element: <Promotion />,
             },
             {
                 path: 'service',

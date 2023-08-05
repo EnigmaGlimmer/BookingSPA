@@ -28,7 +28,7 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 function Footer() {
     return (
         <section id="footer">
-            <Container>
+            <Container className="py-5">
                 <Row className="align-items-stretch">
                     <Col sm="12" xl="4" className="text-sm-center text-xl-start">
                         <FullLogo></FullLogo>
@@ -82,6 +82,9 @@ function Footer() {
                     </Col>
                 </Row>
             </Container>
+            <div id="copyright" className="py-2 text-center">
+                <p>Fabulous salon theme. Just as stunning as your nail art! @Copyright by Catmedia</p>
+            </div>
         </section>
     );
 }
