@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // List of pages
-import { Home, Contact, Coupon, Service, NotFound } from './pages';
+import { Home, Contact, Coupon, Service, NotFound, About } from './pages';
 
 // React Icons
 import { Spinner } from 'react-bootstrap';
@@ -16,6 +16,11 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <Home />,
+                // loader: <Spinner></Spinner>,
+            },
+            {
+                path: 'about',
+                element: <About />,
                 // loader: <Spinner></Spinner>,
             },
             {

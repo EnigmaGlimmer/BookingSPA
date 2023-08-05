@@ -1,0 +1,197 @@
+.about-brand{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--clr-secondary);
+}
+.about-brand-title{
+    font-size: 54px;
+    margin-bottom: 20px;
+}
+.about-brand-content-form{
+    width: 50%;
+    position: relative;
+}
+.about-brand-img{
+    width: 50%;
+}
+.about-brand-content-container{
+    width: 50%;
+    margin: 0 auto;
+}
+.about-brand-img-flower-1{
+    width: 40%;
+    position: absolute;
+    transform: rotate(120deg) translate(-55%,110%);
+}
+.about-brand-img-flower-2 {
+    width: 22%;
+    position: absolute;
+    right: 0;
+    bottom: 10%;
+    transform: translate(20%,100%);
+}
+/* Daisy Story */
+.about-story{
+    width: 100%;
+    padding: 30px 0;
+}
+.about-story-form{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+.about-story-item-1{
+    width: 23%;
+}
+.about-story-item-2 {
+    width: 35%;
+    text-align: center;
+    position: relative;
+}
+.about-story-item-3{
+    width: 23%;
+    transform: translateY(30%);
+}
+.about-story-title{
+    font-size: 34px;
+    padding: 20px;
+}
+.about-story-img-flower{
+    width: 45%;
+    transform: rotateX(180deg) rotate(-90deg) translate(34%,-154%);
+    position: absolute;
+    bottom: 0;
+}
+/* Daisy Image */
+.about-image-store{
+    width: 100%;
+    padding: 50px 0;
+}
+.about-image-store-form{
+    width: 80%;
+    margin: 0 auto;
+}
+.about-image-store-content{
+
+}
+.about-image-store-title{
+    font-size: 34px;
+}
+.about-image-store-btn{
+    color: var(--clr-primary);
+    border-bottom: 1px solid var(--clr-primary);
+    padding:5px;
+}
+.about-image-store-list{
+    width: 100%;
+    padding: 30px 0;
+}
+.about-image-store-form-child{
+    position: relative;
+}
+.about-image-store-form-content{
+    position: absolute;
+    background-color: white;
+    bottom: 0;
+    margin:0;
+    padding: 10px;
+    width: 85%;
+}
+.about-image-store-swiper{
+    overflow-y: unset;
+}
+.about-image-store-swiper .swiper-pagination{
+    transform: translateY(50px) !important;
+}
+.about-image-store-swiper .swiper-pagination-bullet{
+    border: 2px solid #545452;
+    padding: 5px !important;
+    background-color: white;
+}
+.about-image-store-swiper .swiper-pagination-bullet-active ::before{
+    content: '';
+    display: block;
+    position: relative;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #545452;
+}
+/* Deco */
+.about-deco{
+    width: 100%;
+}
+.about-deco-form{
+    position: relative;
+}
+.about-deco-title{
+    font-size: 74px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* Staff */
+.about-staff{
+    width: 100%;
+    padding: 40px 0;
+    position: relative;
+}
+.about-staff-deco{
+    width: 20%;
+    position: absolute;
+    transform: rotateX(180deg) rotate(120deg) translate(25%,44%);
+}
+.about-staff-form{
+    width: 70%;
+    margin: 0 auto;
+}
+.about-staff-title{
+    width: 100%;
+    text-align: center;
+    font-size: 34px;
+    padding: 20px;
+}
+.about-staff-list{
+    display: flex;
+    justify-content: space-between;
+}
+.about-staff-item{
+    width: 30%;
+}
+.about-staff-item-name{
+    padding: 20px 0;
+    font-size: large;
+}
+/* Booking */
+.about-booking{
+    width: 100%;
+    position: relative;
+    text-align: center;
+}
+.about-booking-img{
+    width: 100%;
+}
+.about-booking-content{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: translateY(-50%);
+}
+.about-booking-title{
+    font-size: 34px;
+    padding-bottom: 20px;
+}
+.about-booking-deco{
+    width: 20%;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+}
+.booking-f{
+    opacity: 0.4;
+}
