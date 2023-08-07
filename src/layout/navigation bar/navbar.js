@@ -114,6 +114,7 @@ function Navigation() {
                         left: 0,
                         top: !!navRef?.current ? `${navRef?.current?.getBoundingClientRect?.()?.height}px` : '88px',
                         width: '100%',
+                        zIndex: 100,
                     }}
                 >
                     <Nav className="text-uppercase">

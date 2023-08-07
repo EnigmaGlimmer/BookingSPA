@@ -5,6 +5,8 @@ import {} from 'react-bootstrap';
 
 // In-Page Styles
 import './style/text-editor.css';
+import {AiOutlineUnorderedList,AiOutlineOrderedList,AiOutlineUndo,AiOutlineRedo} from 'react-icons/ai';
+import {BsEmojiSmile,BsImage} from 'react-icons/bs'
 
 // Types of Component
 import { ModuleTypes } from './modules';

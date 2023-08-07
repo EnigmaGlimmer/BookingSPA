@@ -7,13 +7,16 @@ import { Col, Container, Row, Breadcrumb, Form, Button } from 'react-bootstrap';
 import moment from 'moment';
 
 // Css
-import './styles/promotion.css';
+import './style/promotion.css';
 
 // Assets
 import headerBackground from '../images/promotion/header.svg';
 import { Pagination } from '../components';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 function Promotion() {
+    document.title = 'Little Daisy - Promotion';
+    const [searchParams, setSearchParams] = useSearchParams();
     const [latestPosts, setLatestPosts] = React.useState([
         {
             presentImage:
@@ -86,14 +89,14 @@ function Promotion() {
             {/*  */}
             <Container>
                 <Row
-                    className="gap-5"
+                    // className="gap-5"
                     style={{
                         padding: '3.5rem 0',
                     }}
-                    id=""
+                    id="promotion-content"
                 >
                     {/* Left side */}
-                    <Col sm="3">
+                    <Col id="promotion-post-list-sidebar" sm="3">
                         <Form className="d-flex position-relative me-2 align-items-center mb-5">
                             <Form.Control
                                 type="search"
@@ -125,7 +128,10 @@ function Promotion() {
                                         <article key={index} className="mb-4">
                                             <Row>
                                                 <Col sm="auto">
-                                                    <img src="https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg"></img>
+                                                    <img
+                                                        src="https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg"
+                                                        alt={post.title}
+                                                    ></img>
                                                 </Col>
                                                 <Col>
                                                     <p className="text-uppercase">
@@ -141,56 +147,108 @@ function Promotion() {
                         </article>
                     </Col>
                     {/* Blog list */}
-                    <Col sm="8">
-                        {posts.map((post, key) => {
-                            return (
-                                <article key={key}>
-                                    <div
-                                        style={{
-                                            maxHeight: '467px',
-                                            width: '100%',
-                                            height: 'auto',
-                                            overflow: 'hidden',
-                                        }}
-                                    >
-                                        <img
-                                            src={post?.presentImage}
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'cover',
-                                                objectPosition: 'center',
-                                            }}
-                                        ></img>
-                                    </div>
-                                    <div className="text-center p-4">
-                                        <h6 className="text-uppercase">
-                                            {moment(post.postedDate).format('MMM D, YYYY')} -{' '}
-                                            {post.categories.join(' ')}
-                                        </h6>
-                                        <h2>{post?.title}</h2>
-                                        <p>{post?.content}</p>
-                                        <Button
-                                            variant="outline"
-                                            className="text-uppercase btn-primary-outline"
-                                            style={{ borderRadius: 'unset' }}
-                                        >
-                                            Read More
-                                        </Button>
-                                    </div>
-                                </article>
-                            );
-                        })}
-                        <Pagination
-                            containerClass="mx-auto text-center"
-                            hoverClass="pagination-hover"
-                            pageNumbers={5}
-                            limited={3}
-                        ></Pagination>
+                    <Col id="promotion-post-list-right" sm="8">
+                        {searchParams.get('postId') && <SinglePromotion></SinglePromotion>}
+                        {!searchParams.get('postId') && (
+                            <>
+                                {posts.map((post, key) => {
+                                    return (
+                                        <article key={key}>
+                                            <div
+                                                style={{
+                                                    maxHeight: '467px',
+                                                    width: '100%',
+                                                    height: 'auto',
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                <img
+                                                    src={post?.presentImage}
+                                                    alt={post.title}
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover',
+                                                        objectPosition: 'center',
+                                                    }}
+                                                ></img>
+                                            </div>
+                                            <div className="text-center p-4">
+                                                <h6 className="text-uppercase">
+                                                    {moment(post.postedDate).format('MMM D, YYYY')} -{' '}
+                                                    {post.categories.join(' ')}
+                                                </h6>
+                                                <h2>{post?.title}</h2>
+                                                <p>{post?.content}</p>
+                                                <Button
+                                                    variant="outline"
+                                                    className="text-uppercase btn-primary-outline"
+                                                    style={{ borderRadius: 'unset' }}
+                                                    onClick={() => {
+                                                        setSearchParams(
+                                                            createSearchParams({
+                                                                postId: key + 1,
+                                                            }),
+                                                        );
+                                                    }}
+                                                >
+                                                    Read More
+                                                </Button>
+                                            </div>
+                                        </article>
+                                    );
+                                })}
+                                <Pagination
+                                    containerClass="mx-auto text-center"
+                                    hoverClass="pagination-hover"
+                                    pageNumbers={5}
+                                    limited={3}
+                                ></Pagination>
+                            </>
+                        )}
                     </Col>
                 </Row>
             </Container>
         </section>
+    );
+}
+
+function SinglePromotion({ title, postedDate, category, content }) {
+    return (
+        <article className="">
+            <p className="text-center">
+                {moment(postedDate).format('MMMM D, YYYY')} - {category || 'HyperText'}
+            </p>
+            <h2 className="text-center">{title || 'Healthy'}</h2>
+            <br></br>
+            <br></br>
+            <article className="">{content}</article>
+
+            {/* Comment */}
+            <div>
+                <h4>Comments</h4>
+                <Row>
+                    <Col>
+                        <img></img>
+                    </Col>
+                    <Col>
+                        <p>{moment(postedDate).format('MMMM D, YYYY')}</p>
+                        <h3>Alizabeth</h3>
+                        <p>
+                            Sit amet quis id adipisicing do culpa anim magna est sint dolore nisi dolore. Laborum
+                            cupidatat elit officia consectetur incididunt ad dolore enim incididunt incididunt
+                            consectetur. Nostrud dolor sunt cillum irure quis. Excepteur ad consequat aliqua
+                            reprehenderit est proident. Eiusmod fugiat velit exercitation deserunt nisi adipisicing
+                            laborum cupidatat non non velit ea.
+                        </p>
+                    </Col>
+                    <Col>Reply</Col>
+                </Row>
+                <h4>Leave a Reply</h4>
+                <p>Logged in as cao tien dat. Edit your profile. Log out?</p>
+                <Form.Control as="textarea" rows={3} placeholder="Your comment *" className="w-100"></Form.Control>
+            </div>
+        </article>
     );
 }
 

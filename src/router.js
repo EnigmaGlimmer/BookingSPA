@@ -1,10 +1,23 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // List of pages
-import { Home, Contact, Coupon, Service, NotFound, About, Promotion } from './pages';
+import {
+    Home,
+    Contact,
+    Booking,
+    Service,
+    NotFound,
+    About,
+    Promotion,
+    AdminBlog,
+    AdminBooking,
+    AdminServices,
+    AdminWeb,
+    AdminExports,
+} from './pages';
 
 // List of layout
-import { Footer, Navbar } from './layout';
+import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
 
 // React Icons
 
@@ -29,12 +42,16 @@ const router = createBrowserRouter([
                 element: <About />,
             },
             {
+                path: 'about',
+                element: <About />,
+            },
+            {
                 path: 'contact',
                 element: <Contact />,
             },
             {
-                path: 'voucher',
-                element: <Coupon />,
+                path: 'booking',
+                element: <Booking />,
             },
             {
                 path: 'promotion',
@@ -43,6 +60,39 @@ const router = createBrowserRouter([
             {
                 path: 'service',
                 element: <Service />,
+            },
+        ],
+    },
+    {
+        path: 'admin',
+        element: (
+            <>
+                <AdminNavbar></AdminNavbar>
+                <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
+            </>
+        ),
+        errorElement: <NotFound></NotFound>,
+        children: [
+            {
+                //Post Blog
+                path: 'blog',
+                element: <AdminBlog></AdminBlog>,
+            },
+            {
+                path: 'booking',
+                element: <AdminBooking></AdminBooking>,
+            },
+            {
+                path: 'services',
+                element: <AdminServices></AdminServices>,
+            },
+            {
+                path: 'web',
+                element: <AdminWeb></AdminWeb>,
+            },
+            {
+                path: 'exports',
+                element: <AdminExports></AdminExports>,
             },
         ],
     },
