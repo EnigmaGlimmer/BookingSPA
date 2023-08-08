@@ -10,7 +10,7 @@ import { default as SpaceTimeFrame } from './space-time-frame';
 const Booking = ({ initialTimeRange, activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
     return (
         <div>
-            <h2>Booking</h2>
+            {/* <h2>Booking</h2> */}
             <Calendar
                 reserved={[
                     {
