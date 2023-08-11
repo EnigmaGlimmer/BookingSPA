@@ -1,42 +1,98 @@
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
 // List of pages
-import { Home, Contact, Coupon, Service, NotFound, About } from './pages';
+import {
+    Home,
+    Contact,
+    Booking,
+    Service,
+    NotFound,
+    About,
+    Promotion,
+    AdminBlog,
+    AdminBooking,
+    AdminServices,
+    AdminWeb,
+    AdminExports,
+} from './pages';
+
+// List of layout
+import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
 
 // React Icons
-import { Spinner } from 'react-bootstrap';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Outlet />,
+        element: (
+            <>
+                <Navbar></Navbar>
+                <Outlet />
+                <Footer></Footer>
+            </>
+        ),
         errorElement: <NotFound></NotFound>,
-        // loader: Spinner,
         children: [
             {
                 path: '',
                 element: <Home />,
-                // loader: <Spinner></Spinner>,
             },
             {
                 path: 'about',
                 element: <About />,
-                // loader: <Spinner></Spinner>,
+            },
+            {
+                path: 'about',
+                element: <About />,
             },
             {
                 path: 'contact',
                 element: <Contact />,
-                // loader: <Spinner></Spinner>,
             },
             {
-                path: 'voucher',
-                element: <Coupon />,
-                // loader: <Spinner></Spinner>,
+                path: 'booking',
+                element: <Booking />,
+            },
+            {
+                path: 'promotion',
+                element: <Promotion />,
             },
             {
                 path: 'service',
                 element: <Service />,
-                // loader: <Spinner></Spinner>,
+            },
+        ],
+    },
+    {
+        path: 'admin',
+        element: (
+            <>
+                <AdminNavbar></AdminNavbar>
+                <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
+            </>
+        ),
+        errorElement: <NotFound></NotFound>,
+        children: [
+            {
+                //Post Blog
+                path: 'blog',
+                element: <AdminBlog></AdminBlog>,
+            },
+            {
+                path: 'booking',
+                element: <AdminBooking></AdminBooking>,
+            },
+            {
+                path: 'services',
+                element: <AdminServices></AdminServices>,
+            },
+            {
+                path: 'web',
+                element: <AdminWeb></AdminWeb>,
+            },
+            {
+                path: 'exports',
+                element: <AdminExports></AdminExports>,
             },
         ],
     },

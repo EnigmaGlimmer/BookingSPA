@@ -128,7 +128,7 @@
     position: relative;
 }
 .about-deco-title{
-    font-size: 74px;
+    font-size: 5vw;
     position: absolute;
     text-align: center;
     width: 100%;
@@ -160,6 +160,9 @@
     display: flex;
     justify-content: space-between;
 }
+.about-staff-list-res{
+    display: none;
+}
 .about-staff-item{
     width: 30%;
 }
@@ -183,7 +186,7 @@
     transform: translateY(-50%);
 }
 .about-booking-title{
-    font-size: 34px;
+    font-size: 3vw;
     padding-bottom: 20px;
 }
 .about-booking-deco{
@@ -194,4 +197,74 @@
 }
 .booking-f{
     opacity: 0.4;
+}
+@media only screen and (max-width: 768px) {
+    /* Story */
+    .about-story-form{
+        flex-direction: column;
+        gap: 30px;
+    }
+    .about-story-item-1 {
+        width: 80%;
+    }
+
+    .about-story-item-2 {
+        width: 80%;
+    }
+
+    .about-story-item-3 {
+        width: 80%;
+        transform: none;
+    }
+    /* Staff */
+    .about-staff-form{
+        width: 80%;
+    }
+}   
+@media only screen and (max-width: 576px) {
+    .about-brand-title{
+        font-size: 34px;
+    }
+    .about-brand{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .about-brand-content-form{
+        width: 100%;
+    }
+    .about-brand-img{
+        width: 100%;
+    }
+    /* About Story */
+    .about-story-form{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .about-story-item-1{
+        width: 100%;
+    }
+    .about-story-item-2{
+        width: 100%;
+    }
+    .about-story-item-3{
+        width: 100%;
+        transform: none;
+    }
+    .about-story-title{
+        font-size: 34px;
+    }
+    /* About Image Store */
+    /* About Deco */
+    /* Booking */
+}
+@media only screen and (max-width: 480px) {
+    .about-staff-list{
+        display: none;
+    }
+    .about-staff-list-res{
+        display: block;
+    }
+    .about-staff-item{
+        width: 100%;
+    }
 }

@@ -4,23 +4,15 @@ import PropTypes from 'prop-types';
 
 // React Booking Calendar
 import { Calendar } from '@demark-pro/react-booking-calendar';
-import {
-    ScheduleComponent,
-    Inject,
-    Day,
-    Week,
-    Month,
-    WorkWeek,
-    MonthAgenda,
-    Agenda,
-} from '@syncfusion/ej2-react-schedule';
-import '@syncfusion/ej2-react-schedule/styles/bootstrap-dark.css';
 
 // Custom
 import { DayCellFooter } from './day-cell-footer';
 
 // Space Time Frame
 import SpaceTimeFrame from './space-time-frame';
+
+// Css
+import './style/booking.css';
 
 // let reserved = [
 //     {
@@ -33,9 +25,9 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
 
     return (
         <section>
-            <h2>Calendar</h2>
-
+            {/* <h2>Calendar</h2> */}
             <Calendar
+                className='booking-root'
                 selected={selectedDates}
                 onChange={(value) => {
                     console.log(value);
@@ -49,9 +41,6 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
                     CalendarContainer: ({ innerProps, children }) => {
                         return (
                             <div
-                                style={{
-                                    width: '680px',
-                                }}
                                 {...innerProps}
                             >
                                 {children}
@@ -67,7 +56,7 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
                 reserved={reserved}
                 variant="booking"
                 dateFnsOptions={{ weekStartsOn: 1 }}
-                range={true}
+                // range={true}
             ></Calendar>
         </section>
     );
