@@ -21,7 +21,7 @@ import galleryThird1 from '../images/galleryThird1.png';
 import galleryThird2 from '../images/galleryThird2.png';
 import reviewUser from '../images/reviewUser.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
+import { EffectCoverflow, Pagination, Navigation,Autoplay } from 'swiper/modules';
 import { Button, Row } from 'react-bootstrap';
 import { Booking } from '../components';
 
@@ -176,7 +176,7 @@ function Home() {
                 </div>
             </div>
             {/* Other Services */}
-            <div className="other">
+            <div className="other py-5">
                 <div className="other-bg">
                     <div className="other-img-flower">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -286,6 +286,73 @@ function Home() {
                             navigation={true}
                             pagination={true}
                             modules={[EffectCoverflow, Pagination, Navigation]}
+                            className="review-mySwiper"
+                        >
+                            <SwiperSlide className="review-slide">
+                                {({ isActive }) => (
+                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
+                                        <div className="review-img">
+                                            <img src={reviewUser} alt="Service" width={'100%'} />
+                                        </div>
+                                        <div className="review-user-name">John Mad</div>
+                                        <div className="review-content">
+                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                            ut labore et dolore magna.
+                                        </div>
+                                    </div>
+                                )}
+                            </SwiperSlide>
+                            <SwiperSlide className="review-slide">
+                                {({ isActive }) => (
+                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
+                                        <div className="review-img">
+                                            <img src={reviewUser} alt="Service" width={'100%'} />
+                                        </div>
+                                        <div className="review-user-name">John Mad</div>
+                                        <div className="review-content">
+                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                            ut labore et dolore magna.
+                                        </div>
+                                    </div>
+                                )}
+                            </SwiperSlide>
+                            <SwiperSlide className="review-slide">
+                                {({ isActive }) => (
+                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
+                                        <div className="review-img">
+                                            <img src={reviewUser} alt="Service" width={'100%'} />
+                                        </div>
+                                        <div className="review-user-name">John Mad</div>
+                                        <div className="review-content">
+                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                            ut labore et dolore magna.
+                                        </div>
+                                    </div>
+                                )}
+                            </SwiperSlide>
+                        </Swiper>
+                    </div>
+                </div>
+            </div>
+            {/* Comment and Review Responsive*/}
+            <div className="review-res py-5">
+                <div className="review-form">
+                    <div className="review-header">
+                        <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>
+                        <div className="review-title">Comments & Reviews</div>
+                    </div>
+                    <div className="review-list">
+                        <Swiper
+                            navigation={true} 
+                            pagination={true}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
+                            modules={[Navigation,Pagination,Autoplay]}
                             className="review-mySwiper"
                         >
                             <SwiperSlide className="review-slide">
