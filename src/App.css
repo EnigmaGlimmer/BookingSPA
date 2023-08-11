@@ -73,6 +73,29 @@ li {
     padding-left: 0.6rem;
 }
 
+.link-text {
+    text-decoration: none;
+}
+
 .btn {
     border-radius: 0;
+}
+
+.bg-main {
+    background-color: var(--clr-primary);
+}
+
+img {
+    max-width: 100%;
+}
+
+blockquote {
+    border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+}
+
+.demo img {
+    max-width: 100%;
 }

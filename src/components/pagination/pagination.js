@@ -6,26 +6,32 @@ import { Button } from 'react-bootstrap';
 // React Icon
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
+// style
+import './pagination.css';
+
 function Pagination({
     activePage = 1,
     pageNumbers = 6,
     limited = 3,
     containerClass,
     hoverClass,
+    hoverArrowClass,
     leftIconComponent,
     rightIconComponent,
     activePageComponent,
     normalPageComponent,
 }) {
     return (
-        <div className={containerClass}>
-            <span className="me-2">{leftIconComponent?.() || <AiOutlineLeft></AiOutlineLeft>}</span>
+        <div className={containerClass} id="pagination">
+            <span className={'me-2 ' + hoverArrowClass} style={{ cursor: 'pointer' }}>
+                {leftIconComponent?.() || <AiOutlineLeft></AiOutlineLeft>}
+            </span>
             {Array.from(Array(pageNumbers).keys()).map((_, index) => {
                 if (activePage === index + 1) {
                     return (
                         activePageComponent?.(index + 1) || (
                             <span
-                                className="p-3"
+                                className="p-3 me-1"
                                 style={{
                                     border: '1px solid var(--clr-border)',
                                     borderRadius: '50%',
@@ -47,7 +53,7 @@ function Pagination({
                         normalPageComponent?.(index + 1) || (
                             <span
                                 key={index}
-                                className={'p-3' + ` ${hoverClass}`}
+                                className={'p-3 ' + hoverClass}
                                 style={{
                                     cursor: 'pointer',
                                 }}
@@ -58,7 +64,9 @@ function Pagination({
                     );
                 }
             })}
-            <span className="ms-2">{rightIconComponent?.() || <AiOutlineRight></AiOutlineRight>}</span>
+            <span className={'ms-2 ' + hoverArrowClass} style={{ cursor: 'pointer' }}>
+                {rightIconComponent?.() || <AiOutlineRight></AiOutlineRight>}
+            </span>
         </div>
     );
 }

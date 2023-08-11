@@ -14,6 +14,8 @@ import {
     AdminServices,
     AdminWeb,
     AdminExports,
+    AdminUploads,
+    AdminTestimonials,
 } from './pages';
 
 // List of layout
@@ -91,8 +93,16 @@ const router = createBrowserRouter([
                 element: <AdminWeb></AdminWeb>,
             },
             {
+                path: 'testimonials',
+                element: <AdminTestimonials></AdminTestimonials>,
+            },
+            {
                 path: 'exports',
                 element: <AdminExports></AdminExports>,
+            },
+            {
+                path: 'uploads',
+                element: <AdminUploads></AdminUploads>,
             },
         ],
     },

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-quill/dist/quill.snow.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';

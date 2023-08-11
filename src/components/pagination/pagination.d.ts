@@ -3,7 +3,8 @@ type PaginationProps = {
     pageNumbers: number;
     limited: number;
     containerClass?: string;
-    hoverClass: string;
+    hoverClass?: string;
+    hoverArrowClass?: string;
     leftIconComponent?: React.Component;
     rightIconComponent?: React.Component;
     activePageComponent?: (children: React.Component) => React.Component;

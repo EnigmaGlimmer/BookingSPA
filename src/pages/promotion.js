@@ -121,7 +121,7 @@ function Promotion() {
                         </article>
 
                         <article className="mb-3">
-                            <h3>Latest Posts</h3>
+                            <h3 className="mb-3">Latest Posts</h3>
                             <div>
                                 {latestPosts.map((post, index) => {
                                     return (
@@ -147,7 +147,7 @@ function Promotion() {
                         </article>
                     </Col>
                     {/* Blog list */}
-                    <Col id="promotion-post-list-right" sm="8">
+                    <Col id="promotion-post-list-right" sm="9">
                         {searchParams.get('postId') && <SinglePromotion></SinglePromotion>}
                         {!searchParams.get('postId') && (
                             <>
@@ -200,7 +200,8 @@ function Promotion() {
                                 })}
                                 <Pagination
                                     containerClass="mx-auto text-center"
-                                    hoverClass="pagination-hover"
+                                    // hoverClass="pagination-hover"
+                                    hoverArrowClass="pagination-arrow-hover"
                                     pageNumbers={5}
                                     limited={3}
                                 ></Pagination>

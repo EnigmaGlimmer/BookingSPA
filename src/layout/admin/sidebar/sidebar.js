@@ -3,12 +3,46 @@ import React from 'react';
 // style
 import './sidebar.css';
 import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function Sidebar({ children }) {
     return (
         <div>
-            <Row>
-                <Col>Sidebar</Col>
+            <Row className="h-100" id="sidebar-container">
+                <Col sm="auto" id="sidebar">
+                    <ul className="list-style-none ">
+                        <li>
+                            <Link className="link-text" to="/admin/blog">
+                                Blog
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="link-text" to="/admin/uploads">
+                                Uploaded Images
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="link-text" to="/admin/testimonials">
+                                Testimonicals
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="link-text" to="/admin/web">
+                                Web Content
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="link-text" to="/admin/services">
+                                Services
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="link-text" to="/admin/booking">
+                                Booking
+                            </Link>
+                        </li>
+                    </ul>
+                </Col>
                 <Col>{children}</Col>
             </Row>
         </div>

@@ -1,0 +1,25 @@
+#sidebar-container {
+    min-height: calc(100vh - 92px);
+    max-height: calc(100vh - 92px);
+}
+
+#sidebar {
+    background-color: var(--clr-primary);
+    border-right: 1px solid var(--clr-border);
+    min-height: 100%;
+    padding: 0;
+}
+
+#sidebar a {
+    color: var(--clr-link);
+    white-space: nowrap;
+}
+
+#sidebar li {
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+}
+
+#sidebar li:hover {
+    background-color: var(--clr-darker-background);
+}
