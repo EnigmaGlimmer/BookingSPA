@@ -11,7 +11,7 @@ import aboutDaisy4 from '../images/aboutDaisy4.png';
 import aboutDeco from '../images/aboutDeco.png';
 import aboutBooking from '../images/aboutBooking.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
+import { FreeMode, Pagination,Autoplay,Navigation } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
 
 const listImg = [
@@ -87,13 +87,31 @@ export default function About() {
                     </div>
                     <div className="about-image-store-list">
                         <Swiper
-                            slidesPerView={4}
+                            slidesPerView={1}
                             spaceBetween={30}
                             freeMode={true}
                             pagination={{
                                 clickable: true,
                             }}
-                            modules={[FreeMode, Pagination]}
+                            autoplay={{
+                                delay: 2500,
+                                disableOnInteraction: false,
+                            }}
+                            breakpoints={{
+                                576: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                768: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 40,
+                                },
+                                1024: {
+                                    slidesPerView: 4,
+                                    spaceBetween: 50,
+                                }
+                            }}
+                            modules={[FreeMode, Pagination,Autoplay]}
                             className="about-image-store-swiper"
                         >
                             {listImg?.map((item, index) => {
@@ -161,6 +179,63 @@ export default function About() {
                                 <p>- specialized</p>
                             </div>
                         </div>
+                    </div>
+                    {/* Staff Responsive */}
+                    <div className='about-staff-list-res'>
+                        <Swiper
+                            spaceBetween={30}
+                            centeredSlides={true}
+                            autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                            }}
+                            pagination={{
+                            clickable: true,
+                            }}
+                            navigation={true}
+                            modules={[Autoplay, Pagination, Navigation]}
+                            className="mySwiper"
+                        >
+                            <SwiperSlide>
+                                <div className="about-staff-item">
+                                    <div className="about-staff-item-img">
+                                        <img src={aboutDaisy4} width={'100%'} />
+                                    </div>
+                                    <div className="about-staff-item-name">Full Name</div>
+                                    <div className="about-staff-item-specialized">
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="about-staff-item">
+                                    <div className="about-staff-item-img">
+                                        <img src={aboutDaisy4} width={'100%'} />
+                                    </div>
+                                    <div className="about-staff-item-name">Full Name</div>
+                                    <div className="about-staff-item-specialized">
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <div className="about-staff-item">
+                                    <div className="about-staff-item-img">
+                                        <img src={aboutDaisy4} width={'100%'} />
+                                    </div>
+                                    <div className="about-staff-item-name">Full Name</div>
+                                    <div className="about-staff-item-specialized">
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                        <p>- specialized</p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
                 </div>
             </div>

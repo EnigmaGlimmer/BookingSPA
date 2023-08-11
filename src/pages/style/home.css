@@ -109,6 +109,8 @@
 }
 .nail-care-img{
     padding: 25px;
+    width: 70%;
+    margin: 0 auto;
 }
 .nail-care-title{
     font-size: 34px;
@@ -252,6 +254,14 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+.review-res{
+    display: none;
+    width: 100%;
+    background-image: url("../../images/reviewBg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .review-form{
     width: 80%;
     margin: 0 auto;
@@ -286,4 +296,89 @@
 }
 .review-slide{
     width: 33%;
+}
+@media only screen and (max-width: 1200px) {
+    .review-item{
+        width: 70%;
+    }
+    .review-form{
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .review{
+        display: none;
+    }
+    .review-res{
+        display: block;
+    }
+}
+@media only screen and (max-width: 576px) {
+    /* Introduce */
+    .intro-form{
+        flex-direction:column-reverse; 
+    }
+    .intro-bg{
+        width: 100%;
+    }
+    .intro-content{
+        width: 100%;
+    }
+    .intro-img-form{
+        width: 100%;
+    }
+    .intro-img-flower-bot{
+        transform: translate(0,-20%);
+    }
+    .intro-content-form{
+        width: 100%;
+    }
+    .intro-img{
+        width: 100%;
+    }
+    /* Three Service */
+    .three-form{
+        flex-direction: column;
+    }
+    .nail-care{
+        width: 100%;
+    }
+    /* Quality */
+    .quality-item-form{
+        flex-direction: column;
+    }
+    .quality-item{
+        width: 100%;
+    }
+    /* Other */
+    .other-form{
+        flex-direction: column-reverse;
+    }
+    .other-img{
+        width: 100%;
+    }
+    .other-content{
+        width: 100%;
+    }
+    .other-bg{
+        width: 100%;
+        height: 95%;
+        top: 0;
+        transform: none;
+    }
+    /* Booking */
+    .booking-form{
+        flex-direction: column;
+        gap: 30px;
+    }
+    .booking-time-form{
+        width: 100%;
+    }
+    .booking-calendar{
+        width: 100%;
+    }
+    /* Review */
+    .review-item{
+
+    }
 }

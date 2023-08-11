@@ -11,6 +11,9 @@ import { DayCellFooter } from './day-cell-footer';
 // Space Time Frame
 import SpaceTimeFrame from './space-time-frame';
 
+// Css
+import './style/booking.css';
+
 // let reserved = [
 //     {
 //         startDate: new Date(),
@@ -24,6 +27,7 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
         <section>
             {/* <h2>Calendar</h2> */}
             <Calendar
+                className='booking-root'
                 selected={selectedDates}
                 onChange={(value) => {
                     console.log(value);
@@ -37,9 +41,6 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
                     CalendarContainer: ({ innerProps, children }) => {
                         return (
                             <div
-                                style={{
-                                    width: '680px',
-                                }}
                                 {...innerProps}
                             >
                                 {children}

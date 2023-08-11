@@ -9,7 +9,7 @@ import homeFlowerDeco from '../images/home/flower.svg';
 import aboutBooking from '../images/aboutBooking.png'
 import './style/service.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination } from 'swiper/modules';
+import { FreeMode, Pagination,Autoplay } from 'swiper/modules';
 const listImg = [
     aboutDaisy1,aboutDaisy2,aboutDaisy3,aboutDaisy4,aboutDaisy1,aboutDaisy2,aboutDaisy3,aboutDaisy4
 ]
@@ -82,30 +82,48 @@ function Service() {
                     </div>
                 </div>
                 <div className='about-image-store-list'>
-                        <Swiper
-                            slidesPerView={4}
-                            spaceBetween={30}
-                            freeMode={true}
-                            pagination={{
+                    <Swiper
+                        slidesPerView={1}
+                        spaceBetween={30}
+                        freeMode={true}
+                        pagination={{
                             clickable: true,
-                            }}
-                            modules={[FreeMode, Pagination]}
-                            className="about-image-store-swiper"
-                        >
-                            {listImg?.map((item,index) => {
-                                return(
+                        }}
+                        autoplay={{
+                            delay: 2500,
+                            disableOnInteraction: false,
+                        }}
+                        breakpoints={{
+                            576: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                                spaceBetween: 40,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                                spaceBetween: 50,
+                            }
+                        }}
+                        modules={[FreeMode, Pagination,Autoplay]}
+                        className="about-image-store-swiper"
+                    >
+                        {listImg?.map((item, index) => {
+                            return (
                                 <SwiperSlide key={index}>
-                                    <div className='about-image-store-form-child'>
-                                        <img src={item} width={"100%"}/>
-                                        <p className='about-image-store-form-content'>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                                            sed do eiusmod tempor.
+                                    <div className="about-image-store-form-child">
+                                        <img src={item} width={'100%'} />
+                                        <p className="about-image-store-form-content">
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                            tempor.
                                         </p>
                                     </div>
                                 </SwiperSlide>
-                                )
-                            })}
-                        </Swiper>
+                            );
+                        })}
+                    </Swiper>
                 </div>
             </div>
         </div>
