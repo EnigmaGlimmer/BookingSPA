@@ -1,0 +1,83 @@
+.css-160qpsv-DayCellHeader{
+    display: none;
+}
+.css-1riib8c-DayCellFooter{
+    display: none;
+}
+.css-1grf7vp-DayCellHeader{
+    display: none;
+}
+.css-1ne43xu-DayCellFooter{
+    display: none;
+}
+.css-a2m0pv-Et{
+    background-color:var(--clr-primary-yellow) !important;
+    border-radius: unset !important;
+    border: unset!important;
+}
+.css-1awxhgd-DayCellContent{
+    color: #000 !important;
+}
+.css-1uhpw3s-DayCellContent{
+    color: #000 !important;
+    border: 2px solid black !important;
+    padding: 15px 18.5px;
+}
+/* Background Header */
+.css-elpag6-Et{
+    background-color: #303030;
+    padding: 15px 10px !important;
+}
+.css-elpag6-Et > svg > path{
+    fill: var(--clr-primary-yellow) !important;
+}
+.css-qkxwav-MonthContent > span{
+    color: var(--clr-primary-yellow) !important;
+}
+.booking-calendar-module{
+    background-color: #FDF2CB;
+}
+.css-unzynr-Et{
+    background-color: #FDF2CB !important;
+}
+/* Border */
+.css-p6g64r-DayCell{
+    border-top: unset !important;
+    height: 60px !important;
+    width: 60px !important;
+}
+.css-dk8k5x-DayCell{
+    border-top: unset !important;
+    height: 60px !important;
+    width: 60px !important;
+}
+.css-h80u5e-Et:hover{
+    background-color: unset !important;
+}
+.css-19ryhug-Et:hover{
+    background-color: unset !important;
+}
+.booking-calendar-module{
+    width: 400px;
+    height: fit-content;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 576px) {
+    .booking-calendar-module {
+        width: 300px;
+        height: fit-content;
+        margin: 0 auto;
+    }
+    .css-1uhpw3s-DayCellContent {
+        padding: 8px 11px;
+    }
+    .css-p6g64r-DayCell {
+        height: 45px !important;
+        width: 45px !important;
+    }
+
+    .css-dk8k5x-DayCell {
+        height: 45px !important;
+        width: 45px !important;
+    }
+}

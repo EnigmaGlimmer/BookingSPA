@@ -43,7 +43,7 @@ function Sidebar({ children }) {
                         </li>
                     </ul>
                 </Col>
-                <Col>{children}</Col>
+                <Col style={{ backgroundColor: 'var(--clr-background)' }}>{children}</Col>
             </Row>
         </div>
     );

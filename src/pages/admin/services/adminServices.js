@@ -5,7 +5,7 @@ import { CustomReactQuill } from '../../../components';
 
 // Text Editor
 
-import { Button, Form, Tab, Table, Tabs } from 'react-bootstrap';
+import { Button, Col, Form, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 import { Formik } from 'formik';
 
@@ -19,13 +19,19 @@ function AdminServices() {
                     return (
                         <Form onSubmit={handleSubmit}>
                             <div className="p-3 mb-3" style={{ background: '#fff' }}>
-                                <Form.Group>
+                                <Form.Group className="mb-3">
                                     <Form.Label>Service Title</Form.Label>
                                     <Form.Control name="title" placeholder="Enter service title"></Form.Control>
                                 </Form.Group>
-                                <Form.Group>
+                                <Form.Group className="mb-3">
                                     <Form.Label>Service Description</Form.Label>
                                     <Form.Control name="description" placeholder="Enter service title"></Form.Control>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Dependency</Form.Label>
+                                    <Form.Select name="parent" placeholder="Enter service title">
+                                        <option value={1}>Service 1</option>
+                                    </Form.Select>
                                 </Form.Group>
                             </div>
 
@@ -51,29 +57,39 @@ function AdminServices() {
                                 <h4>Meta data</h4>
                                 <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                                     <Tab eventKey="home" title="General Info">
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Stocks</Form.Label>
                                             <Form.Control placeholder="Enter Stocks"></Form.Control>
                                         </Form.Group>
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Price</Form.Label>
                                             <Form.Control placeholder="Enter Price"></Form.Control>
                                         </Form.Group>
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Discount</Form.Label>
                                             <Form.Control placeholder="Enter Discount"></Form.Control>
                                         </Form.Group>
+                                        <Row className="mb-3">
+                                            <Col>
+                                                <Form.Label>Promotion Start</Form.Label>
+                                                <Form.Control type="date"></Form.Control>
+                                            </Col>
+                                            <Col>
+                                                <Form.Label>Promotion End</Form.Label>
+                                                <Form.Control type="date"></Form.Control>
+                                            </Col>
+                                        </Row>
                                     </Tab>
                                     <Tab eventKey="profile" title="Meta Data">
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Meta title</Form.Label>
                                             <Form.Control placeholder="Enter meta title"></Form.Control>
                                         </Form.Group>
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Meta Keywords</Form.Label>
                                             <Form.Control placeholder="Enter meta keywords"></Form.Control>
                                         </Form.Group>
-                                        <Form.Group>
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Meta Description</Form.Label>
                                             <Form.Control placeholder="Enter meta Description"></Form.Control>
                                         </Form.Group>
@@ -116,7 +132,12 @@ function AdminServices() {
                 </tbody>
             </Table>
 
-            <h3>Create Service Post</h3>
+            <h3>Edit Service Posts</h3>
+
+            <Form.Select className="mb-3">
+                <option>Service 1</option>
+                <option>Service 2</option>
+            </Form.Select>
 
             <CustomReactQuill
                 onChange={(htmlText) => {

@@ -1,11 +1,12 @@
-import React from 'react';
-import { Button, Col, Modal, Row } from 'react-bootstrap';
+import React, { useRef } from 'react';
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 
 function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected }) {
     const [uploadedImages, setUploadedImages] = React.useState([
         'https://img.freepik.com/premium-photo/image-colorful-galaxy-sky-generative-ai_791316-9864.jpg?w=2000',
         'https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg',
     ]);
+    let uploadInputRef = useRef(null);
 
     return (
         <div>
@@ -14,7 +15,25 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                     <Modal.Title>Uploads Modal</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Button variant="outline">+ Upload New Asset</Button>
+                    <Button
+                        variant="outline"
+                        onClick={() => {
+                            if (uploadInputRef.current) {
+                                uploadInputRef.current.click();
+                            }
+                        }}
+                    >
+                        + Upload New Asset
+                    </Button>
+
+                    <Form.Control
+                        type="file"
+                        className="d-none"
+                        ref={uploadInputRef}
+                        onChange={(e) => {
+                            console.log(e.currentTarget.files);
+                        }}
+                    ></Form.Control>
 
                     <div className="">
                         <Row>
