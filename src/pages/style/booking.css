@@ -1,0 +1,61 @@
+.booking-form-input{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.booking-input{
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+.booking-input:focus{
+    outline: none;
+}
+/* Booking Process */
+.booking-process{
+
+}
+.booking-step{
+    position: relative;
+}
+.booking-process-form{
+    width: 40%;
+    margin: 0 auto;
+    position: relative;
+}
+.booking-step-form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.booking-process-line{
+    width: 100%;
+    border-top: 1px dashed black;
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.booking-step-circle{
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background-color: white;
+    text-align: center;
+    position: relative;
+}
+.booking-step-title{
+    padding-top: 10px;
+}
+.booking-step-title{
+    position: absolute;
+    white-space: nowrap;
+    transform: translateX(-25%);
+}
+.booking-dot{
+    font-size: 18px;
+    position: absolute;
+    right: 0;
+}
