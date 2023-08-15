@@ -1,0 +1,4 @@
+const cloudinaryConfig = {
+    apikey: '',
+    secreteKey: '',
+};

@@ -137,3 +137,11 @@ button[aria-controls='mobile-nav-menu'].collapsed .nav-hamburger::before {
     right: -1px;
     top: 9px;
 }
+
+.line {
+    position: relative;
+    width: calc(100% + 2rem);
+    transform: translateX(-1rem);
+    height: 1px;
+    background-color: var(--clr-border);
+}

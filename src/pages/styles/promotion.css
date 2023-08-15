@@ -14,23 +14,6 @@
 
 .pagination-hover:hover {
     --_i: 100%;
-    color: transparent;
+    color: red;
     transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
-}
-.pagination-arrow-hover {
-    transform: scale(1);
-    transition: font-size 0.3s linear;
-}
-.pagination-arrow-hover:hover {
-    font-size: 2rem;
-    transform: scale(2) translateY(-200px);
-}
-
-@media (max-width: 576px) {
-    #promotion-content #promotion-post-list-sidebar {
-        order: 2;
-    }
-    #promotion-content #promotion-post-list-right {
-        order: 1;
-    }
 }

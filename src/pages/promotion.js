@@ -14,23 +14,29 @@ import headerBackground from '../images/promotion/header.svg';
 import { Pagination } from '../components';
 import { createSearchParams, useSearchParams } from 'react-router-dom';
 
+// Document Meta (SEO)
+import DocumentMeta from 'react-document-meta';
+
 function Promotion() {
     document.title = 'Little Daisy - Promotion';
     const [searchParams, setSearchParams] = useSearchParams();
     const [latestPosts, setLatestPosts] = React.useState([
         {
+            id: 0,
             presentImage:
                 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
             postedDate: new Date(),
             title: 'Lorem ipsum dolor sit amet',
         },
         {
+            id: 1,
             presentImage:
                 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
             postedDate: new Date(),
             title: 'Lorem ipsum dolor sit amet',
         },
         {
+            id: 2,
             presentImage:
                 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
             postedDate: new Date(),
@@ -39,6 +45,7 @@ function Promotion() {
     ]);
     const [posts, setPosts] = React.useState([
         {
+            id: 0,
             presentImage: 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-img-1.jpg',
             postedDate: new Date(),
             title: 'Love Your Skin',
@@ -47,6 +54,7 @@ function Promotion() {
             categories: ['CAREHYDRATION'],
         },
         {
+            id: 1,
             presentImage: 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-img-1.jpg',
             postedDate: new Date(),
             title: 'Love Your Skin',
@@ -85,6 +93,15 @@ function Promotion() {
                     </Row>
                 </Container>
             </header>
+            {searchParams.get('postId') && (
+                <section>
+                    <img
+                        src={posts?.find?.((p) => p.id.toString() === searchParams.get('postId'))?.presentImage}
+                        className="w-100"
+                        style={{ maxHeight: '420px', objectFit: 'cover' }}
+                    ></img>
+                </section>
+            )}
 
             {/*  */}
             <Container>
@@ -121,7 +138,7 @@ function Promotion() {
                         </article>
 
                         <article className="mb-3">
-                            <h3>Latest Posts</h3>
+                            <h3 className="mb-3">Latest Posts</h3>
                             <div>
                                 {latestPosts.map((post, index) => {
                                     return (
@@ -147,7 +164,7 @@ function Promotion() {
                         </article>
                     </Col>
                     {/* Blog list */}
-                    <Col id="promotion-post-list-right" sm="8">
+                    <Col id="promotion-post-list-right" sm="9">
                         {searchParams.get('postId') && <SinglePromotion></SinglePromotion>}
                         {!searchParams.get('postId') && (
                             <>
@@ -187,7 +204,7 @@ function Promotion() {
                                                     onClick={() => {
                                                         setSearchParams(
                                                             createSearchParams({
-                                                                postId: key + 1,
+                                                                postId: post?.id,
                                                             }),
                                                         );
                                                     }}
@@ -200,7 +217,8 @@ function Promotion() {
                                 })}
                                 <Pagination
                                     containerClass="mx-auto text-center"
-                                    hoverClass="pagination-hover"
+                                    // hoverClass="pagination-hover"
+                                    hoverArrowClass="pagination-arrow-hover"
                                     pageNumbers={5}
                                     limited={3}
                                 ></Pagination>
@@ -214,41 +232,54 @@ function Promotion() {
 }
 
 function SinglePromotion({ title, postedDate, category, content }) {
+    const meta = {
+        title: 'Some Meta Title',
+        description: 'I am a description, and I can create multiple tags',
+        canonical: 'http://example.com/path/to/page',
+        meta: {
+            charset: 'utf-8',
+            name: {
+                keywords: 'react,meta,document,html,tags',
+            },
+        },
+    };
     return (
-        <article className="">
-            <p className="text-center">
-                {moment(postedDate).format('MMMM D, YYYY')} - {category || 'HyperText'}
-            </p>
-            <h2 className="text-center">{title || 'Healthy'}</h2>
-            <br></br>
-            <br></br>
-            <article className="">{content}</article>
+        <DocumentMeta {...meta}>
+            <article className="">
+                <p className="text-center">
+                    {moment(postedDate).format('MMMM D, YYYY')} - {category || 'HyperText'}
+                </p>
+                <h2 className="text-center">{title || 'Healthy'}</h2>
+                <br></br>
+                <br></br>
+                <article className="">{content}</article>
 
-            {/* Comment */}
-            <div>
-                <h4>Comments</h4>
-                <Row>
-                    <Col>
-                        <img></img>
-                    </Col>
-                    <Col>
-                        <p>{moment(postedDate).format('MMMM D, YYYY')}</p>
-                        <h3>Alizabeth</h3>
-                        <p>
-                            Sit amet quis id adipisicing do culpa anim magna est sint dolore nisi dolore. Laborum
-                            cupidatat elit officia consectetur incididunt ad dolore enim incididunt incididunt
-                            consectetur. Nostrud dolor sunt cillum irure quis. Excepteur ad consequat aliqua
-                            reprehenderit est proident. Eiusmod fugiat velit exercitation deserunt nisi adipisicing
-                            laborum cupidatat non non velit ea.
-                        </p>
-                    </Col>
-                    <Col>Reply</Col>
-                </Row>
-                <h4>Leave a Reply</h4>
-                <p>Logged in as cao tien dat. Edit your profile. Log out?</p>
-                <Form.Control as="textarea" rows={3} placeholder="Your comment *" className="w-100"></Form.Control>
-            </div>
-        </article>
+                {/* Comment */}
+                <div>
+                    <h4>Comments</h4>
+                    <Row>
+                        <Col>
+                            <img></img>
+                        </Col>
+                        <Col>
+                            <p>{moment(postedDate).format('MMMM D, YYYY')}</p>
+                            <h3>Alizabeth</h3>
+                            <p>
+                                Sit amet quis id adipisicing do culpa anim magna est sint dolore nisi dolore. Laborum
+                                cupidatat elit officia consectetur incididunt ad dolore enim incididunt incididunt
+                                consectetur. Nostrud dolor sunt cillum irure quis. Excepteur ad consequat aliqua
+                                reprehenderit est proident. Eiusmod fugiat velit exercitation deserunt nisi adipisicing
+                                laborum cupidatat non non velit ea.
+                            </p>
+                        </Col>
+                        <Col>Reply</Col>
+                    </Row>
+                    <h4>Leave a Reply</h4>
+                    <p>Logged in as cao tien dat. Edit your profile. Log out?</p>
+                    <Form.Control as="textarea" rows={3} placeholder="Your comment *" className="w-100"></Form.Control>
+                </div>
+            </article>
+        </DocumentMeta>
     );
 }
 

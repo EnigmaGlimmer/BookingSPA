@@ -8,19 +8,6 @@ import 'swiper/css/pagination';
 import AppRouter from './router';
 
 function App() {
-    const [formValue, setFormValue] = React.useState({
-        email: '',
-        phone: '',
-        date: null,
-        timestart: '',
-        timeend: '',
-    });
-
-    React.useEffect(() => {
-        console.log(formValue);
-        return () => {};
-    }, [formValue]);
-
     return <AppRouter></AppRouter>;
 }
 
