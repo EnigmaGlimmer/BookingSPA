@@ -122,7 +122,7 @@ function AdminServices() {
                         </td>
                         <td>12$</td>
                         <td>
-                            <img src=""></img>
+                            <img src="" alt=""></img>
                         </td>
                         <td>
                             <Button variant="outline">Not available</Button>
