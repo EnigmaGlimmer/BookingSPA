@@ -6,9 +6,16 @@ import 'swiper/css/pagination';
 
 // App Router Component
 import AppRouter from './router';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
-    return <AppRouter></AppRouter>;
+    return (
+        <>
+            <AppRouter></AppRouter>
+            <ToastContainer />
+        </>
+    );
 }
 
 export default App;

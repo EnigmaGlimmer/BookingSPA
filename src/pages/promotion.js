@@ -20,7 +20,10 @@ import DocumentMeta from 'react-document-meta';
 function Promotion() {
     document.title = 'Little Daisy - Promotion';
     const [searchParams, setSearchParams] = useSearchParams();
-    const [latestPosts, setLatestPosts] = React.useState([
+    const [
+        latestPosts,
+        // setLatestPosts
+    ] = React.useState([
         {
             id: 0,
             presentImage:
@@ -43,7 +46,10 @@ function Promotion() {
             title: 'Lorem ipsum dolor sit amet',
         },
     ]);
-    const [posts, setPosts] = React.useState([
+    const [
+        posts,
+        // setPosts
+    ] = React.useState([
         {
             id: 0,
             presentImage: 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-img-1.jpg',
@@ -97,6 +103,7 @@ function Promotion() {
                 <section>
                     <img
                         src={posts?.find?.((p) => p.id.toString() === searchParams.get('postId'))?.presentImage}
+                        alt=""
                         className="w-100"
                         style={{ maxHeight: '420px', objectFit: 'cover' }}
                     ></img>
@@ -259,7 +266,7 @@ function SinglePromotion({ title, postedDate, category, content }) {
                     <h4>Comments</h4>
                     <Row>
                         <Col>
-                            <img></img>
+                            <img src="" alt="Avatar"></img>
                         </Col>
                         <Col>
                             <p>{moment(postedDate).format('MMMM D, YYYY')}</p>

@@ -3,7 +3,10 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { UploadModal } from '../../../components';
 
 function Uploads() {
-    const [uploads, setUploads] = React.useState(['']);
+    const [
+        uploads,
+        // setUploads
+    ] = React.useState(['']);
     const [showUploadModal, setShowUploadModal] = React.useState(false);
 
     return (
@@ -23,7 +26,7 @@ function Uploads() {
                 {uploads.map((upload) => {
                     return (
                         <Col sm="auto">
-                            <img src={upload}></img>
+                            <img src={upload} alt="assets"></img>
                         </Col>
                     );
                 })}

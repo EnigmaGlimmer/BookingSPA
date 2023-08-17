@@ -7,7 +7,10 @@ import moment from 'moment';
 import { Button, Table } from 'react-bootstrap';
 
 function AdminTestimonials() {
-    const [testimonials, setTestimonials] = React.useState([]);
+    const [
+        testimonials,
+        // setTestimonials
+    ] = React.useState([]);
     return (
         <section>
             <h3>Testimonials</h3>
@@ -27,7 +30,7 @@ function AdminTestimonials() {
                     <tr>
                         <td>1</td>
                         <td>
-                            <img src=""></img>superbrowly@testimonials.com
+                            <img src="" alt=""></img>superbrowly@testimonials.com
                         </td>
                         <td>
                             Ullamco velit adipisicing veniam consectetur consectetur cillum ut amet aliqua. Nulla irure
@@ -46,7 +49,7 @@ function AdminTestimonials() {
                     <tr>
                         <td>2</td>
                         <td>
-                            <img src=""></img>superbrowly@testimonials.com
+                            <img src="" alt=""></img>superbrowly@testimonials.com
                         </td>
                         <td>
                             Ullamco velit adipisicing veniam consectetur consectetur cillum ut amet aliqua. Nulla irure

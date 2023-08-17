@@ -21,8 +21,8 @@ import galleryThird1 from '../images/galleryThird1.png';
 import galleryThird2 from '../images/galleryThird2.png';
 import reviewUser from '../images/reviewUser.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Navigation,Autoplay } from 'swiper/modules';
-import { Button, Row } from 'react-bootstrap';
+import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { Button } from 'react-bootstrap';
 import { Booking } from '../components';
 
 function Home() {
@@ -346,13 +346,13 @@ function Home() {
                     </div>
                     <div className="review-list">
                         <Swiper
-                            navigation={true} 
+                            navigation={true}
                             pagination={true}
                             autoplay={{
                                 delay: 2500,
                                 disableOnInteraction: false,
                             }}
-                            modules={[Navigation,Pagination,Autoplay]}
+                            modules={[Navigation, Pagination, Autoplay]}
                             className="review-mySwiper"
                         >
                             <SwiperSlide className="review-slide">

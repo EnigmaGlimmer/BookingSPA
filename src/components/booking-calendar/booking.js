@@ -20,7 +20,7 @@ const Booking = ({ initialTimeRange, activeDate, onChangeDate, onChangeTimeStart
                 ]}
                 onChangeDate={onChangeDate}
             ></Calendar>
-            {!!activeDate && (
+            {!!onChangeDate && (
                 <SpaceTimeFrame
                     reserved={[
                         {

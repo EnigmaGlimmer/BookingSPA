@@ -1,0 +1,19 @@
+// Actions
+export const API_RESPONSE_SUCCESS = 'API_RESPONSE_SUCCESS';
+export const API_RESPONSE_ERROR = 'API_RESPONSE_ERROR';
+export const GET_ASSET_LIST = 'GET_UPLOAD_LIST';
+
+// Add Blog
+export const POST_ASSET = 'POST_ASSET';
+export const POST_ASSET_SUCCESS = 'POST_ASSET_SUCCESS';
+export const POST_ASSET_FAILED = 'POST_ASSET_FAILED';
+
+// Edit Blog
+export const PUT_ASSET = 'PUT_ASSET';
+export const PUT_ASSET_SUCCESS = 'PUT_ASSET_SUCCESS';
+export const PUT_ASSET_FAILED = 'PUT_ASSET_FAILED';
+
+// Delete Blog
+export const DELETE_ASSET = 'DELETE_ASSET';
+export const DELETE_ASSET_SUCCESS = 'DELETE_ASSET_SUCCESS';
+export const DELETE_ASSET_FAILED = 'DELETE_ASSET_FAILED';

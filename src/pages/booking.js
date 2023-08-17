@@ -207,11 +207,11 @@ function Step3(){
         <div>
             <div className='booking-component'>
                 <div className='booking-component-date'>
-                    <Booking></Booking>
+                    <Booking onChangeDate={(date)=>{}}></Booking>
                 </div>
-                <div className='booking-component-time'>
+                {/* <div className='booking-component-time'>
                     <SpaceTimeFrame></SpaceTimeFrame>
-                </div>
+                </div> */}
             </div>
             <div className='booking-component-button-done'>
                 <button>Done</button>

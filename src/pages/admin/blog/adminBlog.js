@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 
 function AdminBlog() {
     const [demo, setDemo] = useState('');
+
     return (
         <section className="container-fluid py-3">
             <h3 className="mb-3">Post your new blog</h3>
@@ -15,6 +16,7 @@ function AdminBlog() {
                     <h4 className="mb-5">Edit the content</h4>
                     <Formik
                         initialValues={{
+                            id: 1,
                             title: '',
                         }}
                         onSubmit={(values) => {}}

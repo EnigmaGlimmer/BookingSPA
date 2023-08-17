@@ -11,7 +11,7 @@ import aboutDaisy4 from '../images/aboutDaisy4.png';
 import aboutDeco from '../images/aboutDeco.png';
 import aboutBooking from '../images/aboutBooking.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination,Autoplay,Navigation } from 'swiper/modules';
+import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
 
 const listImg = [
@@ -68,11 +68,11 @@ export default function About() {
                             simplify the message. And thanks to it, people will see us, hear us and understand us.
                         </div>
                         <div className="about-story-img-flower booking-f">
-                            <img src={homeFlowerDeco} width={'100%'} />
+                            <img src={homeFlowerDeco} alt="" width={'100%'} />
                         </div>
                     </div>
                     <div className="about-story-item-3">
-                        <img src={aboutStory2} width={'100%'} />
+                        <img src={aboutStory2} alt="story" width={'100%'} />
                     </div>
                 </div>
             </div>
@@ -109,16 +109,16 @@ export default function About() {
                                 1024: {
                                     slidesPerView: 4,
                                     spaceBetween: 50,
-                                }
+                                },
                             }}
-                            modules={[FreeMode, Pagination,Autoplay]}
+                            modules={[FreeMode, Pagination, Autoplay]}
                             className="about-image-store-swiper"
                         >
                             {listImg?.map((item, index) => {
                                 return (
                                     <SwiperSlide key={index}>
                                         <div className="about-image-store-form-child">
-                                            <img src={item} width={'100%'} />
+                                            <img src={item} alt="about-1" width={'100%'} />
                                             <p className="about-image-store-form-content">
                                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                                                 tempor.
@@ -148,7 +148,7 @@ export default function About() {
                     <div className="about-staff-list">
                         <div className="about-staff-item">
                             <div className="about-staff-item-img">
-                                <img src={aboutDaisy4} width={'100%'} />
+                                <img src={aboutDaisy4} alt="" width={'100%'} />
                             </div>
                             <div className="about-staff-item-name">Full Name</div>
                             <div className="about-staff-item-specialized">
@@ -181,16 +181,16 @@ export default function About() {
                         </div>
                     </div>
                     {/* Staff Responsive */}
-                    <div className='about-staff-list-res'>
+                    <div className="about-staff-list-res">
                         <Swiper
                             spaceBetween={30}
                             centeredSlides={true}
                             autoplay={{
-                            delay: 2500,
-                            disableOnInteraction: false,
+                                delay: 2500,
+                                disableOnInteraction: false,
                             }}
                             pagination={{
-                            clickable: true,
+                                clickable: true,
                             }}
                             navigation={true}
                             modules={[Autoplay, Pagination, Navigation]}
