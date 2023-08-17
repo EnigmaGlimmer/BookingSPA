@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import {
     Home,
     Contact,
-    Booking,
+    BookingPage,
     Service,
     NotFound,
     About,
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'booking',
-                element: <Booking />,
+                element: <BookingPage />,
             },
             {
                 path: 'promotion',

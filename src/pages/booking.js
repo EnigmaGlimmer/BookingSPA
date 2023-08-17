@@ -7,8 +7,10 @@ import { Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import Form from "react-bootstrap/Form";
 import {GoDotFill} from 'react-icons/go';
-import {GrFormCheckmark} from 'react-icons/gr'
+import {GrFormCheckmark} from 'react-icons/gr';
+import Booking from '../components/booking-calendar/booking';
 import * as yup from "yup";
+import SpaceTimeFrame from '../components/booking-calendar/space-time-frame';
 
 
 let bookingSchema = yup.object().shape({
@@ -22,7 +24,7 @@ let bookingSchema = yup.object().shape({
     email: yup.string().email().required("Email is required field"),
     messenger: yup.string().required("Full Address is required field"),
 });
-function Booking() {
+function BookingPage() {
     const [step,setStep] = React.useState(1);
     function getStepHandle(theStep){ 
         if(step === theStep){
@@ -57,7 +59,7 @@ function Booking() {
                     {JSON.stringify(values,null,4)}
                 </pre> */}
                     <form onSubmit={handleSubmit}>
-
+                        <Step3></Step3>
                     </form>
                     {/* Booking Process */}
                     <div className='booking-process'>
@@ -200,6 +202,23 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
             </div>
     )
 }
+function Step3(){
+    return(
+        <div>
+            <div className='booking-component'>
+                <div className='booking-component-date'>
+                    <Booking></Booking>
+                </div>
+                <div className='booking-component-time'>
+                    <SpaceTimeFrame></SpaceTimeFrame>
+                </div>
+            </div>
+            <div className='booking-component-button-done'>
+                <button>Done</button>
+            </div>
+        </div>
+    )
+}
 function Step2(setStep,step){
     return(
             <div className="intro-form">
@@ -269,4 +288,4 @@ function Step2(setStep,step){
             </div>
     )
 }
-export default Booking;
+export default BookingPage;
