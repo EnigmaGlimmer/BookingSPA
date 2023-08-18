@@ -13,11 +13,6 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
     ]);
     let uploadInputRef = useRef(null);
 
-    React.useEffect(() => {
-        setUploadedImages();
-        return () => {};
-    }, []);
-
     return (
         <div>
             <Modal size="lg" show={show} onHide={() => onHide(show)} animation={true}>

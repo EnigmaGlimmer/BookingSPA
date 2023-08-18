@@ -45,6 +45,11 @@
         "web-vitals": "^2.1.4",
         "yarn": "^1.22.19"
     },
+    "overrides": {
+        "@typescript-eslint/typescript-estree": "^5.57.1",
+        "fork-ts-checker-webpack-plugin": "^6.5.3",
+        "typescript": "^5.1.6"
+    },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",

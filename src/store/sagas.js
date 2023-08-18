@@ -6,9 +6,5 @@ import BlogSaga from './blog/saga';
 import UploadSaga from './upload/saga';
 
 export default function* rootSaga() {
-    yield all([
-        //public
-        fork(BlogSaga),
-        fork(UploadSaga),
-    ]);
+    yield all([fork(BlogSaga), fork(UploadSaga)]);
 }
