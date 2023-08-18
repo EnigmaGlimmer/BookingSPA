@@ -1,0 +1,10 @@
+.booking-root{
+    display: flex;
+    gap: 40px;
+}
+.booking-root-date{
+    width: 50%
+}
+.booking-root-time{
+    width: 50%;
+}
