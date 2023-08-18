@@ -206,7 +206,7 @@ function Step3(){
     return(
         <div>
             <div className='booking-component'>
-                <div className='booking-component-date'>
+                <div>
                     <Booking onChangeDate={(date)=>{}}></Booking>
                 </div>
                 {/* <div className='booking-component-time'>
