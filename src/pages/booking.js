@@ -93,7 +93,10 @@ function BookingPage() {
         </Formik>;
 }
 
-function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step){
+export function Step1(
+    // handleSubmit,touched,errors,handleChange,handleBlur,
+    setStep,step
+    ){
     return(
             <div className="intro-form">
                 <div className="intro-img">
@@ -111,7 +114,9 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                     </div>
                     
-                    <div className="intro-content-form" onSubmit={handleSubmit}>
+                    <div className="intro-content-form" 
+                    // onSubmit={handleSubmit}
+                    >
                         <div>
                             <h2 className="intro-title">Your Information</h2>
                         </div>
@@ -122,12 +127,12 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                                     name='fullName'
                                     className='booking-input' 
                                     placeholder='Full Name'
-                                    isInvalid={touched.fullName && errors.fullName}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    // isInvalid={touched.fullName && errors.fullName}
+                                    // onChange={handleChange}
+                                    // onBlur={handleBlur}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {errors?.fullName}
+                                    {/* {errors?.fullName} */}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
@@ -136,12 +141,12 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                                     name='phoneNumber'
                                     className='booking-input' 
                                     placeholder='Phone Number'
-                                    isInvalid={touched.phoneNumber && errors.phoneNumber}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    // isInvalid={touched.phoneNumber && errors.phoneNumber}
+                                    // onChange={handleChange}
+                                    // onBlur={handleBlur}
                                 />
                                 <Form.Control.Feedback type='invalid'>
-                                    {errors.phoneNumber}
+                                    {/* {errors.phoneNumber} */}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group>
@@ -150,12 +155,12 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                                     name='email'
                                     className='booking-input' 
                                     placeholder='Email'
-                                    isInvalid={touched.email && errors.email}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
+                                    // isInvalid={touched.email && errors.email}
+                                    // onChange={handleChange}
+                                    // onBlur={handleBlur}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    {errors.email}
+                                    {/* {errors.email} */}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </div>
@@ -165,12 +170,12 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                                 name='messenger'
                                 className='booking-input' 
                                 placeholder='Messenger'
-                                isInvalid={touched.messenger && errors.messenger}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
+                                // isInvalid={touched.messenger && errors.messenger}
+                                // onChange={handleChange}
+                                // onBlur={handleBlur}
                             />
                             <Form.Control.Feedback type="invalid">
-                                {errors.messenger}
+                                {/* {errors.messenger} */}
                             </Form.Control.Feedback>
                         </div>
                         <div>
@@ -178,7 +183,7 @@ function Step1(handleSubmit,touched,errors,handleChange,handleBlur,setStep,step)
                                 type="button"
                                 variant="outline"
                                 className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                                onClick={()=>setStep(e => ++e)}
+                                // onClick={()=>setStep(e => ++e)}
                             >
                                 Next
                             </Button>

@@ -24,6 +24,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
 import { Booking } from '../components';
+import { Step1 } from './booking';
 
 function Home() {
     document.title = 'Little Daisy - Home';
@@ -208,7 +209,7 @@ function Home() {
             </div>
             {/* Booking */}
             <div className="booking py-5 my-5">
-                <div className="booking-form">
+                {/* <div className="booking-form">
                     <div className="booking-time-form">
                         <div className="booking-intro">Dedication</div>
                         <div className="booking-title">Working Hours</div>
@@ -225,7 +226,9 @@ function Home() {
                             <Booking></Booking>
                         </div>
                     </div>
-                </div>
+                </div> */}
+                <Step1
+                ></Step1>
             </div>
             {/* Gallery */}
             <div className="gallery">
