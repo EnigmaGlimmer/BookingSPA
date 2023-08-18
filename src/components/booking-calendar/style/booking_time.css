@@ -1,0 +1,26 @@
+.space-time{
+    background-color: #FDF2CB;
+    width: 100%;
+    height: 100%;
+}
+.space-time-title{
+    background-color: #303030;
+    color: var(--clr-primary-yellow);
+    padding: 15px 10px ;
+    text-align: center;
+}
+.space-time-content{
+    text-align: center;
+}
+.space-time-button{
+    padding: 8px 12px;
+    margin: 10px;
+    background-color: unset;
+}
+.space-time-info{
+    margin: 10px 20px;
+    margin-bottom: 0;
+}
+.space-time-date{
+    font-size: 20px;
+}

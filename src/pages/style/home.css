@@ -254,6 +254,12 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+.review-intro{
+    color: white;
+    font-size: 14px;
+    font-family: var(--ff-primary);
+    margin: 0;
+}
 .review-res{
     display: none;
     width: 100%;
@@ -272,6 +278,8 @@
 .review-title{
     font-size: 34px;
     padding: 20px;
+    color: white;
+    font-family: var(--ff-primary);
 }
 .review-item{
     display: flex;

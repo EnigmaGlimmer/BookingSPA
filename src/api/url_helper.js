@@ -1,8 +1,8 @@
 // 1. Blog
 export const GET_BLOG_LIST = '/api/blog/list';
-export const POST_NEW_BLOG = '';
+export const POST_NEW_BLOG = '/api/blog';
 export const PUT_BLOG = '/api/blog';
-export const DELETE_BLOG = '';
+export const DELETE_BLOG = '/api/blog';
 
 // 2. Comment
 export const GET_COMMENT_LIST = '/api/comment/list';

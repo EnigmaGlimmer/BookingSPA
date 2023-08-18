@@ -4,7 +4,7 @@ const url = require('../url_helper');
 const api = new APIClient();
 
 export const getAssets = (request, config) => {
-    return api.get(url.GET_BLOG_LIST);
+    return api.get(url.GET_ASSET_LIST);
 };
 
 export const getAsset = (request, config) => {
@@ -12,13 +12,13 @@ export const getAsset = (request, config) => {
 };
 
 export const postAsset = () => {
-    return api.create(url.POST_NEW_BLOG);
+    return api.create(url.POST_ASSET);
 };
 
 export const putAsset = (body, config) => {
-    return api.put(url.PUT_BLOG, body);
+    return api.put(url.PUT_ASSET, body);
 };
 
 export const deleteAsset = () => {
-    return api.delete(url.DELE);
+    return api.delete(url.DELETE_ASSET);
 };
