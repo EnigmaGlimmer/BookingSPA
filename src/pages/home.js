@@ -113,14 +113,14 @@ function Home() {
                         <div className="nail-care-img">
                             <img src={nailArt} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">Nail Care</div>
+                        <div className="nail-care-title">Nail Art</div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
                     </div>
                     <div className="nail-care">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">Nail Care</div>
+                        <div className="nail-care-title">Best Lashes</div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
                     </div>
                 </div>
@@ -157,7 +157,7 @@ function Home() {
                                 <img src={lashesServices} alt="Service" width={'100%'} />
                             </div>
                             <div className="quality-item-price">2.05 $</div>
-                            <div className="quality-item-name">Nails Services</div>
+                            <div className="quality-item-name">Lashes Services</div>
                             <div className="quality-btn-form">
                                 <Button
                                     variant="outline"
