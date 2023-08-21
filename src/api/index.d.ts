@@ -66,6 +66,9 @@ export declare enum BlogStatus {
 // 2. Comment
 type CommentResponse = {};
 type PostComment = {};
+
+// 3. Upload
+
 // *** Axios Response Types
 // 1. Blog
 /**
@@ -86,3 +89,29 @@ export declare const postComment: (
     body: PostComment,
     config: AxiosRequestConfig,
 ) => Promise<APIResponse<CommentResponse>>;
+
+// 3. Upload
+type UploadDTO = {};
+type CreateUploadDTO = {};
+type UpdateUploadDTO = {};
+
+export declare const getAssets: (
+    request: Pagination,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<Array<UploadDTO>>>;
+
+export declare const getAsset: (
+    id: string,
+    request: Pagination,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<UploadDTO>>;
+
+export declare const postAsset: (body: CreateUploadDTO, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;
+
+export declare const putAsset: (
+    id: string,
+    body: UpdateUploadDTO,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<UploadDTO>>;
+
+export declare const deleteAsset: (id: string, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;

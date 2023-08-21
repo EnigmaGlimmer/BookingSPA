@@ -1,0 +1,44 @@
+{
+    "hero": {
+        "h1": ""
+    },
+    "intro": {
+        "short": "",
+        "clean": ""
+    },
+    "messages": [
+        {
+            "title": "",
+            "message": ""
+        },
+        {
+            "title": "",
+            "message": ""
+        },
+        {
+            "title": "",
+            "message": ""
+        }
+    ],
+    "serviceIntro": {
+        "title": "",
+        "packages": [
+            { "name": "", "price": "", "id": 1 },
+            { "name": "", "price": "", "id": 1 }
+        ]
+    },
+    "otherServices": {
+        "p": "",
+        "services": ["", "", "", ""]
+    },
+    "galleries": [
+        {
+            "link": "",
+            "rate": ""
+        }
+    ],
+    "testimonials": {
+        "h3": "",
+        "h2": ""
+    }
+}

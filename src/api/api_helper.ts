@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { api } from '../config';
 
 // default
@@ -14,10 +14,10 @@ if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
 // intercepting to capture errors
 axios.interceptors.response.use(
-    function (response) {
+    function (response: AxiosResponse) {
         return response.data ? response.data : response;
     },
-    function (error) {
+    function (error: AxiosError) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         let message;
         switch (error.status) {
@@ -52,7 +52,7 @@ class APIClient {
     //  get = (url, params) => {
     //   return axios.get(url, params);
     // };
-    get = (url, params) => {
+    get = (url: string, params?: object, config?: AxiosRequestConfig) => {
         let response;
 
         let paramKeys = [];
@@ -64,9 +64,9 @@ class APIClient {
             });
 
             const queryString = paramKeys && paramKeys.length ? paramKeys.join('&') : '';
-            response = axios.get(`${url}?${queryString}`, params);
+            response = axios.get(`${url}?${queryString}`, config);
         } else {
-            response = axios.get(`${url}`, params);
+            response = axios.get(`${url}`, config);
         }
 
         return response;
@@ -74,23 +74,23 @@ class APIClient {
     /**
      * post given data to url
      */
-    create = (url, data) => {
+    create = (url: string, data: any) => {
         return axios.post(url, data);
     };
     /**
      * Updates data
      */
-    update = (url, data) => {
-        return axios.patch(url, data);
+    update = (url: string, data: any, config?: AxiosRequestConfig) => {
+        return axios.patch(url, data, config);
     };
 
-    put = (url, data) => {
-        return axios.put(url, data);
+    put = (url: string, data: any, config?: AxiosRequestConfig) => {
+        return axios.put(url, data, config);
     };
     /**
      * Delete
      */
-    delete = (url, config) => {
+    delete = (url: string, config: AxiosRequestConfig) => {
         return axios.delete(url, { ...config });
     };
 }
