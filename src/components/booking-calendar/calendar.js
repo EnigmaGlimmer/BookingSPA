@@ -24,10 +24,9 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
     const [selectedDates, setSelectedDates] = useState([]);
 
     return (
-        <section>
+        <section className='calendar-root'>
             {/* <h2>Calendar</h2> */}
             <Calendar
-                className='booking-root'
                 selected={selectedDates}
                 onChange={(value) => {
                     console.log(value);

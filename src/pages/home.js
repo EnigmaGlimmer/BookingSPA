@@ -10,6 +10,7 @@ import nailArt from '../images/nailArt.png';
 import bestLashes from '../images/bestLashes.png';
 import nailService from '../images/nailService.png';
 import lashesServices from '../images/lashesService.png';
+import lahesSercviceBottom from '../images/lashesServiceBottom.png';
 import otherBig from '../images/otherBig.png';
 import otherSmall from '../images/otherSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
@@ -126,10 +127,10 @@ function Home() {
                 </div>
             </div>
             {/* Service Quality */}
-            <div className="quality py-5">
+            <div className="quality">
                 <div className="quality-form">
                     <h1 className="quality-title">Our service is always developing the most perfect to serve women</h1>
-                    <div className="quality-item-form">
+                    {/* <div className="quality-item-form">
                         <div className="quality-item">
                             <div className="quality-img">
                                 <img src={nailService} alt="Service" width={'100%'} />
@@ -150,9 +151,9 @@ function Home() {
                                     View More
                                 </Button>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Item */}
-                        <div className="quality-item">
+                        {/* <div className="quality-item">
                             <div className="quality-img">
                                 <img src={lashesServices} alt="Service" width={'100%'} />
                             </div>
@@ -173,11 +174,11 @@ function Home() {
                                 </Button>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
-            {/* Other Services */}
-            <div className="other py-5">
+            {/* Nail Services */}
+            <div className="other">
                 <div className="other-bg">
                     <div className="other-img-flower">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -196,13 +197,82 @@ function Home() {
                     </div>
                     <div className="other-content">
                         <div className="other-content-form">
-                            <div className="other-title">We also provide some other services such as…</div>
-                            <ul>
-                                <li>Lash lift</li>
-                                <li>Eyebrow laminations</li>
-                                <li>Tin tin eyebrow and lashes</li>
-                                <li>Waxing eyebrows</li>
-                            </ul>
+                            <h1 className="other-title">Nail Services</h1>
+                            <div className='other-list'>
+                                <div className='other-list-item'>
+                                    <p>Lash lift</p>
+                                    <div className='other-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='other-list-item'>
+                                    <p>Eyebrow laminations</p>
+                                    <div className='other-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='other-list-item'>
+                                    <p>Tin tin eyebrow and lashes</p>
+                                    <div className='other-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='other-list-item'>
+                                    <p>Waxing eyebrows</p>
+                                    <div className='other-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button className='my-btn text-uppercase btn-primary-outline btn btn-outline'>Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Lashes Services */}
+            <div className="lashes">
+                <div className="lashes-bg">
+                </div>
+                <div className="lashes-form">
+                    <div className="lashes-content">
+                        <div className="lashes-content-form">
+                            <h1 className="lashes-title">Lashes Services</h1>
+                            <div className='lashes-list'>
+                                <div className='lashes-list-item'>
+                                    <p>Lash lift</p>
+                                    <div className='lashes-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='lashes-list-item'>
+                                    <p>Eyebrow laminations</p>
+                                    <div className='lashes-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='lashes-list-item'>
+                                    <p>Tin tin eyebrow and lashes</p>
+                                    <div className='lashes-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                                <div className='lashes-list-item'>
+                                    <p>Waxing eyebrows</p>
+                                    <div className='lashes-list-dashed'></div>
+                                    <p>12$</p>
+                                </div>
+                            </div>
+                            <div>
+                                <button className='my-btn text-uppercase btn-primary-outline btn btn-outline'>Book Now</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lashes-img">
+                        <div className="lashes-img-form">
+                            <div className="lashes-img-big">
+                                <img src={lashesServices} alt="Service" width={'100%'} />
+                            </div>
+                            <div className="lashes-img-small">
+                                <img src={lahesSercviceBottom} alt="Service" width={'100%'} />
+                                <div className="lashes-img-flower">
+                                    <img alt="deco" src={homeFlowerDeco} width={'100%'} />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

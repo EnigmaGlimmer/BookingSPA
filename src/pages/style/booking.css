@@ -63,6 +63,7 @@
     display: flex;
     width: 80%;
     margin: 0 auto;
+    justify-content: center;
     gap: 40px;
 }
 .booking-component-date{
@@ -76,4 +77,43 @@
 .booking-component-button-done{
     text-align: center;
     padding: 20px;
+}
+/* Booking Completed */
+.completed{
+    width: 33%;
+    margin: 0 auto;
+    text-align: center;
+}
+.completed-form{
+    background-color: var(--clr-primary-yellow);
+    padding: 20px;
+}
+.completed-item-form{
+    width: 70%;
+    margin: 0 auto;
+}
+.completed-item{
+    padding: 10px 0;
+}
+.completed-item-content{
+    font-weight: 600;
+    font-size: 18px;
+}
+.completed-item{
+    display: flex;
+    justify-content: space-between;
+}
+.completed-mess{
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    padding: 20px 0;
+}
+.completed-total-fee{
+    margin: 0 auto;
+    width: 100%;
+}
+.completed-total-fee-title{
+    width: fit-content;
+    padding: 10px;
 }
