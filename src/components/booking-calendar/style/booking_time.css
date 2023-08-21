@@ -1,6 +1,6 @@
 .space-time{
     background-color: #FDF2CB;
-    width: 100%;
+    width: 400px;
     height: 100%;
 }
 .space-time-title{
@@ -23,4 +23,11 @@
 }
 .space-time-date{
     font-size: 20px;
+}
+@media only screen and (max-width: 576px) {
+    .space-time {
+        width: 300px;
+        height: fit-content;
+        margin: 0 auto;
+    }
 }

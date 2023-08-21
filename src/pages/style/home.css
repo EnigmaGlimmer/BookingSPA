@@ -150,6 +150,11 @@
 .other{
     width: 100%;
     position: relative;
+    margin-bottom: 60px;
+    padding: 60px 0;
+}
+.other-title {
+    padding-top: 30px;
 }
 .other-bg{
     height:90%;
@@ -185,9 +190,12 @@
 .other-content{
     width: 50%;
 }
+.other-content li {
+    list-style-type: none;
+}
 .other-content-form{
-    margin: 0 auto;
-    width: fit-content;
+    width: 80%;
+    float: right;
 }
 .other-img-flower{
     width: 20%;
@@ -195,6 +203,107 @@
     right: 0;
     top: 0;
     transform: translateY(-50%);
+}
+.other-list{
+    width: 100%;
+    padding-top: 30px;
+}
+.other-list-item{
+    display: flex;
+    width: 100%;
+    gap: 5px;
+}
+.other-list-dashed{
+    flex-grow: 1;
+    border-top: 1px dashed black;
+    transform: translateY(25%);
+}
+/* Lashes */
+.lashes {
+    width: 100%;
+    position: relative;
+    margin: 60px 0;
+    padding: 60px 0;
+}
+.lashes-title{
+    padding-top: 30px;
+}
+.lashes-bg {
+    height: 90%;
+    width: 80%;
+    position: absolute;
+    background-color: var(--clr-secondary);
+    z-index: -1;
+    top: 65%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.lashes-form {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.lashes-img {
+    width: 50%;
+    position: relative;
+}
+
+.lashes-img-big {
+    width: 70%;
+    float: right;
+
+}
+
+.lashes-img-small {
+    position: absolute;
+    width: 70%;
+    bottom: -50%;
+}
+
+.lashes-img-form {
+    text-align: right;
+}
+
+.lashes-content {
+    width: 50%;
+}
+
+.lashes-content li {
+    list-style-type: none;
+}
+
+.lashes-content-form {
+    width: 80%;
+    float: left;
+}
+
+.lashes-img-flower {
+    width: 50%;
+    position: absolute;
+    opacity: 50%;
+    right: 0;
+    top: 0;
+    transform: translateX(50%);
+}
+
+.lashes-list {
+    width: 100%;
+    padding-top:30px ;
+}
+
+.lashes-list-item {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+}
+
+.lashes-list-dashed {
+    flex-grow: 1;
+    border-top: 1px dashed black;
+    transform: translateY(25%);
 }
 /* Booking */
 .booking{

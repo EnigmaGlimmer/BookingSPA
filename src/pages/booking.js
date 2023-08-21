@@ -35,6 +35,17 @@ function BookingPage() {
             return<></>
         }
     }
+    function getComponentHandle(theStep){
+        if(step === 1){
+            return <Step1></Step1>
+        }else if(step === 2){
+            return <Step2></Step2>
+        }else if(step === 3){
+            return <Step3></Step3>
+        }else if(step === 4){
+            return <Step3></Step3>
+        }
+    }
     document.title = 'Little Daisy - Booking';
     return <Formik
         initialValues={{
@@ -59,7 +70,7 @@ function BookingPage() {
                     {JSON.stringify(values,null,4)}
                 </pre> */}
                     <form onSubmit={handleSubmit}>
-                        <Step3></Step3>
+                        <BookingCompleted></BookingCompleted>
                     </form>
                     {/* Booking Process */}
                     <div className='booking-process'>
@@ -219,7 +230,7 @@ function Step3(){
                 </div> */}
             </div>
             <div className='booking-component-button-done'>
-                <button>Done</button>
+                <button className='my-btn text-uppercase btn-primary-outline btn btn-outline'>Done</button>
             </div>
         </div>
     )
@@ -241,7 +252,6 @@ function Step2(setStep,step){
                     <div className="intro-img-flower-top">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                     </div>
-                    
                     <div className="intro-content-form">
                         <div>
                             <h2 className="intro-title">Your Information</h2>
@@ -291,6 +301,81 @@ function Step2(setStep,step){
                     </div>
                 </div>
             </div>
+    )
+}
+function BookingCompleted(){
+    return(
+        <div className='completed'>
+            <h1 className='completed-title'>Great and Thanks a lot!</h1>
+            <p className='completed-content'>You have successfully booked the service of Little Daisy. Here is your bill. Our staff will contact you shortly!</p>
+            <div className='completed-form'>
+                <div className='completed-item-form'>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                    <div className='completed-item'>
+                        <div className='completed-item-name'>
+                            Services
+                        </div>
+                        <div className='completed-item-content'>
+                            Nails Services
+                        </div>
+                    </div>
+                </div>
+                <div className='completed-mess'>
+                    <span>Icon</span>
+                    <div className='completed-mess-content'>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna.
+                    </div>
+                </div>
+                <span className='completed-total-fee'>
+                    <span className='completed-total-fee-title'>
+                        Your service has a price
+                    </span>
+                    <span className='completed-total-price'>
+                        18$
+                    </span>
+                </span>
+            </div>
+        </div>
     )
 }
 export default BookingPage;
