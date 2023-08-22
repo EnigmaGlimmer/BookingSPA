@@ -8,12 +8,9 @@ import Upload from './upload/reducer';
 
 // 3. Service
 
-import Animal from './animal/reducer';
-
 const rootReducer = combineReducers({
     Blog,
     Upload,
-    Animal,
 });
 
 export default rootReducer;

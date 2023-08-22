@@ -1,9 +1,11 @@
 const { APIClient } = require('../api_helper');
 const url = require('../url_helper');
+const { serialize } = require('object-to-formdata');
 
 const api = new APIClient();
 
 export const getAssets = (request, config) => {
+    console.log('get assets ', request);
     return api.get(url.GET_ASSET_LIST, request, config);
 };
 
@@ -12,7 +14,14 @@ export const getAsset = (id, request, config) => {
 };
 
 export const postAsset = (body, config) => {
-    return api.create(url.POST_ASSET);
+    const formData = serialize(body);
+
+    return api.create(url.POST_ASSET, formData, {
+        ...config,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 };
 
 export const putAsset = (id, body, config) => {

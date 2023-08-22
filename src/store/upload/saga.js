@@ -2,54 +2,80 @@ import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
 import {
+    getAssetListSuccess,
+    getAssetListFailed,
     getAssetSuccess,
     getAssetFailed,
     putAssetSuccess,
     putAssetFailed,
     deleteAssetSuccess,
     deleteAssetFailed,
+    postAssetSuccess,
+    postAssetFailed,
 } from './action';
 
-import { GET_ASSET_LIST, POST_ASSET, POST_ASSET_SUCCESS, PUT_ASSET } from './actionType';
+import {
+    GET_ASSET_LIST,
+    GET_ASSET_SUCCESS,
+    GET_ASSET_FAILED,
+    POST_ASSET,
+    POST_ASSET_SUCCESS,
+    PUT_ASSET,
+    POST_ASSET_FAILED,
+} from './actionType';
 
 // API
-import {} from '../../api';
+import { getAssets, postAsset, putAsset, deleteAsset } from '../../api';
 
-function* getAssets() {
+function* onGetAssets({ take = 10, skip = 0 }) {
     try {
-        const response = yield call();
-    } catch (error) {}
+        const response = yield call(getAssets, { take, skip });
+        yield put(getAssetListSuccess(GET_ASSET_LIST, response));
+    } catch (error) {
+        yield put(getAssetListFailed(GET_ASSET_LIST, error));
+    }
 }
+
+// function* onGetAsset({ payload: id }) {
+//     try {
+//         const response = yield call(getAsset, id);
+//         yield put(getAssetSuccess());
+//     } catch (error) {
+//         yield put(getAssetFailed(error));
+//     }
+// }
 
 function* onAddNewAsset({ payload: newAsset }) {
     try {
-        const response = yield call();
-        yield put(getAssetSuccess(GET_ASSET_LIST, response?.result));
+        const response = yield call(postAsset, {
+            file: newAsset,
+        });
+        yield put(postAssetSuccess(response));
     } catch (error) {
-        yield put(getAssetFailed(GET_ASSET_LIST, error));
+        yield put(postAssetFailed(error));
     }
 }
 
 function* onUpdateAsset({ payload: updatedAsset }) {
-    try {
-        const response = yield call();
-        yield put(putAssetSuccess(updatedAsset));
-    } catch (error) {
-        yield put(putAssetFailed(error));
-    }
+    // try {
+    //     const response = yield call(putAsset);
+    //     yield put(putAssetSuccess(updatedAsset));
+    // } catch (error) {
+    //     yield put(putAssetFailed(error));
+    // }
 }
 
 function* onDeleteAsset({ payload: deletedAsset }) {
-    try {
-        const response = yield call();
-        yield put(deleteAssetSuccess(deletedAsset));
-    } catch (error) {
-        yield put(deleteAssetFailed(deletedAsset));
-    }
+    // try {
+    //     const response = yield call(deleteAsset);
+    //     yield put(deleteAssetSuccess(deletedAsset));
+    // } catch (error) {
+    //     yield put(deleteAssetFailed(deletedAsset));
+    // }
 }
 
 export function* watchGetAssets() {
-    yield takeEvery(GET_ASSET_LIST, getAssets);
+    yield takeEvery(GET_ASSET_LIST, onGetAssets);
 }
 
 export function* watchPostNewAsset() {

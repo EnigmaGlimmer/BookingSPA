@@ -1,1 +1,3 @@
-export * from './animal/action';
+export * from './upload/action';
+
+export * from './blog/action';

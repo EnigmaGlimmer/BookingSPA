@@ -3,8 +3,9 @@ import { api } from '../config';
 
 // default
 axios.defaults.baseURL = api.API_URL;
+console.log(process.env.REACT_APP_RESOURCE_ADDRESS);
 // content type
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // content type
 const token = JSON.parse(sessionStorage.getItem('authUser'))
@@ -15,7 +16,8 @@ if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 // intercepting to capture errors
 axios.interceptors.response.use(
     function (response: AxiosResponse) {
-        return response.data ? response.data : response;
+        console.log(response.data?.result);
+        return response?.data?.isSuccess ? response.data?.result : response;
     },
     function (error: AxiosError) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
