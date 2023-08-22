@@ -24,7 +24,7 @@ const Uploads = (state = INIT_STATE, action) => {
                 case GET_ASSET_LIST:
                     return {
                         ...state,
-                        uploads: [...state.uploads, ...action.payload],
+                        uploads: action.payload.data,
                     };
 
                 default:
@@ -36,7 +36,7 @@ const Uploads = (state = INIT_STATE, action) => {
                 case GET_ASSET_LIST:
                     return {
                         ...state,
-                        error: action.payload,
+                        error: action.payload.error,
                     };
 
                 default:
@@ -62,6 +62,18 @@ const Uploads = (state = INIT_STATE, action) => {
             };
 
         case PUT_ASSET_FAILED:
+            return {
+                ...state,
+                error: action.payload,
+            };
+
+        case DELETE_ASSET_SUCCESS:
+            return {
+                ...state,
+                uploads: action.payload,
+            };
+
+        case DELETE_ASSET_FAILED:
             return {
                 ...state,
                 error: action.payload,

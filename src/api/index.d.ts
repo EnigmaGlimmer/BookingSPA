@@ -91,9 +91,18 @@ export declare const postComment: (
 ) => Promise<APIResponse<CommentResponse>>;
 
 // 3. Upload
-type UploadDTO = {};
-type CreateUploadDTO = {};
-type UpdateUploadDTO = {};
+type UploadDTO = {
+    assetId: string;
+    assetLink: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
+type CreateUploadDTO = {
+    file: File;
+};
+type UpdateUploadDTO = {
+    file: File;
+};
 
 export declare const getAssets: (
     request: Pagination,

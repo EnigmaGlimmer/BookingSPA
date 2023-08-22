@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 // 1. Blog
-import Blog from './blog/saga';
+import Blog from './blog/reducer';
 
 // 2. Upload
-import Upload from './upload/saga';
+import Upload from './upload/reducer';
 
 // 3. Service
 

@@ -1,17 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+// UI
 import { Button, Col, Row } from 'react-bootstrap';
+
+// Store
 import { UploadModal } from '../../../components';
+import { getAssetList } from '../../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Uploads() {
-    const [
-        uploads,
-        // setUploads
-    ] = React.useState(['']);
     const [showUploadModal, setShowUploadModal] = React.useState(false);
+
+    const dispatch = useDispatch();
+
+    const { uploads, error } = useSelector((state) => {
+        return {
+            uploads: state.Upload.uploads,
+            error: state.Upload.error,
+        };
+    });
+
+    useEffect(() => {
+        dispatch(getAssetList());
+    }, [dispatch]);
 
     return (
         <div>
-            <h3>Your Assets</h3>
+            <article className="my-3">
+                <h3 className="d-inline">Your Assets</h3>
+                <Button variant="outlet" className="btn ms-auto mb-2" onClick={() => setShowUploadModal(true)}>
+                    Upload new assets
+                </Button>
+            </article>
             <UploadModal
                 show={showUploadModal}
                 onHide={() => setShowUploadModal(false)}
@@ -19,14 +39,11 @@ function Uploads() {
                 onSave={() => {}}
                 onSelected={() => {}}
             ></UploadModal>
-            <Button variant="outlet" className="btn" onClick={() => setShowUploadModal(true)}>
-                Upload new assets
-            </Button>
             <Row>
-                {uploads.map((upload) => {
+                {(uploads || []).map((upload, id) => {
                     return (
-                        <Col sm="auto">
-                            <img src={upload} alt="assets"></img>
+                        <Col xs="12" sm="6" md="4" lg="3" xxl="2" key={id} className="mb-2">
+                            <img src={upload?.assetLink} alt={'assets' + id} style={{ cursor: 'pointer' }}></img>
                         </Col>
                     );
                 })}

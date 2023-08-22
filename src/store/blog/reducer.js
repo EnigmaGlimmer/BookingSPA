@@ -46,7 +46,7 @@ const Blogs = (state = INIT_STATE, action) => {
             }
 
         default:
-            break;
+            return state;
     }
 };
 

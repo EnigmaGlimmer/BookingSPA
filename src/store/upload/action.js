@@ -11,20 +11,34 @@ import {
     DELETE_ASSET,
     DELETE_ASSET_SUCCESS,
     DELETE_ASSET_FAILED,
+    GET_ASSET_SUCCESS,
+    GET_ASSET_FAILED,
 } from './actionType';
 
-export const getAssetSuccess = (actionType, data) => ({
-    type: API_RESPONSE_SUCCESS,
-    payload: { actionType, data },
-});
+export const getAssetListSuccess = (actionType, data) => {
+    return {
+        type: API_RESPONSE_SUCCESS,
+        payload: { actionType, data },
+    };
+};
 
-export const getAssetFailed = (actionType, error) => ({
+export const getAssetListFailed = (actionType, error) => ({
     type: API_RESPONSE_ERROR,
     payload: { actionType, error },
 });
 
 export const getAssetList = () => ({
     type: GET_ASSET_LIST,
+});
+
+export const getAssetSuccess = (data) => ({
+    type: GET_ASSET_SUCCESS,
+    payload: data,
+});
+
+export const getAssetFailed = (error) => ({
+    type: GET_ASSET_FAILED,
+    payload: error,
 });
 
 export const postAsset = (asset) => ({
