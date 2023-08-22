@@ -29,7 +29,6 @@ import { Step1 } from './booking';
 
 function Home() {
     document.title = 'Little Daisy - Home';
-
     return (
         <section>
             {/* Banner */}
@@ -152,8 +151,8 @@ function Home() {
                                 </Button>
                             </div>
                         </div> */}
-                        {/* Item */}
-                        {/* <div className="quality-item">
+                    {/* Item */}
+                    {/* <div className="quality-item">
                             <div className="quality-img">
                                 <img src={lashesServices} alt="Service" width={'100%'} />
                             </div>
@@ -198,30 +197,32 @@ function Home() {
                     <div className="other-content">
                         <div className="other-content-form">
                             <h1 className="other-title">Nail Services</h1>
-                            <div className='other-list'>
-                                <div className='other-list-item'>
+                            <div className="other-list">
+                                <div className="other-list-item">
                                     <p>Lash lift</p>
-                                    <div className='other-list-dashed'></div>
+                                    <div className="other-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='other-list-item'>
+                                <div className="other-list-item">
                                     <p>Eyebrow laminations</p>
-                                    <div className='other-list-dashed'></div>
+                                    <div className="other-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='other-list-item'>
+                                <div className="other-list-item">
                                     <p>Tin tin eyebrow and lashes</p>
-                                    <div className='other-list-dashed'></div>
+                                    <div className="other-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='other-list-item'>
+                                <div className="other-list-item">
                                     <p>Waxing eyebrows</p>
-                                    <div className='other-list-dashed'></div>
+                                    <div className="other-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
                             </div>
                             <div>
-                                <button className='my-btn text-uppercase btn-primary-outline btn btn-outline'>Book Now</button>
+                                <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
+                                    Book Now
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -229,36 +230,37 @@ function Home() {
             </div>
             {/* Lashes Services */}
             <div className="lashes">
-                <div className="lashes-bg">
-                </div>
+                <div className="lashes-bg"></div>
                 <div className="lashes-form">
                     <div className="lashes-content">
                         <div className="lashes-content-form">
                             <h1 className="lashes-title">Lashes Services</h1>
-                            <div className='lashes-list'>
-                                <div className='lashes-list-item'>
+                            <div className="lashes-list">
+                                <div className="lashes-list-item">
                                     <p>Lash lift</p>
-                                    <div className='lashes-list-dashed'></div>
+                                    <div className="lashes-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='lashes-list-item'>
+                                <div className="lashes-list-item">
                                     <p>Eyebrow laminations</p>
-                                    <div className='lashes-list-dashed'></div>
+                                    <div className="lashes-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='lashes-list-item'>
+                                <div className="lashes-list-item">
                                     <p>Tin tin eyebrow and lashes</p>
-                                    <div className='lashes-list-dashed'></div>
+                                    <div className="lashes-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
-                                <div className='lashes-list-item'>
+                                <div className="lashes-list-item">
                                     <p>Waxing eyebrows</p>
-                                    <div className='lashes-list-dashed'></div>
+                                    <div className="lashes-list-dashed"></div>
                                     <p>12$</p>
                                 </div>
                             </div>
                             <div>
-                                <button className='my-btn text-uppercase btn-primary-outline btn btn-outline'>Book Now</button>
+                                <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
+                                    Book Now
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -297,8 +299,7 @@ function Home() {
                         </div>
                     </div>
                 </div> */}
-                <Step1
-                ></Step1>
+                <Step1></Step1>
             </div>
             {/* Gallery */}
             <div className="gallery">
@@ -307,7 +308,7 @@ function Home() {
                     <div className="gallery-img-form">
                         <div className="gallery-item">
                             <div className="gallery-img-1">
-                                <img src={galleryFirst1} alt="Service" width={'100%'} />
+                                <img src={galleryFirst1} width={'100%'} />
                             </div>
                             <div className="gallery-img-2">
                                 <img src={galleryFirst2} alt="Service" width={'100%'} />
@@ -357,9 +358,10 @@ function Home() {
                                 modifier: 1,
                             }}
                             navigation={true}
+                            initialSlide={1 || 0}
                             pagination={true}
                             modules={[EffectCoverflow, Pagination, Navigation]}
-                            className="review-mySwiper"
+                            className="mySwiper"
                         >
                             <SwiperSlide className="review-slide">
                                 {({ isActive }) => (

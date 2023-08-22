@@ -4,42 +4,42 @@ import {
     GET_ANIMAL_LIST,
     DELETE_ANIMAL,
     DELETE_ANIMAL_SUCCESS,
-    DELETE_ANIMAL_FAILED
+    DELETE_ANIMAL_FAILED,
 } from './actionType.js';
 
-const INIT_STATE = [{
-    name: '',
-    slug:'',
-    url:''
-}]
+const INIT_STATE = [
+    {
+        name: [],
+    },
+];
 
-const Animal = (state = INIT_STATE,action) => {
-    switch (action.type){
+const Animal = (state = INIT_STATE, action) => {
+    switch (action.type) {
         case API_RESPONSE_SUCCESS:
-            switch (action.payload.actionType){
+            switch (action.payload.actionType) {
                 case GET_ANIMAL_LIST:
                     return {
                         ...state,
-                        blogs: action.payload.result
+                        name: action.payload.data,
                     };
-                    default:
-                        return false
+                default:
+                    return false;
             }
         case API_RESPONSE_ERROR:
             switch (action.payload.actionType) {
                 case GET_ANIMAL_LIST:
                     return {
                         ...state,
-                        blogs: action.payload.result,
+                        blogs: action.payload.error,
                     };
 
                 default:
                     return state;
             }
-        
+
         default:
-            break;
+            return state;
     }
-}
+};
 
 export default Animal;

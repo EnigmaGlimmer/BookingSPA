@@ -1,34 +1,33 @@
-.booking-form-input{
+.booking-form-input {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
-.booking-input{
+.booking-input {
     border: none;
     border-bottom: 1px solid black;
     width: 100%;
 }
-.booking-input:focus{
+.booking-input:focus {
     outline: none;
 }
 /* Booking Process */
-.booking-process{
-
+.booking-process {
 }
-.booking-step{
+.booking-step {
     position: relative;
 }
-.booking-process-form{
+.booking-process-form {
     width: 40%;
     margin: 0 auto;
     position: relative;
 }
-.booking-step-form{
+.booking-step-form {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.booking-process-line{
+.booking-process-line {
     width: 100%;
     border-top: 1px dashed black;
     z-index: -1;
@@ -36,7 +35,7 @@
     top: 50%;
     transform: translateY(-50%);
 }
-.booking-step-circle{
+.booking-step-circle {
     border: 1px solid black;
     width: 20px;
     height: 20px;
@@ -46,74 +45,75 @@
     text-align: center;
     position: relative;
 }
-.booking-step-title{
+.booking-step-title {
     padding-top: 10px;
 }
-.booking-step-title{
+.booking-step-title {
     position: absolute;
     white-space: nowrap;
     transform: translateX(-25%);
 }
-.booking-dot{
+.booking-dot {
     font-size: 18px;
     position: absolute;
     right: 0;
 }
-.booking-component{
+.booking-component {
     display: flex;
     width: 80%;
     margin: 0 auto;
     justify-content: center;
     gap: 40px;
 }
-.booking-component-date{
+.booking-component-date {
     width: 50%;
     padding: 0 30px;
 }
-.booking-component-time{
+.booking-component-time {
     padding: 0 30px;
     width: 50%;
 }
-.booking-component-button-done{
+.booking-component-button-done {
     text-align: center;
     padding: 20px;
 }
 /* Booking Completed */
-.completed{
+.completed {
     width: 33%;
     margin: 0 auto;
     text-align: center;
+    padding: 30px 0;
 }
-.completed-form{
+.completed-form {
     background-color: var(--clr-primary-yellow);
     padding: 20px;
 }
-.completed-item-form{
+.completed-item-form {
     width: 70%;
     margin: 0 auto;
 }
-.completed-item{
+.completed-item {
     padding: 10px 0;
 }
-.completed-item-content{
+.completed-item-content {
     font-weight: 600;
     font-size: 18px;
 }
-.completed-item{
+.completed-item {
     display: flex;
     justify-content: space-between;
 }
-.completed-mess{
+.completed-mess {
     width: 70%;
     margin: 0 auto;
     display: flex;
     padding: 20px 0;
 }
-.completed-total-fee{
+.completed-total-fee {
     margin: 0 auto;
     width: 100%;
 }
-.completed-total-fee-title{
+.completed-total-fee-title {
     width: fit-content;
     padding: 10px;
 }

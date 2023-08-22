@@ -1,32 +1,32 @@
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
-    GET_SERVICE,
-    POST_SERVICE,
-    POST_SERVICE_SUCCESS,
-    POST_SERVICE_FAILED,
-    PUT_SERVICE,
-    PUT_SERVICE_SUCCESS,
-    PUT_SERVICE_FAILED,
-    DELETE_SERVICE,
-    DELETE_SERVICE_SUCCESS,
-    DELETE_SERVICE_FAILED,
+    GET_BOOKING,
+    POST_BOOKING,
+    POST_BOOKING_SUCCESS,
+    POST_BOOKING_FAILED,
+    PUT_BOOKING,
+    PUT_BOOKING_SUCCESS,
+    PUT_BOOKING_FAILED,
+    DELETE_BOOKING,
+    DELETE_BOOKING_SUCCESS,
+    DELETE_BOOKING_FAILED,
 } from './actionType';
 
 const INIT_STATE = {
-    service: [],
+    booking: [],
     error: null,
     loading: false,
 };
 
-const Service = (state = INIT_STATE, action) => {
+const Booking = (state = INIT_STATE, action) => {
     switch (action.type) {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
-                case GET_SERVICE:
+                case GET_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
 
                 default:
@@ -35,51 +35,51 @@ const Service = (state = INIT_STATE, action) => {
 
         case API_RESPONSE_ERROR:
             switch (action.payload.actionType) {
-                case GET_SERVICE:
+                case GET_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
 
                 default:
                     return state;
             }
-        case POST_SERVICE_SUCCESS:
+        case POST_BOOKING_SUCCESS:
             switch (action.payload.actionType) {
-                case POST_SERVICE:
+                case POST_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
                 default:
                     return state;
             }
-        case POST_SERVICE_FAILED:
+        case POST_BOOKING_FAILED:
             switch (action.payload.actionType) {
-                case POST_SERVICE:
+                case POST_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
                 default:
                     return state;
             }
-        case PUT_SERVICE_SUCCESS:
+        case PUT_BOOKING_SUCCESS:
             switch (action.payload.actionType) {
-                case PUT_SERVICE:
+                case PUT_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
                 default:
                     return state;
             }
-        case PUT_SERVICE_FAILED:
+        case PUT_BOOKING_FAILED:
             switch (action.payload.actionType) {
-                case PUT_SERVICE:
+                case PUT_BOOKING:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        booking: action.payload.result,
                     };
                 default:
                     return state;
@@ -89,4 +89,4 @@ const Service = (state = INIT_STATE, action) => {
     }
 };
 
-export default Service;
+export default Booking;

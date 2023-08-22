@@ -1,9 +1,9 @@
-.banner{
+.banner {
     width: 100%;
     display: block;
     text-align: center;
 }
-.banner-img{
+.banner-img {
     position: relative;
     width: 80%;
     display: inline-block;
@@ -17,31 +17,31 @@
     width: 18%;
     transform: translateY(80%);
 }
-.banner-img-big{
+.banner-img-big {
     position: relative;
     width: 85%;
     z-index: -1;
     float: right;
 }
-.banner-title{
+.banner-title {
     font-size: 34px;
     width: 60%;
     margin: 0 auto;
     text-align: center;
     padding: 40px;
 }
-.banner-img-extra{
+.banner-img-extra {
     position: absolute;
     width: 100%;
     height: 100%;
     left: 0;
 }
 /* Introduce */
-.intro{
+.intro {
     width: 100%;
     position: relative;
 }
-.intro-bg{
+.intro-bg {
     background-color: var(--clr-secondary);
     height: 100%;
     width: 75%;
@@ -49,29 +49,29 @@
     right: 0;
     z-index: -1;
 }
-.intro-form{
+.intro-form {
     width: 80%;
     display: flex;
     margin: 0 auto;
     padding: 60px 0;
 }
-.intro-img{
+.intro-img {
     width: 50%;
 }
-.intro-img-form{
+.intro-img-form {
     position: relative;
 }
-.intro-content{
+.intro-content {
     width: 50%;
 }
-.intro-content-form{
+.intro-content-form {
     width: 60%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
-.intro-img-big{
+.intro-img-big {
     width: 80%;
 }
 .intro-img-small {
@@ -80,7 +80,7 @@
     bottom: -48%;
     right: 5%;
 }
-.intro-img-flower-top{
+.intro-img-flower-top {
     width: 30%;
     transform: translateX(-50%);
 }
@@ -90,64 +90,64 @@
     float: right;
     transform: translateX(40%);
 }
-.intro-title{
+.intro-title {
     font-size: 34px;
 }
 /* Three Sevices */
-.three{
+.three {
     width: 100%;
 }
-.three-form{
+.three-form {
     width: 80%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
 }
-.nail-care{
+.nail-care {
     width: 25%;
     text-align: center;
 }
-.nail-care-img{
+.nail-care-img {
     padding: 25px;
     width: 70%;
     margin: 0 auto;
 }
-.nail-care-title{
+.nail-care-title {
     font-size: 34px;
     padding: 10px;
 }
 /* Quality Service */
-.quality{
+.quality {
     width: 100%;
 }
-.quality-form{
+.quality-form {
     width: 80%;
     margin: 0 auto;
 }
-.quality-title{
+.quality-title {
     font-size: 34px;
     padding: 20px;
     text-align: center;
 }
-.quality-item-form{
+.quality-item-form {
     display: flex;
     gap: 60px;
 }
-.quality-item{
+.quality-item {
     width: 50%;
     text-align: center;
 }
-.quality-item-price{
+.quality-item-price {
     font-weight: 600;
     font-size: 24px;
     padding-top: 20px;
 }
-.quality-item-name{
+.quality-item-name {
     font-size: 34px;
     margin-bottom: 20px;
 }
 /* Other Service */
-.other{
+.other {
     width: 100%;
     position: relative;
     margin-bottom: 60px;
@@ -156,8 +156,8 @@
 .other-title {
     padding-top: 30px;
 }
-.other-bg{
-    height:90%;
+.other-bg {
+    height: 90%;
     width: 80%;
     position: absolute;
     background-color: var(--clr-secondary);
@@ -166,16 +166,16 @@
     right: 0;
     transform: translateY(-50%);
 }
-.other-form{
+.other-form {
     width: 80%;
     margin: 0 auto;
     display: flex;
     align-items: center;
 }
-.other-img{
+.other-img {
     width: 50%;
 }
-.other-img-big{
+.other-img-big {
     width: 70%;
 }
 .other-img-small {
@@ -184,36 +184,36 @@
     right: 0%;
     width: 50%;
 }
-.other-img-form{
+.other-img-form {
     position: relative;
 }
-.other-content{
+.other-content {
     width: 50%;
 }
 .other-content li {
     list-style-type: none;
 }
-.other-content-form{
+.other-content-form {
     width: 80%;
     float: right;
 }
-.other-img-flower{
+.other-img-flower {
     width: 20%;
     position: absolute;
     right: 0;
     top: 0;
     transform: translateY(-50%);
 }
-.other-list{
+.other-list {
     width: 100%;
     padding-top: 30px;
 }
-.other-list-item{
+.other-list-item {
     display: flex;
     width: 100%;
     gap: 5px;
 }
-.other-list-dashed{
+.other-list-dashed {
     flex-grow: 1;
     border-top: 1px dashed black;
     transform: translateY(25%);
@@ -225,7 +225,7 @@
     margin: 60px 0;
     padding: 60px 0;
 }
-.lashes-title{
+.lashes-title {
     padding-top: 30px;
 }
 .lashes-bg {
@@ -254,7 +254,6 @@
 .lashes-img-big {
     width: 70%;
     float: right;
-
 }
 
 .lashes-img-small {
@@ -291,7 +290,7 @@
 
 .lashes-list {
     width: 100%;
-    padding-top:30px ;
+    padding-top: 30px;
 }
 
 .lashes-list-item {
@@ -306,91 +305,97 @@
     transform: translateY(25%);
 }
 /* Booking */
-.booking{
+.booking {
     width: 100%;
 }
-.booking-form{
+.booking-form {
     width: 80%;
     margin: 0 auto;
     display: flex;
 }
-.booking-time-form{
+.booking-time-form {
     flex-grow: 1;
     width: 50%;
 }
-.booking-title{
+.booking-title {
     font-size: 34px;
 }
-.booking-time{
+.booking-time {
     display: flex;
     justify-content: space-between;
 }
-.booking-calendar{
+.booking-calendar {
     width: 50%;
     text-align: center;
 }
 /* Gallery */
-.gallery{
+.gallery {
     width: 100%;
 }
-.gallery-title{
-    font-size: 34px;
-    padding:20px 0;
+.gallery img {
+    transition: all 0.3s ease-in-out;
 }
-.gallery-form{
+.gallery img:hover {
+    transform: scale(1.2);
+}
+.gallery-title {
+    font-size: 34px;
+    padding: 20px 0;
+}
+.gallery-form {
     width: 80%;
     margin: 0 auto;
 }
-.gallery-item{
+.gallery-item {
     width: 30%;
 }
-.gallery-img-form{
+.gallery-img-form {
     display: flex;
     justify-content: space-between;
 }
-.gallery-img-1{
+.gallery-img-1 {
     margin-bottom: 30px;
 }
-.gallery-view-more{
+.gallery-view-more {
     text-align: center;
     padding: 20px;
 }
 /* Review and Comment */
-.review{
+.review {
     width: 100%;
-    background-image: url("../../images/reviewBg.png");
+    background-image: url('../../images/reviewBg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
-.review-intro{
+.review-intro {
     color: white;
     font-size: 14px;
     font-family: var(--ff-primary);
     margin: 0;
 }
-.review-res{
+.review-res {
     display: none;
     width: 100%;
-    background-image: url("../../images/reviewBg.png");
+    background-image: url('../../images/reviewBg.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
-.review-form{
+.review-form {
     width: 80%;
     margin: 0 auto;
 }
-.review-header{
+.review-header {
     text-align: center;
 }
-.review-title{
+.review-title {
     font-size: 34px;
     padding: 20px;
     color: white;
     font-family: var(--ff-primary);
 }
-.review-item{
+.review-item {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -403,99 +408,98 @@
     padding: 50px 30px;
     opacity: 0.7;
 }
-.active-slide{
+.active-slide {
     opacity: 1;
 }
-.review-img{
+.review-img {
     border-radius: 50%;
     width: 40%;
     overflow: hidden;
 }
-.review-slide{
+.review-slide {
     width: 33%;
 }
 @media only screen and (max-width: 1200px) {
-    .review-item{
+    .review-item {
         width: 70%;
     }
-    .review-form{
+    .review-form {
         width: 100%;
     }
 }
 @media only screen and (max-width: 768px) {
-    .review{
+    .review {
         display: none;
     }
-    .review-res{
+    .review-res {
         display: block;
     }
 }
 @media only screen and (max-width: 576px) {
     /* Introduce */
-    .intro-form{
-        flex-direction:column-reverse; 
+    .intro-form {
+        flex-direction: column-reverse;
     }
-    .intro-bg{
+    .intro-bg {
         width: 100%;
     }
-    .intro-content{
+    .intro-content {
         width: 100%;
     }
-    .intro-img-form{
+    .intro-img-form {
         width: 100%;
     }
-    .intro-img-flower-bot{
-        transform: translate(0,-20%);
+    .intro-img-flower-bot {
+        transform: translate(0, -20%);
     }
-    .intro-content-form{
+    .intro-content-form {
         width: 100%;
     }
-    .intro-img{
+    .intro-img {
         width: 100%;
     }
     /* Three Service */
-    .three-form{
+    .three-form {
         flex-direction: column;
     }
-    .nail-care{
+    .nail-care {
         width: 100%;
     }
     /* Quality */
-    .quality-item-form{
+    .quality-item-form {
         flex-direction: column;
     }
-    .quality-item{
+    .quality-item {
         width: 100%;
     }
     /* Other */
-    .other-form{
+    .other-form {
         flex-direction: column-reverse;
     }
-    .other-img{
+    .other-img {
         width: 100%;
     }
-    .other-content{
+    .other-content {
         width: 100%;
     }
-    .other-bg{
+    .other-bg {
         width: 100%;
         height: 95%;
         top: 0;
         transform: none;
     }
     /* Booking */
-    .booking-form{
+    .booking-form {
         flex-direction: column;
         gap: 30px;
     }
-    .booking-time-form{
+    .booking-time-form {
         width: 100%;
     }
-    .booking-calendar{
+    .booking-calendar {
         width: 100%;
     }
     /* Review */
-    .review-item{
-
+    .review-item {
     }
 }

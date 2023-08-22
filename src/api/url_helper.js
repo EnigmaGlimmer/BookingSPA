@@ -15,4 +15,5 @@ export const POST_ASSET = '/api/asset';
 export const PUT_ASSET = '/api/asset';
 export const DELETE_ASSET = '/api/asset';
 
-// 4.
+// 4. Animal
+export const GET_ANIMAL_LIST = 'https://jsonplaceholder.typicode.com/users';
