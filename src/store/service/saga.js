@@ -10,30 +10,42 @@ import {
     postServiceError,
     putServiceSuccess,
     putServiceError,
+    deleteServiceSuccess,
+    deleteServiceError,
 } from './action';
 
-import { GET_SERVICE, POST_SERVICE, PUT_SERVICE } from './actionType';
+import { GET_SERVICE_LIST, POST_SERVICE, PUT_SERVICE, DELETE_SERVICE } from './actionType';
 
 // API
 import {
-    getService as getServiceAPI,
+    getServiceList as getServiceListAPI,
     postService as postServiceAPI,
     updateService as updateServiceAPI,
+    deleteService as deleteServiceAPI,
 } from '../../api';
 
 function* getService() {
     try {
-        const response = yield call(getServiceAPI);
-        yield put(getSuccess(GET_SERVICE, response?.result || []));
+        const response = yield call(getServiceListAPI, {
+            skip: 0,
+            take: 10,
+        });
+
+        yield put(getSuccess(GET_SERVICE_LIST, response || []));
     } catch (error) {
-        yield put(getError(GET_SERVICE, error));
+        yield put(getError(GET_SERVICE_LIST, error));
     }
 }
 
-function* onAddNewService({ payload: newService }) {
+function* onAddNewService({ payload: { parentId, createdDate, serviceName } }) {
     try {
-        const response = yield call(postServiceAPI, newService);
-        yield put(postServiceSuccess(response?.result));
+        const response = yield call(postServiceAPI, {
+            parentId,
+            createdDate,
+            serviceName,
+        });
+
+        yield put(postServiceSuccess(response));
         toast.success('Service Added Successfully', {
             autoClose: 3000,
         });
@@ -54,8 +66,18 @@ function* onUpdateService({ payload: updatedService }) {
     }
 }
 
+function* onDeleteService({ payload: { serviceId } }) {
+    try {
+        console.log(serviceId);
+        yield call(deleteServiceAPI, serviceId);
+        yield put(deleteServiceSuccess(serviceId));
+    } catch (error) {
+        yield put(deleteServiceError(error));
+    }
+}
+
 export function* watchGetService() {
-    yield takeEvery(GET_SERVICE, getService);
+    yield takeEvery(GET_SERVICE_LIST, getService);
 }
 
 export function* watchPostNewService() {
@@ -66,8 +88,12 @@ export function* watchUpdateService() {
     yield takeEvery(PUT_SERVICE, onUpdateService);
 }
 
+export function* watchDeleteService() {
+    yield takeEvery(DELETE_SERVICE, onDeleteService);
+}
+
 function* servicesaga() {
-    yield all([fork(watchGetService), fork(watchPostNewService), fork(watchUpdateService)]);
+    yield all([fork(watchGetService), fork(watchPostNewService), fork(watchUpdateService), fork(watchDeleteService)]);
 }
 
 export default servicesaga;

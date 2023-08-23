@@ -1,7 +1,7 @@
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
-    GET_SERVICE,
+    GET_SERVICE_LIST,
     POST_SERVICE,
     POST_SERVICE_SUCCESS,
     POST_SERVICE_FAILED,
@@ -14,7 +14,7 @@ import {
 } from './actionType';
 
 const INIT_STATE = {
-    service: [],
+    services: [],
     error: null,
     loading: false,
 };
@@ -23,10 +23,10 @@ const Service = (state = INIT_STATE, action) => {
     switch (action.type) {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
-                case GET_SERVICE:
+                case GET_SERVICE_LIST:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        services: action.payload.data,
                     };
 
                 default:
@@ -35,55 +35,47 @@ const Service = (state = INIT_STATE, action) => {
 
         case API_RESPONSE_ERROR:
             switch (action.payload.actionType) {
-                case GET_SERVICE:
+                case GET_SERVICE_LIST:
                     return {
                         ...state,
-                        service: action.payload.result,
+                        services: action.payload.error,
                     };
 
                 default:
                     return state;
             }
         case POST_SERVICE_SUCCESS:
-            switch (action.payload.actionType) {
-                case POST_SERVICE:
-                    return {
-                        ...state,
-                        service: action.payload.result,
-                    };
-                default:
-                    return state;
-            }
+            return {
+                ...state,
+                services: [...state.services, action.payload.data],
+            };
         case POST_SERVICE_FAILED:
-            switch (action.payload.actionType) {
-                case POST_SERVICE:
-                    return {
-                        ...state,
-                        service: action.payload.result,
-                    };
-                default:
-                    return state;
-            }
+            return {
+                ...state,
+                errors: action.payload.error,
+            };
+
         case PUT_SERVICE_SUCCESS:
-            switch (action.payload.actionType) {
-                case PUT_SERVICE:
-                    return {
-                        ...state,
-                        service: action.payload.result,
-                    };
-                default:
-                    return state;
-            }
+            return {
+                ...state,
+                services: action.payload.data,
+            };
         case PUT_SERVICE_FAILED:
-            switch (action.payload.actionType) {
-                case PUT_SERVICE:
-                    return {
-                        ...state,
-                        service: action.payload.result,
-                    };
-                default:
-                    return state;
-            }
+            return {
+                ...state,
+                errors: action.payload.error,
+            };
+        case DELETE_SERVICE_SUCCESS:
+            return {
+                ...state,
+                services: state.services.filter((item) => item.serviceId !== action.payload.serviceId),
+            };
+        case DELETE_SERVICE_FAILED:
+            return {
+                ...state,
+                errors: action.payload.error,
+            };
+
         default:
             return state;
     }

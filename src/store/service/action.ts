@@ -1,7 +1,7 @@
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
-    GET_SERVICE,
+    GET_SERVICE_LIST,
     POST_SERVICE,
     POST_SERVICE_SUCCESS,
     POST_SERVICE_FAILED,
@@ -14,14 +14,11 @@ import {
 } from './actionType';
 
 // 1. Get SERVICE
-export const getService = (actionType) => ({
-    type: GET_SERVICE,
-    payload: {
-        actionType,
-    },
+export const getService = () => ({
+    type: GET_SERVICE_LIST,
 });
 
-export const getSuccess = (actionType, data) => ({
+export const getSuccess = (actionType: string, data: any) => ({
     type: API_RESPONSE_SUCCESS,
     payload: {
         actionType,
@@ -29,7 +26,7 @@ export const getSuccess = (actionType, data) => ({
     },
 });
 
-export const getError = (actionType, error) => ({
+export const getError = (actionType: string, error: string) => ({
     type: API_RESPONSE_ERROR,
     payload: {
         actionType,
@@ -39,19 +36,23 @@ export const getError = (actionType, error) => ({
 
 // 2. Create new SERVICE
 
-export const postService = () => ({
-    type: POST_SERVICE,
-    payload: {},
-});
+export const postService = (asset: { serviceName: string; parentId?: number; createdDate: Date }) => {
+    return {
+        type: POST_SERVICE,
+        payload: asset,
+    };
+};
 
-export const postServiceSuccess = (data) => ({
-    type: POST_SERVICE_SUCCESS,
-    payload: {
-        data,
-    },
-});
+export const postServiceSuccess = (data: any) => {
+    return {
+        type: POST_SERVICE_SUCCESS,
+        payload: {
+            data,
+        },
+    };
+};
 
-export const postServiceError = (error) => ({
+export const postServiceError = (error: string) => ({
     type: POST_SERVICE_FAILED,
     payload: {
         error,
@@ -62,7 +63,6 @@ export const postServiceError = (error) => ({
 
 export const putService = () => ({
     type: PUT_SERVICE,
-    payload: {},
 });
 
 export const putServiceSuccess = (data) => ({
@@ -81,15 +81,17 @@ export const putServiceError = (error) => ({
 
 // 4. Delete SERVICE
 
-export const deleteService = () => ({
+export const deleteService = (serviceId) => ({
     type: DELETE_SERVICE,
-    payload: {},
+    payload: {
+        serviceId,
+    },
 });
 
-export const deleteServiceSuccess = (data) => ({
+export const deleteServiceSuccess = (serviceId) => ({
     type: DELETE_SERVICE_SUCCESS,
     payload: {
-        data,
+        serviceId,
     },
 });
 

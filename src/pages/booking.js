@@ -3,10 +3,9 @@ import introBig from '../images/introBig.png';
 import introSmall from '../images/introSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAnimal } from '../store/actions';
 import './style/booking.css';
 import { Button } from 'react-bootstrap';
-import { Formik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import { GoDotFill } from 'react-icons/go';
 import { GrFormCheckmark } from 'react-icons/gr';
@@ -22,15 +21,25 @@ let bookingSchema = yup.object().shape({
     messenger: yup.string().required('Full Address is required field'),
 });
 function BookingPage() {
-    const dispatch = useDispatch();
-    const { animals } = useSelector((state) => {
-        console.log(state);
-        console.log(state.Animal.name);
-        return {
-            animals: state.Animal.name,
-        };
-    });
+    document.title = 'Little Daisy - Booking';
+
     const [step, setStep] = React.useState(1);
+
+    const dispatch = useDispatch();
+
+    const validation = useFormik({
+        initialValues: {
+            fullName: '',
+            email: '',
+            phoneNumber: '',
+            messenger: '',
+        },
+        validationSchema: bookingSchema,
+        onSubmit: (values) => {
+            dispatch();
+        },
+    });
+
     function getStepHandle(theStep) {
         if (step === theStep) {
             return <GoDotFill className="booking-dot"></GoDotFill>;
@@ -40,68 +49,46 @@ function BookingPage() {
             return <></>;
         }
     }
-    function getComponentHandle(theStep) {
+    function getComponentHandle() {
         if (step === 1) {
-            return <Step1></Step1>;
+            return <Step1 step={step} setStep={setStep} validation={validation}></Step1>;
         } else if (step === 2) {
-            return <Step2></Step2>;
+            return <Step2 step={step} setStep={setStep} validation={validation}></Step2>;
         } else if (step === 3) {
-            return <Step3></Step3>;
+            return <Step3 step={step} setStep={setStep} validation={validation}></Step3>;
         } else if (step === 4) {
             return <BookingCompleted></BookingCompleted>;
         }
     }
-    document.title = 'Little Daisy - Booking';
     return (
-        <Formik
-            initialValues={{
-                fullName: '',
-                email: '',
-                phoneNumber: '',
-                messenger: '',
-            }}
-            validationSchema={bookingSchema}
-        >
-            {({ values, touched, errors, isValid, setFieldValue, handleSubmit, handleChange, handleBlur }) => {
-                return (
-                    <div className="intro my-5">
-                        <pre>{JSON.stringify(animals, 4, 4)}</pre>
-                        <form onSubmit={handleSubmit}>
-                            <BookingCompleted></BookingCompleted>
-                        </form>
-                        {/* Booking Process */}
-                        <div className="booking-process">
-                            <div className="booking-process-form">
-                                <div className="booking-process-line"></div>
-                                <div className="booking-step-form">
-                                    <div className="booking-step">
-                                        <div className="booking-step-circle">{getStepHandle(1)}</div>
-                                        <div className="booking-step-title">STEP 1</div>
-                                    </div>
-                                    <div className="booking-step">
-                                        <div className="booking-step-circle">{getStepHandle(2)}</div>
-                                        <div className="booking-step-title">STEP 2</div>
-                                    </div>
-                                    <div className="booking-step">
-                                        <div className="booking-step-circle">{getStepHandle(3)}</div>
-                                        <div className="booking-step-title">STEP 3</div>
-                                    </div>
-                                </div>
-                                <button onClick={() => dispatch(getAnimal())}>Get Animal</button>
-                            </div>
+        <div className="intro my-5">
+            <form onSubmit={validation.handleSubmit}>{getComponentHandle()}</form>
+            {/* Booking Process */}
+            <div className="booking-process">
+                <div className="booking-process-form">
+                    <div className="booking-process-line"></div>
+                    <div className="booking-step-form">
+                        <div className="booking-step">
+                            <div className="booking-step-circle">{getStepHandle(1)}</div>
+                            <div className="booking-step-title">STEP 1</div>
+                        </div>
+                        <div className="booking-step">
+                            <div className="booking-step-circle">{getStepHandle(2)}</div>
+                            <div className="booking-step-title">STEP 2</div>
+                        </div>
+                        <div className="booking-step">
+                            <div className="booking-step-circle">{getStepHandle(3)}</div>
+                            <div className="booking-step-title">STEP 3</div>
                         </div>
                     </div>
-                );
-            }}
-        </Formik>
+                    {/* <button onClick={() => dispatch(getAnimal())}>Get Animal</button> */}
+                </div>
+            </div>
+        </div>
     );
 }
 
-export function Step1(
-    // handleSubmit,touched,errors,handleChange,handleBlur,
-    setStep,
-    step,
-) {
+export function Step1({ setStep, step, validation }) {
     return (
         <div className="intro-form">
             <div className="intro-img">
@@ -181,22 +168,10 @@ export function Step1(
                             type="button"
                             variant="outline"
                             className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            // onClick={()=>setStep(e => ++e)}
+                            onClick={() => setStep(2)}
                         >
                             Next
                         </Button>
-                        {step > 1 ? (
-                            <Button
-                                type="button"
-                                variant="outline"
-                                className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
-                                onClick={() => setStep((e) => --e)}
-                            >
-                                Back
-                            </Button>
-                        ) : (
-                            <></>
-                        )}
                     </div>
                 </div>
                 <div className="intro-img-flower-bot">
@@ -206,7 +181,7 @@ export function Step1(
         </div>
     );
 }
-function Step3() {
+function Step3({ step, setStep, validation }) {
     return (
         <div>
             <div className="booking-component">
@@ -223,7 +198,7 @@ function Step3() {
         </div>
     );
 }
-function Step2(setStep, step) {
+function Step2({ setStep, step, validation }) {
     return (
         <div className="intro-form">
             <div className="intro-img">
@@ -262,12 +237,12 @@ function Step2(setStep, step) {
                             Lashes
                         </Button>
                     </div>
-                    <div>
+                    <div style={{ display: 'flex' }}>
                         <Button
                             type="button"
                             variant="outline"
                             className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            onClick={() => setStep((e) => ++e)}
+                            onClick={() => setStep(3)}
                         >
                             Next
                         </Button>
@@ -276,7 +251,7 @@ function Step2(setStep, step) {
                                 type="button"
                                 variant="outline"
                                 className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
-                                onClick={() => setStep((e) => --e)}
+                                onClick={() => setStep(1)}
                             >
                                 Back
                             </Button>
