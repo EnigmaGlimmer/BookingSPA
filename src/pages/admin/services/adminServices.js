@@ -1,5 +1,5 @@
 import React from 'react';
-
+import * as yup from 'yup';
 // Components
 import { CustomReactQuill } from '../../../components';
 
@@ -9,29 +9,132 @@ import { Button, Col, Form, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 import { Formik } from 'formik';
 
+//Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { getService, postService, deleteService } from '../../../store/service/action';
+
+let serviceSchema = yup.object().shape({
+    title: yup.string().required('Title is required field'),
+});
+
 function AdminServices() {
+    const [parent, setParent] = React.useState([]);
+
+    const dispatch = useDispatch();
+
+    const { services } = useSelector((state) => {
+        return {
+            services: state.Service.services,
+        };
+    });
+    React.useEffect(() => {
+        dispatch(getService());
+    }, [dispatch]);
+    const handleDeleteService = (id) => {
+        dispatch(deleteService(id));
+    };
     return (
         <section className="container-fluid py-3">
             <h3>Create Service</h3>
 
-            <Formik initialValues={{}} onSubmit={() => {}}>
-                {({ values, handleChange, handleSubmit }) => {
+            <Formik
+                initialValues={{
+                    title: '',
+                    parentId: null,
+                }}
+                validationSchema={serviceSchema}
+                onSubmit={(values, formikHelper) => {
+                    formikHelper.setSubmitting(false);
+                    dispatch(
+                        postService({
+                            parentId: values.parentId,
+                            createdDate: new Date(),
+                            serviceName: values.title,
+                        }),
+                    );
+                }}
+            >
+                {({ values, handleChange, handleSubmit, handleBlur, errors, touched }) => {
                     return (
                         <Form onSubmit={handleSubmit}>
+                            <pre>{JSON.stringify(values, 4, 4)}</pre>
                             <div className="p-3 mb-3" style={{ background: '#fff' }}>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Service Title</Form.Label>
-                                    <Form.Control name="title" placeholder="Enter service title"></Form.Control>
+                                    <Form.Control
+                                        name="title"
+                                        placeholder="Enter service title"
+                                        isInvalid={touched?.title && errors?.title}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Service Description</Form.Label>
-                                    <Form.Control name="description" placeholder="Enter service title"></Form.Control>
+                                    <Form.Control
+                                        name="description"
+                                        placeholder="Enter service title"
+                                        isInvalid={touched.description && errors.description}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
                                 </Form.Group>
                                 <Form.Group className="mb-3">
                                     <Form.Label>Dependency</Form.Label>
-                                    <Form.Select name="parent" placeholder="Enter service title">
-                                        <option value={1}>Service 1</option>
+                                    <Form.Select
+                                        name="parentId"
+                                        onChange={handleChange}
+                                        placeholder="Enter service title"
+                                    >
+                                        <option value={0}>Choose the root service</option>
+                                        {services?.map((item, index) => {
+                                            return (
+                                                <option key={index} value={item?.serviceId}>
+                                                    {item?.serviceName}
+                                                </option>
+                                            );
+                                        })}
                                     </Form.Select>
+                                    <Button type="submit">Submit</Button>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Table striped bordered hover>
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Service Name</th>
+                                                <th>Dependency</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {services?.map((item, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{item?.serviceId}</td>
+
+                                                        <td>{item?.serviceName}</td>
+                                                        <td>
+                                                            {
+                                                                services.find((e) => e.parentId === item?.parentId)
+                                                                    .serviceName
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <Button
+                                                                onClick={() => handleDeleteService(item?.serviceId)}
+                                                            >
+                                                                Delete
+                                                            </Button>
+                                                            <Button className="mx-4">Update</Button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </Table>
                                 </Form.Group>
                             </div>
 

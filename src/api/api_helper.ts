@@ -3,7 +3,7 @@ import { api } from '../config';
 
 // default
 axios.defaults.baseURL = api.API_URL;
-console.log(process.env.REACT_APP_RESOURCE_ADDRESS);
+
 // content type
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
 console.log(axios.defaults);

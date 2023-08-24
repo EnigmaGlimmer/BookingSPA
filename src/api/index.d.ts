@@ -1,4 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
+import { type } from 'os';
 
 // *** Type Helper
 interface APIResponse<Type> {
@@ -125,7 +126,24 @@ export declare const putAsset: (
 
 export declare const deleteAsset: (id: string, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;
 
-// 4. Testimonial
+// 4. Service
+type ServiceDTO = {
+    serviceId: number;
+    serviceName: string;
+    createdDate: Date;
+    parentId: number;
+    childs: Array<ServiceDTO>;
+};
+type CreateServiceDTO = {
+    serviceName: string;
+    parentId: number;
+    createdDate: Date;
+};
+type UpdateServiceDTO = {};
+export declare const getServiceList: (request: Pagination) => Promise<APIResponse<Array<ServiceDTO>>>;
+export declare const postService: (body: CreateServiceDTO) => Promise<APIResponse<ServiceDTO>>;
+
+// 5. Testimonial
 type TestimonialDTO = {
     testimonialId: number;
 };
