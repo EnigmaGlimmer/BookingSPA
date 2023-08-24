@@ -5,7 +5,6 @@ const { serialize } = require('object-to-formdata');
 const api = new APIClient();
 
 export const getAssets = (request, config) => {
-    console.log('get assets ', request);
     return api.get(url.GET_ASSET_LIST, request, config);
 };
 

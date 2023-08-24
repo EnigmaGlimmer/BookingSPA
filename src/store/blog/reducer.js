@@ -26,7 +26,7 @@ const Blogs = (state = INIT_STATE, action) => {
                 case GET_BLOG_LIST:
                     return {
                         ...state,
-                        blogs: action.payload.result,
+                        blogs: action.payload,
                     };
 
                 default:
@@ -38,12 +38,30 @@ const Blogs = (state = INIT_STATE, action) => {
                 case GET_BLOG_LIST:
                     return {
                         ...state,
-                        blogs: action.payload.result,
+                        blogs: action.payload,
                     };
 
                 default:
                     return state;
             }
+
+        case POST_BLOG_SUCCESS:
+            return { ...state, blogs: [...state.blogs, action.payload] };
+
+        case POST_BLOG_FAILED:
+            return { ...state, error: action.payload };
+
+        case PUT_BLOG_SUCCESS:
+            return { ...state };
+
+        case PUT_BLOG_FAILED:
+            return { ...state };
+
+        case DELETE_BLOG_SUCCESS:
+            return { ...state };
+
+        case DELETE_BLOG_FAILED:
+            return { ...state };
 
         default:
             return state;

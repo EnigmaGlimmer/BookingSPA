@@ -1,35 +1,36 @@
 {
     "hero": {
-        "h1": ""
+        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit"
     },
     "intro": {
-        "short": "",
-        "clean": ""
+        "short": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "cleanTitle": "Lorem ipsum dolor sit amet",
+        "clean": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
     },
     "messages": [
         {
-            "title": "",
-            "message": ""
+            "title": "Nail Care",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         },
         {
-            "title": "",
-            "message": ""
+            "title": "Nail Care",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         },
         {
-            "title": "",
-            "message": ""
+            "title": "Nail Care",
+            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         }
     ],
     "serviceIntro": {
-        "title": "",
+        "title": "Our service is always developing the most perfect to serve women",
         "packages": [
-            { "name": "", "price": "", "id": 1 },
-            { "name": "", "price": "", "id": 1 }
+            { "name": "Nails Services", "price": 2.05, "id": 1 },
+            { "name": "Nails Services", "price": 2.05, "id": 2 }
         ]
     },
     "otherServices": {
-        "p": "",
-        "services": ["", "", "", ""]
+        "p": "We also provide some other services such as…",
+        "services": ["Lash lift", "Eyebrow laminations", "Tin tin eyebrow and lashes", "Waxing eyebrows"]
     },
     "galleries": [
         {

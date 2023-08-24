@@ -26,6 +26,9 @@ import { Button } from 'react-bootstrap';
 import { Booking } from '../components';
 import { Step1 } from './booking';
 
+// Content
+import home from '../config/content/home.json';
+
 function Home() {
     document.title = 'Little Daisy - Home';
 
@@ -33,7 +36,7 @@ function Home() {
         <section>
             {/* Banner */}
             <div className="banner my-5 pb-5">
-                <h1 className="banner-title">Lorem ipsum dolor sit, consectetur adipiscing elit</h1>
+                <h1 className="banner-title">{home.hero.h1}</h1>
                 <div className="banner-img">
                     <div className="banner-img-big">
                         <img alt="banner" src={bannerBig} width={'100%'} />
@@ -227,8 +230,7 @@ function Home() {
                         </div>
                     </div>
                 </div> */}
-                <Step1
-                ></Step1>
+                <Step1></Step1>
             </div>
             {/* Gallery */}
             <div className="gallery">

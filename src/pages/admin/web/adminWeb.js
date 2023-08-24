@@ -1,14 +1,22 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
+import { Link, useSearchParams, createSearchParams } from 'react-router-dom';
 
 function AdminWeb() {
+    const [params, setParams] = useSearchParams();
     return (
         <section>
             <h3>Web Content</h3>
             <ul>
-                <li>Homepage</li>
-                <li>About us</li>
-                <li>Promotion</li>
+                <li>
+                    <Link to={'?content=home'}>Homepage</Link>
+                </li>
+                <li>
+                    <Link to="?content=about">About us</Link>
+                </li>
+                <li>
+                    <Link to="?content=promotion">Promotion</Link>
+                </li>
             </ul>
             <h3>Contact</h3>
             <ul>

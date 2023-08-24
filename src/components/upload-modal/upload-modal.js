@@ -103,7 +103,9 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                                             const link = upload?.assetLink;
                                                             onSelected(link);
                                                             navigator.clipboard.writeText(link);
-                                                            toast.success('Copied this link of image');
+                                                            toast.success('Copied this link of image', {
+                                                                autoClose: 3000,
+                                                            });
                                                         }}
                                                     >
                                                         Copy this link

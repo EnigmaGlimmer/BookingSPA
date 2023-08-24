@@ -15,4 +15,9 @@ export const POST_ASSET = '/api/asset';
 export const PUT_ASSET = '/api/asset';
 export const DELETE_ASSET = '/api/asset';
 
-// 4.
+// 4. Testimonial
+export const GET_TESTIMONIAL_LIST = '/api/testimonial/list';
+export const GET_TESTIMONIAL = '/api/testimonial';
+export const POST_TESTIMONIAL = '/api/testimonial';
+export const PUT_TESTIMONIAL = '/api/testimonial';
+export const DELETE_TESTIMONIAL = '/api/testimonial';

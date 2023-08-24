@@ -124,3 +124,34 @@ export declare const putAsset: (
 ) => Promise<APIResponse<UploadDTO>>;
 
 export declare const deleteAsset: (id: string, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;
+
+// 4. Testimonial
+type TestimonialDTO = {
+    testimonialId: number;
+};
+type CreateTestimonialDTO = {};
+type UpdateTestimonialDTO = {};
+
+export declare const getTestimonials: (
+    request: Pagination,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<TestimonialDTO>>;
+
+export const getTestimonial: (
+    id: number,
+    request: any,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<TestimonialDTO>>;
+
+export const postTestimonial: (
+    body: CreateTestimonialDTO,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<TestimonialDTO>>;
+
+export const putTestimonial: (
+    id: number,
+    body: UpdateTestimonialDTO,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<TestimonialDTO>>;
+
+export const deleteTestimonial: (id: number) => Promise<APIResponse<number>>;
