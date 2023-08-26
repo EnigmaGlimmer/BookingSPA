@@ -19,3 +19,14 @@ export const DELETE_ASSET = '/api/asset';
 export const GET_SERVICE = '/api/service';
 export const POST_SERVICE = '/api/service';
 export const DELETE_SERVICE = '/api/service';
+
+//5. Customer
+export const GET_CUSTOMER = '/api/customer';
+export const POST_CUSTOMER = '/api/customer';
+export const DELETE_CUSTOMER = '/api/customer';
+
+// 6. Booking
+export const POST_BOOKING = '/api/booking';
+
+// 7. Assign
+export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';
