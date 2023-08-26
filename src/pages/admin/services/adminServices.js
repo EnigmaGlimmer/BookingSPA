@@ -14,7 +14,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getService, postService, deleteService } from '../../../store/service/action';
 
 let serviceSchema = yup.object().shape({
-    title: yup.string().required('Title is required field'),
+    title: yup.string().required('Title is require field'),
+    price: yup.number().required('Price is require field'),
+    promotion: yup.object().shape({
+        promotionName: yup.string().required('Promotion Name is require field'),
+        startDate: yup.date().required(),
+        endDate: yup.date().required(),
+        discountRates: yup.number().required('Discount is require field'),
+    }),
 });
 
 function AdminServices() {
@@ -36,11 +43,19 @@ function AdminServices() {
     return (
         <section className="container-fluid py-3">
             <h3>Create Service</h3>
-
+            Đà Nẵng, Việt Nam
             <Formik
                 initialValues={{
                     title: '',
                     parentId: null,
+                    price: 0,
+                    promotion: {
+                        promotionName: '',
+                        startDate: new Date(),
+                        endDate: new Date(),
+                        discountRates: 0,
+                        isDeleted: false,
+                    },
                 }}
                 validationSchema={serviceSchema}
                 onSubmit={(values, formikHelper) => {
@@ -50,6 +65,14 @@ function AdminServices() {
                             parentId: values.parentId,
                             createdDate: new Date(),
                             serviceName: values.title,
+                            price: values.price,
+                            promotion: {
+                                promotionName: '',
+                                startDate: new Date(),
+                                endDate: new Date(),
+                                discountRates: 0,
+                                isDeleted: false,
+                            },
                         }),
                     );
                 }}
@@ -70,17 +93,81 @@ function AdminServices() {
                                     ></Form.Control>
                                     <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
                                 </Form.Group>
+
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Service Description</Form.Label>
+                                    <Form.Label>Service Price</Form.Label>
                                     <Form.Control
-                                        name="description"
-                                        placeholder="Enter service title"
-                                        isInvalid={touched.description && errors.description}
+                                        name="price"
+                                        placeholder="Enter service price"
+                                        isInvalid={touched.price && errors.price}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     ></Form.Control>
-                                    <Form.Control.Feedback type="invalid">{errors.description}</Form.Control.Feedback>
+                                    <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
                                 </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Promotion</Form.Label>
+                                    <Form.Control
+                                        name="promotion.promotionName"
+                                        placeholder="Enter Promotion Name"
+                                        isInvalid={
+                                            touched.promotion?.promotionName && !!errors.promotion?.promotionName
+                                        }
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.promotion?.promotionName}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Start Date</Form.Label>
+                                    <Form.Control
+                                        name="promotion.startDate"
+                                        placeholder="Enter Start Date"
+                                        type="date"
+                                        isInvalid={touched.promotion?.startDate && !!errors.promotion?.startDate}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.promotion?.startDate}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>End Date</Form.Label>
+                                    <Form.Control
+                                        name="promotion.endDate"
+                                        placeholder="Enter End Date"
+                                        type="date"
+                                        isInvalid={touched.promotion?.endDate && !!errors.promotion?.endDate}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.promotion?.endDate}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Discount Rates</Form.Label>
+                                    <Form.Control
+                                        name="promotion.discountRates"
+                                        placeholder="Enter Discount Rates"
+                                        step={0.2}
+                                        type="number"
+                                        isInvalid={touched.promotion?.discountRates && errors.promotion?.discountRates}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                    ></Form.Control>
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.promotion?.discountRates}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+
                                 <Form.Group className="mb-3">
                                     <Form.Label>Dependency</Form.Label>
                                     <Form.Select
@@ -99,6 +186,7 @@ function AdminServices() {
                                     </Form.Select>
                                     <Button type="submit">Submit</Button>
                                 </Form.Group>
+
                                 <Form.Group>
                                     <Table striped bordered hover>
                                         <thead>
@@ -203,9 +291,7 @@ function AdminServices() {
                     );
                 }}
             </Formik>
-
             <h3>System Services</h3>
-
             <Table striped bordered hover size="sm" style={{ borderColor: 'var(--clr-border)' }}>
                 <thead>
                     <tr>
@@ -234,14 +320,11 @@ function AdminServices() {
                     </tr>
                 </tbody>
             </Table>
-
             <h3>Edit Service Posts</h3>
-
             <Form.Select className="mb-3">
                 <option>Service 1</option>
                 <option>Service 2</option>
             </Form.Select>
-
             <CustomReactQuill
                 onChange={(htmlText) => {
                     console.log(htmlText);

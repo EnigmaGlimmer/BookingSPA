@@ -1,4 +1,5 @@
 .booking-form-input {
+    width: 50%;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -17,6 +18,11 @@
 .booking-step {
     position: relative;
 }
+.booking-input-item {
+    display: flex;
+    gap: 20px;
+}
+
 .booking-process-form {
     width: 40%;
     margin: 0 auto;
@@ -116,4 +122,17 @@
 .completed-total-fee-title {
     width: fit-content;
     padding: 10px;
+}
+/* Booking Item */
+.booking-list-item {
+    width: 100%;
+}
+.booking-item-form {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+#booking-nails-service:hover {
 }

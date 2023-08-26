@@ -7,6 +7,8 @@ import UploadSaga from './upload/saga';
 // Service
 import ServiceSaga from './service/saga';
 
+import CustomerSaga from './customer/saga';
+
 export default function* rootSaga() {
-    yield all([fork(BlogSaga), fork(UploadSaga), fork(ServiceSaga)]);
+    yield all([fork(BlogSaga), fork(UploadSaga), fork(ServiceSaga), fork(CustomerSaga)]);
 }

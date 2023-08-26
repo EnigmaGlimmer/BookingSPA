@@ -63,6 +63,8 @@
     margin: 0 auto;
     background-color: #fdf2cb;
 }
+.booking-root-date {
+}
 @media only screen and (max-width: 576px) {
     .calendar-root {
         width: 300px;

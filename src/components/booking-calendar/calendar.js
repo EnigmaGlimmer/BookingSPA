@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // PropTypes
 import PropTypes from 'prop-types';
 
@@ -21,55 +21,49 @@ import './style/booking.css';
 //     },
 // ];
 function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate }) {
-    const [selectedDates, setSelectedDates] = useState([]);
-
     return (
-        <section className='calendar-root'>
-            {/* <h2>Calendar</h2> */}
-            <Calendar
-                selected={selectedDates}
-                onChange={(value) => {
-                    console.log(value);
-                    setSelectedDates(value);
-                }}
-                onOverbook={(e, error) => {
-                    console.log(e);
-                    console.log(error);
-                }}
-                components={{
-                    CalendarContainer: ({ innerProps, children }) => {
-                        return (
-                            <div
-                                {...innerProps}
-                            >
-                                {children}
-                            </div>
-                        );
-                    },
-                }}
-                // disabled={(date, state) => {
-                //     console.log(date);
-                //     console.log(state);
-                //     return !state.isPast;
-                // }}
-                reserved={reserved}
-                variant="booking"
-                dateFnsOptions={{ weekStartsOn: 1 }}
-                // range={true}
-            ></Calendar>
+        <section className="calendar-root">
+            <div className="calendar-frame">
+                <Calendar
+                    selected={[initialDate]}
+                    onChange={(value) => {
+                        const date = value[0];
+                        console.log(date);
+                        onChangeDate(date);
+                    }}
+                    onOverbook={(e, error) => {
+                        console.log(e);
+                        console.log(error);
+                    }}
+                    components={{
+                        CalendarContainer: ({ innerProps, children }) => {
+                            return <div {...innerProps}>{children}</div>;
+                        },
+                    }}
+                    // disabled={(date, state) => {
+                    //     console.log(date);
+                    //     console.log(state);
+                    //     return !state.isPast;
+                    // }}
+                    reserved={reserved}
+                    variant="booking"
+                    dateFnsOptions={{ weekStartsOn: 1 }}
+                    range={false}
+                ></Calendar>
+            </div>
         </section>
     );
 }
 
-ReactBookingCalendar.propTypes = {
-    initialDate: PropTypes.objectOf(Date),
-    reserved: PropTypes.arrayOf(
-        PropTypes.shape({
-            startDate: PropTypes.objectOf(Date).isRequired,
-            endDate: PropTypes.objectOf(Date).isRequired,
-        }),
-    ),
-    onChangeDate: PropTypes.func.isRequired,
-};
+// ReactBookingCalendar.propTypes = {
+//     initialDate: PropTypes.objectOf(Date),
+//     reserved: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             startDate: PropTypes.objectOf(Date).isRequired,
+//             endDate: PropTypes.objectOf(Date).isRequired,
+//         }),
+//     ),
+//     onChangeDate: PropTypes.func.isRequired,
+// };
 
 export default ReactBookingCalendar;

@@ -33,7 +33,7 @@ function* getBooking() {
 function* onAddNewBooking({ payload: newBooking }) {
     try {
         const response = yield call(postBookingAPI, newBooking);
-        yield put(postBookingSuccess(response?.result));
+        yield put(postBookingSuccess(response));
         toast.success('Booking Added Successfully', {
             autoClose: 3000,
         });
