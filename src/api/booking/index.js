@@ -1,4 +1,4 @@
-import { postCustomer } from '..';
+import { postCustomer, searchCustomer } from '..';
 
 const { APIClient } = require('../api_helper');
 const url = require('../url_helper');
@@ -10,16 +10,22 @@ export const postBooking = (body) => {
 };
 
 export const assignBooking = (customer, booking) => {
-    return postCustomer(customer).then((newCustomer) => {
-        const submitBooking = {
-            ...booking,
-            customerId: newCustomer.customerId,
-        };
-        return postBooking(submitBooking);
-        // api.put(url.ASSIGN_BOOKING_CUSTOMER, {
-        //     customerId: response.customerId,
-        //     customerEmai: response.customerEmail,
-        //     bookingId: response.bookingId,
-        // });
-    });
+    return postCustomer(customer)
+        .then((response) => {
+            if (!!response.data.errors) {
+                return searchCustomer({
+                    email: customer?.customerEmail,
+                });
+            }
+
+            return response;
+        })
+        .then((newCustomer) => {
+            const submitBooking = {
+                ...booking,
+                customerId: newCustomer.customerId,
+            };
+
+            return postBooking(submitBooking);
+        });
 };

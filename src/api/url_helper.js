@@ -30,6 +30,7 @@ export const DELETE_TESTIMONIAL = '/api/testimonial';
 export const GET_CUSTOMER = '/api/customer';
 export const POST_CUSTOMER = '/api/customer';
 export const DELETE_CUSTOMER = '/api/customer';
+export const SEARCH_CUSTOMER = '/api/customer/search';
 
 // 7. Booking
 export const POST_BOOKING = '/api/booking';
