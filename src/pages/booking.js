@@ -144,7 +144,6 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2

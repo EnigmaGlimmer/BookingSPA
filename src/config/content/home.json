@@ -1,45 +1,87 @@
 {
     "hero": {
-        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit"
+        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit",
+        "primaryImage": "../images/bannerBig.png",
+        "secondaryImage": "../images/bannerSmall.png"
     },
     "intro": {
-        "short": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-        "cleanTitle": "Lorem ipsum dolor sit amet",
-        "clean": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+        "short": "About Little Daisy",
+        "firstTitle": "Perfect beauty service",
+        "firstSubTitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "secondTitle": "Lorem ipsum dolor sit amet",
+        "secondSubTitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "primaryImage": "../images/bannerBig.png",
+        "secondaryImage": "../images/bannerSmall.png"
     },
     "messages": [
         {
+            "image": "../images/nailCare.png",
             "title": "Nail Care",
             "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         },
         {
-            "title": "Nail Care",
+            "image": "../images/nailArt.png",
+            "title": "Nail Art",
             "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         },
         {
-            "title": "Nail Care",
+            "image": "../images/bestLashes.png",
+            "title": "Best Lashes",
             "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         }
     ],
-    "serviceIntro": {
+    "nailService": {
+        "imagePrimary": "../images/otherBig.png",
+        "imageSecondary": "../images/otherSmall.png",
         "title": "Our service is always developing the most perfect to serve women",
         "packages": [
             { "name": "Nails Services", "price": 2.05, "id": 1 },
-            { "name": "Nails Services", "price": 2.05, "id": 2 }
+            { "name": "Lashes Services", "price": 2.05, "id": 2 },
+            { "name": "Lashes 2 Services", "price": 2.05, "id": 2 }
         ]
     },
-    "otherServices": {
-        "p": "We also provide some other services such as…",
-        "services": ["Lash lift", "Eyebrow laminations", "Tin tin eyebrow and lashes", "Waxing eyebrows"]
+    "lashesService": {
+        "imagePrimary": "../images/lashesService.png",
+        "imageSecondary": "../images/lashesServiceBottom.png",
+        "title": "Our service is always developing the most perfect to serve women",
+        "packages": [
+            { "name": "Lashes 2 Services", "price": 2.05, "id": 1 },
+            { "name": "Lashes 3 Services", "price": 2.05, "id": 2 }
+        ]
     },
     "galleries": [
         {
-            "link": "",
-            "rate": ""
+            "galleryFirst1": "../images/galleryFirst1.png",
+            "galleryFirst2": "../images/galleryFirst2.png"
+        },
+        {
+            "gallerySecond1": "../images/gallerySecond1.png",
+            "gallerySecond2": "../images/gallerySecond2.png"
+        },
+        {
+            "galleryThird1": "../images/galleryThird1.png",
+            "galleryThird2": "../images/galleryThird2.png"
         }
     ],
     "testimonials": {
-        "h3": "",
-        "h2": ""
+        "subTitle": "TESTEMONIALS THOUGHTS",
+        "title": "Comments and Reviews",
+        "review": [
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            },
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            },
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            }
+        ]
     }
 }

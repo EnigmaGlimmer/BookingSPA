@@ -133,7 +133,7 @@ function Service() {
                 </div>
                 <div className="about-booking-content">
                     <div className="about-booking-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
-                    <button>Book Now</button>
+                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
                 </div>
             </div>
         </div>
