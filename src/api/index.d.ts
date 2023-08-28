@@ -132,12 +132,22 @@ type ServiceDTO = {
     serviceName: string;
     createdDate: Date;
     parentId: number;
+    price: number;
+    promotion: any;
     childs: Array<ServiceDTO>;
 };
 type CreateServiceDTO = {
     serviceName: string;
     parentId: number;
     createdDate: Date;
+    price: number;
+    promotion: {
+        promotionName: string;
+        startDate: Date;
+        endDate: Date;
+        discountRates: number;
+        isDeleted: boolean;
+    };
 };
 type UpdateServiceDTO = {};
 export declare const getServiceList: (request: Pagination) => Promise<APIResponse<Array<ServiceDTO>>>;
@@ -173,3 +183,45 @@ export const putTestimonial: (
 ) => Promise<APIResponse<TestimonialDTO>>;
 
 export const deleteTestimonial: (id: number) => Promise<APIResponse<number>>;
+
+// 6. Customer
+type CustomerDTO = {
+    customerId: number;
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+    isDeleted: boolean;
+};
+type CreateCustomerDTO = {
+    customerName: string;
+    customerEmail: string;
+    customerPhone: string;
+};
+export declare const postCustomer: (body: CreateCustomerDTO) => Promise<APIResponse<CustomerDTO>>;
+
+// 6. Booking
+type BookingDTO = {
+    customerId: number;
+    customerName: string;
+    bookingId: number;
+};
+
+type CreateBookingDTO = {
+    createdDate: Date;
+    isCancelled: boolean;
+    serviceId: number;
+    slot: {
+        start_Hour: string;
+        end_Hour: string;
+    };
+};
+
+type BookingCustomerDTO = {
+    bookingId: number;
+    customerId: number;
+};
+
+export declare const assignBooking: (
+    customer: CreateCustomerDTO,
+    booking: CreateBookingDTO,
+) => Promise<APIResponse<BookingCustomerDTO>>;

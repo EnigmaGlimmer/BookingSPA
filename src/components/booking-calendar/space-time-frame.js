@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import './style/booking_time.css';
 
 const SpaceTimeFrame = ({
+    initialSpaceTimes = [
+        ['1:00pm', '2:00pm'],
+        ['3:00pm', '4:00pm'],
+        ['5:00pm', '6:00pm'],
+    ],
     reserved = [
         ['1:00pm', '2:00pm'],
         ['4:00pm', '5:00pm'],
@@ -11,24 +16,18 @@ const SpaceTimeFrame = ({
     onChangeTimeStart,
     onChangeTimeEnd,
 }) => {
-    const spaces = [
-        ['1:00pm', '2:00pm'],
-        ['3:00pm', '4:00pm'],
-        ['5:00pm', '6:00pm'],
-    ];
-
     return (
-        <div className='space-time'>
-            <h4 className='space-time-title'>Choice Time</h4>
-            <div className='space-time-info'>
+        <div className="space-time">
+            <h4 className="space-time-title">Choice Time</h4>
+            <div className="space-time-info">
                 <p>Choose your service hours on the</p>
-                <div className='space-time-date'>30th July</div>
+                <div className="space-time-date"></div>
             </div>
-            <div className='space-time-content'>
-                {spaces.map((space, key) => {
+            <div className="space-time-content">
+                {initialSpaceTimes.map((space, key) => {
                     return (
                         <button
-                            className='space-time-button'
+                            className="space-time-button"
                             key={key}
                             onClick={() => {
                                 let startTime = space[0];
@@ -47,10 +46,6 @@ const SpaceTimeFrame = ({
             </div>
         </div>
     );
-};
-
-SpaceTimeFrame.propTypes = {
-    // reserved: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string.isRequired, PropTypes.string.isRequired)),
 };
 
 export default SpaceTimeFrame;

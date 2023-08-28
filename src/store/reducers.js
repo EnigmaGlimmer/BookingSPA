@@ -9,10 +9,14 @@ import Upload from './upload/reducer';
 // 3. Service
 import Service from './service/reducer';
 
+//4. Customer
+import Customer from './customer/reducer';
+
 const rootReducer = combineReducers({
     Blog,
     Upload,
     Service,
+    Customer,
 });
 
 export default rootReducer;

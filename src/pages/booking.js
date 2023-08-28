@@ -5,64 +5,50 @@ import homeFlowerDeco from '../images/home/flower.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import './style/booking.css';
 import { Button } from 'react-bootstrap';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import { GoDotFill } from 'react-icons/go';
 import { GrFormCheckmark } from 'react-icons/gr';
 import Booking from '../components/booking-calendar/booking';
 import * as yup from 'yup';
 import { MdOutlineMailOutline } from 'react-icons/md';
-import SpaceTimeFrame from '../components/booking-calendar/space-time-frame';
+
+import { assignBooking, postCustomer } from '../api';
+import { getService } from '../store/service/action';
+
+import { postBooking } from '../store/booking/action';
+import { toast } from 'react-toastify';
+import moment from 'moment';
 
 let bookingSchema = yup.object().shape({
-    fullName: yup.string().required('Full Name is required field'),
-    phoneNumber: yup.string().typeError('Phone Number must be number').required('Phone Number is required field'),
-    email: yup.string().email().required('Email is required field'),
-    messenger: yup.string().required('Full Address is required field'),
+    customer: yup.object().shape({
+        customerName: yup.string().required('Customer Name is required field'),
+        customerPhone: yup.string().typeError('Phone Number must be number').required('Phone Number is required field'),
+        customerEmail: yup.string().email().required('Email is required field'),
+    }),
+    booking: yup.object().shape({
+        start_Hour: yup.string().required('Start Hour is require field'),
+        end_Hour: yup.string().required('End Day is require field'),
+    }),
+
+    // messenger: yup.string().required('Messenger is required field'),
 });
 function BookingPage() {
     document.title = 'Little Daisy - Booking';
 
     const [step, setStep] = React.useState(1);
 
-    const dispatch = useDispatch();
-
-    const validation = useFormik({
-        initialValues: {
-            fullName: '',
-            email: '',
-            phoneNumber: '',
-            messenger: '',
-        },
-        validationSchema: bookingSchema,
-        onSubmit: (values) => {
-            dispatch();
-        },
-    });
-
     function getStepHandle(theStep) {
         if (step === theStep) {
             return <GoDotFill className="booking-dot"></GoDotFill>;
         } else if (step > theStep) {
             return <GrFormCheckmark className="booking-dot"></GrFormCheckmark>;
-        } else {
-            return <></>;
         }
-    }
-    function getComponentHandle() {
-        if (step === 1) {
-            return <Step1 step={step} setStep={setStep} validation={validation}></Step1>;
-        } else if (step === 2) {
-            return <Step2 step={step} setStep={setStep} validation={validation}></Step2>;
-        } else if (step === 3) {
-            return <Step3 step={step} setStep={setStep} validation={validation}></Step3>;
-        } else if (step === 4) {
-            return <BookingCompleted></BookingCompleted>;
-        }
+        return <></>;
     }
     return (
         <div className="intro my-5">
-            <form onSubmit={validation.handleSubmit}>{getComponentHandle()}</form>
+            <StepComponent step={step} setStep={setStep}></StepComponent>
             {/* Booking Process */}
             <div className="booking-process">
                 <div className="booking-process-form">
@@ -81,16 +67,115 @@ function BookingPage() {
                             <div className="booking-step-title">STEP 3</div>
                         </div>
                     </div>
-                    {/* <button onClick={() => dispatch(getAnimal())}>Get Animal</button> */}
                 </div>
             </div>
         </div>
     );
 }
 
-export function Step1({ setStep, step, validation }) {
+const StepComponent = ({ step, setStep }) => {
+    const [serviceChoice, setServiceChoice] = React.useState(null);
+
+    const { services, booking, newBooking, customers, newCustomer } = useSelector((state) => {
+        return {
+            services: state.Service.services,
+            booking: state.Booking?.booking,
+            newBooking: state.Booking?.new,
+            customers: state.Customer.customers,
+            newCustomer: state.Customer.new,
+        };
+    });
+
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        dispatch(getService());
+    }, []);
+
+    const validation = useFormik({
+        initialValues: {
+            customer: {
+                customerName: '',
+                customerEmail: '',
+                customerPhone: '',
+            },
+            booking: {
+                customerId: newCustomer?.customerid,
+                serviceId: 0,
+                checkinDate: '',
+                createdDate: new Date(),
+                slot: {
+                    start_Hour: '',
+                    end_Hour: '',
+                },
+            },
+        },
+        validationSchema: bookingSchema,
+        onSubmit: (values, formikHelper) => {
+            formikHelper.setSubmitting(false);
+
+            assignBooking(
+                {
+                    customerName: values.customer.customerName,
+                    customerEmail: values.customer.customerEmail,
+                    customerPhone: values.customer.customerPhone,
+                },
+                {
+                    // customerId: newCustomer.customerId,
+                    createdDate: new Date(),
+                    serviceId: values.booking.serviceId,
+                    slot: {
+                        start_Hour: values.booking.slot.start_Hour,
+                        end_Hour: values.booking.slot.end_Hour,
+                    },
+                },
+            )
+                .then((response) => {
+                    console.log(response);
+                    toast.success('Post successfully', {
+                        autoClose: 3000,
+                    });
+                })
+                .catch((error) => {
+                    toast.error(error);
+                });
+        },
+    });
+
     return (
-        <div className="intro-form">
+        <Form onSubmit={validation.handleSubmit}>
+            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
+            {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
+                (step === 2 && (
+                    <Step2
+                        step={step}
+                        setStep={setStep}
+                        validation={validation}
+                        serviceChoice={serviceChoice}
+                        setServiceChoice={setServiceChoice}
+                        services={services}
+                    ></Step2>
+                )) ||
+                (step === 3 && (
+                    <Step3
+                        step={step}
+                        setStep={setStep}
+                        validation={validation}
+                        onChangeDate={(date) => {
+                            const value = moment(date).format('YYYY-MM-DD');
+                            validation.setFieldValue('booking.checkinDate', value);
+                        }}
+                        onChangeTimeStart={(time) => validation.setFieldValue('booking.slot.start_Hour', time)}
+                        onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
+                    ></Step3>
+                )) || <BookingCompleted></BookingCompleted>}
+        </Form>
+    );
+};
+
+export function Step1({ setStep, validation }) {
+    return (
+        <form className="intro-form" onSubmit={validation?.handleSubmit}>
             <div className="intro-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
@@ -106,10 +191,7 @@ export function Step1({ setStep, step, validation }) {
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
 
-                <div
-                    className="intro-content-form"
-                    // onSubmit={handleSubmit}
-                >
+                <div className="intro-content-form">
                     <div>
                         <h2 className="intro-title">Your Information</h2>
                     </div>
@@ -117,38 +199,48 @@ export function Step1({ setStep, step, validation }) {
                         <Form.Group>
                             <input
                                 type="text"
-                                name="fullName"
+                                name="customer.customerName"
                                 className="booking-input"
                                 placeholder="Full Name"
-                                // isInvalid={touched.fullName && errors.fullName}
-                                // onChange={handleChange}
-                                // onBlur={handleBlur}
+                                onChange={validation?.handleChange}
+                                onBlur={validation?.handleBlur}
                             />
-                            <Form.Control.Feedback type="invalid">{/* {errors?.fullName} */}</Form.Control.Feedback>
+                            {validation?.touched?.customer?.customerName &&
+                                validation?.errors?.customer?.customerName && (
+                                    <div className="feedback-invalid">{validation?.errors?.customer?.customerName}</div>
+                                )}
                         </Form.Group>
                         <Form.Group>
                             <input
                                 type="text"
-                                name="phoneNumber"
+                                name="customer.customerPhone"
                                 className="booking-input"
                                 placeholder="Phone Number"
-                                // isInvalid={touched.phoneNumber && errors.phoneNumber}
-                                // onChange={handleChange}
-                                // onBlur={handleBlur}
+                                onChange={validation?.handleChange}
+                                onBlur={validation?.handleBlur}
                             />
-                            <Form.Control.Feedback type="invalid">{/* {errors.phoneNumber} */}</Form.Control.Feedback>
+                            {validation?.touched?.customer?.customerPhone &&
+                                validation?.errors?.customer?.customerPhone && (
+                                    <div className="feedback-invalid">
+                                        {validation?.errors?.customer?.customerPhone}
+                                    </div>
+                                )}
                         </Form.Group>
                         <Form.Group>
                             <input
                                 type="text"
-                                name="email"
+                                name="customer.customerEmail"
                                 className="booking-input"
                                 placeholder="Email"
-                                // isInvalid={touched.email && errors.email}
-                                // onChange={handleChange}
-                                // onBlur={handleBlur}
+                                onChange={validation?.handleChange}
+                                onBlur={validation?.handleBlur}
                             />
-                            <Form.Control.Feedback type="invalid">{/* {errors.email} */}</Form.Control.Feedback>
+                            {validation?.touched?.customer?.customerEmail &&
+                                validation?.errors?.customer?.customerEmail && (
+                                    <div className="feedback-invalid">
+                                        {validation?.errors?.customer?.customerEmail}
+                                    </div>
+                                )}
                         </Form.Group>
                     </div>
                     <div style={{ paddingTop: '30px' }}>
@@ -157,18 +249,30 @@ export function Step1({ setStep, step, validation }) {
                             name="messenger"
                             className="booking-input"
                             placeholder="Messenger"
-                            // isInvalid={touched.messenger && errors.messenger}
-                            // onChange={handleChange}
-                            // onBlur={handleBlur}
+                            onChange={validation?.handleChange}
+                            onBlur={validation?.handleBlur}
                         />
-                        <Form.Control.Feedback type="invalid">{/* {errors.messenger} */}</Form.Control.Feedback>
+                        {validation?.touched.messenger && validation?.errors.messenger && (
+                            <div className="feedback-invalid">{validation.errors?.messenger}</div>
+                        )}
                     </div>
                     <div>
                         <Button
-                            type="button"
                             variant="outline"
                             className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            onClick={() => setStep(2)}
+                            onClick={() => {
+                                const allowNext =
+                                    validation?.touched?.customer?.customerName &&
+                                    !validation?.errors?.customer?.customerName &&
+                                    validation?.touched?.customer?.customerPhone &&
+                                    !validation?.errors?.customer?.customerPhone &&
+                                    validation?.touched?.customer?.customerEmail &&
+                                    !validation?.errors?.customer?.customerEmail;
+
+                                console.log(allowNext);
+
+                                if (allowNext) setStep(2);
+                            }}
                         >
                             Next
                         </Button>
@@ -178,27 +282,16 @@ export function Step1({ setStep, step, validation }) {
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
             </div>
-        </div>
+        </form>
     );
 }
-function Step3({ step, setStep, validation }) {
-    return (
-        <div>
-            <div className="booking-component">
-                <div>
-                    <Booking onChangeDate={(date) => {}}></Booking>
-                </div>
-                {/* <div className='booking-component-time'>
-                    <SpaceTimeFrame></SpaceTimeFrame>
-                </div> */}
-            </div>
-            <div className="booking-component-button-done">
-                <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Done</button>
-            </div>
-        </div>
-    );
-}
-function Step2({ setStep, step, validation }) {
+function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
+    const { services } = useSelector((state) => {
+        return {
+            services: state.Service.services,
+        };
+    });
+
     return (
         <div className="intro-form">
             <div className="intro-img">
@@ -219,50 +312,126 @@ function Step2({ setStep, step, validation }) {
                     <div>
                         <h2 className="intro-title">Your Information</h2>
                     </div>
-                    <div className="booking-form-input">
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            onClick={() => setStep((e) => ++e)}
-                        >
-                            Nails
-                        </Button>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            onClick={() => setStep((e) => ++e)}
-                        >
-                            Lashes
-                        </Button>
-                    </div>
-                    <div style={{ display: 'flex' }}>
-                        <Button
-                            type="button"
-                            variant="outline"
-                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
-                            onClick={() => setStep(3)}
-                        >
-                            Next
-                        </Button>
-                        {step > 1 ? (
+                    <div className="booking-input-item">
+                        <div className="booking-form-input">
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
-                                onClick={() => setStep(1)}
+                                onClick={() => {
+                                    setServiceChoice(true);
+                                }}
+                                id="booking-nails-service"
+                                className="my-btn text-uppercase btn-primary-outline btn btn-outline"
                             >
-                                Back
+                                Nail
                             </Button>
-                        ) : (
-                            <></>
-                        )}
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => {
+                                    setServiceChoice(false);
+                                }}
+                                id="booking-nails-service"
+                                className="my-btn text-uppercase btn-primary-outline btn btn-outline"
+                            >
+                                Lashes
+                            </Button>
+                        </div>
+
+                        <div className="booking-list-item">
+                            {serviceChoice
+                                ? services
+                                      ?.find((service) => service.serviceName === 'Nail')
+                                      ?.childs?.map((item, index) => {
+                                          return (
+                                              <div
+                                                  className="booking-item-form"
+                                                  key={index}
+                                                  onClick={() => {
+                                                      setStep(3);
+                                                      validation.setFieldValue('booking.serviceId', item?.serviceId);
+                                                  }}
+                                              >
+                                                  <div className="booking-item-title">{item?.serviceName}</div>
+                                                  <div className="booking-item-price">{item?.price}$</div>
+                                              </div>
+                                          );
+                                      })
+                                : services
+                                      ?.find((service) => service.serviceName === 'Lash')
+                                      ?.childs?.map((item, index) => {
+                                          return (
+                                              <div
+                                                  className="booking-item-form"
+                                                  key={index}
+                                                  onClick={() => {
+                                                      setStep(3);
+                                                      validation.setFieldValue('booking.serviceId', item?.serviceId);
+                                                  }}
+                                              >
+                                                  <div className="booking-item-title">{item?.serviceName}</div>
+                                                  <div className="booking-item-price">{item?.price}$</div>
+                                              </div>
+                                          );
+                                      })}
+                        </div>
                     </div>
                 </div>
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
+                    onClick={() => setStep(1)}
+                >
+                    Back
+                </Button>
+            </div>
+        </div>
+    );
+}
+function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
+    return (
+        <div>
+            <div className="booking-component">
+                <div>
+                    <Booking
+                        activeDate={validation.values.booking.checkinDate}
+                        initialTimeRange={[
+                            ['8:30', '9:30'],
+                            ['9:30', '10:30'],
+                            ['10:30', '11:30'],
+                            ['11:30', '12:30'],
+                            ['13:30', '14:30'],
+                            ['14:30', '15:30'],
+                            ['15:30', '16:30'],
+                            ['16:30', '17:30'],
+                            ['17:30', '18:30'],
+                        ]}
+                        onChangeDate={onChangeDate}
+                        onChangeTimeStart={onChangeTimeStart}
+                        onChangeTimeEnd={onChangeTimeEnd}
+                    ></Booking>
+                </div>
+            </div>
+            <div className="booking-component-button-done">
+                <button
+                    type="submit"
+                    className="my-btn text-uppercase px-5  btn-primary-outline btn btn-outline"
+                    // onClick={() => validation.handleSubmit()}
+                >
+                    Done
+                </button>
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5 mx-4"
+                    onClick={() => setStep(2)}
+                >
+                    Back
+                </Button>
             </div>
         </div>
     );

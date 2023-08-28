@@ -26,3 +26,13 @@ export const GET_TESTIMONIAL = '/api/testimonial';
 export const POST_TESTIMONIAL = '/api/testimonial';
 export const PUT_TESTIMONIAL = '/api/testimonial';
 export const DELETE_TESTIMONIAL = '/api/testimonial';
+// 6. Customer
+export const GET_CUSTOMER = '/api/customer';
+export const POST_CUSTOMER = '/api/customer';
+export const DELETE_CUSTOMER = '/api/customer';
+
+// 7. Booking
+export const POST_BOOKING = '/api/booking';
+
+// 8. Assign
+export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';

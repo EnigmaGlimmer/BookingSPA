@@ -1,33 +1,33 @@
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
-    GET_BOOKING,
-    POST_BOOKING,
-    POST_BOOKING_SUCCESS,
-    POST_BOOKING_FAILED,
-    PUT_BOOKING,
-    PUT_BOOKING_SUCCESS,
-    PUT_BOOKING_FAILED,
-    DELETE_BOOKING,
-    DELETE_BOOKING_SUCCESS,
-    DELETE_BOOKING_FAILED,
+    GET_CUSTOMER,
+    POST_CUSTOMER,
+    POST_CUSTOMER_SUCCESS,
+    POST_CUSTOMER_FAILED,
+    PUT_CUSTOMER,
+    PUT_CUSTOMER_SUCCESS,
+    PUT_CUSTOMER_FAILED,
+    DELETE_CUSTOMER,
+    DELETE_CUSTOMER_SUCCESS,
+    DELETE_CUSTOMER_FAILED,
 } from './actionType';
 
 const INIT_STATE = {
-    booking: [],
+    customer: [],
     new: null,
     error: null,
     loading: false,
 };
 
-const Booking = (state = INIT_STATE, action) => {
+const Customer = (state = INIT_STATE, action) => {
     switch (action.type) {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
-                case GET_BOOKING:
+                case GET_CUSTOMER:
                     return {
                         ...state,
-                        booking: action.payload.result,
+                        customer: action.payload.data,
                     };
 
                 default:
@@ -36,40 +36,39 @@ const Booking = (state = INIT_STATE, action) => {
 
         case API_RESPONSE_ERROR:
             switch (action.payload.actionType) {
-                case GET_BOOKING:
+                case GET_CUSTOMER:
                     return {
                         ...state,
-                        booking: action.payload.result,
+                        customer: action.payload.data,
                     };
 
                 default:
                     return state;
             }
-        case POST_BOOKING_SUCCESS:
+        case POST_CUSTOMER_SUCCESS:
             return {
                 ...state,
-                new: action.payload.result,
-                booking: action.payload.data,
+                customer: [...state.customer, action.payload.asset],
+                new: action.payload.asset,
             };
-        case POST_BOOKING_FAILED:
-        case POST_BOOKING:
+        case POST_CUSTOMER_FAILED:
             return {
                 ...state,
-                booking: action.payload.error,
+                error: action.payload.error,
             };
-        case PUT_BOOKING_SUCCESS:
+        case PUT_CUSTOMER_SUCCESS:
             return {
                 ...state,
-                booking: action.payload.data,
+                customer: action.payload.data,
             };
-        case PUT_BOOKING_FAILED:
+        case PUT_CUSTOMER_FAILED:
             return {
                 ...state,
-                booking: action.payload.error,
+                customer: action.payload.data,
             };
         default:
             return state;
     }
 };
 
-export default Booking;
+export default Customer;

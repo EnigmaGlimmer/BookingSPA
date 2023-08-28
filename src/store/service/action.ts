@@ -36,7 +36,13 @@ export const getError = (actionType: string, error: string) => ({
 
 // 2. Create new SERVICE
 
-export const postService = (asset: { serviceName: string; parentId?: number; createdDate: Date }) => {
+export const postService = (asset: {
+    serviceName: string;
+    parentId?: number;
+    createdDate: Date;
+    price: number;
+    promotion: any;
+}) => {
     return {
         type: POST_SERVICE,
         payload: asset,
