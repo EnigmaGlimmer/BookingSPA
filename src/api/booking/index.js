@@ -29,3 +29,6 @@ export const assignBooking = (customer, booking) => {
             return postBooking(submitBooking);
         });
 };
+export const getBookingList = (request) => {
+    return api.get(url.GET_BOOKING, request);
+};

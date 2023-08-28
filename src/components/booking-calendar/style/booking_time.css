@@ -21,12 +21,15 @@
     cursor: pointer;
 }
 
-.space-time-button:hover,
-.space-time-button[data-active='true'] {
+.space-time-button:hover {
     background-color: var(--clr-primary-yellow);
     color: #fff;
 }
 
+.space-time-button[data-active='true'] {
+    opacity: 0.5;
+    user-select: none;
+}
 .space-time-info {
     margin: 10px 20px;
     margin-bottom: 0;

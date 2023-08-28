@@ -1,8 +1,21 @@
 import moment from 'moment';
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBooking } from '../../../store/actions';
 
 function AdminBooking() {
+    const dispatch = useDispatch();
+    const { bookings } = useSelector((state) => {
+        return {
+            bookings: state.Booking.bookings,
+        };
+    });
+    React.useEffect(() => {
+        dispatch(getBooking);
+    }, [dispatch]);
+
+    console.log(bookings);
     return (
         <section className="container">
             <h3>Booking</h3>
@@ -16,18 +29,22 @@ function AdminBooking() {
                     <th>Actions</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <img src="" alt=""></img>
-                            usergmailtest@gmail.com
-                        </td>
-                        <td>{moment().format('MMMM DD, YYYY')}</td>
-                        <td>08:00 - 9:12</td>
-                        <td>
-                            <Button variant="outline">Not available</Button>
-                        </td>
-                    </tr>
+                    {(bookings || []).map((booking) => {
+                        return (
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <img src="" alt=""></img>
+                                    usergmailtest@gmail.com
+                                </td>
+                                <td>{moment().format('MMMM DD, YYYY')}</td>
+                                <td>08:00 - 9:12</td>
+                                <td>
+                                    <Button variant="outline">Not available</Button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
 

@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
 import {
-    getSuccess,
-    getError,
+    getBookingSuccess,
+    getBookingError,
     postBookingSuccess,
     postBookingError,
     putBookingSuccess,
@@ -16,17 +16,23 @@ import { GET_BOOKING, POST_BOOKING, PUT_BOOKING } from './actionType';
 
 // API
 import {
-    getBooking as getBookingAPI,
+    getBookingList as getBookingListAPI,
     postBooking as postBookingAPI,
     updateBooking as updateBookingAPI,
 } from '../../api';
 
 function* getBooking() {
     try {
-        const response = yield call(getBookingAPI);
-        yield put(getSuccess(GET_BOOKING, response?.result || []));
+        const response = yield call(getBookingListAPI, {
+            skip: 0,
+            take: 30,
+            orderBy: 'CheckinDate',
+            searchBy: 'None',
+        });
+
+        yield put(getBookingSuccess(GET_BOOKING, Array.isArray(response) ? response : []));
     } catch (error) {
-        yield put(getError(GET_BOOKING, error));
+        yield put(getBookingError(GET_BOOKING, error));
     }
 }
 
