@@ -13,6 +13,10 @@ export const getCustomer = (request, id) => {
     return axiosInstance;
 };
 
+export const searchCustomer = (request) => {
+    return api.get(url.SEARCH_CUSTOMER, request);
+};
+
 export const postCustomer = (body) => {
     const axiosInstance = api.create(url.POST_CUSTOMER, body);
     return axiosInstance;

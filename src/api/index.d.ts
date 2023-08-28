@@ -197,9 +197,16 @@ type CreateCustomerDTO = {
     customerEmail: string;
     customerPhone: string;
 };
+type SearchCustomerDTO = {
+    email: string;
+    phone: string;
+    id: number;
+};
 export declare const postCustomer: (body: CreateCustomerDTO) => Promise<APIResponse<CustomerDTO>>;
 
-// 6. Booking
+export declare const searchCustomer: (request: SearchCustomerDTO) => Promise<APIResponse<CustomerDTO>>;
+
+// 7. Booking
 type BookingDTO = {
     customerId: number;
     customerName: string;
@@ -210,6 +217,7 @@ type CreateBookingDTO = {
     createdDate: Date;
     isCancelled: boolean;
     serviceId: number;
+    checkinDate: string;
     slot: {
         start_Hour: string;
         end_Hour: string;

@@ -1,6 +1,5 @@
 import React from 'react';
 // PropTypes
-import PropTypes from 'prop-types';
 import './style/booking_time.css';
 
 const SpaceTimeFrame = ({
@@ -16,6 +15,8 @@ const SpaceTimeFrame = ({
     onChangeTimeStart,
     onChangeTimeEnd,
 }) => {
+    const [selected, setSelected] = React.useState(null);
+
     return (
         <div className="space-time">
             <h4 className="space-time-title">Choice Time</h4>
@@ -26,10 +27,13 @@ const SpaceTimeFrame = ({
             <div className="space-time-content">
                 {initialSpaceTimes.map((space, key) => {
                     return (
-                        <button
+                        <span
                             className="space-time-button"
+                            data-active={key === selected}
                             key={key}
                             onClick={() => {
+                                setSelected(key);
+
                                 let startTime = space[0];
 
                                 onChangeTimeStart(startTime);
@@ -40,7 +44,7 @@ const SpaceTimeFrame = ({
                             }}
                         >
                             {space.join(' - ')}
-                        </button>
+                        </span>
                     );
                 })}
             </div>

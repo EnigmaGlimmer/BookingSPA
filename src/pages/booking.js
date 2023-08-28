@@ -1,22 +1,35 @@
 import React from 'react';
+
+// Assets
 import introBig from '../images/introBig.png';
 import introSmall from '../images/introSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import './style/booking.css';
-import { Button } from 'react-bootstrap';
-import { useFormik } from 'formik';
-import Form from 'react-bootstrap/Form';
-import { GoDotFill } from 'react-icons/go';
-import { GrFormCheckmark } from 'react-icons/gr';
-import Booking from '../components/booking-calendar/booking';
-import * as yup from 'yup';
-import { MdOutlineMailOutline } from 'react-icons/md';
 
-import { assignBooking, postCustomer } from '../api';
+// Redux store
+import { useDispatch, useSelector } from 'react-redux';
 import { getService } from '../store/service/action';
 
-import { postBooking } from '../store/booking/action';
+// Custom style
+import './style/booking.css';
+
+// Bootstrap component
+import { Button, Form } from 'react-bootstrap';
+// Component
+import Booking from '../components/booking-calendar/booking';
+
+// Formik handlers
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+// React Icons
+import { GoDotFill } from 'react-icons/go';
+import { GrFormCheckmark } from 'react-icons/gr';
+import { MdOutlineMailOutline } from 'react-icons/md';
+
+// API
+import { assignBooking } from '../api';
+
+// Helpers
 import { toast } from 'react-toastify';
 import moment from 'moment';
 
@@ -27,10 +40,11 @@ let bookingSchema = yup.object().shape({
         customerEmail: yup.string().email().required('Email is required field'),
     }),
     booking: yup.object().shape({
-        start_Hour: yup.string().required('Start Hour is require field'),
-        end_Hour: yup.string().required('End Day is require field'),
+        slot: yup.object().shape({
+            start_Hour: yup.string().required('Start Hour is require field'),
+            end_Hour: yup.string().required('End Day is require field'),
+        }),
     }),
-
     // messenger: yup.string().required('Messenger is required field'),
 });
 function BookingPage() {
@@ -124,6 +138,8 @@ const StepComponent = ({ step, setStep }) => {
                     // customerId: newCustomer.customerId,
                     createdDate: new Date(),
                     serviceId: values.booking.serviceId,
+                    isCancelled: false,
+                    checkinDate: values.booking.checkinDate,
                     slot: {
                         start_Hour: values.booking.slot.start_Hour,
                         end_Hour: values.booking.slot.end_Hour,
@@ -131,10 +147,18 @@ const StepComponent = ({ step, setStep }) => {
                 },
             )
                 .then((response) => {
-                    console.log(response);
-                    toast.success('Post successfully', {
-                        autoClose: 3000,
-                    });
+                    if (response?.data?.isSuccess === false) {
+                        response?.data?.errors?.forEach?.((msg) => {
+                            toast.error(msg, {
+                                autoClose: 3000,
+                            });
+                        });
+                        return;
+                    } else {
+                        toast.success('Post successfully', {
+                            autoClose: 3000,
+                        });
+                    }
                 })
                 .catch((error) => {
                     toast.error(error);
@@ -144,7 +168,6 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2
@@ -153,7 +176,6 @@ const StepComponent = ({ step, setStep }) => {
                         validation={validation}
                         serviceChoice={serviceChoice}
                         setServiceChoice={setServiceChoice}
-                        services={services}
                     ></Step2>
                 )) ||
                 (step === 3 && (
@@ -175,7 +197,7 @@ const StepComponent = ({ step, setStep }) => {
 
 export function Step1({ setStep, validation }) {
     return (
-        <form className="intro-form" onSubmit={validation?.handleSubmit}>
+        <div className="intro-form">
             <div className="intro-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
@@ -262,14 +284,9 @@ export function Step1({ setStep, validation }) {
                             className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
                             onClick={() => {
                                 const allowNext =
-                                    validation?.touched?.customer?.customerName &&
-                                    !validation?.errors?.customer?.customerName &&
-                                    validation?.touched?.customer?.customerPhone &&
-                                    !validation?.errors?.customer?.customerPhone &&
-                                    validation?.touched?.customer?.customerEmail &&
-                                    !validation?.errors?.customer?.customerEmail;
-
-                                console.log(allowNext);
+                                    !!validation?.values?.customer?.customerName &&
+                                    !!validation?.values?.customer?.customerPhone &&
+                                    !!validation?.values?.customer?.customerEmail;
 
                                 if (allowNext) setStep(2);
                             }}
@@ -282,7 +299,7 @@ export function Step1({ setStep, validation }) {
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
             </div>
-        </form>
+        </div>
     );
 }
 function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
@@ -340,7 +357,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
 
                         <div className="booking-list-item">
                             {serviceChoice
-                                ? services
+                                ? (services || [])
                                       ?.find((service) => service.serviceName === 'Nail')
                                       ?.childs?.map((item, index) => {
                                           return (
@@ -357,7 +374,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                                               </div>
                                           );
                                       })
-                                : services
+                                : (services || [])
                                       ?.find((service) => service.serviceName === 'Lash')
                                       ?.childs?.map((item, index) => {
                                           return (
@@ -394,36 +411,35 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
 }
 function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
     return (
-        <div>
+        <>
             <div className="booking-component">
-                <div>
-                    <Booking
-                        activeDate={validation.values.booking.checkinDate}
-                        initialTimeRange={[
-                            ['8:30', '9:30'],
-                            ['9:30', '10:30'],
-                            ['10:30', '11:30'],
-                            ['11:30', '12:30'],
-                            ['13:30', '14:30'],
-                            ['14:30', '15:30'],
-                            ['15:30', '16:30'],
-                            ['16:30', '17:30'],
-                            ['17:30', '18:30'],
-                        ]}
-                        onChangeDate={onChangeDate}
-                        onChangeTimeStart={onChangeTimeStart}
-                        onChangeTimeEnd={onChangeTimeEnd}
-                    ></Booking>
-                </div>
+                <Booking
+                    activeDate={validation.values.booking.checkinDate}
+                    initialTimeRange={[
+                        ['8:30', '9:30'],
+                        ['9:30', '10:30'],
+                        ['10:30', '11:30'],
+                        ['11:30', '12:30'],
+                        ['13:30', '14:30'],
+                        ['14:30', '15:30'],
+                        ['15:30', '16:30'],
+                        ['16:30', '17:30'],
+                        ['17:30', '18:30'],
+                    ]}
+                    onChangeDate={onChangeDate}
+                    onChangeTimeStart={onChangeTimeStart}
+                    onChangeTimeEnd={onChangeTimeEnd}
+                ></Booking>
             </div>
             <div className="booking-component-button-done">
-                <button
+                <Button
                     type="submit"
+                    variant="outline"
                     className="my-btn text-uppercase px-5  btn-primary-outline btn btn-outline"
                     // onClick={() => validation.handleSubmit()}
                 >
                     Done
-                </button>
+                </Button>
                 <Button
                     type="button"
                     variant="outline"
@@ -433,7 +449,7 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
                     Back
                 </Button>
             </div>
-        </div>
+        </>
     );
 }
 function BookingCompleted() {
