@@ -55,5 +55,9 @@
                 ]
             }
         ]
+    },
+    "bookingAbout": {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "image": ""
     }
 }

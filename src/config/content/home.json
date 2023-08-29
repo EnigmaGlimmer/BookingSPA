@@ -30,6 +30,9 @@
             "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
         }
     ],
+    "introServices": {
+        "title": "Our service is always developing the most perfect to serve women"
+    },
     "nailService": {
         "imagePrimary": "../images/otherBig.png",
         "imageSecondary": "../images/otherSmall.png",

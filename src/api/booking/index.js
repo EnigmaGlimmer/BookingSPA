@@ -32,3 +32,7 @@ export const assignBooking = (customer, booking) => {
 export const getBookingList = (request) => {
     return api.get(url.GET_BOOKING, request);
 };
+
+export const deleteBooking = (id) => {
+    return api.delete(`${url.DELETE_BOOKING}/${id}`);
+};

@@ -2,8 +2,8 @@
     "banner": {
         "image": ""
     },
-    "product": {
-        "name": "Services Name",
+    "serviceProduct": {
+        "title": "Services Name",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget magna done fermentum iaculis eu non diam phasellus vestibulum. Id donec ultrices tincidunt arcu. Malesuada proin libero nunc consequat interdum varius sit amet. Eu ultrices vitae auctor eu augue ut lectus. Suscipit tellus mauris a diam. Viverra orci sagittis eu volutpat odio facilisis etmagnis dis parturient mananis interdum arcu ac tortor dignissim convallis aenean.",
         "list": [
             {
@@ -22,5 +22,8 @@
                 "content": ""
             }
         ]
+    },
+    "serviceBooking": {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
     }
 }

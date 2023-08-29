@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBooking } from '../../../store/actions';
+import { deleteBooking, getBookings } from '../../../store/actions';
 
 function AdminBooking() {
     const dispatch = useDispatch();
@@ -12,10 +12,11 @@ function AdminBooking() {
         };
     });
     React.useEffect(() => {
-        dispatch(getBooking);
+        dispatch(getBookings());
     }, [dispatch]);
-
-    console.log(bookings);
+    const handleDeleteBooking = (id) => {
+        dispatch(deleteBooking(id));
+    };
     return (
         <section className="container">
             <h3>Booking</h3>
@@ -24,6 +25,7 @@ function AdminBooking() {
                 <thead>
                     <th>ID</th>
                     <th>Email</th>
+                    <th>Phone Number</th>
                     <th>Booking Date</th>
                     <th>Booking Time</th>
                     <th>Actions</th>
@@ -32,15 +34,17 @@ function AdminBooking() {
                     {(bookings || []).map((booking) => {
                         return (
                             <tr>
-                                <td>1</td>
+                                <td>{booking.bookingId}</td>
+                                <td>{booking.customers[0].customerEmail}</td>
+                                <td>{booking.customers[0].customerPhone}</td>
+                                <td>{moment(booking.checkinDate).format('yyyy-MM-DD')}</td>
                                 <td>
-                                    <img src="" alt=""></img>
-                                    usergmailtest@gmail.com
+                                    {booking.slot.start_Hour.slice(0, 5)} - {booking.slot.end_Hour.slice(0, 5)}
                                 </td>
-                                <td>{moment().format('MMMM DD, YYYY')}</td>
-                                <td>08:00 - 9:12</td>
                                 <td>
-                                    <Button variant="outline">Not available</Button>
+                                    <Button variant="danger" onClick={handleDeleteBooking(booking.bookingId)}>
+                                        Delete
+                                    </Button>
                                 </td>
                             </tr>
                         );

@@ -10,6 +10,7 @@ import aboutBooking from '../images/aboutBooking.png';
 import './style/service.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
+import service from '../config/content/service.json';
 const listImg = [
     aboutDaisy1,
     aboutDaisy2,
@@ -20,27 +21,21 @@ const listImg = [
     aboutDaisy3,
     aboutDaisy4,
 ];
+
 function Service() {
     return (
         <div>
             {/* Service Banner */}
-            <div className="service-banner py-5">
+            <div className="service-banner py-5" id="st-banner">
                 <div className="service-banner-form">
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
                 </div>
             </div>
             {/* Service Name */}
-            <div className="service-name">
+            <div className="service-name" id="st-serviceProduct">
                 <div className="service-name-form">
-                    <div className="service-name-title">Service Name</div>
-                    <p className="service-name-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Eget magna done fermentum iaculis eu non diam phasellus
-                        vestibulum. Id donec ultrices tincidunt arcu. Malesuada proin libero nunc consequat interdum
-                        varius sit amet. Eu ultrices vitae auctor eu augue ut lectus. Suscipit tellus mauris a diam.
-                        Viverra orci sagittis eu volutpat odio facilisis etmagnis dis parturient mananis interdum arcu
-                        ac tortor dignissim convallis aenean.
-                    </p>
+                    <div className="service-name-title">{service.product.title}</div>
+                    <p className="service-name-content">{service.product.content}</p>
                     <div className="service-name-content-list">
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
@@ -69,12 +64,12 @@ function Service() {
                 </div>
             </div>
             {/* Daisy Images */}
-            <div className="about-image-store">
+            <div className="about-image-store" id="st-listImage">
                 <div className="about-image-store-form">
                     <div className="about-image-store-content">
-                        <div className="about-image-store-title">Little Daisy Stores</div>
+                        <div className="about-image-store-title">{service.listImage.title}</div>
                         <div className="about-image-store-address">
-                            ADD: 198 Lorem ipsum Street, MB, AU <span className="about-image-store-btn">VIEW MAPS</span>
+                            {service.listImage.content} <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
                     </div>
                     <div className="about-image-store-list">
@@ -124,7 +119,7 @@ function Service() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="about-booking">
+            <div className="about-booking" id="st-serviceBooking">
                 <div className="about-booking-deco booking-f">
                     <img src={homeFlowerDeco} alt="" width={'100%'} />
                 </div>
@@ -132,7 +127,7 @@ function Service() {
                     <img src={aboutBooking} alt="" width={'100%'} />
                 </div>
                 <div className="about-booking-content">
-                    <div className="about-booking-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+                    <div className="about-booking-title">{service.serviceBooking.title}</div>
                     <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
                 </div>
             </div>

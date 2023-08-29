@@ -35,7 +35,7 @@ function Home() {
     return (
         <section>
             {/* Banner */}
-            <div className="banner">
+            <div className="banner" id="st-hero">
                 <h1 className="banner-title">{home.hero.h1}</h1>
                 <div className="banner-img">
                     <div className="banner-img-big">
@@ -53,7 +53,7 @@ function Home() {
                 <div></div>
             </div>
             {/* Introduce */}
-            <div className="intro">
+            <div className="intro" id="st-intro">
                 <div className="intro-bg"></div>
                 <div className="intro-form">
                     <div className="intro-img">
@@ -97,7 +97,7 @@ function Home() {
                 </div>
             </div>
             {/* Three Service */}
-            <div className="three">
+            <div className="three" id="st-messages">
                 <div className="three-form">
                     {home.messages.map((item, index) => {
                         return (
@@ -127,13 +127,13 @@ function Home() {
                 </div>
             </div>
             {/* Service Quality */}
-            <div className="quality">
+            <div className="quality" id="st-introServices">
                 <div className="quality-form">
-                    <h1 className="quality-title">{home.nailService.title}</h1>
+                    <h1 className="quality-title">{home.introServices.title}</h1>
                 </div>
             </div>
             {/* Nail Services */}
-            <div className="other">
+            <div className="other" id="st-nailService">
                 <div className="other-bg">
                     <div className="other-img-flower">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -189,7 +189,7 @@ function Home() {
                 </div>
             </div>
             {/* Lashes Services */}
-            <div className="lashes">
+            <div className="lashes" id="st-lashesService">
                 <div className="lashes-bg"></div>
                 <div className="lashes-form">
                     <div className="lashes-content">
@@ -205,21 +205,6 @@ function Home() {
                                         </div>
                                     );
                                 })}
-                                {/* <div className="lashes-list-item">
-                                    <p>Eyebrow laminations</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="lashes-list-item">
-                                    <p>Tin tin eyebrow and lashes</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="lashes-list-item">
-                                    <p>Waxing eyebrows</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div> */}
                             </div>
                             <div>
                                 <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
@@ -266,7 +251,7 @@ function Home() {
                 <BookingPage></BookingPage>
             </div>
             {/* Gallery */}
-            <div className="gallery">
+            <div className="gallery" id="st-galleries">
                 <div className="gallery-form">
                     <h1 className="gallery-title">Gallery</h1>
                     <div className="gallery-img-form">
@@ -302,7 +287,7 @@ function Home() {
                 </div>
             </div>
             {/* Comment and Review */}
-            <div className="review py-5">
+            <div className="review py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">{home.testimonials.subTitle}</h1>
@@ -347,7 +332,7 @@ function Home() {
                 </div>
             </div>
             {/* Comment and Review Responsive*/}
-            <div className="review-res py-5">
+            <div className="review-res py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>

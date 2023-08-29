@@ -38,3 +38,4 @@ export const GET_BOOKING = '/api/booking';
 
 // 8. Assign
 export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';
+export const DELETE_BOOKING = '/api/booking';

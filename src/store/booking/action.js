@@ -14,7 +14,7 @@ import {
 } from './actionType';
 
 // 1. Get booking
-export const getBooking = () => ({
+export const getBookings = () => ({
     type: GET_BOOKING,
 });
 
@@ -83,10 +83,10 @@ export const deleteBooking = () => ({
     payload: {},
 });
 
-export const deleteBookingSuccess = (data) => ({
+export const deleteBookingSuccess = (id) => ({
     type: DELETE_BOOKING_SUCCESS,
     payload: {
-        data,
+        id,
     },
 });
 

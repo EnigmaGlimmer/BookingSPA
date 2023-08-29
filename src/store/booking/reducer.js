@@ -71,6 +71,15 @@ const Booking = (state = INIT_STATE, action) => {
                 ...state,
                 bookings: action.payload.error,
             };
+        case DELETE_BOOKING_SUCCESS:
+            return {
+                ...state,
+                bookings: state.bookings.filter((item) => item.bookingId !== action.payload.id),
+            };
+        case DELETE_BOOKING_FAILED:
+            return {
+                error: action.payload.error,
+            };
         default:
             return state;
     }

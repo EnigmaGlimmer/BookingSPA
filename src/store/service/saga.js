@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
 import {
-    getSuccess,
-    getError,
+    getServiceSuccess,
+    getServiceError,
     postServiceSuccess,
     postServiceError,
     putServiceSuccess,
@@ -31,9 +31,9 @@ function* getService() {
             take: 10,
         });
 
-        yield put(getSuccess(GET_SERVICE_LIST, response || []));
+        yield put(getServiceSuccess(GET_SERVICE_LIST, response || []));
     } catch (error) {
-        yield put(getError(GET_SERVICE_LIST, error));
+        yield put(getServiceError(GET_SERVICE_LIST, error));
     }
 }
 
@@ -70,7 +70,6 @@ function* onUpdateService({ payload: updatedService }) {
 
 function* onDeleteService({ payload: { serviceId } }) {
     try {
-        console.log(serviceId);
         yield call(deleteServiceAPI, serviceId);
         yield put(deleteServiceSuccess(serviceId));
     } catch (error) {
