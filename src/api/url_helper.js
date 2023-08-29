@@ -37,3 +37,8 @@ export const POST_BOOKING = '/api/booking';
 
 // 8. Assign
 export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';
+
+// 9. Setting
+export const GET_SETTING = '/api/settings';
+export const POST_SETTING = '/api/settings';
+export const PUT_SETTING = '/api/settings';

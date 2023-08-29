@@ -1,6 +1,7 @@
 {
     "hero": {
-        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit"
+        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit",
+        "content": ""
     },
     "intro": {
         "short": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",

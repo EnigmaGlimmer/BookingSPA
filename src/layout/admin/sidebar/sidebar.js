@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function Sidebar({ children }) {
     return (
         <div>
-            <Row className="h-100" id="sidebar-container">
+            <Row className="h-100" id="sidebar-container" style={{ flexWrap: 'nowrap' }}>
                 <Col sm="auto" id="sidebar">
                     <ul className="list-style-none ">
                         <li>

@@ -35,7 +35,7 @@ function Home() {
     return (
         <section>
             {/* Banner */}
-            <div className="banner my-5 pb-5">
+            <div className="banner my-5 pb-5" id="st-banner">
                 <h1 className="banner-title">{home.hero.h1}</h1>
                 <div className="banner-img">
                     <div className="banner-img-big">
@@ -53,7 +53,7 @@ function Home() {
                 <div></div>
             </div>
             {/* Introduce */}
-            <div className="intro my-5">
+            <div className="intro my-5" id="st-into">
                 <div className="intro-bg"></div>
                 <div className="intro-form">
                     <div className="intro-img">
@@ -103,7 +103,7 @@ function Home() {
                 </div>
             </div>
             {/* Three Service */}
-            <div className="three py-5">
+            <div className="three py-5" id="st-three-service">
                 <div className="three-form">
                     <div className="nail-care">
                         <div className="nail-care-img">
@@ -129,7 +129,7 @@ function Home() {
                 </div>
             </div>
             {/* Service Quality */}
-            <div className="quality">
+            <div className="quality" id="st-service-quality">
                 <div className="quality-form">
                     <h1 className="quality-title">Our service is always developing the most perfect to serve women</h1>
                     {/* <div className="quality-item-form">
@@ -180,7 +180,7 @@ function Home() {
                 </div>
             </div>
             {/* Nail Services */}
-            <div className="other">
+            <div className="other" id="st-nail-services">
                 <div className="other-bg">
                     <div className="other-img-flower">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -232,7 +232,7 @@ function Home() {
                 </div>
             </div>
             {/* Lashes Services */}
-            <div className="lashes">
+            <div className="lashes" id="st-lashes-services">
                 <div className="lashes-bg"></div>
                 <div className="lashes-form">
                     <div className="lashes-content">
@@ -283,7 +283,7 @@ function Home() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="booking py-5 my-5">
+            <div className="booking py-5 my-5" id="st-nail-booking">
                 {/* <div className="booking-form">
                     <div className="booking-time-form">
                         <div className="booking-intro">Dedication</div>
@@ -305,7 +305,7 @@ function Home() {
                 <Step1></Step1>
             </div>
             {/* Gallery */}
-            <div className="gallery">
+            <div className="gallery" id="st-gallery">
                 <div className="gallery-form">
                     <h1 className="gallery-title">Gallery</h1>
                     <div className="gallery-img-form">
@@ -341,7 +341,7 @@ function Home() {
                 </div>
             </div>
             {/* Comment and Review */}
-            <div className="review py-5">
+            <div className="review py-5" id="st-comment-and-review">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>
@@ -416,7 +416,7 @@ function Home() {
                 </div>
             </div>
             {/* Comment and Review Responsive*/}
-            <div className="review-res py-5">
+            <div className="review-res py-5" id="st-responsive-comment-and-review">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>

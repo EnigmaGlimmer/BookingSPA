@@ -233,3 +233,28 @@ export declare const assignBooking: (
     customer: CreateCustomerDTO,
     booking: CreateBookingDTO,
 ) => Promise<APIResponse<BookingCustomerDTO>>;
+
+// 8. Setting
+type SettingType = 'home' | 'about' | 'booking' | 'testimonial';
+export declare const getSetting: (
+    request: {
+        type: SettingType;
+    },
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<object>>;
+
+export declare const postSetting: (
+    body: {
+        body: object;
+        page: SettingType;
+    },
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<object>>;
+
+export declare const putSetting: (
+    request: {
+        type: SettingType;
+    },
+    body: object,
+    config: AxiosRequestConfig,
+) => Promise<APIResponse<object>>;
