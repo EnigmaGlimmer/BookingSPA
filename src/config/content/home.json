@@ -1,75 +1,47 @@
 {
     "hero": {
-        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit",
-        "primaryImage": "../images/bannerBig.png",
-        "secondaryImage": "../images/bannerSmall.png"
+        "title": "Lorem ipsum dolor sit, consectetur adipiscing elit",
+        "subtitle": "",
+        "content": "",
+        "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
     },
     "intro": {
-        "short": "About Little Daisy",
-        "firstTitle": "Perfect beauty service",
-        "firstSubTitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-        "secondTitle": "Lorem ipsum dolor sit amet",
-        "secondSubTitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-        "primaryImage": "../images/bannerBig.png",
-        "secondaryImage": "../images/bannerSmall.png"
+        "subtitle": "About Little Daisy",
+        "title": "Perfect beauty service",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "child": [
+            {
+                "title": "Lorem ipsum dolor sit amet",
+                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            }
+        ],
+        "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
     },
-    "messages": [
-        {
-            "image": "../images/nailCare.png",
-            "title": "Nail Care",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        },
-        {
-            "image": "../images/nailArt.png",
-            "title": "Nail Art",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        },
-        {
-            "image": "../images/bestLashes.png",
-            "title": "Best Lashes",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        }
-    ],
+    "messages1": {
+        "images": ["../images/nailCare.png"],
+        "title": "Nail Care",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+    },
+    "messages2": {
+        "images": ["../images/nailCare.png"],
+        "title": "Nail Art",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+    },
+    "messages3": {
+        "images": ["../images/nailCare.png"],
+        "title": "Best Lashes",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+    },
     "introServices": {
         "title": "Our service is always developing the most perfect to serve women"
     },
-    "nailService": {
-        "imagePrimary": "../images/otherBig.png",
-        "imageSecondary": "../images/otherSmall.png",
-        "title": "Our service is always developing the most perfect to serve women",
-        "packages": [
-            { "name": "Nails Services", "price": 2.05, "id": 1 },
-            { "name": "Lashes Services", "price": 2.05, "id": 2 },
-            { "name": "Lashes 2 Services", "price": 2.05, "id": 2 }
-        ]
+    "galleries": {
+        "image": []
     },
-    "lashesService": {
-        "imagePrimary": "../images/lashesService.png",
-        "imageSecondary": "../images/lashesServiceBottom.png",
-        "title": "Our service is always developing the most perfect to serve women",
-        "packages": [
-            { "name": "Lashes 2 Services", "price": 2.05, "id": 1 },
-            { "name": "Lashes 3 Services", "price": 2.05, "id": 2 }
-        ]
-    },
-    "galleries": [
-        {
-            "galleryFirst1": "../images/galleryFirst1.png",
-            "galleryFirst2": "../images/galleryFirst2.png"
-        },
-        {
-            "gallerySecond1": "../images/gallerySecond1.png",
-            "gallerySecond2": "../images/gallerySecond2.png"
-        },
-        {
-            "galleryThird1": "../images/galleryThird1.png",
-            "galleryThird2": "../images/galleryThird2.png"
-        }
-    ],
     "testimonials": {
-        "subTitle": "TESTEMONIALS THOUGHTS",
+        "subtitle": "TESTEMONIALS THOUGHTS",
         "title": "Comments and Reviews",
-        "review": [
+        "child": [
             {
                 "image": "../images/reviewUser.png",
                 "title": "John Mad",

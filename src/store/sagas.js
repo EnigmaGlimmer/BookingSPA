@@ -11,6 +11,15 @@ import CustomerSaga from './customer/saga';
 
 import BookingSaga from './booking/saga';
 
+import SettingSaga from './settings/saga';
+
 export default function* rootSaga() {
-    yield all([fork(BlogSaga), fork(UploadSaga), fork(ServiceSaga), fork(CustomerSaga), fork(BookingSaga)]);
+    yield all([
+        fork(BlogSaga),
+        fork(UploadSaga),
+        fork(ServiceSaga),
+        fork(CustomerSaga),
+        fork(BookingSaga),
+        fork(SettingSaga),
+    ]);
 }

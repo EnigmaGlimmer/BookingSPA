@@ -1,4 +1,7 @@
 import React from 'react';
+
+import DOMPurify from 'dompurify';
+
 import './style/home.css';
 import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
 import bannerSmall from '../images/bannerSmall.png';
@@ -24,19 +27,40 @@ import reviewUser from '../images/reviewUser.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
-import { Booking } from '../components';
-import BookingPage, { Step1 } from './booking';
+
+import BookingPage from './booking';
 
 // Content
-import home from '../config/content/home.json';
+// import home from '../config/content/home.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSettingList } from '../store/settings/action';
 
 function Home() {
     document.title = 'Little Daisy - Home';
+    const dispatch = useDispatch();
+
+    const { home } = useSelector((state) => {
+        return {
+            home: state.Setting.setting.content.home,
+        };
+    });
+
+    React.useEffect(() => {
+        dispatch(getSettingList('home'));
+    }, [dispatch]);
+
     return (
         <section>
             {/* Banner */}
             <div className="banner" id="st-hero">
-                <h1 className="banner-title">{home.hero.h1}</h1>
+                <h1 className="banner-title">{home?.hero?.title}</h1>
+                <h2>{home?.hero?.subtitle}</h2>
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(home?.hero?.content),
+                    }}
+                ></p>
+
                 <div className="banner-img">
                     <div className="banner-img-big">
                         <img alt="banner" src={bannerBig} width={'100%'} />
@@ -72,13 +96,13 @@ function Home() {
                         </div>
                         <div className="intro-content-form">
                             <div>
-                                <h6>{home.intro.short}</h6>
-                                <h2 className="intro-title">{home.intro.firstTitle}</h2>
+                                <h6>{home.intro.subtitle}</h6>
+                                <h2 className="intro-title">{home.intro.title}</h2>
                             </div>
-                            <p>{home.intro.firstSubTitle}</p>
+                            <p>{home.intro.content}</p>
                             <div>
-                                <h5>{home.intro.secondTitle}</h5>
-                                <p>{home.intro.secondSubTitle}</p>
+                                <h5>{home.intro.child[0].title}</h5>
+                                <p>{home.intro.child[0].content}</p>
                             </div>
                             <div>
                                 <Button
@@ -97,33 +121,29 @@ function Home() {
                 </div>
             </div>
             {/* Three Service */}
-            <div className="three" id="st-messages">
+            <div className="three">
                 <div className="three-form">
-                    {home.messages.map((item, index) => {
-                        return (
-                            <div className="nail-care" key={index}>
-                                <div className="nail-care-img">
-                                    <img src={nailCare} alt="nail care" width={'100%'} />
-                                </div>
-                                <div className="nail-care-title">{item.title}</div>
-                                <p>{item.message}</p>
-                            </div>
-                        );
-                    })}
-                    {/* <div className="nail-care">
+                    <div className="nail-care" id="st-messages-1">
+                        <div className="nail-care-img">
+                            <img src={nailCare} alt="nail care" width={'100%'} />
+                        </div>
+                        <div className="nail-care-title">{home?.messages1?.title}</div>
+                        <p>{home?.message1?.content}</p>
+                    </div>
+                    <div className="nail-care" id="st-messages-2">
                         <div className="nail-care-img">
                             <img src={nailArt} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">{home.messages[1].title}</div>
-                        <p>{home.messages[1].message}</p>
+                        <div className="nail-care-title">{home?.messages2?.title}</div>
+                        <p>{home?.message2?.content}</p>
                     </div>
-                    <div className="nail-care">
+                    <div className="nail-care" id="st-messages-3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">{home.messages[2].title}</div>
-                        <p>{home.messages[2].message}</p>
-                    </div> */}
+                        <div className="nail-care-title">{home?.messages3?.title}</div>
+                        <p>{home?.message3?.content}</p>
+                    </div>
                 </div>
             </div>
             {/* Service Quality */}
@@ -154,15 +174,12 @@ function Home() {
                         <div className="other-content-form">
                             <h1 className="other-title">Nail Services</h1>
                             <div className="other-list">
-                                {home.nailService.packages.map((item, index) => {
-                                    return (
-                                        <div className="other-list-item" key={index}>
-                                            <p>{item.name}</p>
-                                            <div className="other-list-dashed"></div>
-                                            <p>{item.price}$</p>
-                                        </div>
-                                    );
-                                })}
+                                <div className="other-list-item">
+                                    <p>Nail</p>
+                                    <div className="other-list-dashed"></div>
+                                    <p>27$</p>
+                                </div>
+
                                 {/* <div className="other-list-item">
                                     <p>Eyebrow laminations</p>
                                     <div className="other-list-dashed"></div>
@@ -196,15 +213,11 @@ function Home() {
                         <div className="lashes-content-form">
                             <h1 className="lashes-title">Lashes Services</h1>
                             <div className="lashes-list">
-                                {home.lashesService.packages.map((item, index) => {
-                                    return (
-                                        <div className="other-list-item" key={index}>
-                                            <p>{item.name}</p>
-                                            <div className="other-list-dashed"></div>
-                                            <p>{item.price}$</p>
-                                        </div>
-                                    );
-                                })}
+                                <div className="other-list-item">
+                                    <p>Lashes</p>
+                                    <div className="other-list-dashed"></div>
+                                    <p>26$</p>
+                                </div>
                             </div>
                             <div>
                                 <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
@@ -290,7 +303,7 @@ function Home() {
             <div className="review py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
-                        <h1 className="review-intro">{home.testimonials.subTitle}</h1>
+                        <h1 className="review-intro">{home.testimonials.subtitle}</h1>
                         <div className="review-title">{home.testimonials.title}</div>
                     </div>
                     <div className="review-list">
@@ -312,7 +325,7 @@ function Home() {
                             modules={[EffectCoverflow, Pagination, Navigation]}
                             className="mySwiper"
                         >
-                            {home.testimonials.review.map((item, index) => {
+                            {home?.testimonials?.child?.map((item, index) => {
                                 return (
                                     <SwiperSlide className="review-slide" key={index}>
                                         {({ isActive }) => (
@@ -349,7 +362,7 @@ function Home() {
                             modules={[Navigation, Pagination, Autoplay]}
                             className="review-mySwiper"
                         >
-                            {home.testimonials.review.map((item, index) => {
+                            {home?.testimonials?.child?.map?.((item, index) => {
                                 return (
                                     <SwiperSlide className="review-slide" key={index}>
                                         {({ isActive }) => (
