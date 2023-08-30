@@ -13,7 +13,7 @@ import aboutBooking from '../images/aboutBooking.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
-
+import about from '../config/content/about.json';
 const listImg = [
     aboutDaisy1,
     aboutDaisy2,
@@ -28,17 +28,11 @@ export default function About() {
     document.title = 'Little Daisy - About';
     return (
         <section>
-            <div className="about-brand">
+            <div className="about-brand" id="st-intro">
                 <div className="about-brand-content-form">
                     <div className="about-brand-content-container">
-                        <div className="about-brand-title">
-                            We are <br />
-                            Little Daisy
-                        </div>
-                        <div className="about-brand-content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna.
-                        </div>
+                        <div className="about-brand-title">{about.intro.title}</div>
+                        <div className="about-brand-content">{about.intro.content}</div>
                     </div>
                     <div className="about-brand-img-flower-1 booking-f">
                         <img alt="brand" src={homeFlowerDeco} width={'100%'} />
@@ -52,21 +46,14 @@ export default function About() {
                 </div>
             </div>
             {/* Daisy Story */}
-            <div className="about-story">
+            <div className="about-story" id="st-story">
                 <div className="about-story-form">
                     <div className="about-story-item-1">
                         <img src={aboutStory1} alt="Brand" width={'100%'} />
                     </div>
                     <div className="about-story-item-2">
-                        <div className="about-story-title">Little Daisy Story</div>
-                        <div className="about-story-content">
-                            Successful brands know that storytelling is a powerful marketing tool. They know how to use
-                            stories to get their message across. But first, why brand stories? What famous brand stories
-                            are there? Because stories are the best weapon we have for eliminating noise Because it
-                            organizes information in an attractive way Because it is the most effective tool to
-                            influence the human brain Or simply put: Brand story in marketing is a filter that helps to
-                            simplify the message. And thanks to it, people will see us, hear us and understand us.
-                        </div>
+                        <div className="about-story-title">{about.story.title}</div>
+                        <div className="about-story-content">{about.story.content}</div>
                         <div className="about-story-img-flower booking-f">
                             <img src={homeFlowerDeco} alt="" width={'100%'} />
                         </div>
@@ -77,12 +64,13 @@ export default function About() {
                 </div>
             </div>
             {/* Daisy Images */}
-            <div className="about-image-store">
+            <div className="about-image-store" id="st-listImage">
                 <div className="about-image-store-form">
                     <div className="about-image-store-content">
-                        <div className="about-image-store-title">Little Daisy Stores</div>
+                        <div className="about-image-store-title">{about.listImage.title}</div>
                         <div className="about-image-store-address">
-                            ADD: 198 Lorem ipsum Street, MB, AU <span className="about-image-store-btn">VIEW MAPS</span>
+                            {about.listImage.content}
+                            <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
                     </div>
                     <div className="about-image-store-list">
@@ -132,53 +120,35 @@ export default function About() {
                 </div>
             </div>
             {/* About Deco */}
-            <div className="about-deco">
+            <div className="about-deco" id="st-deco">
                 <div className="about-deco-form">
                     <img src={aboutDeco} alt="Service" width={'100%'} />
-                    <h1 className="about-deco-title">spiscing elit & sed do eiusmod</h1>
+                    <h1 className="about-deco-title">{about.deco.title}</h1>
                 </div>
             </div>
             {/* Staff */}
-            <div className="about-staff">
+            <div className="about-staff" id="st-listStaff">
                 <div className="about-staff-deco booking-f">
                     <img src={homeFlowerDeco} width={'100%'} />
                 </div>
                 <div className="about-staff-form">
-                    <div className="about-staff-title">Our Staff</div>
+                    <div className="about-staff-title">{about.title}</div>
                     <div className="about-staff-list">
-                        <div className="about-staff-item">
-                            <div className="about-staff-item-img">
-                                <img src={aboutDaisy4} alt="" width={'100%'} />
-                            </div>
-                            <div className="about-staff-item-name">Full Name</div>
-                            <div className="about-staff-item-specialized">
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                            </div>
-                        </div>
-                        <div className="about-staff-item">
-                            <div className="about-staff-item-img">
-                                <img src={aboutDaisy4} width={'100%'} />
-                            </div>
-                            <div className="about-staff-item-name">Full Name</div>
-                            <div className="about-staff-item-specialized">
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                            </div>
-                        </div>
-                        <div className="about-staff-item">
-                            <div className="about-staff-item-img">
-                                <img src={aboutDaisy4} width={'100%'} />
-                            </div>
-                            <div className="about-staff-item-name">Full Name</div>
-                            <div className="about-staff-item-specialized">
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                                <p>- specialized</p>
-                            </div>
-                        </div>
+                        {about.listStaff.staff.map((item, index) => {
+                            return (
+                                <div className="about-staff-item" key={index}>
+                                    <div className="about-staff-item-img">
+                                        <img src={aboutDaisy4} alt="" width={'100%'} />
+                                    </div>
+                                    <div className="about-staff-item-name">{item.name}</div>
+                                    <div className="about-staff-item-specialized">
+                                        {item.major.map((item, index) => {
+                                            return <p key={index}>- {item.specialized}</p>;
+                                        })}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                     {/* Staff Responsive */}
                     <div className="about-staff-list-res">
@@ -240,7 +210,7 @@ export default function About() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="about-booking">
+            <div className="about-booking" id="st-bookingAbout">
                 <div className="about-booking-deco booking-f">
                     <img src={homeFlowerDeco} width={'100%'} />
                 </div>
@@ -248,7 +218,7 @@ export default function About() {
                     <img src={aboutBooking} width={'100%'} />
                 </div>
                 <div className="about-booking-content">
-                    <div className="about-booking-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+                    <div className="about-booking-title">{about.bookingAbout.title}</div>
                     <Button
                         variant="outline"
                         className="my-btn text-uppercase btn-primary-outline btn btn-outline me-2"

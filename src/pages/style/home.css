@@ -2,6 +2,8 @@
     width: 100%;
     display: block;
     text-align: center;
+    padding-bottom: 60px;
+    margin-bottom: 60px;
 }
 .banner-img {
     position: relative;
@@ -40,6 +42,8 @@
 .intro {
     width: 100%;
     position: relative;
+    padding-top: 60px;
+    margin-bottom: 60px;
 }
 .intro-bg {
     background-color: var(--clr-secondary);
@@ -96,6 +100,8 @@
 /* Three Sevices */
 .three {
     width: 100%;
+    padding: 60px 0;
+    margin: 20px 0;
 }
 .three-form {
     width: 80%;
@@ -150,8 +156,8 @@
 .other {
     width: 100%;
     position: relative;
-    margin-bottom: 60px;
-    padding: 60px 0;
+    margin: 0px 0 100px 0;
+    padding: 60px 0 100px 0;
 }
 .other-title {
     padding-top: 30px;
@@ -222,8 +228,8 @@
 .lashes {
     width: 100%;
     position: relative;
-    margin: 60px 0;
-    padding: 60px 0;
+    margin: 180px 0 60px 0;
+    padding: 30px 0;
 }
 .lashes-title {
     padding-top: 30px;
@@ -307,6 +313,8 @@
 /* Booking */
 .booking {
     width: 100%;
+    margin: 60px 0;
+    padding: 60px 0;
 }
 .booking-form {
     width: 80%;
@@ -331,6 +339,7 @@
 /* Gallery */
 .gallery {
     width: 100%;
+    margin-bottom: 60px;
 }
 .gallery img {
     transition: all 0.3s ease-in-out;
@@ -352,6 +361,7 @@
 .gallery-img-form {
     display: flex;
     justify-content: space-between;
+    padding: 10px 0;
 }
 .gallery-img-1 {
     margin-bottom: 30px;
@@ -359,6 +369,8 @@
 .gallery-view-more {
     text-align: center;
     padding: 20px;
+    cursor: pointer;
+    user-select: none;
 }
 /* Review and Comment */
 .review {
@@ -434,6 +446,10 @@
     .review-res {
         display: block;
     }
+    .lashes {
+        margin: 60px 0 60px 0;
+        padding: 0px 0;
+    }
 }
 @media only screen and (max-width: 576px) {
     /* Introduce */
@@ -475,6 +491,7 @@
     /* Other */
     .other-form {
         flex-direction: column-reverse;
+        gap: 40px;
     }
     .other-img {
         width: 100%;
@@ -487,6 +504,20 @@
         height: 95%;
         top: 0;
         transform: none;
+    }
+    /* Lashes */
+    .lashes-form {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .lashes-bg {
+        transform: translateY(-70%);
+    }
+    .lashes-img {
+        width: 100%;
+    }
+    .lashes-content {
+        width: 100%;
     }
     /* Booking */
     .booking-form {

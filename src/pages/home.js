@@ -1,4 +1,7 @@
 import React from 'react';
+
+import DOMPurify from 'dompurify';
+
 import './style/home.css';
 import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
 import bannerSmall from '../images/bannerSmall.png';
@@ -24,19 +27,40 @@ import reviewUser from '../images/reviewUser.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
-import { Booking } from '../components';
-import { Step1 } from './booking';
+
+import BookingPage from './booking';
 
 // Content
-import home from '../config/content/home.json';
+// import home from '../config/content/home.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSettingList } from '../store/settings/action';
 
 function Home() {
     document.title = 'Little Daisy - Home';
+    const dispatch = useDispatch();
+
+    const { home } = useSelector((state) => {
+        return {
+            home: state.Setting.setting.content.home,
+        };
+    });
+
+    React.useEffect(() => {
+        dispatch(getSettingList('home'));
+    }, [dispatch]);
+
     return (
         <section>
             {/* Banner */}
-            <div className="banner my-5 pb-5" id="st-banner">
-                <h1 className="banner-title">{home.hero.h1}</h1>
+            <div className="banner" id="st-hero">
+                <h1 className="banner-title">{home?.hero?.title}</h1>
+                <h2>{home?.hero?.subtitle}</h2>
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(home?.hero?.content),
+                    }}
+                ></p>
+
                 <div className="banner-img">
                     <div className="banner-img-big">
                         <img alt="banner" src={bannerBig} width={'100%'} />
@@ -53,7 +77,7 @@ function Home() {
                 <div></div>
             </div>
             {/* Introduce */}
-            <div className="intro my-5" id="st-into">
+            <div className="intro" id="st-intro">
                 <div className="intro-bg"></div>
                 <div className="intro-form">
                     <div className="intro-img">
@@ -72,19 +96,13 @@ function Home() {
                         </div>
                         <div className="intro-content-form">
                             <div>
-                                <h6>About Little Daisy</h6>
-                                <h2 className="intro-title">Perfect beauty service</h2>
+                                <h6>{home.intro.subtitle}</h6>
+                                <h2 className="intro-title">{home.intro.title}</h2>
                             </div>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna.
-                            </p>
+                            <p>{home.intro.content}</p>
                             <div>
-                                <h5>Lorem ipsum dolor sit amet</h5>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna.
-                                </p>
+                                <h5>{home.intro.child[0].title}</h5>
+                                <p>{home.intro.child[0].content}</p>
                             </div>
                             <div>
                                 <Button
@@ -103,84 +121,39 @@ function Home() {
                 </div>
             </div>
             {/* Three Service */}
-            <div className="three py-5" id="st-three-service">
+            <div className="three">
                 <div className="three-form">
-                    <div className="nail-care">
+                    <div className="nail-care" id="st-messages-1">
                         <div className="nail-care-img">
                             <img src={nailCare} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">Nail Care</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
+                        <div className="nail-care-title">{home?.messages1?.title}</div>
+                        <p>{home?.message1?.content}</p>
                     </div>
-                    <div className="nail-care">
+                    <div className="nail-care" id="st-messages-2">
                         <div className="nail-care-img">
                             <img src={nailArt} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">Nail Art</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
+                        <div className="nail-care-title">{home?.messages2?.title}</div>
+                        <p>{home?.message2?.content}</p>
                     </div>
-                    <div className="nail-care">
+                    <div className="nail-care" id="st-messages-3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} />
                         </div>
-                        <div className="nail-care-title">Best Lashes</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</p>
+                        <div className="nail-care-title">{home?.messages3?.title}</div>
+                        <p>{home?.message3?.content}</p>
                     </div>
                 </div>
             </div>
             {/* Service Quality */}
-            <div className="quality" id="st-service-quality">
+            <div className="quality" id="st-introServices">
                 <div className="quality-form">
-                    <h1 className="quality-title">Our service is always developing the most perfect to serve women</h1>
-                    {/* <div className="quality-item-form">
-                        <div className="quality-item">
-                            <div className="quality-img">
-                                <img src={nailService} alt="Service" width={'100%'} />
-                            </div>
-                            <div className="quality-item-price">2.05 $</div>
-                            <div className="quality-item-name">Nails Services</div>
-                            <div className="quality-btn-form">
-                                <Button
-                                    variant="outline"
-                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline me-2"
-                                >
-                                    Book Now
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                                >
-                                    View More
-                                </Button>
-                            </div>
-                        </div> */}
-                    {/* Item */}
-                    {/* <div className="quality-item">
-                            <div className="quality-img">
-                                <img src={lashesServices} alt="Service" width={'100%'} />
-                            </div>
-                            <div className="quality-item-price">2.05 $</div>
-                            <div className="quality-item-name">Lashes Services</div>
-                            <div className="quality-btn-form">
-                                <Button
-                                    variant="outline"
-                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline me-2"
-                                >
-                                    Book Now
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                                >
-                                    View More
-                                </Button>
-                            </div>
-                        </div>
-                    </div> */}
+                    <h1 className="quality-title">{home.introServices.title}</h1>
                 </div>
             </div>
             {/* Nail Services */}
-            <div className="other" id="st-nail-services">
+            <div className="other" id="st-nailService">
                 <div className="other-bg">
                     <div className="other-img-flower">
                         <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -202,11 +175,12 @@ function Home() {
                             <h1 className="other-title">Nail Services</h1>
                             <div className="other-list">
                                 <div className="other-list-item">
-                                    <p>Lash lift</p>
+                                    <p>Nail</p>
                                     <div className="other-list-dashed"></div>
-                                    <p>12$</p>
+                                    <p>27$</p>
                                 </div>
-                                <div className="other-list-item">
+
+                                {/* <div className="other-list-item">
                                     <p>Eyebrow laminations</p>
                                     <div className="other-list-dashed"></div>
                                     <p>12$</p>
@@ -220,7 +194,7 @@ function Home() {
                                     <p>Waxing eyebrows</p>
                                     <div className="other-list-dashed"></div>
                                     <p>12$</p>
-                                </div>
+                                </div> */}
                             </div>
                             <div>
                                 <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
@@ -232,32 +206,17 @@ function Home() {
                 </div>
             </div>
             {/* Lashes Services */}
-            <div className="lashes" id="st-lashes-services">
+            <div className="lashes" id="st-lashesService">
                 <div className="lashes-bg"></div>
                 <div className="lashes-form">
                     <div className="lashes-content">
                         <div className="lashes-content-form">
                             <h1 className="lashes-title">Lashes Services</h1>
                             <div className="lashes-list">
-                                <div className="lashes-list-item">
-                                    <p>Lash lift</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="lashes-list-item">
-                                    <p>Eyebrow laminations</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="lashes-list-item">
-                                    <p>Tin tin eyebrow and lashes</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="lashes-list-item">
-                                    <p>Waxing eyebrows</p>
-                                    <div className="lashes-list-dashed"></div>
-                                    <p>12$</p>
+                                <div className="other-list-item">
+                                    <p>Lashes</p>
+                                    <div className="other-list-dashed"></div>
+                                    <p>26$</p>
                                 </div>
                             </div>
                             <div>
@@ -283,7 +242,7 @@ function Home() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="booking py-5 my-5" id="st-nail-booking">
+            <div className="booking">
                 {/* <div className="booking-form">
                     <div className="booking-time-form">
                         <div className="booking-intro">Dedication</div>
@@ -302,10 +261,10 @@ function Home() {
                         </div>
                     </div>
                 </div> */}
-                <Step1></Step1>
+                <BookingPage></BookingPage>
             </div>
             {/* Gallery */}
-            <div className="gallery" id="st-gallery">
+            <div className="gallery" id="st-galleries">
                 <div className="gallery-form">
                     <h1 className="gallery-title">Gallery</h1>
                     <div className="gallery-img-form">
@@ -341,11 +300,11 @@ function Home() {
                 </div>
             </div>
             {/* Comment and Review */}
-            <div className="review py-5" id="st-comment-and-review">
+            <div className="review py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
-                        <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>
-                        <div className="review-title">Comments & Reviews</div>
+                        <h1 className="review-intro">{home.testimonials.subtitle}</h1>
+                        <div className="review-title">{home.testimonials.title}</div>
                     </div>
                     <div className="review-list">
                         <Swiper
@@ -366,57 +325,27 @@ function Home() {
                             modules={[EffectCoverflow, Pagination, Navigation]}
                             className="mySwiper"
                         >
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
+                            {home?.testimonials?.child?.map((item, index) => {
+                                return (
+                                    <SwiperSlide className="review-slide" key={index}>
+                                        {({ isActive }) => (
+                                            <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
+                                                <div className="review-img">
+                                                    <img src={reviewUser} alt="Service" width={'100%'} />
+                                                </div>
+                                                <div className="review-user-name">{item.title}</div>
+                                                <div className="review-content">{item.content}</div>
+                                            </div>
+                                        )}
+                                    </SwiperSlide>
+                                );
+                            })}
                         </Swiper>
                     </div>
                 </div>
             </div>
             {/* Comment and Review Responsive*/}
-            <div className="review-res py-5" id="st-responsive-comment-and-review">
+            <div className="review-res py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>
@@ -433,51 +362,21 @@ function Home() {
                             modules={[Navigation, Pagination, Autoplay]}
                             className="review-mySwiper"
                         >
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
-                            <SwiperSlide className="review-slide">
-                                {({ isActive }) => (
-                                    <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
-                                        <div className="review-img">
-                                            <img src={reviewUser} alt="Service" width={'100%'} />
-                                        </div>
-                                        <div className="review-user-name">John Mad</div>
-                                        <div className="review-content">
-                                            Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                            dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                            ut labore et dolore magna.
-                                        </div>
-                                    </div>
-                                )}
-                            </SwiperSlide>
+                            {home?.testimonials?.child?.map?.((item, index) => {
+                                return (
+                                    <SwiperSlide className="review-slide" key={index}>
+                                        {({ isActive }) => (
+                                            <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
+                                                <div className="review-img">
+                                                    <img src={reviewUser} alt="Service" width={'100%'} />
+                                                </div>
+                                                <div className="review-user-name">{item.title}</div>
+                                                <div className="review-content">{item.content}</div>
+                                            </div>
+                                        )}
+                                    </SwiperSlide>
+                                );
+                            })}
                         </Swiper>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 #sidebar-container {
     min-height: calc(100vh - 92px);
-    max-height: calc(100vh - 92px);
+    min-height: calc(100vh - 92px);
 }
 
 #sidebar {

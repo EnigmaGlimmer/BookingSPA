@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Assets
 import introBig from '../images/introBig.png';
@@ -27,7 +27,7 @@ import { GrFormCheckmark } from 'react-icons/gr';
 import { MdOutlineMailOutline } from 'react-icons/md';
 
 // API
-import { assignBooking } from '../api';
+import { assignBooking, getBookingList } from '../api';
 
 // Helpers
 import { toast } from 'react-toastify';
@@ -410,14 +410,61 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
     );
 }
 function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
+    const [bookingList, setBookingList] = useState([]);
+
+    const [selectedDate, setSelectedDate] = useState();
+    const [reversedTimeRange, setReversed] = useState([]);
+
+    useEffect(() => {
+        let searchBy = 'Date';
+        let keyword = moment(selectedDate).format('DD/MM/YYYY');
+
+        getBookingList({
+            orderBy: 'CreatedDate',
+            searchBy: searchBy,
+            keyword: keyword || moment().format('MM/YYYY'),
+            skip: 0,
+            take: 31,
+        })
+            .then((response) => {
+                if (!Array.isArray(response)) {
+                    response.errors.forEach((msg) => {
+                        toast.error(msg, {
+                            autoClose: 3000,
+                        });
+                    });
+
+                    return;
+                }
+
+                setBookingList(response);
+
+                setReversed(
+                    response.map((b) => {
+                        const [start1, end1] = b.slot.start_Hour.split(':');
+                        const [start2, end2] = b.slot.end_Hour.split(':');
+
+                        return [[start1, end1].join(':'), [start2, end2].join(':')];
+                    }),
+                );
+                toast.success('Got it!!', {
+                    autoClose: 3000,
+                });
+            })
+            .catch((error) => {
+                toast.error(error);
+            });
+    }, [selectedDate]);
+
     return (
         <>
+            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             <div className="booking-component">
                 <Booking
                     activeDate={validation.values.booking.checkinDate}
                     initialTimeRange={[
-                        ['8:30', '9:30'],
-                        ['9:30', '10:30'],
+                        ['08:30', '09:30'],
+                        ['09:30', '10:30'],
                         ['10:30', '11:30'],
                         ['11:30', '12:30'],
                         ['13:30', '14:30'],
@@ -426,9 +473,17 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
                         ['16:30', '17:30'],
                         ['17:30', '18:30'],
                     ]}
-                    onChangeDate={onChangeDate}
-                    onChangeTimeStart={onChangeTimeStart}
-                    onChangeTimeEnd={onChangeTimeEnd}
+                    reserved={reversedTimeRange}
+                    onChangeDate={(date) => {
+                        onChangeDate(date);
+                        setSelectedDate(date);
+                    }}
+                    onChangeTimeStart={(time) => {
+                        onChangeTimeStart(time);
+                    }}
+                    onChangeTimeEnd={(time) => {
+                        onChangeTimeEnd(time);
+                    }}
                 ></Booking>
             </div>
             <div className="booking-component-button-done">

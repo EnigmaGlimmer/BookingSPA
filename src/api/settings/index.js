@@ -13,12 +13,19 @@ export const getSetting = (request, config) => {
 };
 
 export const postSetting = (body, config) => {
-    return api.create(url.POST_SETTING, body, {
-        ...config,
-        headers: {
-            'Content-Type': 'application/json',
+    return api.create(
+        url.POST_SETTING,
+        {
+            ...body,
+            body: JSON.stringify(body.body),
         },
-    });
+        {
+            ...config,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        },
+    );
 };
 
 export const putSetting = (request, body, config) => {

@@ -1,5 +1,6 @@
 .admin-control {
     cursor: pointer;
+    position: relative;
 }
 
 .selected-section {
@@ -7,7 +8,7 @@
 }
 
 .selected-section::after,
-.admin-control:hover {
+.admin-control:hover::after {
     content: '';
     display: block;
     position: absolute;
@@ -15,4 +16,6 @@
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: var(--clr-border);
+    opacity: 0.3;
 }

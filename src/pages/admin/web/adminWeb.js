@@ -1,19 +1,38 @@
 import React from 'react';
 
 // Component
-import { Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 import { Home, About, BookingPage, Promotion } from '../..';
 
 import { useFormik } from 'formik';
 
 import { Link, useSearchParams, createSearchParams } from 'react-router-dom';
 
+// JSON
+import about from '../../../config/content/about.json';
+import home from '../../../config/content/home.json';
+import service from '../../../config/content/service.json';
+
 // Custom style
 import './style.css';
 import { postSetting } from '../../../api';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getSettingList } from '../../../store/actions';
+import { UploadModal } from '../../../components';
 function AdminWeb() {
     const [params] = useSearchParams();
+    const dispatch = useDispatch();
+    const { setting } = useSelector((state) => {
+        return {
+            setting: state.Setting.setting,
+        };
+    });
+
+    let currentContent = params?.get?.('content');
+
+    React.useEffect(() => {
+        dispatch(getSettingList(params.get('content')));
+    }, [dispatch, currentContent]);
 
     return (
         <section>
@@ -58,6 +77,7 @@ function AdminWeb() {
                             </Form.Group>
                         </li>
                     </ul>
+                    <button>Post JSON </button>
                 </>
             )}
         </section>
@@ -66,29 +86,44 @@ function AdminWeb() {
 
 function PageDemo({ page }) {
     const [sections, setSections] = React.useState(null);
+    const [editTool, setEditTool] = React.useState({
+        sectionName: '',
+        page,
+        show: false,
+    });
 
     React.useEffect(() => {
         const elements = document.querySelectorAll('[id*="st-"]');
-
         setSections(elements);
 
-        elements.forEach((element) => {
-            if (!element.classList.contains('admin-control')) {
-                element.classList.add('admin-control');
+        document.querySelectorAll('[id*="st-"]').forEach((section) => {
+            if (!section.classList.contains('admin-control')) {
             }
+            section.classList.add('admin-control');
+
+            console.log(section);
+            section.addEventListener('click', () => {
+                let sectionName = section.id.replace('st-', '');
+                console.log(sectionName);
+                setEditTool({
+                    sectionName,
+                    page,
+                    show: true,
+                });
+            });
         });
 
         return () => {};
-    }, []);
+    }, [page]);
 
-    React.useEffect(() => {
-        (sections || []).forEach((element) => {
-            element.removeEventListener('click', () => {});
-            element.addEventListener('click', () => {});
-        });
-    }, [sections]);
+    // React.useEffect(() => {
+    //     (sections || []).forEach((element) => {
+    //         element.removeEventListener('click', () => {});
+    //         element.addEventListener('click', () => {});
+    //     });
+    // }, [sections]);
 
-    function Render() {
+    const Render = React.useCallback(() => {
         switch (page) {
             case 'home':
                 return <Home></Home>;
@@ -105,11 +140,11 @@ function PageDemo({ page }) {
             default:
                 return <></>;
         }
-    }
+    }, [page]);
 
     return (
         <>
-            <ul>
+            {/* <ul>
                 <li>
                     <button
                         onClick={() => {
@@ -137,11 +172,12 @@ function PageDemo({ page }) {
                         Post Object
                     </button>
                 </li>
-            </ul>
+            </ul> */}
 
             <h3>Web Content</h3>
 
             <ListWeb></ListWeb>
+            {editTool?.show && <EditTool sectionName={editTool.sectionName} page={editTool.page}></EditTool>}
 
             <div style={{ overflowX: 'scroll', maxWidth: '820px' }}>
                 <Render></Render>
@@ -191,13 +227,43 @@ function ListWeb() {
 }
 
 function EditTool({ sectionName, page }) {
-    const { handleChange, handleBlur, handleSubmit, values, errors, touched } = useFormik({
+    const dispatch = useDispatch();
+
+    const { content } = useSelector((state) => ({
+        content: state.Setting?.setting?.content?.[page],
+    }));
+
+    const { handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue } = useFormik({
         initialValues: {
             title: 'Edit this context',
+            subtitle: '',
             content: 'Edit this content',
+            childContent: [
+                {
+                    title: 'Edit this context',
+                    subtitle: '',
+                    content: 'Edit this content',
+                    images: [],
+                },
+            ],
+            images: [],
         },
-        onSubmit: (values) => {},
+        onSubmit: (values) => {
+            dispatch(
+                postSetting({
+                    body: {
+                        ...content,
+                        [sectionName]: values,
+                    },
+                    page,
+                }),
+            );
+        },
     });
+
+    // Handle Images
+    const [uploadModal, setUploadModal] = React.useState(false);
+
     return (
         <Form onSubmit={handleSubmit}>
             <h4>
@@ -206,7 +272,7 @@ function EditTool({ sectionName, page }) {
             <Form.Group className="mb-3">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
-                    name="title"
+                    name={`title`}
                     value={values.title}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -215,9 +281,20 @@ function EditTool({ sectionName, page }) {
                 <Form.Control.Feedback type="invalid">{errors?.title}</Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
+                <Form.Label>Subtitle</Form.Label>
+                <Form.Control
+                    name={`subtitle`}
+                    value={values.subtitle}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={touched?.subtitle && !!errors?.subtitle}
+                ></Form.Control>
+                <Form.Control.Feedback type="invalid">{errors?.subtitle}</Form.Control.Feedback>
+            </Form.Group>
+            <Form.Group className="mb-3">
                 <Form.Label>Content</Form.Label>
                 <Form.Control
-                    name="content"
+                    name={`content`}
                     value={values.content}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -225,6 +302,40 @@ function EditTool({ sectionName, page }) {
                 ></Form.Control>
                 <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
             </Form.Group>
+            <Form.Group className="mb-3">
+                <Form.Label>Child Content</Form.Label>
+                <Form.Control
+                    name={`childContent`}
+                    value={values.childContent}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    isInvalid={touched?.childContent && !!errors?.childContent}
+                ></Form.Control>
+                <Form.Control.Feedback type="invalid">{errors?.childContent}</Form.Control.Feedback>
+            </Form.Group>{' '}
+            <Form.Group className="mb-3">
+                <Form.Label>Images</Form.Label>
+                <Button variant="outline" onClick={() => setUploadModal(true)}>
+                    Upload your image
+                </Button>
+                <UploadModal
+                    show={uploadModal}
+                    onSave={(hasShown) => {}}
+                    onSelected={(selected) => {}}
+                    selected={''}
+                    onHide={() => {
+                        setUploadModal(false);
+                    }}
+                    onCopyLink={(link) => {
+                        setFieldValue('images', [...values.images, link]);
+                        setUploadModal(false);
+                    }}
+                ></UploadModal>
+            </Form.Group>
+            <Button type="submit" variant="primary">
+                Submit
+            </Button>
+            <pre>{JSON.stringify(values, 4, 4)}</pre>
         </Form>
     );
 }
