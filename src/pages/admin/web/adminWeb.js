@@ -27,7 +27,6 @@ function AdminWeb() {
             setting: state.Setting.setting,
         };
     });
-
     let currentContent = params?.get?.('content');
 
     React.useEffect(() => {
@@ -101,10 +100,8 @@ function PageDemo({ page }) {
             }
             section.classList.add('admin-control');
 
-            console.log(section);
             section.addEventListener('click', () => {
                 let sectionName = section.id.replace('st-', '');
-                console.log(sectionName);
                 setEditTool({
                     sectionName,
                     page,
@@ -232,12 +229,12 @@ function EditTool({ sectionName, page }) {
     const { content } = useSelector((state) => ({
         content: state.Setting?.setting?.content?.[page],
     }));
-
+    console.log(sectionName);
     const { handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue } = useFormik({
         initialValues: {
-            title: 'Edit this context',
-            subtitle: '',
-            content: 'Edit this content',
+            title: content?.[sectionName]?.title,
+            subtitle: content?.[sectionName]?.subtitle,
+            content: content?.[sectionName]?.content,
             childContent: [
                 {
                     title: 'Edit this context',
@@ -259,8 +256,8 @@ function EditTool({ sectionName, page }) {
                 }),
             );
         },
+        enableReinitialize: true,
     });
-
     // Handle Images
     const [uploadModal, setUploadModal] = React.useState(false);
 

@@ -23,3 +23,39 @@
 #sidebar li:hover {
     background-color: var(--clr-darker-background);
 }
+.list-link-admin {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    transition: all 100ms ease-in-out;
+}
+.list-link-admin a:hover {
+    background-color: var(--clr-darker-background);
+}
+.list-link-admin a {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+}
+#sidebar {
+    position: relative;
+}
+.sidebar-toggle {
+    position: absolute;
+    right: 0;
+    transform: translate(50%, 30%);
+    border-radius: 50%;
+    font-size: 25px;
+    background-color: white;
+    color: var(--clr-primary-yellow);
+}
+.right-side {
+    transform: translate(50%, 30%) rotate(180deg);
+}
+
+.sidebar-hide {
+    width: 30px;
+    overflow: hidden;
+}
+.sidebar-hide a {
+    display: none;
+}
