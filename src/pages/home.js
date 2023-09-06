@@ -50,7 +50,6 @@ function Home() {
             service: state.Service.services,
         };
     });
-    console.log(service);
     React.useEffect(() => {
         dispatch(getSettingList('home'));
         dispatch(getService());
@@ -70,14 +69,14 @@ function Home() {
 
                 <div className="banner-img">
                     <div className="banner-img-big">
-                        <img alt="banner" src={bannerBig} width={'100%'} />
+                        <img alt="banner" src={home?.hero?.images?.[0]} width={'100%'} />
                     </div>
                     <div className="banner-img-extra">
                         <div className="banner-img-flower">
                             <img alt="banner" src={homeFlowerDeco} width={'100%'} />
                         </div>
                         <div className="banner-img-small">
-                            <img alt="banner" src={bannerSmall} width={'100%'} />
+                            <img alt="banner" src={home?.hero?.childImage?.[0]} width={'100%'} />
                         </div>
                     </div>
                 </div>
@@ -108,8 +107,8 @@ function Home() {
                             </div>
                             <p>{home.intro.content}</p>
                             <div>
-                                <h5>{home.intro.child[0].title}</h5>
-                                <p>{home.intro.child[0].content}</p>
+                                <h5>{home?.intro?.child?.title}</h5>
+                                <p>{home?.intro?.child?.content}</p>
                             </div>
                             <div>
                                 <Button
@@ -192,22 +191,6 @@ function Home() {
                                             </div>
                                         );
                                     })}
-
-                                {/* <div className="other-list-item">
-                                    <p>Eyebrow laminations</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="other-list-item">
-                                    <p>Tin tin eyebrow and lashes</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="other-list-item">
-                                    <p>Waxing eyebrows</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div> */}
                             </div>
                             <div>
                                 <div className="btn-frame-dark">

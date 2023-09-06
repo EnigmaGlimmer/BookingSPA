@@ -10,8 +10,8 @@ function Sidebar({ children }) {
     const [toggle, setToggle] = React.useState(true);
     return (
         <div>
-            <Row className="h-100" id="sidebar-container" style={{ flexWrap: 'nowrap' }}>
-                <Col sm="auto" className="" id="sidebar">
+            <div className="h-100" id="sidebar-container" style={{ flexWrap: 'nowrap' }}>
+                <div className="" id="sidebar">
                     <div className={toggle ? `list-link-admin` : `list-link-admin sidebar-hide`}>
                         <div onClick={() => setToggle((e) => !e)}>
                             <AiFillLeftCircle
@@ -37,9 +37,9 @@ function Sidebar({ children }) {
                             Booking
                         </Link>
                     </div>
-                </Col>
-                <Col style={{ backgroundColor: 'var(--clr-background)' }}>{children}</Col>
-            </Row>
+                </div>
+                <div className="sidebar-item-2">{children}</div>
+            </div>
         </div>
     );
 }

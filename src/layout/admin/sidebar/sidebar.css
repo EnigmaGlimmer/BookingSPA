@@ -1,6 +1,6 @@
 #sidebar-container {
     min-height: calc(100vh - 92px);
-    min-height: calc(100vh - 92px);
+    display: flex;
 }
 
 #sidebar {
@@ -8,6 +8,7 @@
     border-right: 1px solid var(--clr-border);
     min-height: 100%;
     padding: 0;
+    max-width: 100vw;
 }
 
 #sidebar a {
@@ -58,4 +59,9 @@
 }
 .sidebar-hide a {
     display: none;
+}
+
+.sidebar-item-2 {
+    flex-grow: 1;
+    padding: 20px;
 }
