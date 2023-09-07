@@ -14,20 +14,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
 import about from '../config/content/about.json';
-const listImg = [
-    aboutDaisy1,
-    aboutDaisy2,
-    aboutDaisy3,
-    aboutDaisy4,
-    aboutDaisy1,
-    aboutDaisy2,
-    aboutDaisy3,
-    aboutDaisy4,
-];
 export default function About() {
+    const listImg = [1, 2, 3, 4, 5];
     document.title = 'Little Daisy - About';
     return (
-        <section>
+        <section className="about">
             <div className="about-brand" id="st-intro">
                 <div className="about-brand-content-form">
                     <div className="about-brand-content-container">
@@ -102,19 +93,14 @@ export default function About() {
                             modules={[FreeMode, Pagination, Autoplay]}
                             className="about-image-store-swiper"
                         >
-                            {listImg?.map((item, index) => {
-                                return (
-                                    <SwiperSlide key={index}>
-                                        <div className="about-image-store-form-child">
-                                            <img src={item} alt="about-1" width={'100%'} />
-                                            <p className="about-image-store-form-content">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor.
-                                            </p>
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
+                            <SwiperSlide>
+                                <div className="about-image-store-form-child">
+                                    <img src={''} alt="about-1" width={'100%'} />
+                                    <p className="about-image-store-form-content">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                                    </p>
+                                </div>
+                            </SwiperSlide>
                         </Swiper>
                     </div>
                 </div>

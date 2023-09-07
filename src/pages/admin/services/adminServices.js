@@ -172,10 +172,10 @@ function AdminServices() {
                             })}
                         </Form.Select>
                     </Form.Group>
+                    <Button type="submit" className="mb-2" variant="primary">
+                        Submit
+                    </Button>
                 </div>
-                <Button type="submit" className="mb-2" variant="outline">
-                    Submit
-                </Button>
 
                 {/* <div className="p-3 mb-3" style={{ background: '#fff' }}>
                     <h4>Service Gallery</h4>

@@ -34,6 +34,7 @@ import BookingPage from './booking';
 // import home from '../config/content/home.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/settings/action';
+import { getService } from '../store/actions';
 
 function Home() {
     document.title = 'Little Daisy - Home';
@@ -44,9 +45,14 @@ function Home() {
             home: state.Setting.setting.content.home,
         };
     });
-
+    const { service } = useSelector((state) => {
+        return {
+            service: state.Service.services,
+        };
+    });
     React.useEffect(() => {
         dispatch(getSettingList('home'));
+        dispatch(getService());
     }, [dispatch]);
 
     return (
@@ -63,14 +69,14 @@ function Home() {
 
                 <div className="banner-img">
                     <div className="banner-img-big">
-                        <img alt="banner" src={bannerBig} width={'100%'} />
+                        <img alt="banner" src={home?.hero?.images?.[0]} width={'100%'} />
                     </div>
                     <div className="banner-img-extra">
                         <div className="banner-img-flower">
                             <img alt="banner" src={homeFlowerDeco} width={'100%'} />
                         </div>
                         <div className="banner-img-small">
-                            <img alt="banner" src={bannerSmall} width={'100%'} />
+                            <img alt="banner" src={home?.hero?.childImage?.[0]} width={'100%'} />
                         </div>
                     </div>
                 </div>
@@ -101,8 +107,8 @@ function Home() {
                             </div>
                             <p>{home.intro.content}</p>
                             <div>
-                                <h5>{home.intro.child[0].title}</h5>
-                                <p>{home.intro.child[0].content}</p>
+                                <h5>{home?.intro?.child?.title}</h5>
+                                <p>{home?.intro?.child?.content}</p>
                             </div>
                             <div>
                                 <Button
@@ -123,26 +129,26 @@ function Home() {
             {/* Three Service */}
             <div className="three">
                 <div className="three-form">
-                    <div className="nail-care" id="st-messages-1">
+                    <div className="nail-care" id="st-messages1">
                         <div className="nail-care-img">
                             <img src={nailCare} alt="nail care" width={'100%'} />
                         </div>
                         <div className="nail-care-title">{home?.messages1?.title}</div>
-                        <p>{home?.message1?.content}</p>
+                        <p>{home?.messages1?.content}</p>
                     </div>
-                    <div className="nail-care" id="st-messages-2">
+                    <div className="nail-care" id="st-messages2">
                         <div className="nail-care-img">
                             <img src={nailArt} alt="nail care" width={'100%'} />
                         </div>
                         <div className="nail-care-title">{home?.messages2?.title}</div>
-                        <p>{home?.message2?.content}</p>
+                        <p>{home?.messages2?.content}</p>
                     </div>
-                    <div className="nail-care" id="st-messages-3">
+                    <div className="nail-care" id="st-messages3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} />
                         </div>
                         <div className="nail-care-title">{home?.messages3?.title}</div>
-                        <p>{home?.message3?.content}</p>
+                        <p>{home?.messages3?.content}</p>
                     </div>
                 </div>
             </div>
@@ -174,32 +180,24 @@ function Home() {
                         <div className="other-content-form">
                             <h1 className="other-title">Nail Services</h1>
                             <div className="other-list">
-                                <div className="other-list-item">
-                                    <p>Nail</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>27$</p>
-                                </div>
-
-                                {/* <div className="other-list-item">
-                                    <p>Eyebrow laminations</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="other-list-item">
-                                    <p>Tin tin eyebrow and lashes</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div>
-                                <div className="other-list-item">
-                                    <p>Waxing eyebrows</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>12$</p>
-                                </div> */}
+                                {service
+                                    ?.find?.((e) => e.serviceName === 'Nail')
+                                    ?.childs?.map?.((item, index) => {
+                                        return (
+                                            <div className="other-list-item" key={index}>
+                                                <p>{item.serviceName}</p>
+                                                <div className="other-list-dashed"></div>
+                                                <p>{item.price}$</p>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                             <div>
-                                <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
-                                    Book Now
-                                </button>
+                                <div className="btn-frame-dark">
+                                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
+                                        Book Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -213,16 +211,24 @@ function Home() {
                         <div className="lashes-content-form">
                             <h1 className="lashes-title">Lashes Services</h1>
                             <div className="lashes-list">
-                                <div className="other-list-item">
-                                    <p>Lashes</p>
-                                    <div className="other-list-dashed"></div>
-                                    <p>26$</p>
-                                </div>
+                                {service
+                                    ?.find((e) => e.serviceName === 'Lash')
+                                    ?.childs?.map((item, index) => {
+                                        return (
+                                            <div className="other-list-item" key={index}>
+                                                <p>{item.serviceName}</p>
+                                                <div className="other-list-dashed"></div>
+                                                <p>{item.price}$</p>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                             <div>
-                                <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">
-                                    Book Now
-                                </button>
+                                <div className="btn-frame-dark">
+                                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
+                                        Book Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

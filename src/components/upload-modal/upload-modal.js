@@ -64,11 +64,26 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
 
     return (
         <div>
-            <Modal size="lg" show={show} onHide={() => onHide(show)} animation={true}>
-                <Modal.Header closeButton>
+            <Modal
+                size="lg"
+                show={show}
+                onHide={() => onHide(show)}
+                animation={true}
+                style={{ width: '100%', overflow: 'unset', background: 'none' }}
+            >
+                <Modal.Header style={{ margin: '0 auto', width: '80%', background: 'white' }} closeButton>
                     <Modal.Title>Assets Modal</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body
+                    style={{
+                        margin: '0 auto',
+                        maxWidth: 'unset',
+                        background: 'white',
+                        width: '80%',
+                        overflow: 'scroll',
+                        maxHeight: '75vh',
+                    }}
+                >
                     <Tabs className="mb-3">
                         <Tab eventKey="library" title="Library">
                             <Row id="asset-list">
