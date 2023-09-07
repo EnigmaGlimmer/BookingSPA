@@ -1,0 +1,63 @@
+{
+    "intro": {
+        "image": "",
+        "title": "We are Little Daisy",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+    },
+    "story": {
+        "imageLeft": "",
+        "imageRight": "",
+        "title": "Little Daisy Story",
+        "content": "Successful brands know that storytelling is a powerful marketing tool. They know how to use stories to get their message across. But first, why brand stories? What famous brand stories are there? Because stories are the best weapon we have for eliminating noise Because it organizes information in an attractive way Because it is the most effective tool to influence the human brain Or simply put: Brand story in marketing is a filter that helps to simplify the message. And thanks to it, people will see us, hear us and understand us."
+    },
+    "listImage": {
+        "title": "Little Daisy Stores",
+        "content": "ADD: 198 Lorem ipsum Street, MB, AU",
+        "slide": [
+            {
+                "image": "",
+                "content": ""
+            }
+        ]
+    },
+    "deco": {
+        "image": "",
+        "title": "spiscing elit & sed do eiusmod"
+    },
+    "listStaff": {
+        "title": "Our Staff",
+        "staff": [
+            {
+                "image": "",
+                "name": "Full Name",
+                "major": [
+                    {
+                        "specialized": "specialized"
+                    }
+                ]
+            },
+            {
+                "image": "",
+                "name": "Full Name",
+                "major": [
+                    {
+                        "specialized": "specialized"
+                    }
+                ]
+            },
+            {
+                "image": "",
+                "name": "Full Name",
+                "major": [
+                    {
+                        "specialized": "specialized"
+                    }
+                ]
+            }
+        ]
+    },
+    "bookingAbout": {
+        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+        "image": ""
+    }
+}

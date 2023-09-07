@@ -1,46 +1,62 @@
 {
     "hero": {
-        "h1": "Lorem ipsum dolor sit, consectetur adipiscing elit",
-        "content": ""
+        "title": "Lorem ipsum dolor sit, consectetur adipiscing elit",
+        "subtitle": "",
+        "content": "",
+        "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
     },
     "intro": {
-        "short": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
-        "cleanTitle": "Lorem ipsum dolor sit amet",
-        "clean": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+        "subtitle": "About Little Daisy",
+        "title": "Perfect beauty service",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "child": [
+            {
+                "title": "Lorem ipsum dolor sit amet",
+                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            }
+        ],
+        "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
     },
-    "messages": [
-        {
-            "title": "Nail Care",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        },
-        {
-            "title": "Nail Care",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        },
-        {
-            "title": "Nail Care",
-            "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
-        }
-    ],
-    "serviceIntro": {
-        "title": "Our service is always developing the most perfect to serve women",
-        "packages": [
-            { "name": "Nails Services", "price": 2.05, "id": 1 },
-            { "name": "Nails Services", "price": 2.05, "id": 2 }
-        ]
+    "messages1": {
+        "images": ["../images/nailCare.png"],
+        "title": "Nail Care",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
-    "otherServices": {
-        "p": "We also provide some other services such as…",
-        "services": ["Lash lift", "Eyebrow laminations", "Tin tin eyebrow and lashes", "Waxing eyebrows"]
+    "messages2": {
+        "images": ["../images/nailCare.png"],
+        "title": "Nail Art",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
     },
-    "galleries": [
-        {
-            "link": "",
-            "rate": ""
-        }
-    ],
+    "messages3": {
+        "images": ["../images/nailCare.png"],
+        "title": "Best Lashes",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+    },
+    "introServices": {
+        "title": "Our service is always developing the most perfect to serve women"
+    },
+    "galleries": {
+        "image": []
+    },
     "testimonials": {
-        "h3": "",
-        "h2": ""
+        "subtitle": "TESTEMONIALS THOUGHTS",
+        "title": "Comments and Reviews",
+        "child": [
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            },
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            },
+            {
+                "image": "../images/reviewUser.png",
+                "title": "John Mad",
+                "content": "Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+            }
+        ]
     }
 }

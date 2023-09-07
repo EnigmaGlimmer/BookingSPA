@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Col, Form, Modal, ProgressBar, Row, Tab, Tabs } from 'react-bootstrap';
 
 import './upload-modal.css';
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { postAsset } from '../../store/actions';
+import { getAssetList, postAsset } from '../../store/actions';
 import config from '../../config';
 import { toast } from 'react-toastify';
 
@@ -58,13 +58,32 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
 
     const [recents, setRecents] = useState(null);
 
+    useEffect(() => {
+        dispatch(getAssetList());
+    }, [dispatch]);
+
     return (
         <div>
-            <Modal size="lg" show={show} onHide={() => onHide(show)} animation={true}>
-                <Modal.Header closeButton>
+            <Modal
+                size="lg"
+                show={show}
+                onHide={() => onHide(show)}
+                animation={true}
+                style={{ width: '100%', overflow: 'unset', background: 'none' }}
+            >
+                <Modal.Header style={{ margin: '0 auto', width: '80%', background: 'white' }} closeButton>
                     <Modal.Title>Assets Modal</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body
+                    style={{
+                        margin: '0 auto',
+                        maxWidth: 'unset',
+                        background: 'white',
+                        width: '80%',
+                        overflow: 'scroll',
+                        maxHeight: '75vh',
+                    }}
+                >
                     <Tabs className="mb-3">
                         <Tab eventKey="library" title="Library">
                             <Row id="asset-list">
@@ -104,8 +123,9 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                                             onSelected(link);
                                                             navigator.clipboard.writeText(link);
                                                             toast.success('Copied this link of image', {
-                                                                autoClose: 3000,
+                                                                autoClose: 1000,
                                                             });
+                                                            onCopyLink(link);
                                                         }}
                                                     >
                                                         Copy this link

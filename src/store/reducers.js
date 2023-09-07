@@ -12,11 +12,19 @@ import Service from './service/reducer';
 //4. Customer
 import Customer from './customer/reducer';
 
+// 5. Booking
+import Booking from './booking/reducer';
+
+//6. Setting
+import Setting from './settings/reducer';
+
 const rootReducer = combineReducers({
     Blog,
     Upload,
     Service,
     Customer,
+    Booking,
+    Setting,
 });
 
 export default rootReducer;

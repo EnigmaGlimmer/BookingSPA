@@ -26,12 +26,21 @@ const SpaceTimeFrame = ({
             </div>
             <div className="space-time-content">
                 {initialSpaceTimes.map((space, key) => {
+                    const hasReserved = reserved.some(([s, e]) => {
+                        const start = space[0];
+                        const end = space[1];
+
+                        return start === s && e === end;
+                    });
+
                     return (
                         <span
                             className="space-time-button"
-                            data-active={key === selected}
+                            data-active={hasReserved}
                             key={key}
                             onClick={() => {
+                                if (hasReserved) return;
+
                                 setSelected(key);
 
                                 let startTime = space[0];

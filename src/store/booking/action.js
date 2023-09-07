@@ -14,14 +14,11 @@ import {
 } from './actionType';
 
 // 1. Get booking
-export const getBooking = (actionType) => ({
+export const getBookings = () => ({
     type: GET_BOOKING,
-    payload: {
-        actionType,
-    },
 });
 
-export const getSuccess = (actionType, data) => ({
+export const getBookingSuccess = (actionType, data) => ({
     type: API_RESPONSE_SUCCESS,
     payload: {
         actionType,
@@ -29,7 +26,7 @@ export const getSuccess = (actionType, data) => ({
     },
 });
 
-export const getError = (actionType, error) => ({
+export const getBookingError = (actionType, error) => ({
     type: API_RESPONSE_ERROR,
     payload: {
         actionType,
@@ -86,10 +83,10 @@ export const deleteBooking = () => ({
     payload: {},
 });
 
-export const deleteBookingSuccess = (data) => ({
+export const deleteBookingSuccess = (id) => ({
     type: DELETE_BOOKING_SUCCESS,
     payload: {
-        data,
+        id,
     },
 });
 

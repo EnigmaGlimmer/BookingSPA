@@ -14,7 +14,7 @@ import {
 } from './actionType';
 
 const INIT_STATE = {
-    booking: [],
+    bookings: [],
     new: null,
     error: null,
     loading: false,
@@ -27,7 +27,7 @@ const Booking = (state = INIT_STATE, action) => {
                 case GET_BOOKING:
                     return {
                         ...state,
-                        booking: action.payload.result,
+                        bookings: action.payload.data,
                     };
 
                 default:
@@ -39,7 +39,7 @@ const Booking = (state = INIT_STATE, action) => {
                 case GET_BOOKING:
                     return {
                         ...state,
-                        booking: action.payload.result,
+                        error: action.payload.error,
                     };
 
                 default:
@@ -49,23 +49,36 @@ const Booking = (state = INIT_STATE, action) => {
             return {
                 ...state,
                 new: action.payload.result,
-                booking: action.payload.data,
+                bookings: action.payload.data,
             };
         case POST_BOOKING_FAILED:
+            return {
+                ...state,
+                errors: action.payload.error,
+            };
         case POST_BOOKING:
             return {
                 ...state,
-                booking: action.payload.error,
+                bookings: action.payload.error,
             };
         case PUT_BOOKING_SUCCESS:
             return {
                 ...state,
-                booking: action.payload.data,
+                bookings: action.payload.data,
             };
         case PUT_BOOKING_FAILED:
             return {
                 ...state,
-                booking: action.payload.error,
+                bookings: action.payload.error,
+            };
+        case DELETE_BOOKING_SUCCESS:
+            return {
+                ...state,
+                bookings: state.bookings.filter((item) => item.bookingId !== action.payload.id),
+            };
+        case DELETE_BOOKING_FAILED:
+            return {
+                error: action.payload.error,
             };
         default:
             return state;

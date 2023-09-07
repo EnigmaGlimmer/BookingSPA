@@ -208,9 +208,19 @@ export declare const searchCustomer: (request: SearchCustomerDTO) => Promise<API
 
 // 7. Booking
 type BookingDTO = {
-    customerId: number;
-    customerName: string;
     bookingId: number;
+    createdDate: Date;
+    checkinDate: Date;
+    checkoutDate: Date;
+    isCancelled: boolean;
+    couponId: number;
+    serviceId: number;
+    slot: {
+        slotId: number;
+        start_Hour: string;
+        end_Hour: string;
+    };
+    customers: CustomerDTO[];
 };
 
 type CreateBookingDTO = {
@@ -228,12 +238,19 @@ type BookingCustomerDTO = {
     bookingId: number;
     customerId: number;
 };
-
+type SearchBookingDTO = {
+    orderBy: 'CreatedDate' | 'CheckinDate' | 'CheckoutDate' | 'IsCancelled' | 'None';
+    searchBy: 'None' | 'Date' | 'Month';
+    keyword: string;
+    take: number;
+    skip: number;
+};
 export declare const assignBooking: (
     customer: CreateCustomerDTO,
     booking: CreateBookingDTO,
 ) => Promise<APIResponse<BookingCustomerDTO>>;
 
+export declare const getBookingList: (request: SearchBookingDTO) => Promise<APIResponse<BookingDTO[]>>;
 // 8. Setting
 type SettingType = 'home' | 'about' | 'booking' | 'testimonial';
 export declare const getSetting: (
@@ -245,7 +262,7 @@ export declare const getSetting: (
 
 export declare const postSetting: (
     body: {
-        body: object;
+        body: string;
         page: SettingType;
     },
     config: AxiosRequestConfig,

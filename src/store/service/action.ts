@@ -18,7 +18,7 @@ export const getService = () => ({
     type: GET_SERVICE_LIST,
 });
 
-export const getSuccess = (actionType: string, data: any) => ({
+export const getServiceSuccess = (actionType: string, data: any) => ({
     type: API_RESPONSE_SUCCESS,
     payload: {
         actionType,
@@ -26,7 +26,7 @@ export const getSuccess = (actionType: string, data: any) => ({
     },
 });
 
-export const getError = (actionType: string, error: string) => ({
+export const getServiceError = (actionType: string, error: string) => ({
     type: API_RESPONSE_ERROR,
     payload: {
         actionType,
