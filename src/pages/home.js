@@ -69,14 +69,14 @@ function Home() {
 
                 <div className="banner-img">
                     <div className="banner-img-big">
-                        <img alt="banner" src={home?.hero?.images?.[0]} width={'100%'} />
+                        <img alt="banner" src={home?.hero?.images?.[0] || bannerBig} width={'100%'} />
                     </div>
                     <div className="banner-img-extra">
                         <div className="banner-img-flower">
                             <img alt="banner" src={homeFlowerDeco} width={'100%'} />
                         </div>
                         <div className="banner-img-small">
-                            <img alt="banner" src={home?.hero?.childImage?.[0]} width={'100%'} />
+                            <img alt="banner" src={home?.hero?.childImage?.[0] || bannerSmall} width={'100%'} />
                         </div>
                     </div>
                 </div>

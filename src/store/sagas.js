@@ -13,6 +13,8 @@ import BookingSaga from './booking/saga';
 
 import SettingSaga from './settings/saga';
 
+import categorysaga from './blog category/saga';
+
 export default function* rootSaga() {
     yield all([
         fork(BlogSaga),
@@ -21,5 +23,6 @@ export default function* rootSaga() {
         fork(CustomerSaga),
         fork(BookingSaga),
         fork(SettingSaga),
+        fork(categorysaga),
     ]);
 }

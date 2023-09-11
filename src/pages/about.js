@@ -94,12 +94,12 @@ export default function About() {
                             className="about-image-store-swiper"
                         >
                             <SwiperSlide>
-                                <div className="about-image-store-form-child">
+                                {/* <div className="about-image-store-form-child">
                                     <img src={''} alt="about-1" width={'100%'} />
                                     <p className="about-image-store-form-content">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
                                     </p>
-                                </div>
+                                </div> */}
                             </SwiperSlide>
                         </Swiper>
                     </div>

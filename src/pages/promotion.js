@@ -16,6 +16,7 @@ import { createSearchParams, useSearchParams } from 'react-router-dom';
 
 // Document Meta (SEO)
 import DocumentMeta from 'react-document-meta';
+import * as DOMPurify from 'dompurify';
 
 function Promotion() {
     document.title = 'Little Daisy - Promotion';
@@ -147,7 +148,7 @@ function Promotion() {
                         <article className="mb-3">
                             <h3 className="mb-3">Latest Posts</h3>
                             <div>
-                                {latestPosts.map((post, index) => {
+                                {latestPosts?.map?.((post, index) => {
                                     return (
                                         <article key={index} className="mb-4">
                                             <Row>
@@ -172,7 +173,17 @@ function Promotion() {
                     </Col>
                     {/* Blog list */}
                     <Col id="promotion-post-list-right" sm="9">
-                        {searchParams.get('postId') && <SinglePromotion></SinglePromotion>}
+                        {searchParams.get('postId') && (
+                            <SinglePromotion
+                                title={'Heading'}
+                                categories={['Post', 'Nail']}
+                                postedDate={new Date()}
+                                content={`<div>
+                                <p>Something in the post would be shown here</p>
+                                <img src="https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg">
+                                </div>`}
+                            ></SinglePromotion>
+                        )}
                         {!searchParams.get('postId') && (
                             <>
                                 {posts.map((post, key) => {
@@ -238,15 +249,17 @@ function Promotion() {
     );
 }
 
-function SinglePromotion({ title, postedDate, category, content }) {
+function SinglePromotion({ title, postedDate, categories, content, keywords, description }) {
     const meta = {
-        title: 'Some Meta Title',
+        title: title,
         description: 'I am a description, and I can create multiple tags',
         canonical: 'http://example.com/path/to/page',
         meta: {
             charset: 'utf-8',
             name: {
-                keywords: 'react,meta,document,html,tags',
+                title: title,
+                keywords: keywords,
+                description: description,
             },
         },
     };
@@ -254,12 +267,17 @@ function SinglePromotion({ title, postedDate, category, content }) {
         <DocumentMeta {...meta}>
             <article className="">
                 <p className="text-center">
-                    {moment(postedDate).format('MMMM D, YYYY')} - {category || 'HyperText'}
+                    {moment(postedDate).format('MMMM DD, YYYY')} - {categories?.join?.(', ') || 'HyperText'}
                 </p>
                 <h2 className="text-center">{title || 'Healthy'}</h2>
                 <br></br>
                 <br></br>
-                <article className="">{content}</article>
+                <article
+                    className=""
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(content),
+                    }}
+                ></article>
 
                 {/* Comment */}
                 <div>
