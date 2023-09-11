@@ -34,8 +34,8 @@ function Service() {
             {/* Service Name */}
             <div className="service-name" id="st-serviceProduct">
                 <div className="service-name-form">
-                    <div className="service-name-title">{service.product.title}</div>
-                    <p className="service-name-content">{service.product.content}</p>
+                    <div className="service-name-title">{service?.product?.title}</div>
+                    <p className="service-name-content">{service?.product?.content}</p>
                     <div className="service-name-content-list">
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
@@ -67,7 +67,7 @@ function Service() {
             <div className="about-image-store" id="st-listImage">
                 <div className="about-image-store-form">
                     <div className="about-image-store-content">
-                        <div className="about-image-store-title">{service.listImage.title}</div>
+                        <div className="about-image-store-title">{service?.listImage?.title}</div>
                         <div className="about-image-store-address">
                             {service.listImage.content} <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
@@ -127,7 +127,7 @@ function Service() {
                     <img src={aboutBooking} alt="" width={'100%'} />
                 </div>
                 <div className="about-booking-content">
-                    <div className="about-booking-title">{service.serviceBooking.title}</div>
+                    <div className="about-booking-title">{service?.serviceBooking?.title}</div>
                     <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
                 </div>
             </div>

@@ -42,14 +42,16 @@ function Home() {
 
     const { home } = useSelector((state) => {
         return {
-            home: state.Setting.setting.content.home,
+            home: state.Setting?.setting?.content?.home,
         };
     });
+
     const { service } = useSelector((state) => {
         return {
-            service: state.Service.services,
+            service: state?.Service?.services || [],
         };
     });
+
     React.useEffect(() => {
         dispatch(getSettingList('home'));
         dispatch(getService());
@@ -102,10 +104,10 @@ function Home() {
                         </div>
                         <div className="intro-content-form">
                             <div>
-                                <h6>{home.intro.subtitle}</h6>
-                                <h2 className="intro-title">{home.intro.title}</h2>
+                                <h6>{home?.intro?.subtitle}</h6>
+                                <h2 className="intro-title">{home?.intro?.title}</h2>
                             </div>
-                            <p>{home.intro.content}</p>
+                            <p>{home?.intro?.content}</p>
                             <div>
                                 <h5>{home?.intro?.child?.title}</h5>
                                 <p>{home?.intro?.child?.content}</p>
@@ -155,7 +157,7 @@ function Home() {
             {/* Service Quality */}
             <div className="quality" id="st-introServices">
                 <div className="quality-form">
-                    <h1 className="quality-title">{home.introServices.title}</h1>
+                    <h1 className="quality-title">{home?.introServices?.title}</h1>
                 </div>
             </div>
             {/* Nail Services */}
@@ -212,7 +214,7 @@ function Home() {
                             <h1 className="lashes-title">Lashes Services</h1>
                             <div className="lashes-list">
                                 {service
-                                    ?.find((e) => e.serviceName === 'Lash')
+                                    ?.find?.((e) => e.serviceName === 'Lash')
                                     ?.childs?.map((item, index) => {
                                         return (
                                             <div className="other-list-item" key={index}>
@@ -309,8 +311,8 @@ function Home() {
             <div className="review py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
-                        <h1 className="review-intro">{home.testimonials.subtitle}</h1>
-                        <div className="review-title">{home.testimonials.title}</div>
+                        <h1 className="review-intro">{home?.testimonials?.subtitle}</h1>
+                        <div className="review-title">{home?.testimonials?.title}</div>
                     </div>
                     <div className="review-list">
                         <Swiper
@@ -339,8 +341,8 @@ function Home() {
                                                 <div className="review-img">
                                                     <img src={reviewUser} alt="Service" width={'100%'} />
                                                 </div>
-                                                <div className="review-user-name">{item.title}</div>
-                                                <div className="review-content">{item.content}</div>
+                                                <div className="review-user-name">{item?.title}</div>
+                                                <div className="review-content">{item?.content}</div>
                                             </div>
                                         )}
                                     </SwiperSlide>
@@ -376,8 +378,8 @@ function Home() {
                                                 <div className="review-img">
                                                     <img src={reviewUser} alt="Service" width={'100%'} />
                                                 </div>
-                                                <div className="review-user-name">{item.title}</div>
-                                                <div className="review-content">{item.content}</div>
+                                                <div className="review-user-name">{item?.title}</div>
+                                                <div className="review-content">{item?.content}</div>
                                             </div>
                                         )}
                                     </SwiperSlide>

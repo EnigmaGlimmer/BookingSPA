@@ -48,7 +48,7 @@ let bookingSchema = yup.object().shape({
     // messenger: yup.string().required('Messenger is required field'),
 });
 function BookingPage() {
-    document.title = 'Little Daisy - Booking';
+    document.title = 'Little Daisy - Booking your slot here';
 
     const [step, setStep] = React.useState(1);
 

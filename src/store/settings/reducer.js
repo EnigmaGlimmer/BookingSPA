@@ -32,7 +32,6 @@ const Setting = (state = INIT_STATE, action) => {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
                 case GET_SETTING_LIST:
-                    console.log(action);
                     return {
                         ...state,
                         setting: {
@@ -61,16 +60,16 @@ const Setting = (state = INIT_STATE, action) => {
             }
 
         case POST_SETTING_SUCCESS:
-            switch (action.payload.actionType) {
-                case GET_SETTING_LIST:
-                    return {
-                        ...state,
-                        setting: action.payload.data,
-                    };
-
-                default:
-                    return state;
-            }
+            console.log(action);
+            return {
+                ...state,
+                setting: {
+                    content: {
+                        ...state.setting.content,
+                        [action.payload.page]: action.payload.data,
+                    },
+                },
+            };
 
         case POST_SETTING_FAILED:
             return {

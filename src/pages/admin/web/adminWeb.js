@@ -1,20 +1,16 @@
 import React from 'react';
 
 // Component
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { Home, About, BookingPage, Promotion } from '../..';
 
-import { FieldArray, useFormik } from 'formik';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 import { Link, useSearchParams, createSearchParams } from 'react-router-dom';
 
 //Swiper
 import { Pagination, Navigation, Mousewheel, Keyboard } from 'swiper/modules';
-
-// JSON
-import about from '../../../config/content/about.json';
-import home from '../../../config/content/home.json';
-import service from '../../../config/content/service.json';
 
 //Icons
 import { FaTimes } from 'react-icons/fa';
@@ -22,19 +18,16 @@ import { BiAddToQueue } from 'react-icons/bi';
 
 // Custom style
 import './style.css';
-import { postSetting } from '../../../api';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSettingList } from '../../../store/actions';
+import { getSettingList, postSetting } from '../../../store/actions';
 import { UploadModal } from '../../../components';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useContact } from '../../../hooks/useContact';
+
 function AdminWeb() {
     const [params] = useSearchParams();
     const dispatch = useDispatch();
-    const { setting } = useSelector((state) => {
-        return {
-            setting: state.Setting.setting,
-        };
-    });
+
     let currentContent = params?.get?.('content');
 
     React.useEffect(() => {
@@ -43,51 +36,118 @@ function AdminWeb() {
 
     return (
         <section>
+            <Row className="align-items-center">
+                <Col xs="auto">
+                    <h3>Web Content</h3>
+                    <p>You can edit your own content</p>
+                </Col>
+                <Col xs="auto">
+                    <div className="mb-3">
+                        <ListWeb></ListWeb>
+                    </div>
+                </Col>
+            </Row>
+
             {params.get('content') ? (
                 <PageDemo page={params.get('content')}></PageDemo>
             ) : (
-                <>
-                    <h3>Web Content</h3>
-                    <p>You can edit your own content</p>
-                    <ListWeb></ListWeb>
-                    <h3>Contact Information</h3>
-                    <p>You can edit your own contact</p>
-                    <ul>
-                        <li>
-                            <Form.Group>
-                                <Form.Label>Phone Number</Form.Label>
-                                <Form.Control></Form.Control>
-                            </Form.Group>
-                        </li>
-                        <li>
-                            <Form.Group>
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control></Form.Control>
-                            </Form.Group>
-                        </li>
-                        <li>
-                            <Form.Group>
-                                <Form.Label>Facebook</Form.Label>
-                                <Form.Control></Form.Control>
-                            </Form.Group>
-                        </li>
-                        <li>
-                            <Form.Group>
-                                <Form.Label>Instagram</Form.Label>
-                                <Form.Control></Form.Control>
-                            </Form.Group>
-                        </li>
-                        <li>
-                            <Form.Group>
-                                <Form.Label>Whatsapp</Form.Label>
-                                <Form.Control></Form.Control>
-                            </Form.Group>
-                        </li>
-                    </ul>
-                    <button>Post JSON </button>
-                </>
+                <ContactInformation></ContactInformation>
             )}
         </section>
+    );
+}
+
+function ContactInformation() {
+    const dispatch = useDispatch();
+    const contact = useContact();
+
+    const { handleSubmit, handleChange, values, errors, touched, handleBlur } = useFormik({
+        initialValues: {
+            phone: contact?.phone || '61432842392',
+            email: contact?.email || 'abc@gmail.com',
+            facebook: contact?.facebook || 'facebook.com@littlespa',
+            instagram: contact?.instagram || 'sdkodfosdjf',
+            whatsapp: contact?.whatsapp || '2543534543',
+        },
+        enableReinitialize: true,
+        onSubmit: (values) => {
+            dispatch(postSetting(values, 'contact'));
+        },
+    });
+
+    return (
+        <Form onSubmit={handleSubmit}>
+            <h3>Contact Information</h3>
+            <p>You can edit your own contact</p>
+            <ul>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control
+                            name="phone"
+                            value={values.phone}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.phone && !!errors?.phone}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.phone}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            name="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.email && !!errors?.email}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.email}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Facebook</Form.Label>
+                        <Form.Control
+                            name="facebook"
+                            value={values.facebook}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.facebook && !!errors?.facebook}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.facebook}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Instagram</Form.Label>
+                        <Form.Control
+                            name="instagram"
+                            value={values.instagram}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.instagram && !!errors?.instagram}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.instagram}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Whatsapp</Form.Label>
+                        <Form.Control
+                            name="whatsapp"
+                            value={values.whatsapp}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.whatsapp && !!errors?.whatsapp}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.whatsapp}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+            </ul>
+            <Button type="submit">Update Dial</Button>
+        </Form>
     );
 }
 
@@ -121,13 +181,6 @@ function PageDemo({ page }) {
         return () => {};
     }, [page]);
 
-    // React.useEffect(() => {
-    //     (sections || []).forEach((element) => {
-    //         element.removeEventListener('click', () => {});
-    //         element.addEventListener('click', () => {});
-    //     });
-    // }, [sections]);
-
     const Render = React.useCallback(() => {
         switch (page) {
             case 'home':
@@ -143,7 +196,7 @@ function PageDemo({ page }) {
                 return <BookingPage></BookingPage>;
 
             default:
-                return <></>;
+                return <ContactInformation></ContactInformation>;
         }
     }, [page]);
 
@@ -155,39 +208,6 @@ function PageDemo({ page }) {
 
     return (
         <>
-            {/* <ul>
-                <li>
-                    <button
-                        onClick={() => {
-                            postSetting({
-                                body: JSON.stringify({
-                                    home: {
-                                        title: 'This is Homepage',
-                                        subtitle: 'Subtitle of homepage',
-                                    },
-                                    about: {
-                                        title: 'skdlksadms',
-                                        subtitle: 'skadjksaljd',
-                                    },
-                                }),
-                                page: 'home',
-                            })
-                                .then((response) => {
-                                    console.log(response);
-                                })
-                                .catch((error) => {
-                                    console.log(error);
-                                });
-                        }}
-                    >
-                        Post Object
-                    </button>
-                </li>
-            </ul> */}
-
-            <h3>Web Content</h3>
-
-            <ListWeb></ListWeb>
             <EditTool
                 show={editTool?.show}
                 onHide={() => setEditTool((e) => (e.show = false))}
@@ -204,41 +224,56 @@ function PageDemo({ page }) {
 
 function ListWeb() {
     return (
-        <ul>
-            <li>
-                <Link
-                    to={{
-                        search: createSearchParams({
-                            content: 'home',
-                        }).toString(),
-                    }}
-                >
-                    Homepage
-                </Link>
-            </li>
-            <li>
-                <Link
-                    to={{
-                        search: createSearchParams({
-                            content: 'about',
-                        }).toString(),
-                    }}
-                >
-                    About us
-                </Link>
-            </li>
-            <li>
-                <Link
-                    to={{
-                        search: createSearchParams({
-                            content: 'promotion',
-                        }).toString(),
-                    }}
-                >
-                    Promotion
-                </Link>
-            </li>
-        </ul>
+        <Dropdown>
+            <Dropdown.Toggle id="dropdown-basic">Select page to edit</Dropdown.Toggle>
+
+            <Dropdown.Menu>
+                <Dropdown.Item>
+                    <Link
+                        to={{
+                            search: createSearchParams({
+                                content: 'home',
+                            }).toString(),
+                        }}
+                    >
+                        Homepage
+                    </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    <Link
+                        to={{
+                            search: createSearchParams({
+                                content: 'about',
+                            }).toString(),
+                        }}
+                    >
+                        About us
+                    </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    <Link
+                        to={{
+                            search: createSearchParams({
+                                content: 'promotion',
+                            }).toString(),
+                        }}
+                    >
+                        Promotion
+                    </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                    <Link
+                        to={{
+                            search: createSearchParams({
+                                content: 'contact',
+                            }).toString(),
+                        }}
+                    >
+                        Contact
+                    </Link>
+                </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
     );
 }
 
@@ -266,14 +301,15 @@ function EditTool({ sectionName, page, show, onHide }) {
         },
         onSubmit: (values) => {
             dispatch(
-                postSetting({
-                    body: {
+                postSetting(
+                    {
                         ...content,
                         [sectionName]: values,
                     },
                     page,
-                }),
+                ),
             );
+            onHide();
         },
         enableReinitialize: true,
     });
@@ -541,7 +577,6 @@ function EditTool({ sectionName, page, show, onHide }) {
                     <Button type="submit" variant="primary" className="my-4">
                         Submit
                     </Button>
-                    <pre>{JSON.stringify(values, 4, 4)}</pre>
                 </Form>
             </Modal.Body>
         </Modal>

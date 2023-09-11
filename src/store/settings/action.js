@@ -36,18 +36,26 @@ export const getSettingError = (actionType, error) => ({
 });
 
 // 2. Create new blog
-export const postSetting = (body, page) => ({
-    type: POST_SETTING,
-    payload: {
-        body,
-        page,
-    },
-});
+export const postSetting = (body, page) => {
+    return {
+        type: POST_SETTING,
+        payload: {
+            body,
+            page,
+        },
+    };
+};
 
-export const postSettingSuccess = (data) => ({
-    type: POST_SETTING_SUCCESS,
-    payload: data,
-});
+export const postSettingSuccess = ({ page, data }) => {
+    console.log(page, data);
+    return {
+        type: POST_SETTING_SUCCESS,
+        payload: {
+            page,
+            data,
+        },
+    };
+};
 
 export const postSettingError = (error) => ({
     type: POST_SETTING_FAILED,
