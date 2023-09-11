@@ -20,6 +20,7 @@ function* getBlogs() {
 }
 
 function* onAddNewBlog({ payload: newBlog }) {
+    console.log(newBlog);
     try {
         const response = yield call(postBlogAPI, newBlog);
         yield put(postBlogSuccess(response?.result));

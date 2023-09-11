@@ -18,16 +18,11 @@ interface Pagination {
 type SingleBlog = {
     BlogId: number;
     articleTitle: string;
-    articleContent: string;
+    articleContent: object;
     createdDate: Date;
-    updatedDate: Date;
-    categories: string[];
+    categories: number[];
     status: BlogStatus;
     presentedImage: string;
-    galleries: string;
-    likeCount: number;
-    comments: CommentResponse[];
-    commentCount: number;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
@@ -35,12 +30,11 @@ type SingleBlog = {
 
 interface CreateBlog {
     articleTitle: string;
-    articleContent: string;
-    ceatedDate: Date;
+    articleContent: object;
+    createdDate: Date;
     categories: number[];
-    presentedImage: string;
-    galleries: string;
     status: BlogStatus;
+    presentedImage: string;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
@@ -48,12 +42,10 @@ interface CreateBlog {
 
 interface UpdateBlog {
     articleTitle: string;
-    articleContent: string;
+    articleContent: object;
     ceatedDate: Date;
     categories: number[];
     presentedImage: string;
-    galleries: string;
-    status: BlogStatus;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
@@ -221,6 +213,7 @@ type BookingDTO = {
         end_Hour: string;
     };
     customers: CustomerDTO[];
+    categories: [];
 };
 
 type CreateBookingDTO = {
@@ -275,3 +268,18 @@ export declare const putSetting: (
     body: object,
     config: AxiosRequestConfig,
 ) => Promise<APIResponse<object>>;
+
+// Blog Category
+type CategoryDTO = {
+    categoryId: number;
+    categoryName: string;
+};
+type CreateCategoryDTO = {
+    categoryName: string;
+};
+type SearchCategoryDTO = {
+    take: number;
+    skip: number;
+};
+export declare const postCategory: (body: CreateCategoryDTO) => Promise<APIResponse<CategoryDTO>>;
+export declare const getCategoryList: (request: SearchCategoryDTO) => Promise<APIResponse<CategoryDTO>>;

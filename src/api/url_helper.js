@@ -44,3 +44,9 @@ export const DELETE_BOOKING = '/api/booking';
 export const GET_SETTING = '/api/settings';
 export const POST_SETTING = '/api/settings';
 export const PUT_SETTING = '/api/settings';
+
+// 10. Blog Category
+export const GET_CATEGORY_LIST = '/api/category/list';
+export const POST_CATEGORY = '/api/category';
+export const PUT_CATEGORY = '/api/category';
+export const DELETE_CATEGORY = '/api/category';

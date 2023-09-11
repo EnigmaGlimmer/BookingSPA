@@ -163,13 +163,15 @@ function AdminServices() {
                         <Form.Label>Dependency</Form.Label>
                         <Form.Select name="parentId" onChange={handleChange} placeholder="Enter service title">
                             <option value={0}>Choose the root service</option>
-                            {(services || [])?.map((item, index) => {
+                            {/* {(services || [])?.map((item, index) => {
                                 return (
                                     <option key={index} value={item?.serviceId}>
                                         {item?.serviceName}
                                     </option>
                                 );
-                            })}
+                            })} */}
+                            <option value={services?.find?.((e) => e.serviceName === 'Nail')?.serviceId}>Nail</option>
+                            <option value={services?.find?.((e) => e.serviceName === 'Lash')?.serviceId}>Lash</option>
                         </Form.Select>
                     </Form.Group>
                     <Button type="submit" className="mb-2" variant="primary">
@@ -225,28 +227,31 @@ function ServiceListTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {(services || [])?.map((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{item?.serviceId}</td>
-
-                                <td>{item?.serviceName}</td>
-                                <td>{item?.price}$</td>
-                                <td></td>
-                                <td>{(services || []).find((e) => e.parentId === item?.parentId).serviceName}</td>
-                                <td>
-                                    <Button variant="outline" onClick={() => handleDeleteService(item?.serviceId)}>
-                                        Delete
-                                    </Button>
-                                    <Button variant="outline" className="mx-4">
-                                        Update
-                                    </Button>
-                                    <Button variant="outline">Not available</Button>
-                                    <Button variant="outline">View post</Button>
-                                </td>
-                            </tr>
-                        );
-                    })}
+                    {(services || [])
+                        ?.filter((e) => e.serviceName !== 'Nail' && e.serviceName !== 'Lash')
+                        .map((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{item?.serviceId}</td>
+                                    <td>{item?.serviceName}</td>
+                                    <td>{item?.price}$</td>
+                                    <td></td>
+                                    <td>
+                                        {(services || [])?.find?.((e) => e.serviceId === item?.parentId)?.serviceName}
+                                    </td>
+                                    <td>
+                                        <Button variant="outline" onClick={() => handleDeleteService(item?.serviceId)}>
+                                            Delete
+                                        </Button>
+                                        <Button variant="outline" className="mx-4">
+                                            Update
+                                        </Button>
+                                        <Button variant="outline">Not available</Button>
+                                        <Button variant="outline">View post</Button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                 </tbody>
             </Table>
         </>

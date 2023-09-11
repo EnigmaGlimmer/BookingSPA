@@ -7,8 +7,8 @@ export const getBlogList = (request, config) => {
     return api.get(url.GET_BLOG_LIST);
 };
 
-export const postBlog = () => {
-    return api.create(url.POST_NEW_BLOG);
+export const postBlog = (body, config) => {
+    return api.create(url.POST_NEW_BLOG, body, config);
 };
 
 export const putBlog = (body, config) => {

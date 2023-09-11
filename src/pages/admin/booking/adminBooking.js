@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBooking, getBookings } from '../../../store/actions';
+import { getBookings } from '../../../store/actions';
 
 function AdminBooking() {
     const dispatch = useDispatch();
@@ -14,9 +14,6 @@ function AdminBooking() {
     React.useEffect(() => {
         dispatch(getBookings());
     }, [dispatch]);
-    const handleDeleteBooking = (id) => {
-        dispatch(deleteBooking(id));
-    };
     return (
         <section className="container">
             <h3>Booking</h3>
@@ -41,11 +38,7 @@ function AdminBooking() {
                                 <td>
                                     {booking.slot.start_Hour.slice(0, 5)} - {booking.slot.end_Hour.slice(0, 5)}
                                 </td>
-                                <td>
-                                    <Button variant="danger" onClick={handleDeleteBooking(booking.bookingId)}>
-                                        Delete
-                                    </Button>
-                                </td>
+                                <td></td>
                             </tr>
                         );
                     })}

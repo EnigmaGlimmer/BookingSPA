@@ -34,8 +34,8 @@ function Service() {
             {/* Service Name */}
             <div className="service-name" id="st-serviceProduct">
                 <div className="service-name-form">
-                    <div className="service-name-title">{service.product.title}</div>
-                    <p className="service-name-content">{service.product.content}</p>
+                    <div className="service-name-title">{service.serviceProduct.title}</div>
+                    <p className="service-name-content">{service.serviceProduct.content}</p>
                     <div className="service-name-content-list">
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
