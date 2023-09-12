@@ -36,7 +36,7 @@ export const getServiceError = (actionType: string, error: string) => ({
 
 // 2. Create new SERVICE
 
-export const postService = (asset: {
+export const postService = (newService: {
     serviceName: string;
     parentId?: number;
     createdDate: Date;
@@ -45,7 +45,7 @@ export const postService = (asset: {
 }) => {
     return {
         type: POST_SERVICE,
-        payload: asset,
+        payload: newService,
     };
 };
 

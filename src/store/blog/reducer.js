@@ -15,6 +15,7 @@ import {
 
 const INIT_STATE = {
     blogs: [],
+    total: 0,
     error: null,
     loading: false,
 };
@@ -26,7 +27,8 @@ const Blogs = (state = INIT_STATE, action) => {
                 case GET_BLOG_LIST:
                     return {
                         ...state,
-                        blogs: action.payload,
+                        blogs: action.payload.data,
+                        total: action.payload.total,
                     };
 
                 default:
@@ -38,7 +40,7 @@ const Blogs = (state = INIT_STATE, action) => {
                 case GET_BLOG_LIST:
                     return {
                         ...state,
-                        blogs: action.payload,
+                        blogs: action.payload.error,
                     };
 
                 default:
@@ -46,10 +48,10 @@ const Blogs = (state = INIT_STATE, action) => {
             }
 
         case POST_BLOG_SUCCESS:
-            return { ...state, blogs: [...state.blogs, action.payload] };
+            return { ...state, blogs: [...state.blogs, action.payload.data] };
 
         case POST_BLOG_FAILED:
-            return { ...state, error: action.payload };
+            return { ...state, error: action.payload.error };
 
         case PUT_BLOG_SUCCESS:
             return { ...state };

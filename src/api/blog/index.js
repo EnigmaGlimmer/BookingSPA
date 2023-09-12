@@ -4,11 +4,15 @@ const url = require('../url_helper');
 const api = new APIClient();
 
 export const getBlogList = (request, config) => {
-    return api.get(url.GET_BLOG_LIST);
+    return api.get(url.GET_BLOG_LIST, request, config);
 };
 
-export const postBlog = () => {
-    return api.create(url.POST_NEW_BLOG);
+export const getSingleBlog = (id, config) => {
+    return api.get(`${url.GET_SINGLE_BLOG}/${id}`, null, config);
+};
+
+export const postBlog = (body, config) => {
+    return api.create(url.POST_NEW_BLOG, body, config);
 };
 
 export const putBlog = (body, config) => {

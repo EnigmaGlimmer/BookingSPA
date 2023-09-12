@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // React Bootstrap
 import { Col, Container, Row, Breadcrumb, Form, Button } from 'react-bootstrap';
@@ -12,14 +12,25 @@ import './style/promotion.css';
 // Assets
 import headerBackground from '../images/promotion/header.svg';
 import { Pagination } from '../components';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
+import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
 
 // Document Meta (SEO)
 import DocumentMeta from 'react-document-meta';
+import * as DOMPurify from 'dompurify';
+
+// store
+import { useDispatch, useSelector } from 'react-redux';
+import { getBlogList } from '../store/actions';
+
+// api
+import { getSingleBlog as getSingleBlogAPI } from '../api';
+import { BlogOrderBy, BlogSearchBy } from '../api/enum';
+import { toast } from 'react-toastify';
 
 function Promotion() {
     document.title = 'Little Daisy - Promotion';
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
+
     const [
         latestPosts,
         // setLatestPosts
@@ -46,29 +57,27 @@ function Promotion() {
             title: 'Lorem ipsum dolor sit amet',
         },
     ]);
-    const [
-        posts,
-        // setPosts
-    ] = React.useState([
-        {
-            id: 0,
-            presentImage: 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-img-1.jpg',
-            postedDate: new Date(),
-            title: 'Love Your Skin',
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque viverra justo nec ultrices. Nunc lobortis mattis aliquam faucibus. Habitasse platea dictumst vestibulum rhoncus. Id porta nibh venenatis cras sed. Nunc consequat interdum varius si',
-            categories: ['CAREHYDRATION'],
-        },
-        {
-            id: 1,
-            presentImage: 'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-img-1.jpg',
-            postedDate: new Date(),
-            title: 'Love Your Skin',
-            content:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Neque viverra justo nec ultrices. Nunc lobortis mattis aliquam faucibus. Habitasse platea dictumst vestibulum rhoncus. Id porta nibh venenatis cras sed. Nunc consequat interdum varius si',
-            categories: ['CAREHYDRATION'],
-        },
-    ]);
+
+    const { posts } = useSelector((state) => {
+        return {
+            posts: state?.Blog?.blogs,
+        };
+    });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(
+            getBlogList({
+                skip: 1,
+                take: 10,
+                keyword: '',
+                orderBy: BlogOrderBy.CreatedDate,
+                searchBy: BlogSearchBy.None,
+            }),
+        );
+    }, [dispatch]);
+
     return (
         <section id="promotion">
             {/* Header */}
@@ -99,10 +108,14 @@ function Promotion() {
                     </Row>
                 </Container>
             </header>
-            {searchParams.get('postId') && (
+            {!!searchParams?.get?.('postId') && (
                 <section>
                     <img
-                        src={posts?.find?.((p) => p.id.toString() === searchParams.get('postId'))?.presentImage}
+                        src={
+                            posts?.find?.((p) => {
+                                return p.blogId.toString() === searchParams?.get?.('postId');
+                            })?.presentedImage
+                        }
                         alt=""
                         className="w-100"
                         style={{ maxHeight: '420px', objectFit: 'cover' }}
@@ -147,7 +160,7 @@ function Promotion() {
                         <article className="mb-3">
                             <h3 className="mb-3">Latest Posts</h3>
                             <div>
-                                {latestPosts.map((post, index) => {
+                                {latestPosts?.map?.((post, index) => {
                                     return (
                                         <article key={index} className="mb-4">
                                             <Row>
@@ -172,54 +185,19 @@ function Promotion() {
                     </Col>
                     {/* Blog list */}
                     <Col id="promotion-post-list-right" sm="9">
-                        {searchParams.get('postId') && <SinglePromotion></SinglePromotion>}
-                        {!searchParams.get('postId') && (
+                        {(!!searchParams?.get?.('postId') && <SinglePromotion></SinglePromotion>) || (
                             <>
-                                {posts.map((post, key) => {
+                                {posts?.map?.((post, key) => {
                                     return (
-                                        <article key={key}>
-                                            <div
-                                                style={{
-                                                    maxHeight: '467px',
-                                                    width: '100%',
-                                                    height: 'auto',
-                                                    overflow: 'hidden',
-                                                }}
-                                            >
-                                                <img
-                                                    src={post?.presentImage}
-                                                    alt={post.title}
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '100%',
-                                                        objectFit: 'cover',
-                                                        objectPosition: 'center',
-                                                    }}
-                                                ></img>
-                                            </div>
-                                            <div className="text-center p-4">
-                                                <h6 className="text-uppercase">
-                                                    {moment(post.postedDate).format('MMM D, YYYY')} -{' '}
-                                                    {post.categories.join(' ')}
-                                                </h6>
-                                                <h2>{post?.title}</h2>
-                                                <p>{post?.content}</p>
-                                                <Button
-                                                    variant="outline"
-                                                    className="text-uppercase btn-primary-outline"
-                                                    style={{ borderRadius: 'unset' }}
-                                                    onClick={() => {
-                                                        setSearchParams(
-                                                            createSearchParams({
-                                                                postId: post?.id,
-                                                            }),
-                                                        );
-                                                    }}
-                                                >
-                                                    Read More
-                                                </Button>
-                                            </div>
-                                        </article>
+                                        <SinglePromotionThumbnail
+                                            key={key}
+                                            id={post?.blogId}
+                                            categories={post?.categories?.map?.((c) => c.categoryName)}
+                                            content={post?.content}
+                                            postedDate={post?.createdDate}
+                                            presentImage={post?.presentedImage}
+                                            title={post?.title}
+                                        ></SinglePromotionThumbnail>
                                     );
                                 })}
                                 <Pagination
@@ -238,28 +216,140 @@ function Promotion() {
     );
 }
 
-function SinglePromotion({ title, postedDate, category, content }) {
-    const meta = {
-        title: 'Some Meta Title',
-        description: 'I am a description, and I can create multiple tags',
-        canonical: 'http://example.com/path/to/page',
-        meta: {
-            charset: 'utf-8',
-            name: {
-                keywords: 'react,meta,document,html,tags',
-            },
-        },
-    };
+function SinglePromotionThumbnail({ id, title, postedDate, categories, content, presentImage }) {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     return (
-        <DocumentMeta {...meta}>
+        <article>
+            <div
+                style={{
+                    maxHeight: '467px',
+                    width: '100%',
+                    height: 'auto',
+                    overflow: 'hidden',
+                }}
+            >
+                <img
+                    src={presentImage}
+                    alt={title}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                    }}
+                ></img>
+            </div>
+            <div className="text-center p-4">
+                <h6 className="text-uppercase">
+                    {moment(postedDate).format('MMM DD, YYYY')} - {categories.join(', ')}
+                </h6>
+                <h2>{title}</h2>
+                <p>{content}</p>
+                <Button
+                    variant="outline"
+                    className="text-uppercase btn-primary-outline"
+                    style={{ borderRadius: 'unset' }}
+                    onClick={() => {
+                        setSearchParams(
+                            createSearchParams({
+                                postId: id,
+                            }),
+                        );
+                    }}
+                >
+                    Read More
+                </Button>
+            </div>
+        </article>
+    );
+}
+
+function SinglePromotion() {
+    const [searchParams] = useSearchParams();
+    const postId = searchParams?.get?.('postId');
+
+    const { posts } = useSelector((state) => {
+        return {
+            posts: state?.Blog?.blogs,
+        };
+    });
+
+    const [post, setPost] = React.useState();
+
+    useEffect(() => {
+        const foundPost = posts?.find?.((post) => {
+            return post.blogId.toString() === postId;
+        });
+
+        if (!foundPost) {
+            getSingleBlogAPI(postId)
+                .then((response) => {
+                    if (response?.blogId) {
+                        setPost(response);
+                    }
+                })
+                .catch((err) => {
+                    toast.error(typeof err === 'string' ? err : 'Get Failed', {
+                        autoClose: 3000,
+                    });
+                });
+            return;
+        }
+
+        setPost(foundPost);
+    }, [postId, posts]);
+
+    if (post?.status === 1) {
+        return <ClosedSinglePromotion></ClosedSinglePromotion>;
+    }
+    return (
+        <DocumentMeta
+            {...{
+                title: `Little spa - [Blog] ${post?.articleTitle}`,
+                description: 'I am a description, and I can create multiple tags',
+                canonical: 'http://example.com/path/to/page',
+                meta: {
+                    charset: 'utf-8',
+                    name: {
+                        title: post?.metaTitle,
+                        keywords: post?.metaKeywords,
+                        description: post?.metaDescription,
+                    },
+                },
+            }}
+        >
             <article className="">
                 <p className="text-center">
-                    {moment(postedDate).format('MMMM D, YYYY')} - {category || 'HyperText'}
+                    {moment(post?.createdDate).format('MMMM DD, YYYY')} -{' '}
+                    {post?.categories?.map((c) => {
+                        console.log(c);
+                        return (
+                            <Link
+                                // to={{
+                                //     search: {
+                                //         category: c?.categoryId,
+                                //     },
+                                // }}
+                                to={{
+                                    search: `?category=${c?.categoryId}`,
+                                }}
+                                preventScrollReset={true}
+                            >
+                                {c?.categoryName}
+                            </Link>
+                        );
+                    })}
                 </p>
-                <h2 className="text-center">{title || 'Healthy'}</h2>
+                <h2 className="text-center">{post?.articleTitle}</h2>
                 <br></br>
                 <br></br>
-                <article className="">{content}</article>
+                <article
+                    className="mb-3"
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(post?.articleContent),
+                    }}
+                ></article>
 
                 {/* Comment */}
                 <div>
@@ -269,7 +359,7 @@ function SinglePromotion({ title, postedDate, category, content }) {
                             <img src="" alt="Avatar"></img>
                         </Col>
                         <Col>
-                            <p>{moment(postedDate).format('MMMM D, YYYY')}</p>
+                            <p>{moment(post?.postedDate).format('MMMM D, YYYY')}</p>
                             <h3>Alizabeth</h3>
                             <p>
                                 Sit amet quis id adipisicing do culpa anim magna est sint dolore nisi dolore. Laborum
@@ -288,6 +378,10 @@ function SinglePromotion({ title, postedDate, category, content }) {
             </article>
         </DocumentMeta>
     );
+}
+
+function ClosedSinglePromotion() {
+    return <h2>This blog has been blocked by its authority</h2>;
 }
 
 export default Promotion;

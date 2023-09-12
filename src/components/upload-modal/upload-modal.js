@@ -58,6 +58,8 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
 
     const [recents, setRecents] = useState(null);
 
+    // State of asset list that start from page.2
+
     useEffect(() => {
         dispatch(getAssetList());
     }, [dispatch]);

@@ -1,3 +1,4 @@
+import { BlogRequest } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -15,18 +16,19 @@ import {
 
 // 1. Get blog list
 
-export const getBlogList = (actionType) => ({
-    type: GET_BLOG_LIST,
-    payload: {
-        actionType,
-    },
-});
+export const getBlogList = (request: BlogRequest) => {
+    return {
+        type: GET_BLOG_LIST,
+        payload: request,
+    };
+};
 
-export const getSuccess = (actionType, data) => ({
+export const getSuccess = (actionType, { data, total }) => ({
     type: API_RESPONSE_SUCCESS,
     payload: {
         actionType,
         data,
+        total,
     },
 });
 
@@ -39,9 +41,12 @@ export const getError = (actionType, error) => ({
 });
 
 // 2. Create new blog
-export const postBlog = () => ({
-    type: POST_BLOG,
-});
+export const postBlog = (newBlog) => {
+    return {
+        type: POST_BLOG,
+        payload: newBlog,
+    };
+};
 
 export const postBlogSuccess = (data) => ({
     type: POST_BLOG_SUCCESS,

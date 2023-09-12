@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { type } from 'os';
+import { BlogOrderBy, BlogSearchBy, BlogStatus } from './enum';
 
 // *** Type Helper
 interface APIResponse<Type> {
@@ -9,6 +9,13 @@ interface APIResponse<Type> {
     errors: string[];
 }
 
+interface APIListResponse<Type> {
+    list: Type[];
+    page: number;
+    take: number;
+    total: number;
+}
+
 interface Pagination {
     take: number;
     skip: number;
@@ -16,18 +23,13 @@ interface Pagination {
 
 // 1. Blog
 type SingleBlog = {
-    BlogId: number;
+    blogId: number;
     articleTitle: string;
-    articleContent: string;
+    articleContent: object;
     createdDate: Date;
-    updatedDate: Date;
-    categories: string[];
+    categories: number[];
     status: BlogStatus;
     presentedImage: string;
-    galleries: string;
-    likeCount: number;
-    comments: CommentResponse[];
-    commentCount: number;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
@@ -35,12 +37,11 @@ type SingleBlog = {
 
 interface CreateBlog {
     articleTitle: string;
-    articleContent: string;
-    ceatedDate: Date;
+    articleContent: object;
+    createdDate: Date;
     categories: number[];
-    presentedImage: string;
-    galleries: string;
     status: BlogStatus;
+    presentedImage: string;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
@@ -48,20 +49,21 @@ interface CreateBlog {
 
 interface UpdateBlog {
     articleTitle: string;
-    articleContent: string;
+    articleContent: object;
     ceatedDate: Date;
     categories: number[];
     presentedImage: string;
-    galleries: string;
-    status: BlogStatus;
     metaKeywords: string;
     metaTitle: string;
     metaDescription: string;
 }
 
-export declare enum BlogStatus {
-    Opening,
-    Closed,
+interface BlogRequest {
+    orderBy: BlogOrderBy;
+    searchBy: BlogSearchBy;
+    keyword: string;
+    skip: number;
+    take: number;
 }
 
 // 2. Comment
@@ -78,11 +80,15 @@ type PostComment = {};
  * @returns Phản hồi bất đồng bộ của kiểu dữ liệu danh sách blog.
  */
 export declare const getBlogList: (
-    request: Pagination,
+    request: BlogRequest,
     config?: AxiosRequestConfig,
-) => Promise<APIResponse<Array<SingleBlog>>>;
-export declare const postBlog: (body: CreateBlog, config: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
-export declare const updateBlog: (body: UpdateBlog, config: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
+) => Promise<APIListResponse<SingleBlog> | APIResponse<APIListResponse<SingleBlog>> | string>;
+export declare const getSingleBlog: (
+    id: number,
+    config?: AxiosRequestConfig,
+) => Promise<APIListResponse<SingleBlog> | SingleBlog | string>;
+export declare const postBlog: (body: CreateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
+export declare const updateBlog: (body: UpdateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
 
 // 2. Comment
 export declare const getCommentList: (pagination) => Promise<APIResponse<CommentResponse>>;
@@ -221,6 +227,7 @@ type BookingDTO = {
         end_Hour: string;
     };
     customers: CustomerDTO[];
+    categories: [];
 };
 
 type CreateBookingDTO = {
@@ -275,3 +282,18 @@ export declare const putSetting: (
     body: object,
     config: AxiosRequestConfig,
 ) => Promise<APIResponse<object>>;
+
+// Blog Category
+type CategoryDTO = {
+    categoryId: number;
+    categoryName: string;
+};
+type CreateCategoryDTO = {
+    categoryName: string;
+};
+type SearchCategoryDTO = {
+    take: number;
+    skip: number;
+};
+export declare const postCategory: (body: CreateCategoryDTO) => Promise<APIResponse<CategoryDTO>>;
+export declare const getCategoryList: (request: SearchCategoryDTO) => Promise<APIResponse<CategoryDTO>>;

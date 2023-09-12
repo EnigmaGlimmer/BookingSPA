@@ -46,7 +46,6 @@ function Navigation() {
     const dispatch = useDispatch();
 
     const { services } = useSelector((state) => {
-        console.log(state);
         return {
             services: state?.Service?.services || [],
         };

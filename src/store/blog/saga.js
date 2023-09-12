@@ -8,12 +8,19 @@ import { getSuccess, getError, postBlogSuccess, postBlogError, putBlogSuccess, p
 import { GET_BLOG_LIST, POST_BLOG, PUT_BLOG } from './actionType';
 
 // API
-import { getBlogList as getBlogListAPI, postBlog as postBlogAPI, updateBlog as updateBlogAPI } from '../../api';
+import {
+    BlogOrderBy,
+    BlogSearchBy,
+    getBlogList as getBlogListAPI,
+    postBlog as postBlogAPI,
+    updateBlog as updateBlogAPI,
+} from '../../api';
 
-function* getBlogs() {
+function* getBlogs({ payload }) {
     try {
-        const response = yield call(getBlogListAPI);
-        yield put(getSuccess(GET_BLOG_LIST, response?.result || []));
+        const response = yield call(getBlogListAPI, payload);
+
+        yield put(getSuccess(GET_BLOG_LIST, { data: response?.list || [], total: response?.total || 0 }));
     } catch (error) {
         yield put(getError(GET_BLOG_LIST, error));
     }
@@ -22,7 +29,9 @@ function* getBlogs() {
 function* onAddNewBlog({ payload: newBlog }) {
     try {
         const response = yield call(postBlogAPI, newBlog);
-        yield put(postBlogSuccess(response?.result));
+
+        yield put(postBlogSuccess(response));
+
         toast.success('Blog Added Successfully', {
             autoClose: 3000,
         });

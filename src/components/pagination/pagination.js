@@ -26,11 +26,12 @@ function Pagination({
             <span className={'me-2 ' + hoverArrowClass} style={{ cursor: 'pointer' }}>
                 {leftIconComponent?.() || <AiOutlineLeft></AiOutlineLeft>}
             </span>
-            {Array.from(Array(pageNumbers).keys()).map((_, index) => {
+            {Array?.from(Array(pageNumbers).keys())?.map?.((_, index) => {
                 if (activePage === index + 1) {
                     return (
                         activePageComponent?.(index + 1) || (
                             <span
+                                key={index}
                                 className="p-3 me-1"
                                 style={{
                                     border: '1px solid var(--clr-border)',

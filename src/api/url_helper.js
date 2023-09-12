@@ -1,5 +1,6 @@
 // 1. Blog
 export const GET_BLOG_LIST = '/api/blog/list';
+export const GET_SINGLE_BLOG = '/api/blog';
 export const POST_NEW_BLOG = '/api/blog';
 export const PUT_BLOG = '/api/blog';
 export const DELETE_BLOG = '/api/blog';
@@ -44,3 +45,9 @@ export const DELETE_BOOKING = '/api/booking';
 export const GET_SETTING = '/api/settings';
 export const POST_SETTING = '/api/settings';
 export const PUT_SETTING = '/api/settings';
+
+// 10. Blog Category
+export const GET_CATEGORY_LIST = '/api/category/list';
+export const POST_CATEGORY = '/api/category';
+export const PUT_CATEGORY = '/api/category';
+export const DELETE_CATEGORY = '/api/category';

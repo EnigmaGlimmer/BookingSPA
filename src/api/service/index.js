@@ -9,7 +9,6 @@ export const getServiceList = (request, config) => {
 };
 
 export const postService = (body) => {
-    console.log(body);
     const axiosInstance = api.create(url.POST_SERVICE, body);
     return axiosInstance;
 };
