@@ -238,7 +238,7 @@ function ListWeb() {
 
 function EditTool({ sectionName, page, show, onHide }) {
     const dispatch = useDispatch();
-
+    console.log(page);
     const { content } = useSelector((state) => ({
         content: state.Setting?.setting?.content?.[page],
     }));
@@ -258,7 +258,8 @@ function EditTool({ sectionName, page, show, onHide }) {
             images: content?.[sectionName]?.images || [],
             childImage: content?.[sectionName]?.childImage || [],
         },
-        onSubmit: (values) => {
+        onSubmit: (values, formikHelper) => {
+            formikHelper.setSubmitting(false);
             dispatch(
                 postSetting({
                     body: {
