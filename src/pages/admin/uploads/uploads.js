@@ -5,8 +5,9 @@ import { Button, Col, Row } from 'react-bootstrap';
 
 // Store
 import { UploadModal } from '../../../components';
-import { getAssetList } from '../../../store/actions';
+import { deleteAsset, getAssetList } from '../../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { FaTimes } from 'react-icons/fa';
 
 function Uploads() {
     const [showUploadModal, setShowUploadModal] = React.useState(false);
@@ -23,7 +24,9 @@ function Uploads() {
     useEffect(() => {
         dispatch(getAssetList());
     }, [dispatch]);
-
+    const handleDelete = (id) => {
+        dispatch(deleteAsset(id));
+    };
     return (
         <div>
             <article className="my-3">
@@ -40,9 +43,13 @@ function Uploads() {
                 onSelected={() => {}}
             ></UploadModal>
             <Row>
-                {(uploads || []).map((upload, id) => {
+                {(uploads || [])?.map((upload, id) => {
                     return (
                         <Col xs="12" sm="6" md="4" lg="3" xxl="2" key={id} className="mb-2">
+                            <FaTimes
+                                onClick={() => handleDelete(upload?.assetId)}
+                                style={{ cursor: 'pointer' }}
+                            ></FaTimes>
                             <img src={upload?.assetLink} alt={'assets' + id} style={{ cursor: 'pointer' }}></img>
                         </Col>
                     );

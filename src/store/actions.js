@@ -9,3 +9,5 @@ export * from './service/action';
 export * from './settings/action';
 
 export * from './blog category/action';
+
+export * from './upload/action';

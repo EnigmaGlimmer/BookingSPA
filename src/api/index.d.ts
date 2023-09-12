@@ -130,7 +130,7 @@ export declare const putAsset: (
     config: AxiosRequestConfig,
 ) => Promise<APIResponse<UploadDTO>>;
 
-export declare const deleteAsset: (id: string, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;
+export declare const deleteAsset: (id: number, config: AxiosRequestConfig) => Promise<APIResponse<UploadDTO>>;
 
 // 4. Service
 type ServiceDTO = {

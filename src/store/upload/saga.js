@@ -22,6 +22,7 @@ import {
     POST_ASSET_SUCCESS,
     PUT_ASSET,
     POST_ASSET_FAILED,
+    DELETE_ASSET,
 } from './actionType';
 
 // API
@@ -65,13 +66,13 @@ function* onUpdateAsset({ payload: updatedAsset }) {
     // }
 }
 
-function* onDeleteAsset({ payload: deletedAsset }) {
-    // try {
-    //     const response = yield call(deleteAsset);
-    //     yield put(deleteAssetSuccess(deletedAsset));
-    // } catch (error) {
-    //     yield put(deleteAssetFailed(deletedAsset));
-    // }
+function* onDeleteAsset({ payload: { id } }) {
+    try {
+        yield call(deleteAsset, id);
+        yield put(deleteAssetSuccess(id));
+    } catch (error) {
+        yield put(deleteAssetFailed(error));
+    }
 }
 
 export function* watchGetAssets() {
@@ -87,7 +88,7 @@ export function* watchUpdateAsset() {
 }
 
 export function* watchDeleteAsset() {
-    yield takeEvery(PUT_ASSET, onDeleteAsset);
+    yield takeEvery(DELETE_ASSET, onDeleteAsset);
 }
 
 function* uploadsaga() {

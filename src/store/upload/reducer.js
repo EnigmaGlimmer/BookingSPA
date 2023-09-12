@@ -70,13 +70,13 @@ const Uploads = (state = INIT_STATE, action) => {
         case DELETE_ASSET_SUCCESS:
             return {
                 ...state,
-                uploads: action.payload,
+                uploads: state.uploads.filter((e) => e.assetId !== action.payload.id),
             };
 
         case DELETE_ASSET_FAILED:
             return {
                 ...state,
-                error: action.payload,
+                error: action.payload.error,
             };
 
         default:
