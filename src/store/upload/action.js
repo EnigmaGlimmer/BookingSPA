@@ -71,14 +71,19 @@ export const putAssetFailed = (error) => ({
     payload: error,
 });
 
-export const deleteAsset = (asset) => ({
+export const deleteAsset = (id) => ({
     type: DELETE_ASSET,
+    payload: {
+        id,
+    },
 });
 
-export const deleteAssetSuccess = (asset) => ({
+export const deleteAssetSuccess = (id) => ({
     type: DELETE_ASSET_SUCCESS,
+    payload: { id },
 });
 
-export const deleteAssetFailed = (asset) => ({
+export const deleteAssetFailed = (error) => ({
     type: DELETE_ASSET_FAILED,
+    payload: { error },
 });

@@ -32,7 +32,6 @@ const Setting = (state = INIT_STATE, action) => {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
                 case GET_SETTING_LIST:
-                    console.log(action);
                     return {
                         ...state,
                         setting: {

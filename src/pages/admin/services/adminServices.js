@@ -240,7 +240,12 @@ function ServiceListTable() {
                                         {(services || [])?.find?.((e) => e.serviceId === item?.parentId)?.serviceName}
                                     </td>
                                     <td>
-                                        <Button variant="outline" onClick={() => handleDeleteService(item?.serviceId)}>
+                                        <Button
+                                            variant="outline"
+                                            onClick={() => {
+                                                handleDeleteService(item?.serviceId);
+                                            }}
+                                        >
                                             Delete
                                         </Button>
                                         <Button variant="outline" className="mx-4">
