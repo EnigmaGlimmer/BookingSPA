@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // React Bootstrap
-import { Col, Container, Row, Breadcrumb, Form, Button } from 'react-bootstrap';
+import { Col, Container, Row, Breadcrumb, Form, Button, Dropdown } from 'react-bootstrap';
+
+// React Icon
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 // momentjs
 import moment from 'moment';
@@ -11,7 +14,9 @@ import './style/promotion.css';
 
 // Assets
 import headerBackground from '../images/promotion/header.svg';
-import { Pagination } from '../components';
+import ReactPaginate from 'react-paginate';
+
+// router
 import { Link, createSearchParams, useSearchParams } from 'react-router-dom';
 
 // Document Meta (SEO)
@@ -20,10 +25,10 @@ import * as DOMPurify from 'dompurify';
 
 // store
 import { useDispatch, useSelector } from 'react-redux';
-import { getBlogList } from '../store/actions';
+import { getBlogList, getCategoryList } from '../store/actions';
 
 // api
-import { getSingleBlog as getSingleBlogAPI } from '../api';
+import { getSingleBlog as getSingleBlogAPI, getBlogList as getBlogListAPI } from '../api';
 import { BlogOrderBy, BlogSearchBy } from '../api/enum';
 import { toast } from 'react-toastify';
 
@@ -31,53 +36,69 @@ function Promotion() {
     document.title = 'Little Daisy - Promotion';
     const [searchParams] = useSearchParams();
 
-    const [
-        latestPosts,
-        // setLatestPosts
-    ] = React.useState([
-        {
-            id: 0,
-            presentImage:
-                'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
-            postedDate: new Date(),
-            title: 'Lorem ipsum dolor sit amet',
-        },
-        {
-            id: 1,
-            presentImage:
-                'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
-            postedDate: new Date(),
-            title: 'Lorem ipsum dolor sit amet',
-        },
-        {
-            id: 2,
-            presentImage:
-                'https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg',
-            postedDate: new Date(),
-            title: 'Lorem ipsum dolor sit amet',
-        },
-    ]);
+    const [take, setTake] = useState(5);
+    const [page, setPage] = useState(1);
+    const [keyword, setKeyword] = useState('');
+    const [orderBy, setOrderBy] = useState(BlogOrderBy.CreatedDate);
+    const [searchBy, setSearchBy] = useState(BlogSearchBy.None);
 
-    const { posts } = useSelector((state) => {
+    const dispatch = useDispatch();
+    const { posts, categories, totalPost } = useSelector((state) => {
         return {
             posts: state?.Blog?.blogs,
+            totalPost: state?.Blog?.total,
+            categories: state?.Category?.category,
         };
     });
 
-    const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(
-            getBlogList({
-                skip: 1,
-                take: 10,
-                keyword: '',
-                orderBy: BlogOrderBy.CreatedDate,
-                searchBy: BlogSearchBy.None,
-            }),
-        );
+        dispatch(getCategoryList());
     }, [dispatch]);
 
+    useEffect(() => {
+        let query = {
+            skip: page,
+            take: take,
+            keyword: keyword,
+            orderBy: orderBy,
+            searchBy: searchBy,
+        };
+        if (!!searchParams.get('category')) {
+            query = {
+                ...query,
+                keyword: searchParams.get('category'),
+                searchBy: BlogSearchBy.Category,
+            };
+        }
+        dispatch(getBlogList(query));
+    }, [searchParams, take, page, keyword]);
+
+    // Get latest post
+    const [latestPosts, setLatestPosts] = React.useState([]);
+    useEffect(() => {
+        getBlogListAPI({
+            skip: 1,
+            take: 3,
+            keyword: '',
+            orderBy: BlogOrderBy.CreatedDate,
+            searchBy: BlogSearchBy.None,
+        })
+            .then((response) => {
+                if (!!response?.list) {
+                    setLatestPosts(response.list);
+                }
+            })
+            .catch((error) => {
+                toast.error('Server Error', {
+                    autoClose: 3000,
+                });
+            });
+    }, []);
+
+    const linkStyle = {
+        color: 'initial',
+        textDecoration: 'none',
+    };
     return (
         <section id="promotion">
             {/* Header */}
@@ -98,8 +119,10 @@ function Promotion() {
                                     },
                                 }}
                             >
-                                <Breadcrumb.Item href="">Home</Breadcrumb.Item>
-                                <Breadcrumb.Item href="">Services</Breadcrumb.Item>
+                                <Breadcrumb.Item href="" style={linkStyle}>
+                                    Home
+                                </Breadcrumb.Item>
+                                <Breadcrumb.Item style={linkStyle}>Services</Breadcrumb.Item>
                                 <Breadcrumb.Item href="" active>
                                     Promotion
                                 </Breadcrumb.Item>
@@ -150,13 +173,24 @@ function Promotion() {
                         <article className="mb-5">
                             <h3>Categories</h3>
                             <ul className="text-uppercase list-style-none">
-                                <li className="py-2">Beauty</li>
-                                <li className="py-2">Care</li>
-                                <li className="py-2">Cosmetics</li>
-                                <li className="py-2">Hydration</li>
+                                {categories.map((c) => {
+                                    return (
+                                        <li className="py-2">
+                                            <Link
+                                                to={{
+                                                    search: `?category=${c.categoryId}`,
+                                                }}
+                                                style={linkStyle}
+                                            >
+                                                {c?.categoryName}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </article>
 
+                        {/* Latest Post */}
                         <article className="mb-3">
                             <h3 className="mb-3">Latest Posts</h3>
                             <div>
@@ -164,17 +198,25 @@ function Promotion() {
                                     return (
                                         <article key={index} className="mb-4">
                                             <Row>
-                                                <Col sm="auto">
+                                                <Col sm="6">
                                                     <img
-                                                        src="https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg"
+                                                        src={post?.presentedImage}
+                                                        // src="https://leonie.qodeinteractive.com/wp-content/uploads/2021/04/blog-list-feature-img-3-1-92x105.jpg"
                                                         alt={post.title}
                                                     ></img>
                                                 </Col>
-                                                <Col>
-                                                    <p className="text-uppercase">
-                                                        {moment(post.postedDate).format('MMM D, YYYY')}
-                                                    </p>
-                                                    <h5>Lorem ipsum dolor sit amet</h5>
+                                                <Col sm="6">
+                                                    <Link
+                                                        to={{
+                                                            search: `?postId=${post?.blogId}`,
+                                                        }}
+                                                        style={linkStyle}
+                                                    >
+                                                        <p className="text-uppercase font-3 fw-light">
+                                                            {moment(post?.createdDate).format('MMM D, YYYY')}
+                                                        </p>
+                                                        <h5 className="font-1">{post?.articleTitle}</h5>
+                                                    </Link>
                                                 </Col>
                                             </Row>
                                         </article>
@@ -185,6 +227,17 @@ function Promotion() {
                     </Col>
                     {/* Blog list */}
                     <Col id="promotion-post-list-right" sm="9">
+                        <header className="d-flex mb-3 align-items-center gap-3">
+                            <div>Show entries: </div>
+                            <Dropdown>
+                                <Dropdown.Toggle>Select item number</Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    {[2, 3, 5, 8, 10].map((number) => (
+                                        <Dropdown.Item onClick={() => setTake(number)}>{number}</Dropdown.Item>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </header>
                         {(!!searchParams?.get?.('postId') && <SinglePromotion></SinglePromotion>) || (
                             <>
                                 {posts?.map?.((post, key) => {
@@ -193,20 +246,28 @@ function Promotion() {
                                             key={key}
                                             id={post?.blogId}
                                             categories={post?.categories?.map?.((c) => c.categoryName)}
-                                            content={post?.content}
+                                            content={post?.articleContent.replace(/<img[^>]*>/g, '').substring(0, 255)}
                                             postedDate={post?.createdDate}
                                             presentImage={post?.presentedImage}
-                                            title={post?.title}
+                                            title={post?.articleTitle}
                                         ></SinglePromotionThumbnail>
                                     );
                                 })}
-                                <Pagination
-                                    containerClass="mx-auto text-center"
-                                    // hoverClass="pagination-hover"
-                                    hoverArrowClass="pagination-arrow-hover"
-                                    pageNumbers={5}
-                                    limited={3}
-                                ></Pagination>
+
+                                <ReactPaginate
+                                    previousLabel={<AiOutlineLeft></AiOutlineLeft>}
+                                    nextLabel={<AiOutlineRight></AiOutlineRight>}
+                                    pageCount={Math.ceil(totalPost / take)}
+                                    onPageChange={({ selected }) => {
+                                        setPage(selected + 1);
+                                    }}
+                                    containerClassName={'pagination'}
+                                    previousLinkClassName={'pagination-arrow-hover'}
+                                    nextLinkClassName={'pagination-arrow-hover'}
+                                    pageClassName="px-3"
+                                    disabledClassName={'pagination__link--disabled'}
+                                    activeClassName={'pagination-item-active'}
+                                ></ReactPaginate>
                             </>
                         )}
                     </Col>
@@ -245,7 +306,11 @@ function SinglePromotionThumbnail({ id, title, postedDate, categories, content, 
                     {moment(postedDate).format('MMM DD, YYYY')} - {categories.join(', ')}
                 </h6>
                 <h2>{title}</h2>
-                <p>{content}</p>
+                <p
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(content),
+                    }}
+                ></p>
                 <Button
                     variant="outline"
                     className="text-uppercase btn-primary-outline"
@@ -300,9 +365,14 @@ function SinglePromotion() {
         setPost(foundPost);
     }, [postId, posts]);
 
+    const linkStyle = {
+        color: 'initial',
+        textDecoration: 'none',
+    };
     if (post?.status === 1) {
         return <ClosedSinglePromotion></ClosedSinglePromotion>;
     }
+
     return (
         <DocumentMeta
             {...{
@@ -322,22 +392,26 @@ function SinglePromotion() {
             <article className="">
                 <p className="text-center">
                     {moment(post?.createdDate).format('MMMM DD, YYYY')} -{' '}
-                    {post?.categories?.map((c) => {
-                        console.log(c);
+                    {post?.categories?.map((c, index) => {
                         return (
-                            <Link
-                                // to={{
-                                //     search: {
-                                //         category: c?.categoryId,
-                                //     },
-                                // }}
-                                to={{
-                                    search: `?category=${c?.categoryId}`,
-                                }}
-                                preventScrollReset={true}
-                            >
-                                {c?.categoryName}
-                            </Link>
+                            <>
+                                <Link
+                                    key={index}
+                                    // to={{
+                                    //     search: {
+                                    //         category: c?.categoryId,
+                                    //     },
+                                    // }}
+                                    style={linkStyle}
+                                    to={{
+                                        search: `?category=${c?.categoryId}`,
+                                    }}
+                                    preventScrollReset={true}
+                                >
+                                    {c?.categoryName}
+                                </Link>
+                                {index !== post?.categories?.length - 1 && ', '}
+                            </>
                         );
                     })}
                 </p>
@@ -356,10 +430,13 @@ function SinglePromotion() {
                     <h4>Comments</h4>
                     <Row>
                         <Col>
-                            <img src="" alt="Avatar"></img>
+                            <img
+                                src="https://static.vecteezy.com/system/resources/thumbnails/002/002/403/small/man-with-beard-avatar-character-isolated-icon-free-vector.jpg"
+                                alt="Avatar"
+                            ></img>
                         </Col>
                         <Col>
-                            <p>{moment(post?.postedDate).format('MMMM D, YYYY')}</p>
+                            <p>{moment(post?.postedDate).format('MMMM DD, YYYY')}</p>
                             <h3>Alizabeth</h3>
                             <p>
                                 Sit amet quis id adipisicing do culpa anim magna est sint dolore nisi dolore. Laborum

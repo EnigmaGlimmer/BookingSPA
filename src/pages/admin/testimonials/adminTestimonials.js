@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // momentjs
 import moment from 'moment';
@@ -8,52 +8,70 @@ import { useFormik } from 'formik';
 
 // React Bootstrap
 import { Button, Modal, Table } from 'react-bootstrap';
-import { getSettingList } from '../../../store/actions';
+import { getSettingList, postSetting } from '../../../store/actions';
 import { FaTimes } from 'react-icons/fa';
 import { UploadModal } from '../../../components';
 import { Form } from 'react-bootstrap';
-import { postSetting } from '../../../api';
+// import { postSetting } from '../../../api';
+
+const Mode = {
+    HIDE: 0,
+    ADD: 1,
+    EDIT: 2,
+};
 
 function AdminTestimonials() {
-    const [show, setShow] = useState(false);
-    const { theHome } = useSelector((state) => {
+    // const [show, setShow] = useState(false);
+    const [mode, setMode] = React.useState(Mode.HIDE);
+    const [editIndex, setEditIndex] = React.useState(null);
+
+    const { homeContent, testimonials } = useSelector((state) => {
         return {
-            theHome: state.Setting?.setting?.content?.home,
+            homeContent: state.Setting?.setting?.content?.home,
+            testimonials: state.Setting?.setting?.content?.home?.testimonials?.review || [],
         };
     });
 
     const dispatch = useDispatch();
 
     const handleDelete = (item) => {
-        dispatch(
-            postSetting({
-                body: { ...theHome, testimonials: theHome?.testimonials?.filter?.((e) => e !== item) },
-                page: 'home',
-            }),
-        );
+        const body = {
+            ...homeContent,
+            testimonials: {
+                ...homeContent.testimonials,
+                review: testimonials?.filter?.((e) => e !== item),
+            },
+        };
+        dispatch(postSetting(body, 'home'));
     };
 
     React.useEffect(() => {
         dispatch(getSettingList('home'));
     }, [dispatch]);
+
     return (
         <section>
             <h3>Testimonials</h3>
             <Button
                 variant="primary"
                 onClick={() => {
-                    setShow(true);
+                    setMode(Mode.ADD);
                 }}
             >
                 + Add new item
             </Button>
             <AddNew
-                show={show}
+                show={mode === Mode.ADD || (mode === Mode.EDIT && editIndex > -1)}
+                mode={mode}
+                id={editIndex}
                 onHide={() => {
-                    setShow(false);
+                    setMode(Mode.HIDE);
+                    setEditIndex(null);
                 }}
-                content={theHome}
+                content={homeContent}
+                testimonials={testimonials}
             ></AddNew>
+            {/* <pre>{JSON.stringify(testimonials, 4, 4)}</pre> */}
             <Table>
                 <thead>
                     <tr>
@@ -66,10 +84,10 @@ function AdminTestimonials() {
                     </tr>
                 </thead>
                 <tbody>
-                    {theHome?.testimonials?.map?.((item, index) => {
+                    {testimonials?.map?.((item, index) => {
                         return (
                             <tr key={index}>
-                                <td>1</td>
+                                <td>{index + 1}</td>
                                 <td>
                                     {item?.title}
                                     <img src={item?.image} alt=""></img>
@@ -78,7 +96,15 @@ function AdminTestimonials() {
                                 <td>{item?.star}</td>
                                 <td>{moment(item?.date).format('MMMM DD, YYYY')}</td>
                                 <td>
-                                    <Button variant="warning">Edit</Button>
+                                    <Button
+                                        variant="warning"
+                                        onClick={() => {
+                                            setMode(Mode.EDIT);
+                                            setEditIndex(index);
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
                                     <Button onClick={() => handleDelete(item)} variant="danger">
                                         Delete
                                     </Button>
@@ -92,27 +118,63 @@ function AdminTestimonials() {
     );
 }
 
-function AddNew({ show, onHide, content }) {
+function AddNew({ show, onHide, mode, id, content, testimonials }) {
     const [uploadModal, setUploadModal] = React.useState(false);
+    const [entry, setEntry] = React.useState(null);
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (mode === Mode.EDIT && !!id) {
+            const foundTestimonial =
+                mode === Mode.EDIT && id > -1 ? [...testimonials]?.find?.((_, index) => index === id) : {};
+
+            setEntry(foundTestimonial);
+        }
+    }, [mode, id]);
+
     const { handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue } = useFormik({
         initialValues: {
-            title: '',
-            content: '',
-            star: 1,
-            date: Date(),
-            image: '',
+            title: entry?.title || '',
+            content: entry?.content || '',
+            star: entry?.star || 1,
+            postedDate: entry?.postedDate,
+            image: entry?.image || '',
         },
+        enableReinitialize: true,
         onSubmit: (values, formikHelper) => {
             formikHelper.setSubmitting(false);
-            dispatch(
-                postSetting({
-                    body: { ...content, testimonials: [...content?.testimonials, values] },
-                    page: 'home',
-                }),
-            );
+
+            let body;
+            switch (mode) {
+                case Mode.ADD:
+                    body = {
+                        ...content,
+                        testimonials: {
+                            ...content.testimonials,
+                            review: [...testimonials, { ...values, postedDate: new Date() }],
+                        },
+                    };
+
+                    break;
+                case Mode.EDIT:
+                    body = {
+                        ...content,
+                        testimonials: {
+                            ...content.testimonials,
+                            review: [...testimonials].map((t, index) =>
+                                index === id ? { ...t, ...values, postedDate: new Date() } : t,
+                            ),
+                        },
+                    };
+                    break;
+                default:
+                    break;
+            }
+
+            console.log(body);
+
+            dispatch(postSetting(body, 'home'));
         },
     });
 
@@ -146,6 +208,7 @@ function AddNew({ show, onHide, content }) {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             isInvalid={!!touched?.title && !!errors?.title}
+                            value={values?.title}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.title}</Form.Control.Feedback>
                     </Form.Group>
@@ -158,6 +221,7 @@ function AddNew({ show, onHide, content }) {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             isInvalid={touched?.content && !!errors?.content}
+                            value={values?.content}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
                     </Form.Group>
@@ -171,9 +235,10 @@ function AddNew({ show, onHide, content }) {
                             max={5}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            isInvalid={touched?.content && !!errors?.content}
+                            isInvalid={touched?.star && !!errors?.star}
+                            value={values?.star}
                         ></Form.Control>
-                        <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
+                        <Form.Control.Feedback type="invalid">{errors?.star}</Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <div className="py-4">
@@ -206,7 +271,7 @@ function AddNew({ show, onHide, content }) {
                                     ) : (
                                         <></>
                                     )}
-                                    <img src={values.image} width={'100%'} />;
+                                    <img src={values?.image} width={'100%'} />;
                                 </div>
                             </div>
                         </div>

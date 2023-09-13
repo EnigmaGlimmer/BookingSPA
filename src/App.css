@@ -49,18 +49,25 @@ body {
 }
 
 h1 {
-    /* font-size: var(--clr-heading-1); */
     font-family: var(--ff-support);
 }
 
 h2 {
-    /* font-size: var(--clr-heading-2); */
     font-family: var(--ff-secondary);
 }
 
 h3 {
-    /* font-size: var(--clr-heading-3); */
     font-family: var(--ff-secondary);
+}
+
+.font-1 {
+    font-family: var(--ff-support);
+}
+.font-2 {
+    font-family: var(--ff-secondary);
+}
+.font-3 {
+    font-family: var(--ff-primary);
 }
 
 p,
@@ -119,4 +126,63 @@ blockquote {
 }
 img {
     width: 100%;
+}
+
+.breadcrumb-item a {
+    color: initial;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.47);
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-item-active {
+    border: 1px solid var(--clr-border);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination-hover {
+    border: 1px solid;
+    border-radius: 50%;
+    -webkit-mask: conic-gradient(from 180deg at top 8px right 8px, var(--clr-border) 90deg, var(--clr-border) 0)
+            var(--_i, 200%) 0 /200% var(--_i, 8px) border-box no-repeat,
+        conic-gradient(at bottom 8px left 8px, #0000 90deg, #000 0) 0 var(--_i, 200%) / var(--_i, 8px) 200% border-box
+            no-repeat,
+        linear-gradient(var(--clr-border) 0 0) padding-box no-repeat;
+    transition: 0.3s, -webkit-mask-position 0.3s 0.3s;
+}
+
+.pagination-hover:hover {
+    --_i: 100%;
+    color: transparent;
+    transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
+}
+.pagination-arrow-hover {
+    color: initial;
+    transform: scale(1);
+    transition: font-size 0.3s linear;
+}
+.pagination-arrow-hover:hover {
+    font-size: 2rem;
+    transform: scale(2) translateY(-200px);
+}
+
+@media (max-width: 576px) {
+    #promotion-content #promotion-post-list-sidebar {
+        order: 2;
+    }
+    #promotion-content #promotion-post-list-right {
+        order: 1;
+    }
 }

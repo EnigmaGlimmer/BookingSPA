@@ -189,8 +189,8 @@ function PageDemo({ page }) {
             case 'about':
                 return <About />;
 
-            case 'promotion':
-                return <Promotion></Promotion>;
+            // case 'promotion':
+            //     return <Promotion></Promotion>;
 
             case 'booking':
                 return <BookingPage></BookingPage>;
@@ -250,7 +250,7 @@ function ListWeb() {
                         About us
                     </Link>
                 </Dropdown.Item>
-                <Dropdown.Item>
+                {/* <Dropdown.Item>
                     <Link
                         to={{
                             search: createSearchParams({
@@ -260,7 +260,7 @@ function ListWeb() {
                     >
                         Promotion
                     </Link>
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 <Dropdown.Item>
                     <Link
                         to={{

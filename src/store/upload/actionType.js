@@ -1,7 +1,7 @@
 // Actions
 export const API_RESPONSE_SUCCESS = 'API_RESPONSE_SUCCESS';
 export const API_RESPONSE_ERROR = 'API_RESPONSE_ERROR';
-export const GET_ASSET_LIST = 'GET_UPLOAD_LIST';
+export const GET_ASSET_LIST = 'GET_ASSET_LIST';
 
 export const GET_ASSET = 'GET_ASSET';
 export const GET_ASSET_SUCCESS = 'GET_ASSET_SUCCESS';

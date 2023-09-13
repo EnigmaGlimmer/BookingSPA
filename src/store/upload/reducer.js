@@ -12,8 +12,7 @@ import {
 
 const INIT_STATE = {
     uploads: [],
-    pages: [],
-    numberPerPage: 5,
+    total: 0,
     error: {},
 };
 
@@ -25,6 +24,7 @@ const Uploads = (state = INIT_STATE, action) => {
                     return {
                         ...state,
                         uploads: action.payload.data,
+                        total: action.payload.total,
                     };
 
                 default:

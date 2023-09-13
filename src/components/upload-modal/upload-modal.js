@@ -1,22 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
+// Components
 import { Button, Col, Form, Modal, ProgressBar, Row, Tab, Tabs } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
+
+// React Icon
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 import './upload-modal.css';
+
+// Store
 import { useDispatch, useSelector } from 'react-redux';
-
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-
 import { getAssetList, postAsset } from '../../store/actions';
 import config from '../../config';
-import { toast } from 'react-toastify';
+
+// Form
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected }) {
     const dispatch = useDispatch();
 
-    const { uploads, error } = useSelector((state) => {
+    const { uploads, total } = useSelector((state) => {
         return {
             uploads: state.Upload.uploads,
+            total: state.Upload.total,
             error: state.Upload.error,
         };
     });
@@ -57,12 +65,12 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
     });
 
     const [recents, setRecents] = useState(null);
-
-    // State of asset list that start from page.2
+    const [take] = useState(10);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        dispatch(getAssetList());
-    }, [dispatch]);
+        dispatch(getAssetList({ skip: page, take: take }));
+    }, [dispatch, take, page]);
 
     return (
         <div>
@@ -138,6 +146,20 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                     );
                                 })}
                             </Row>
+                            <ReactPaginate
+                                previousLabel={<AiOutlineLeft></AiOutlineLeft>}
+                                nextLabel={<AiOutlineRight></AiOutlineRight>}
+                                pageCount={Math.ceil(total / take)}
+                                onPageChange={({ selected }) => {
+                                    setPage(selected + 1);
+                                }}
+                                containerClassName={'pagination my-2'}
+                                previousLinkClassName={'pagination-arrow-hover'}
+                                nextLinkClassName={'pagination-arrow-hover'}
+                                pageClassName="px-3"
+                                disabledClassName={'pagination__link--disabled'}
+                                activeClassName={'pagination-item-active'}
+                            ></ReactPaginate>
                         </Tab>
                         <Tab eventKey="upload" title="Upload new asset">
                             <Form onSubmit={validation.handleSubmit} className="mb-2">

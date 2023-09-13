@@ -28,10 +28,16 @@ import {
 // API
 import { getAssets, postAsset, putAsset, deleteAsset } from '../../api';
 
-function* onGetAssets({ take = 10, skip = 0 }) {
+function* onGetAssets({ payload }) {
     try {
-        const response = yield call(getAssets, { take, skip });
-        yield put(getAssetListSuccess(GET_ASSET_LIST, response));
+        const response = yield call(getAssets, payload);
+
+        yield put(
+            getAssetListSuccess(GET_ASSET_LIST, {
+                data: response?.list || response || [],
+                total: response?.total || 0,
+            }),
+        );
     } catch (error) {
         yield put(getAssetListFailed(GET_ASSET_LIST, error));
     }
@@ -70,8 +76,14 @@ function* onDeleteAsset({ payload: { id } }) {
     try {
         yield call(deleteAsset, id);
         yield put(deleteAssetSuccess(id));
+        toast.success(`Deleted asset #${id}`, {
+            autoClose: 3000,
+        });
     } catch (error) {
         yield put(deleteAssetFailed(error));
+        toast.error(`Failed to delete asset #${id}`, {
+            autoClose: 3000,
+        });
     }
 }
 

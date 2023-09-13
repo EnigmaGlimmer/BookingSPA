@@ -9,7 +9,6 @@ import { GET_SETTING_LIST, POST_SETTING } from './actionType';
 
 // API
 import { getSetting as getSettingListAPI, postSetting as postSettingAPI } from '../../api';
-import { isString } from 'lodash';
 
 function* getSetting({ payload: { page } }) {
     try {

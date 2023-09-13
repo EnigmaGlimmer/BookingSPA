@@ -1,3 +1,4 @@
+import { Pagination } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -15,10 +16,10 @@ import {
     GET_ASSET_FAILED,
 } from './actionType';
 
-export const getAssetListSuccess = (actionType, data) => {
+export const getAssetListSuccess = (actionType, { data, total }) => {
     return {
         type: API_RESPONSE_SUCCESS,
-        payload: { actionType, data },
+        payload: { actionType, data, total },
     };
 };
 
@@ -27,9 +28,12 @@ export const getAssetListFailed = (actionType, error) => ({
     payload: { actionType, error },
 });
 
-export const getAssetList = () => ({
-    type: GET_ASSET_LIST,
-});
+export const getAssetList = (request: Pagination) => {
+    return {
+        type: GET_ASSET_LIST,
+        payload: request,
+    };
+};
 
 export const getAssetSuccess = (data) => ({
     type: GET_ASSET_SUCCESS,

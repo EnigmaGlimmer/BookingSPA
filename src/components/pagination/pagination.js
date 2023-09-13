@@ -20,6 +20,7 @@ function Pagination({
     rightIconComponent,
     activePageComponent,
     normalPageComponent,
+    onChangePage,
 }) {
     return (
         <div className={containerClass} id="pagination">

@@ -1,6 +1,6 @@
 import { call, put, takeEvery, fork } from 'redux-saga/effects';
 
-import { getTestimonials, postTestimonial } from '../../api';
+import { getTestimonials as getTestimonialListAPI, postTestimonial as postTestimonialAPI } from '../../api';
 
 import {
     API_RESPONSE_SUCCESS,
@@ -10,15 +10,18 @@ import {
     PUT_TESTIMONIAL,
 } from './actionType';
 
-import { getTestimonialListSuccess, getTestimonialListFailed } from './action';
+import {
+    getTestimonialListSuccess,
+    getTestimonialListFailed,
+    postNewTestimonialSuccess,
+    postNewTestimonialFailed,
+} from './action';
 import { all } from 'axios';
 
-function* onGetTestimonialList({ skip = 0, take = 10 }) {
+function* onGetTestimonialList() {
     try {
-        const response = yield call(getTestimonials, {
-            skip: 0,
-            take: 10,
-        });
+        const response = yield call(getTestimonialListAPI);
+
         yield put(getTestimonialListSuccess(GET_TESTIMONIAL_LIST, response));
     } catch (error) {
         yield put(getTestimonialListFailed(GET_TESTIMONIAL_LIST, error));
@@ -27,9 +30,12 @@ function* onGetTestimonialList({ skip = 0, take = 10 }) {
 
 function* onPostTestimonal({ payload: newData }) {
     try {
-        const response = yield call(postTestimonial, newData);
-        yield put(postTestimonial());
-    } catch (error) {}
+        const response = yield call(postTestimonialAPI, newData);
+        console.log(response);
+        yield put(postNewTestimonialSuccess(response));
+    } catch (error) {
+        yield put(postNewTestimonialFailed(error));
+    }
 }
 
 function* onPutTestimonial({ payload: updatedData }) {
@@ -43,14 +49,14 @@ function* watchGetTestimonialList() {
     yield takeEvery(GET_TESTIMONIAL_LIST, onGetTestimonialList);
 }
 
-function* watchPostTestimonal({ payload: testimonial }) {
+function* watchPostTestimonal() {
     yield takeEvery(POST_TESTIMONIAL, onPostTestimonal);
 }
 
-function* watchPutTestimonial({ payload: testimonial, id }) {
-    yield takeEvery(PUT_TESTIMONIAL);
+function* watchPutTestimonial() {
+    yield takeEvery(PUT_TESTIMONIAL, onPutTestimonial);
 }
 
 export default function* testimonialsaga() {
-    yield all([fork(watchGetTestimonialList)]);
+    yield all([fork(watchGetTestimonialList), fork(watchPostTestimonal)]);
 }

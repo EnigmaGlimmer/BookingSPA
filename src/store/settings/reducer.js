@@ -60,7 +60,6 @@ const Setting = (state = INIT_STATE, action) => {
             }
 
         case POST_SETTING_SUCCESS:
-            console.log(action);
             return {
                 ...state,
                 setting: {
