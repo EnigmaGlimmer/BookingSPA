@@ -5,7 +5,7 @@ import React from 'react';
 import { CustomReactQuill } from '../../../components';
 
 // Bootstrap components
-import { Button, Col, Form, Row, Tab, Table, Tabs } from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 // Form submission handlers
 import { useFormik } from 'formik';
@@ -28,7 +28,6 @@ let serviceSchema = yup.object().shape({
 
 function AdminServices() {
     const [parent, setParent] = React.useState([]);
-
     const dispatch = useDispatch();
 
     const { services } = useSelector((state) => {
@@ -199,7 +198,8 @@ function AdminServices() {
     );
 }
 
-function ServiceListTable() {
+function ServiceListTable({showService}) {
+    const [update,setUpdate] = React.useState(false);
     const { services } = useSelector((state) => {
         return {
             services: state.Service.services,
@@ -248,12 +248,13 @@ function ServiceListTable() {
                                         >
                                             Delete
                                         </Button>
-                                        <Button variant="outline" className="mx-4">
+                                        <Button variant="outline" className="mx-4" onClick={() => setUpdate(true)}>
                                             Update
                                         </Button>
                                         <Button variant="outline">Not available</Button>
                                         <Button variant="outline">View post</Button>
                                     </td>
+                                    <UpdateService show={update} serviceId={item?.serviceId} onHide={() => setUpdate(false)}></UpdateService>
                                 </tr>
                             );
                         })}
@@ -343,4 +344,185 @@ function EditServicePost() {
     );
 }
 
+function UpdateService({show,onHide,serviceId}){
+    const [parent, setParent] = React.useState([]);
+
+    const dispatch = useDispatch();
+
+    const { services } = useSelector((state) => {
+        return {
+            services: state.Service.services,
+        };
+    });
+    const theService = services.find(e => e.serviceId === serviceId);
+    console.log(theService)
+        const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik({
+        initialValues: {
+            title: theService?.serviceName,
+            parentId: theService?.parentId,
+            price: theService?.price,
+        },
+        validationSchema: serviceSchema,
+        onSubmit: (values, formikHelper) => {
+            formikHelper.setSubmitting(false);
+            dispatch(
+                postService({
+                    parentId: values.parentId,
+                    createdDate: new Date(),
+                    serviceName: values.title,
+                    price: values.price,
+                    promotion: {
+                        promotionName: '',
+                        startDate: new Date(),
+                        endDate: new Date(),
+                        discountRates: 0,
+                        isDeleted: false,
+                    },
+                }),
+            );
+        },
+    });
+        React.useEffect(() => {
+        dispatch(getService());
+    }, [dispatch]);
+    return(
+        <Modal
+            style={{ width: '100%', overflow: 'unset', background: 'none' }}
+            show={show}
+            onHide={onHide}
+            aria-labelledby="contained-modal-title-vcenter"
+        >
+            <Modal.Header closeButton style={{ margin: '0 auto', width: '80%', background: 'white' }}>
+                <Modal.Title id="contained-modal-title-vcenter">Edit Modal</Modal.Title>
+            </Modal.Header>
+            <Modal.Body
+                                style={{
+                    margin: '0 auto',
+                    maxWidth: 'unset',
+                    background: 'white',
+                    width: '80%',
+                    overflow: 'scroll',
+                    maxHeight: '75vh',
+                }}
+            >
+                <Form onSubmit={handleSubmit}>
+                    {/* <pre>{JSON.stringify(values, 4, 4)}</pre> */}
+                    <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Title</Form.Label>
+                            <Form.Control
+                                name="title"
+                                placeholder="Enter service title"
+                                value={values?.title}
+                                isInvalid={touched?.title && errors?.title}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Price</Form.Label>
+                            <Form.Control
+                                name="price"
+                                placeholder="Enter service price"
+                                value={values.price}
+                                isInvalid={touched.price && errors.price}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
+                        </Form.Group>
+                    </div>
+                    <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Promotion</Form.Label>
+                            <Form.Control
+                                name="promotion.promotionName"
+                                placeholder="Enter Promotion Name"
+                                isInvalid={touched.promotion?.promotionName && !!errors.promotion?.promotionName}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.promotion?.promotionName}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Start Date</Form.Label>
+                            <Form.Control
+                                name="promotion.startDate"
+                                placeholder="Enter Start Date"
+                                type="date"
+                                isInvalid={touched.promotion?.startDate && !!errors.promotion?.startDate}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.promotion?.startDate}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>End Date</Form.Label>
+                            <Form.Control
+                                name="promotion.endDate"
+                                placeholder="Enter End Date"
+                                type="date"
+                                isInvalid={touched.promotion?.endDate && !!errors.promotion?.endDate}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.promotion?.endDate}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Discount Rates</Form.Label>
+                            <Form.Control
+                                name="promotion.discountRates"
+                                placeholder="Enter Discount Rates"
+                                step={0.2}
+                                type="number"
+                                isInvalid={touched.promotion?.discountRates && errors.promotion?.discountRates}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.promotion?.discountRates}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Dependency</Form.Label>
+                            <Form.Select name="parentId" onChange={handleChange} placeholder="Enter service title">
+                                <option value={0}>Choose the root service</option>
+                                {/* {(services || [])?.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item?.serviceId}>
+                                            {item?.serviceName}
+                                        </option>
+                                    );
+                                })} */}
+                                <option value={services?.find?.((e) => e.serviceName === 'Nail')?.serviceId}>Nail</option>
+                                <option value={services?.find?.((e) => e.serviceName === 'Lash')?.serviceId}>Lash</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Button type="submit" className="mb-2" variant="primary">
+                            Submit
+                        </Button>
+                    </div>
+
+                    {/* <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                        <h4>Service Gallery</h4>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Image</Form.Label>
+                            <p>Add Service main Image</p>
+                            <Form.Control name="images" type="file" placeholder="Enter service title"></Form.Control>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Gallery</Form.Label>
+                            <p>Add Service Gallery Images.</p>
+                            <Form.Control name="description" placeholder="Enter service title"></Form.Control>
+                        </Form.Group>
+                    </div> */}
+                </Form>
+            </Modal.Body>
+        </Modal>
+    )
+}
 export default AdminServices;

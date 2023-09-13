@@ -7,10 +7,14 @@ import { FieldArray, Formik, useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { UploadModal } from '../../../components';
-import { getCategoryList, postBlog, postCategory } from '../../../store/actions';
+import { getBlogList, getCategoryList, postBlog, postCategory } from '../../../store/actions';
 import { BiEdit } from 'react-icons/bi';
 import { FaTimes } from 'react-icons/fa';
 import moment from 'moment';
+import { useSearchParams } from 'react-router-dom';
+import { BlogOrderBy, BlogSearchBy } from '../../../api/enum';
+import ReactPaginate from 'react-paginate';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 let blogSchema = yup.object().shape({
     articleTitle: yup.string().required('This field is require field'),
@@ -29,7 +33,68 @@ let categorySchema = yup.object().shape({
     categoryName: yup.string().required('This field is require field'),
 });
 function AdminBlog() {
-    const [demo, setDemo] = useState('');
+    const [searchParams] = useSearchParams();
+    
+    const [take, setTake] = useState(5);
+    const [page, setPage] = useState(1);
+    const [keyword, setKeyword] = useState('');
+    const [orderBy, setOrderBy] = useState(BlogOrderBy.CreatedDate);
+    const [searchBy, setSearchBy] = useState(BlogSearchBy.None);
+
+    const dispatch = useDispatch();
+    const { posts, categories, totalPost } = useSelector((state) => {
+        return {
+            posts: state?.Blog?.blogs,
+            totalPost: state?.Blog?.total,
+            categories: state?.Category?.category,
+        };
+    });
+    console.log(posts,categories)
+    React.useEffect(() => {
+        let query = {
+            skip: page,
+            take: take,
+            keyword: keyword,
+            orderBy: orderBy,
+            searchBy: searchBy,
+        };
+        if (!!searchParams.get('category')) {
+            query = {
+                ...query,
+                keyword: searchParams.get('category'),
+                searchBy: BlogSearchBy.Category,
+            };
+        }
+        dispatch(getBlogList(query));
+    }, [searchParams, take, page, keyword]);
+
+    return (
+        <section>
+            <div className='blog'>
+                <div className='blog-title'>Title</div>
+                <div className='blog-content'>Content</div>
+                <div className='blog-meta'>Meta</div>
+            </div>
+            {/* <ReactPaginate
+                previousLabel={<AiOutlineLeft></AiOutlineLeft>}
+                nextLabel={<AiOutlineRight></AiOutlineRight>}
+                pageCount={Math.ceil(totalPost / take)}
+                onPageChange={({ selected }) => {
+                    setPage(selected + 1);
+                }}
+                containerClassName={'pagination'}
+                previousLinkClassName={'pagination-arrow-hover'}
+                nextLinkClassName={'pagination-arrow-hover'}
+                pageClassName="px-3"
+                disabledClassName={'pagination__link--disabled'}
+                activeClassName={'pagination-item-active'}
+            ></ReactPaginate> */}
+        </section>
+    );
+}
+
+const CreateBlog = () => {
+        const [demo, setDemo] = useState('');
     const [modal, setModal] = useState(false);
     const [showUploadModal, setShowUploadModal] = useState(false);
     const categoryIdsOptionRef = React.useRef();
@@ -46,7 +111,7 @@ function AdminBlog() {
     React.useEffect(() => {
         dispatch(getCategoryList());
     }, [dispatch]);
-    return (
+    return(
         <section className="container-fluid py-3">
             <h2 className="mb-3">Post your new blog</h2>
 
@@ -240,7 +305,7 @@ function AdminBlog() {
                 </Col>
             </Row>
         </section>
-    );
+    )
 }
 
 const Category = ({ show, hide }) => {
