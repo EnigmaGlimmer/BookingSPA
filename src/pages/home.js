@@ -333,7 +333,7 @@ function Home() {
                             modules={[EffectCoverflow, Pagination, Navigation]}
                             className="mySwiper"
                         >
-                            {home?.testimonials?.child?.map((item, index) => {
+                            {home?.testimonials?.review?.map((item, index) => {
                                 return (
                                     <SwiperSlide className="review-slide" key={index}>
                                         {({ isActive }) => (

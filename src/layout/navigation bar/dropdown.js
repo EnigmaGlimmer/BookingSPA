@@ -13,9 +13,9 @@ function DropdownMenu({ submenu, styleContainer, show = false }) {
                 return (
                     <li key={key}>
                         <Link to={item?.link}>
-                            <span className="menu-link d-inline-block" data-active="false">
+                            <p className="menu-link d-inline-block" data-active="false">
                                 {item?.title}
-                            </span>
+                            </p>
                         </Link>
                     </li>
                 );

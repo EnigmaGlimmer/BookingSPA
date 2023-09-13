@@ -152,7 +152,7 @@ function ContactInformation() {
 }
 
 function PageDemo({ page }) {
-    const [sections, setSections] = React.useState(null);
+    const [_, setSections] = React.useState(null);
     const [editTool, setEditTool] = React.useState({
         sectionName: '',
         page,
@@ -201,10 +201,10 @@ function PageDemo({ page }) {
     }, [page]);
 
     // Formik
-    const validation = useFormik({
-        initialValues: {},
-        onSubmit: (values) => {},
-    });
+    // const validation = useFormik({
+    //     initialValues: {},
+    //     onSubmit: (values) => {},
+    // });
 
     return (
         <>
@@ -223,9 +223,15 @@ function PageDemo({ page }) {
 }
 
 function ListWeb() {
+    const linkStyle = {
+        color: 'initial',
+        textDecoration: 'none',
+    };
     return (
         <Dropdown>
-            <Dropdown.Toggle id="dropdown-basic">Select page to edit</Dropdown.Toggle>
+            <Dropdown.Toggle id="dropdown-basic" variant="outline" className="btn-primary-outline">
+                Select page to edit
+            </Dropdown.Toggle>
 
             <Dropdown.Menu>
                 <Dropdown.Item>
@@ -235,6 +241,7 @@ function ListWeb() {
                                 content: 'home',
                             }).toString(),
                         }}
+                        style={linkStyle}
                     >
                         Homepage
                     </Link>
@@ -246,6 +253,7 @@ function ListWeb() {
                                 content: 'about',
                             }).toString(),
                         }}
+                        style={linkStyle}
                     >
                         About us
                     </Link>
@@ -268,6 +276,7 @@ function ListWeb() {
                                 content: 'contact',
                             }).toString(),
                         }}
+                        style={linkStyle}
                     >
                         Contact
                     </Link>
@@ -279,7 +288,7 @@ function ListWeb() {
 
 function EditTool({ sectionName, page, show, onHide }) {
     const dispatch = useDispatch();
-    console.log(page);
+
     const { content } = useSelector((state) => ({
         content: state.Setting?.setting?.content?.[page],
     }));
@@ -305,7 +314,7 @@ function EditTool({ sectionName, page, show, onHide }) {
                 postSetting(
                     {
                         ...content,
-                        [sectionName]: values,
+                        [sectionName]: { ...content?.[sectionName], ...values },
                     },
                     page,
                 ),

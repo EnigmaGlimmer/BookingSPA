@@ -23,7 +23,6 @@ import { BiLogoFacebookCircle, BiLogoInstagram, BiLogoWhatsapp } from 'react-ico
 import { useDispatch, useSelector } from 'react-redux';
 import { getService } from '../../store/actions';
 import { useContact } from '../../hooks/useContact';
-import { Link } from 'react-router-dom';
 
 const defaultProps = {
     center: {
@@ -92,10 +91,14 @@ function Navigation() {
                     </Nav>
                     <DropdownMenu
                         submenu={
-                            services?.map?.((service) => ({
-                                title: service?.serviceName,
-                                link: `service?name=${service?.serviceName}`,
-                            })) || []
+                            services
+                                ?.filter((s) => {
+                                    return s.parentId === 0;
+                                })
+                                .map?.((service) => ({
+                                    title: service?.serviceName,
+                                    link: `service?name=${service?.serviceName}`,
+                                })) || []
                         }
                         styleContainer={{
                             position: 'absolute',

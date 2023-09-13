@@ -8,6 +8,7 @@
 
 #nav-drop-down[data-display='true'] {
     max-height: 220px;
+    overflow-y: scroll;
     transition: max-height 1.5s ease-out, opacity 300ms 300ms ease-out;
     opacity: 1;
 }

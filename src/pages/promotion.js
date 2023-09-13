@@ -230,7 +230,9 @@ function Promotion() {
                         <header className="d-flex mb-3 align-items-center gap-3">
                             <div>Show entries: </div>
                             <Dropdown>
-                                <Dropdown.Toggle>Select item number</Dropdown.Toggle>
+                                <Dropdown.Toggle variant="outline" className="btn-primary-outline">
+                                    Select item number
+                                </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     {[2, 3, 5, 8, 10].map((number) => (
                                         <Dropdown.Item onClick={() => setTake(number)}>{number}</Dropdown.Item>

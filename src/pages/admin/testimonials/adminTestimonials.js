@@ -71,7 +71,7 @@ function AdminTestimonials() {
                 content={homeContent}
                 testimonials={testimonials}
             ></AddNew>
-            {/* <pre>{JSON.stringify(testimonials, 4, 4)}</pre> */}
+
             <Table>
                 <thead>
                     <tr>
@@ -125,7 +125,7 @@ function AddNew({ show, onHide, mode, id, content, testimonials }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (mode === Mode.EDIT && !!id) {
+        if (mode === Mode.EDIT && id > -1) {
             const foundTestimonial =
                 mode === Mode.EDIT && id > -1 ? [...testimonials]?.find?.((_, index) => index === id) : {};
 
@@ -172,8 +172,6 @@ function AddNew({ show, onHide, mode, id, content, testimonials }) {
                     break;
             }
 
-            console.log(body);
-
             dispatch(postSetting(body, 'home'));
         },
     });
@@ -186,7 +184,9 @@ function AddNew({ show, onHide, mode, id, content, testimonials }) {
             aria-labelledby="contained-modal-title-vcenter"
         >
             <Modal.Header closeButton style={{ margin: '0 auto', width: '80%', background: 'white' }}>
-                <Modal.Title id="contained-modal-title-vcenter">Create Testimonial</Modal.Title>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    {mode === Mode.ADD ? 'Create Testimonial' : mode === Mode.EDIT ? `Edit Testimonial #${id}` : 'Hide'}{' '}
+                </Modal.Title>
             </Modal.Header>
             <Modal.Body
                 style={{
@@ -199,7 +199,6 @@ function AddNew({ show, onHide, mode, id, content, testimonials }) {
                 }}
             >
                 <Form onSubmit={handleSubmit}>
-                    <pre>{JSON.stringify(values, 4, 4)}</pre>
                     <Form.Group className="mb-3">
                         <Form.Label>Title</Form.Label>
                         <Form.Control

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Components
 // Text Editor
 import { CustomReactQuill } from '../../../components';
 
 // Bootstrap components
-import { Button, Col, Form, Row, Tab, Table, Tabs } from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 // Form submission handlers
 import { useFormik } from 'formik';
@@ -14,16 +14,20 @@ import * as yup from 'yup';
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { getService, postService, deleteService } from '../../../store/service/action';
+import moment from 'moment';
 
 let serviceSchema = yup.object().shape({
     title: yup.string().required('Title is require field'),
     price: yup.number().required('Price is require field'),
-    promotion: yup.object().shape({
-        promotionName: yup.string().required('Promotion Name is require field'),
-        startDate: yup.date().required(),
-        endDate: yup.date().required(),
-        discountRates: yup.number().required('Discount is require field'),
-    }),
+    promotion: yup
+        .object()
+        .nullable()
+        .shape({
+            promotionName: yup.string().required('Promotion Name is require field'),
+            startDate: yup.date().required(),
+            endDate: yup.date().required(),
+            discountRates: yup.number().required('Discount is require field'),
+        }),
 });
 
 function AdminServices() {
@@ -42,13 +46,7 @@ function AdminServices() {
             title: '',
             parentId: null,
             price: 0,
-            promotion: {
-                promotionName: '',
-                startDate: new Date(),
-                endDate: new Date(),
-                discountRates: 0,
-                isDeleted: false,
-            },
+            promotion: null,
         },
         validationSchema: serviceSchema,
         onSubmit: (values, formikHelper) => {
@@ -75,13 +73,16 @@ function AdminServices() {
         dispatch(getService());
     }, [dispatch]);
 
+    const [checkResult, setCheckResult] = useState(false);
+
     return (
         <section className="container-fluid py-3">
             <h3>Create Service</h3>
             <p className="mb-3">Create a new service by yourself</p>
             <Form onSubmit={handleSubmit}>
-                {/* <pre>{JSON.stringify(values, 4, 4)}</pre> */}
                 <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                    <pre>{JSON.stringify(values, 4, 4)}</pre>
+
                     <Form.Group className="mb-3">
                         <Form.Label>Service Title</Form.Label>
                         <Form.Control
@@ -105,10 +106,34 @@ function AdminServices() {
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
                     </Form.Group>
-                </div>
-                <div className="p-3 mb-3" style={{ background: '#fff' }}>
+
                     <Form.Group className="mb-3">
-                        <Form.Label>Promotion</Form.Label>
+                        <Form.Label>Dependency</Form.Label>
+                        <Form.Select name="parentId" onChange={handleChange} placeholder="Enter service title">
+                            <option value={0}>Choose the root service</option>
+                            {(services || [])
+                                ?.filter((s) => {
+                                    return !s?.parentId;
+                                })
+                                ?.map((item, index) => {
+                                    return (
+                                        <option key={index} value={item?.serviceId}>
+                                            {item?.serviceName}
+                                        </option>
+                                    );
+                                })}
+                            {/* <option value={services?.find?.((e) => e.serviceName === 'Nail')?.serviceId}>Nail</option>
+                            <option value={services?.find?.((e) => e.serviceName === 'Lash')?.serviceId}>Lash</option> */}
+                        </Form.Select>
+                    </Form.Group>
+                </div>
+                {/* 2. Promotion */}
+                <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                    <h3>Promotion</h3>
+                    <p>Add your attraction</p>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Promotion Name</Form.Label>
                         <Form.Control
                             name="promotion.promotionName"
                             placeholder="Enter Promotion Name"
@@ -159,40 +184,33 @@ function AdminServices() {
                         <Form.Control.Feedback type="invalid">{errors.promotion?.discountRates}</Form.Control.Feedback>
                     </Form.Group>
 
-                    <Form.Group className="mb-3">
-                        <Form.Label>Dependency</Form.Label>
-                        <Form.Select name="parentId" onChange={handleChange} placeholder="Enter service title">
-                            <option value={0}>Choose the root service</option>
-                            {/* {(services || [])?.map((item, index) => {
-                                return (
-                                    <option key={index} value={item?.serviceId}>
-                                        {item?.serviceName}
-                                    </option>
-                                );
-                            })} */}
-                            <option value={services?.find?.((e) => e.serviceName === 'Nail')?.serviceId}>Nail</option>
-                            <option value={services?.find?.((e) => e.serviceName === 'Lash')?.serviceId}>Lash</option>
-                        </Form.Select>
-                    </Form.Group>
-                    <Button type="submit" className="mb-2" variant="primary">
+                    <Button type="submit" variant="outline" className="btn-primary-outline me-2">
                         Submit
                     </Button>
+                    <Button variant="outline" className="btn-primary-outline" onClick={() => setCheckResult(true)}>
+                        View Result
+                    </Button>
                 </div>
-
-                {/* <div className="p-3 mb-3" style={{ background: '#fff' }}>
-                    <h4>Service Gallery</h4>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Service Image</Form.Label>
-                        <p>Add Service main Image</p>
-                        <Form.Control name="images" type="file" placeholder="Enter service title"></Form.Control>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Service Gallery</Form.Label>
-                        <p>Add Service Gallery Images.</p>
-                        <Form.Control name="description" placeholder="Enter service title"></Form.Control>
-                    </Form.Group>
-                </div> */}
             </Form>
+            <FormInfoModal
+                show={checkResult}
+                onHide={() => setCheckResult(false)}
+                title={values.title}
+                price={values.price}
+                parentId={values.parentId}
+                parentName={
+                    services?.find?.((s) => {
+                        return s?.serviceId?.toString?.() === values.parentId;
+                    })?.serviceName
+                }
+                promotion={{
+                    promotionName: '',
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    discountRates: 0,
+                    isDeleted: false,
+                }}
+            ></FormInfoModal>
             <ServiceListTable></ServiceListTable>
             <EditServicePost></EditServicePost>
         </section>
@@ -227,36 +245,33 @@ function ServiceListTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {(services || [])
-                        ?.filter((e) => e.serviceName !== 'Nail' && e.serviceName !== 'Lash')
-                        .map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item?.serviceId}</td>
-                                    <td>{item?.serviceName}</td>
-                                    <td>{item?.price}$</td>
-                                    <td></td>
-                                    <td>
-                                        {(services || [])?.find?.((e) => e.serviceId === item?.parentId)?.serviceName}
-                                    </td>
-                                    <td>
-                                        <Button
-                                            variant="outline"
-                                            onClick={() => {
-                                                handleDeleteService(item?.serviceId);
-                                            }}
-                                        >
-                                            Delete
-                                        </Button>
-                                        <Button variant="outline" className="mx-4">
-                                            Update
-                                        </Button>
-                                        <Button variant="outline">Not available</Button>
-                                        <Button variant="outline">View post</Button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                    {/* ?.filter((e) => e.serviceName !== 'Nail' && e.serviceName !== 'Lash') */}
+                    {(services || []).map((item, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{item?.serviceId}</td>
+                                <td>{item?.serviceName}</td>
+                                <td>{item?.price}$</td>
+                                <td></td>
+                                <td>{(services || [])?.find?.((e) => e.serviceId === item?.parentId)?.serviceName}</td>
+                                <td>
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => {
+                                            handleDeleteService(item?.serviceId);
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
+                                    <Button variant="outline" className="mx-4">
+                                        Update
+                                    </Button>
+                                    <Button variant="outline">Not available</Button>
+                                    <Button variant="outline">View post</Button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
         </>
@@ -270,13 +285,17 @@ function EditServicePost() {
         };
     });
 
-    const { handleChange, handleSubmit, values, touched, errors } = useFormik({
+    const { handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors } = useFormik({
         initialValues: {
             articleTitle: '',
             articleContent: '',
         },
         onSubmit: (values) => {},
-        validationSchema: yup.object().shape({}),
+        validationSchema: yup.object().shape({
+            articleTitle: yup.string().required(),
+            articleContent: yup.string().required(),
+            categories: yup.string().required(),
+        }),
     });
 
     return (
@@ -284,20 +303,37 @@ function EditServicePost() {
             <h3>Edit Service Posts</h3>
 
             <div className="p-3 mb-3" style={{ background: '#fff' }}>
-                <Form.Label>Service</Form.Label>
-                <Form.Select className="mb-3">
-                    {(services || [])?.map((service, key) => (
-                        <option key={key} value={service?.serviceId}>
-                            {service?.serviceName}
-                        </option>
-                    ))}
-                </Form.Select>
-                <CustomReactQuill
-                    onChange={(htmlText) => {
-                        console.log(htmlText);
-                    }}
-                ></CustomReactQuill>
-                <h4 className="mt-3">Meta data</h4>
+                <Form.Group id="service-need-to-edit-post">
+                    <Form.Label>Service</Form.Label>
+                    <Form.Select className="mb-3">
+                        {(services || [])?.map((service, key) => (
+                            <option key={key} value={service?.serviceId}>
+                                {service?.serviceName}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Form.Group>
+
+                <Form.Group id="service-post-title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                        name="articleTitle"
+                        className="mb-3"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    ></Form.Control>
+                </Form.Group>
+
+                <Form.Group id="service-post-content">
+                    <CustomReactQuill
+                        onChange={(htmlText) => {
+                            setFieldValue('articleContent', htmlText);
+                        }}
+                    ></CustomReactQuill>
+                </Form.Group>
+
+                <h4 className="mt-3 font-2">Meta data</h4>
+
                 <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
                     <Tab eventKey="home" title="General Info">
                         <Form.Group className="mb-3">
@@ -340,6 +376,37 @@ function EditServicePost() {
                 </Tabs>
             </div>
         </Form>
+    );
+}
+
+function FormInfoModal({ show, onHide, title = '', parentId = null, parentName = '', price = 0, promotion }) {
+    return (
+        <Modal show={show} onHide={onHide} size="sm" centered style={{ background: '#fff', maxWidth: '300px' }}>
+            <Modal.Header closeButton></Modal.Header>
+            <Modal.Body>
+                <article>
+                    <label>Title: </label>
+                    <h2>{title || <i>unknown</i>}</h2>
+                    <label>Root: #{parentId}</label>
+                    <p>{parentName || <i>unknown</i>}</p>
+                    <label>Price</label>
+                    <p>{price}$</p>
+                    <p>
+                        <b>Promotion: </b>
+                    </p>
+                    <label>Name: </label>
+                    <p>{promotion?.promotionName || <i>unknown</i>}</p>
+                    <label>Start: </label>
+                    <p>{moment(promotion?.startDate).format('MMMM DD, YYYY')}</p>
+                    <label>End: </label>
+                    <p>{moment(promotion?.endDate).format('MMMM DD, YYYY')}</p>
+                    <label>Discount rate: </label>
+                    <p>{promotion?.discountRates || <i>unknown</i>}</p>
+                    <label>Worked: </label>
+                    <p>{promotion?.isDeleted ? 'true' : 'false'}</p>
+                </article>
+            </Modal.Body>
+        </Modal>
     );
 }
 
