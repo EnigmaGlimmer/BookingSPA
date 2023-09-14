@@ -1,3 +1,4 @@
+import { SettingType } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -36,7 +37,7 @@ export const getSettingError = (actionType, error) => ({
 });
 
 // 2. Create new blog
-export const postSetting = (body, page) => {
+export const postSetting = (body: any, page: SettingType) => {
     return {
         type: POST_SETTING,
         payload: {

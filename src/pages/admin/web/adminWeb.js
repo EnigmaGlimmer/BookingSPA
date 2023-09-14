@@ -189,8 +189,11 @@ function PageDemo({ page }) {
             case 'about':
                 return <About />;
 
-            // case 'promotion':
-            //     return <Promotion></Promotion>;
+            case 'navbar':
+                return;
+
+            case 'footer':
+                return;
 
             case 'booking':
                 return <BookingPage></BookingPage>;
@@ -199,12 +202,6 @@ function PageDemo({ page }) {
                 return <ContactInformation></ContactInformation>;
         }
     }, [page]);
-
-    // Formik
-    // const validation = useFormik({
-    //     initialValues: {},
-    //     onSubmit: (values) => {},
-    // });
 
     return (
         <>
@@ -258,17 +255,31 @@ function ListWeb() {
                         About us
                     </Link>
                 </Dropdown.Item>
+
                 {/* <Dropdown.Item>
                     <Link
                         to={{
                             search: createSearchParams({
-                                content: 'promotion',
+                                content: 'navbar',
                             }).toString(),
                         }}
+                        style={linkStyle}
                     >
-                        Promotion
+                        Navbar
                     </Link>
                 </Dropdown.Item> */}
+                <Dropdown.Item>
+                    <Link
+                        to={{
+                            search: createSearchParams({
+                                content: 'footer',
+                            }).toString(),
+                        }}
+                        style={linkStyle}
+                    >
+                        Footer
+                    </Link>
+                </Dropdown.Item>
                 <Dropdown.Item>
                     <Link
                         to={{
@@ -591,6 +602,29 @@ function EditTool({ sectionName, page, show, onHide }) {
             </Modal.Body>
         </Modal>
     );
+}
+
+function EditLayout({ layout }) {
+    const dispatch = useDispatch();
+
+    const { values, errors, touched, handleChange, handleSubmit, handleBlur } = useFormik({
+        initialValues: layout === 'navbar' ? {} : layout === 'footer' ? {} : {},
+        onSubmit: (values, helpers) => {
+            helpers.setSubmitting(false);
+            dispatch(postSetting(values, 'layout'));
+        },
+    });
+
+    switch (layout) {
+        case 'navbar':
+            return <Form onSubmit={handleSubmit}></Form>;
+
+        case 'footer':
+            return <></>;
+
+        default:
+            return;
+    }
 }
 
 export default AdminWeb;

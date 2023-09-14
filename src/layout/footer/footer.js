@@ -14,6 +14,8 @@ import FullLogo from '../logo/fulllogo';
 
 // Css
 import './footer.css';
+import useService from '../../hooks/useServices';
+import { Link } from 'react-router-dom';
 
 const defaultProps = {
     center: {
@@ -26,6 +28,13 @@ const defaultProps = {
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 function Footer() {
+    const { services } = useService({
+        request: {
+            skip: 1,
+            take: 2,
+        },
+    });
+
     return (
         <section id="footer">
             <Container className="py-5">
@@ -43,19 +52,45 @@ function Footer() {
                             Little Daisy
                         </h3>
                         <ul>
-                            <li>Home</li>
-                            <li>About us</li>
-                            <li>Services</li>
-                            <li>Promotion</li>
-                            <li>Contact</li>
+                            <li>
+                                <Link to={{ pathname: '/' }} className="link-text">
+                                    Home
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={{ pathname: '/about' }} className="link-text">
+                                    About us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={{ pathname: '/service' }} className="link-text">
+                                    Services
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={{ pathname: '/promotion' }} className="link-text">
+                                    Promotion
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to={{ pathname: '/' }} className="link-text">
+                                    Contact
+                                </Link>
+                            </li>
                         </ul>
                     </Col>
                     <Col sm="6" md="6" xl="2">
                         <h3>Services</h3>
                         <ul>
-                            <li>Nails Art</li>
-                            <li>Lashes</li>
-                            <li>Booking</li>
+                            {services.map((s) => {
+                                return (
+                                    <li>
+                                        <a href={`service?service=${s.serviceName}`} className="link-text">
+                                            {s?.serviceName}
+                                        </a>
+                                    </li>
+                                );
+                            })}
                         </ul>
                         <Row className="mb-3" style={{ flexWrap: 'nowrap' }}>
                             <Col className="col-auto">

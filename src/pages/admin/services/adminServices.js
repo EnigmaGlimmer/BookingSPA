@@ -13,8 +13,9 @@ import * as yup from 'yup';
 
 //Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getService, postService, deleteService } from '../../../store/service/action';
+import { getService, postService, deleteService, putService } from '../../../store/service/action';
 import moment from 'moment';
+import { FaTimes } from 'react-icons/fa';
 
 let serviceSchema = yup.object().shape({
     title: yup.string().required('Title is require field'),
@@ -31,8 +32,6 @@ let serviceSchema = yup.object().shape({
 });
 
 function AdminServices() {
-    const [parent, setParent] = React.useState([]);
-
     const dispatch = useDispatch();
 
     const { services } = useSelector((state) => {
@@ -70,7 +69,12 @@ function AdminServices() {
     });
 
     React.useEffect(() => {
-        dispatch(getService());
+        dispatch(
+            getService({
+                skip: 0,
+                take: 100,
+            }),
+        );
     }, [dispatch]);
 
     const [checkResult, setCheckResult] = useState(false);
@@ -81,8 +85,6 @@ function AdminServices() {
             <p className="mb-3">Create a new service by yourself</p>
             <Form onSubmit={handleSubmit}>
                 <div className="p-3 mb-3" style={{ background: '#fff' }}>
-                    <pre>{JSON.stringify(values, 4, 4)}</pre>
-
                     <Form.Group className="mb-3">
                         <Form.Label>Service Title</Form.Label>
                         <Form.Control
@@ -122,8 +124,6 @@ function AdminServices() {
                                         </option>
                                     );
                                 })}
-                            {/* <option value={services?.find?.((e) => e.serviceName === 'Nail')?.serviceId}>Nail</option>
-                            <option value={services?.find?.((e) => e.serviceName === 'Lash')?.serviceId}>Lash</option> */}
                         </Form.Select>
                     </Form.Group>
                 </div>
@@ -217,7 +217,11 @@ function AdminServices() {
     );
 }
 
-function ServiceListTable() {
+function ServiceListTable({ showService }) {
+    const [updateModal, setUpdateModal] = React.useState({
+        show: false,
+        activeIndex: null,
+    });
     const { services } = useSelector((state) => {
         return {
             services: state.Service.services,
@@ -245,7 +249,6 @@ function ServiceListTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* ?.filter((e) => e.serviceName !== 'Nail' && e.serviceName !== 'Lash') */}
                     {(services || []).map((item, index) => {
                         return (
                             <tr key={index}>
@@ -263,12 +266,31 @@ function ServiceListTable() {
                                     >
                                         Delete
                                     </Button>
-                                    <Button variant="outline" className="mx-4">
+                                    <Button
+                                        variant="outline"
+                                        className="mx-4"
+                                        onClick={() =>
+                                            setUpdateModal({
+                                                show: true,
+                                                activeIndex: item?.serviceId,
+                                            })
+                                        }
+                                    >
                                         Update
                                     </Button>
                                     <Button variant="outline">Not available</Button>
                                     <Button variant="outline">View post</Button>
                                 </td>
+                                <UpdateService
+                                    show={updateModal.show && updateModal?.activeIndex === item?.serviceId}
+                                    serviceId={item?.serviceId}
+                                    onHide={() =>
+                                        setUpdateModal({
+                                            show: false,
+                                            activeIndex: null,
+                                        })
+                                    }
+                                ></UpdateService>
                             </tr>
                         );
                     })}
@@ -410,4 +432,210 @@ function FormInfoModal({ show, onHide, title = '', parentId = null, parentName =
     );
 }
 
+function UpdateService({ show, onHide, serviceId }) {
+    const { services } = useSelector((state) => {
+        return {
+            services: state.Service.services,
+        };
+    });
+
+    const foundService = services?.find?.((s) => s.serviceId === serviceId);
+
+    const dispatch = useDispatch();
+
+    const { values, handleChange, handleSubmit, handleBlur, setFieldValue, errors, touched } = useFormik({
+        initialValues: {
+            title: foundService?.serviceName,
+            parentId: foundService?.parentId,
+            price: foundService?.price,
+            promotion: null,
+        },
+        validationSchema: serviceSchema,
+        onSubmit: (values, formikHelper) => {
+            formikHelper.setSubmitting(false);
+
+            dispatch(
+                putService({
+                    id: serviceId,
+                    updatedService: { ...values, serviceName: values.title },
+                }),
+            );
+            onHide();
+        },
+    });
+
+    return (
+        <Modal
+            style={{ width: '100%', overflow: 'unset', background: 'none' }}
+            show={show}
+            onHide={onHide}
+            aria-labelledby="contained-modal-title-vcenter"
+        >
+            <Modal.Header closeButton style={{ margin: '0 auto', width: '80%', background: 'white' }}>
+                <Modal.Title id="contained-modal-title-vcenter">Edit Modal</Modal.Title>
+            </Modal.Header>
+            <Modal.Body
+                style={{
+                    margin: '0 auto',
+                    maxWidth: 'unset',
+                    background: 'white',
+                    width: '80%',
+                    overflow: 'scroll',
+                    maxHeight: '75vh',
+                }}
+            >
+                <Form onSubmit={handleSubmit}>
+                    <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Name</Form.Label>
+                            <Form.Control
+                                name="title"
+                                placeholder="Enter service name"
+                                value={values?.title}
+                                isInvalid={touched?.title && errors?.title}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Price</Form.Label>
+                            <Form.Control
+                                name="price"
+                                placeholder="Enter service price"
+                                value={values?.price}
+                                isInvalid={touched.price && errors.price}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Dependency</Form.Label>
+                            <Form.Select name="parentId" onChange={handleChange} placeholder="Enter service title">
+                                <option value={0} selected={!foundService?.parentId}>
+                                    Choose the root service
+                                </option>
+                                {(services || [])
+                                    ?.filter((s) => !s.parentId)
+                                    ?.map?.((item, index) => {
+                                        return (
+                                            <option
+                                                key={index}
+                                                value={item?.serviceId}
+                                                selected={foundService?.parentId === item?.serviceId}
+                                            >
+                                                {item?.serviceName}
+                                            </option>
+                                        );
+                                    })}
+                            </Form.Select>
+                        </Form.Group>
+                    </div>
+
+                    {(!values.promotion && (
+                        <Button
+                            variant="outline"
+                            className="btn-primary-outline"
+                            onClick={() =>
+                                setFieldValue('promotion', {
+                                    promotionName: '',
+                                    startDate: new Date(),
+                                    endDate: new Date(),
+                                    discountRates: 0,
+                                    isDeleted: false,
+                                })
+                            }
+                        >
+                            + ADD PROMOTION
+                        </Button>
+                    )) || (
+                        <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                            <Row className="justify-content-between">
+                                <Col>
+                                    <h3>Promotion</h3>
+                                </Col>
+                                <Col className="text-end">
+                                    <Button
+                                        variant="outline"
+                                        className="btn-primary-outline"
+                                        onClick={() => setFieldValue('promotion', null)}
+                                    >
+                                        <FaTimes></FaTimes>
+                                    </Button>
+                                </Col>
+                            </Row>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control
+                                    name="promotion.promotionName"
+                                    placeholder="Enter Promotion Name"
+                                    isInvalid={touched.promotion?.promotionName && !!errors.promotion?.promotionName}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                ></Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.promotion?.promotionName}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Start Date</Form.Label>
+                                <Form.Control
+                                    name="promotion.startDate"
+                                    placeholder="Enter Start Date"
+                                    type="date"
+                                    isInvalid={touched.promotion?.startDate && !!errors.promotion?.startDate}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                ></Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.promotion?.startDate}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>End Date</Form.Label>
+                                <Form.Control
+                                    name="promotion.endDate"
+                                    placeholder="Enter End Date"
+                                    type="date"
+                                    isInvalid={touched.promotion?.endDate && !!errors.promotion?.endDate}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                ></Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.promotion?.endDate}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Discount Rates</Form.Label>
+                                <Form.Control
+                                    name="promotion.discountRates"
+                                    placeholder="Enter Discount Rates"
+                                    step={0.2}
+                                    type="number"
+                                    isInvalid={touched.promotion?.discountRates && errors.promotion?.discountRates}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                ></Form.Control>
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.promotion?.discountRates}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </div>
+                    )}
+                    <article>
+                        <Button type="submit" className="my-2 btn-primary-outline" variant="outline">
+                            SUBMIT THE EDIT OF SERVICE
+                        </Button>
+                    </article>
+                </Form>
+            </Modal.Body>
+        </Modal>
+    );
+}
 export default AdminServices;

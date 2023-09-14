@@ -85,6 +85,7 @@ li {
 }
 
 .link-text {
+    color: initial;
     text-decoration: none;
 }
 

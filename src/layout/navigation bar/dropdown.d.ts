@@ -1,5 +1,5 @@
 type DropdownMenuProps = {
-    submenu: Array<{ title: string; link: string }>;
+    submenu: Array<{ title: string; link: string; childs: Array<{ title: string; link: string }> }>;
     styleContainer: React.CSSProperties;
     show: boolean;
 };

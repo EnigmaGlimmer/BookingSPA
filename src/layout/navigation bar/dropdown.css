@@ -3,11 +3,13 @@
     background-color: var(--clr-primary);
     overflow: hidden;
     list-style-type: none;
-    width: 220px;
+    /* width: 220px; */
+    z-index: 1000;
+    box-shadow: 1px 2px 5px var(--clr-border);
 }
 
 #nav-drop-down[data-display='true'] {
-    max-height: 220px;
+    max-height: 420px;
     overflow-y: scroll;
     transition: max-height 1.5s ease-out, opacity 300ms 300ms ease-out;
     opacity: 1;
@@ -15,6 +17,7 @@
 
 #nav-drop-down[data-display='false'] {
     max-height: 0;
+    padding: 0 !important;
     transition: max-height 300ms ease-out, opacity 300ms 300ms ease-out;
     opacity: 1;
 }
@@ -25,4 +28,12 @@
 
 #nav-drop-down li a {
     text-decoration: none;
+}
+
+#nav-drop-down .split-line::after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+    background-color: var(--clr-border);
 }

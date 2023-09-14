@@ -1,3 +1,4 @@
+import { Pagination, UpdateServiceDTO } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -14,8 +15,9 @@ import {
 } from './actionType';
 
 // 1. Get SERVICE
-export const getService = () => ({
+export const getService = (request: Pagination) => ({
     type: GET_SERVICE_LIST,
+    payload: request,
 });
 
 export const getServiceSuccess = (actionType: string, data: any) => ({
@@ -66,16 +68,14 @@ export const postServiceError = (error: string) => ({
 });
 
 // 3. Update SERVICE
-
-export const putService = () => ({
+export const putService = (request: { id: number; updatedService: UpdateServiceDTO }) => ({
     type: PUT_SERVICE,
+    payload: request,
 });
 
-export const putServiceSuccess = (data) => ({
+export const putServiceSuccess = (data: UpdateServiceDTO) => ({
     type: PUT_SERVICE_SUCCESS,
-    payload: {
-        data,
-    },
+    payload: data,
 });
 
 export const putServiceError = (error) => ({

@@ -19,6 +19,7 @@ export const DELETE_ASSET = '/api/asset';
 // 4. Service
 export const GET_SERVICE = '/api/service';
 export const POST_SERVICE = '/api/service';
+export const PUT_SERVICE = '/api/service';
 export const DELETE_SERVICE = '/api/service';
 
 // 5. Testimonial

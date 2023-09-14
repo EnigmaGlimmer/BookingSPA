@@ -20,16 +20,13 @@ import { GET_SERVICE_LIST, POST_SERVICE, PUT_SERVICE, DELETE_SERVICE } from './a
 import {
     getServiceList as getServiceListAPI,
     postService as postServiceAPI,
-    updateService as updateServiceAPI,
+    putService as updateServiceAPI,
     deleteService as deleteServiceAPI,
 } from '../../api';
 
-function* getService() {
+function* getService({ payload }) {
     try {
-        const response = yield call(getServiceListAPI, {
-            skip: 0,
-            take: 10,
-        });
+        const response = yield call(getServiceListAPI, payload);
 
         yield put(getServiceSuccess(GET_SERVICE_LIST, response || []));
     } catch (error) {
@@ -59,12 +56,16 @@ function* onAddNewService({ payload: { parentId, createdDate, serviceName, price
     }
 }
 
-function* onUpdateService({ payload: updatedService }) {
+function* onUpdateService({ payload: { id, updatedService } }) {
     try {
-        const response = yield call(updateServiceAPI, updatedService);
-        yield put(putServiceSuccess(response?.result));
+        const response = yield call(updateServiceAPI, id, updatedService);
+
+        yield put(putServiceSuccess(response));
+
+        toast.success('Edited Service Success', { autoClose: 3000 });
     } catch (error) {
         yield put(putServiceError(error));
+        toast.error('Edited Service Failed', { autoClose: 3000 });
     }
 }
 

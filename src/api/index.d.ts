@@ -147,7 +147,7 @@ type CreateServiceDTO = {
     parentId: number;
     createdDate: Date;
     price: number;
-    promotion: {
+    promotion?: {
         promotionName: string;
         startDate: Date;
         endDate: Date;
@@ -155,9 +155,25 @@ type CreateServiceDTO = {
         isDeleted: boolean;
     };
 };
-type UpdateServiceDTO = {};
-export declare const getServiceList: (request: Pagination) => Promise<APIResponse<Array<ServiceDTO>>>;
+type UpdateServiceDTO = {
+    serviceName: string;
+    parentId: number;
+    price: number;
+    promotion?: {
+        promotionName: string;
+        startDate: Date;
+        endDate: Date;
+        discountRates: number;
+        isDeleted: boolean;
+    };
+};
+export declare const getServiceList: (request: Pagination) => Promise<Array<ServiceDTO>>;
 export declare const postService: (body: CreateServiceDTO) => Promise<APIResponse<ServiceDTO>>;
+export declare const putService: (
+    id: number,
+    body: UpdateServiceDTO,
+    config?: AxiosRequestConfig,
+) => Promise<APIResponse<ServiceDTO>>;
 
 // 5. Testimonial
 type TestimonialDTO = {
@@ -259,7 +275,7 @@ export declare const assignBooking: (
 
 export declare const getBookingList: (request: SearchBookingDTO) => Promise<APIResponse<BookingDTO[]>>;
 // 8. Setting
-type SettingType = 'home' | 'about' | 'booking' | 'testimonial';
+type SettingType = 'home' | 'about' | 'booking' | 'testimonial' | 'layout';
 export declare const getSetting: (
     request: {
         type: SettingType;

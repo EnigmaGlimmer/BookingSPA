@@ -12,6 +12,10 @@ export const postService = (body) => {
     const axiosInstance = api.create(url.POST_SERVICE, body);
     return axiosInstance;
 };
+
+export const putService = (id, body, config) => {
+    return api.put(`${url.PUT_SERVICE}/${id}`, body, config);
+};
 export const deleteService = (id) => {
     const axiosInstance = api.delete(`${url.DELETE_SERVICE}/${id}`);
     return axiosInstance;

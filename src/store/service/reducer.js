@@ -44,6 +44,7 @@ const Service = (state = INIT_STATE, action) => {
                 default:
                     return state;
             }
+
         case POST_SERVICE_SUCCESS:
             return {
                 ...state,
@@ -58,13 +59,16 @@ const Service = (state = INIT_STATE, action) => {
         case PUT_SERVICE_SUCCESS:
             return {
                 ...state,
-                services: action.payload.data,
+                services: state.services.map((s) => {
+                    return s.serviceId === action.payload.serviceId ? { ...s, ...action.payload } : s;
+                }),
             };
         case PUT_SERVICE_FAILED:
             return {
                 ...state,
                 errors: action.payload.error,
             };
+
         case DELETE_SERVICE_SUCCESS:
             return {
                 ...state,

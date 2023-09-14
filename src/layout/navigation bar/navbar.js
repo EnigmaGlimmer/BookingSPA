@@ -23,6 +23,7 @@ import { BiLogoFacebookCircle, BiLogoInstagram, BiLogoWhatsapp } from 'react-ico
 import { useDispatch, useSelector } from 'react-redux';
 import { getService } from '../../store/actions';
 import { useContact } from '../../hooks/useContact';
+import useService from '../../hooks/useServices';
 
 const defaultProps = {
     center: {
@@ -42,17 +43,12 @@ function Navigation() {
     const [linkPosition, setLinkPosition] = React.useState(0);
     const [contactSidebar, showContactSidebar] = React.useState(false);
 
-    const dispatch = useDispatch();
-
-    const { services } = useSelector((state) => {
-        return {
-            services: state?.Service?.services || [],
-        };
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 2,
+        },
     });
-
-    useEffect(() => {
-        dispatch(getService());
-    }, []);
 
     return (
         <Navbar
@@ -98,6 +94,10 @@ function Navigation() {
                                 .map?.((service) => ({
                                     title: service?.serviceName,
                                     link: `service?name=${service?.serviceName}`,
+                                    childs: service?.childs?.map?.((c) => ({
+                                        title: c?.serviceName,
+                                        link: `service?name=${c?.serviceName}`,
+                                    })),
                                 })) || []
                         }
                         styleContainer={{

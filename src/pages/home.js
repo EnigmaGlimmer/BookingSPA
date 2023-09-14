@@ -46,15 +46,20 @@ function Home() {
         };
     });
 
-    const { service } = useSelector((state) => {
+    const { services } = useSelector((state) => {
         return {
-            service: state?.Service?.services || [],
+            services: state?.Service?.services || [],
         };
     });
 
     React.useEffect(() => {
         dispatch(getSettingList('home'));
-        dispatch(getService());
+        dispatch(
+            getService({
+                take: 100,
+                skip: 1,
+            }),
+        );
     }, [dispatch]);
 
     return (
@@ -182,14 +187,16 @@ function Home() {
                         <div className="other-content-form">
                             <h1 className="other-title">Nail Services</h1>
                             <div className="other-list">
-                                {service
-                                    ?.find?.((e) => e.serviceName === 'Nail')
-                                    ?.childs?.map?.((item, index) => {
+                                {services
+                                    ?.find?.((e) => e.serviceId === 1 || e.serviceName === 'Nail')
+                                    ?.childs?.slice(0, 5)
+                                    ?.map?.((item, index) => {
                                         return (
                                             <div className="other-list-item" key={index}>
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
-                                                <p>{item.price}$</p>
+                                                {/* <p>{item.price}$</p> */}
+                                                <p>-20%</p>
                                             </div>
                                         );
                                     })}
@@ -213,9 +220,13 @@ function Home() {
                         <div className="lashes-content-form">
                             <h1 className="lashes-title">Lashes Services</h1>
                             <div className="lashes-list">
-                                {service
-                                    ?.find?.((e) => e.serviceName === 'Lash')
-                                    ?.childs?.map((item, index) => {
+                                {services
+                                    ?.find?.((e) => {
+                                        console.log(e.serviceId, e.serviceName);
+                                        return e.serviceId === 3 || e.serviceName === 'Lashes';
+                                    })
+                                    ?.childs?.slice?.(0, 5)
+                                    ?.map?.((item, index) => {
                                         return (
                                             <div className="other-list-item" key={index}>
                                                 <p>{item.serviceName}</p>
