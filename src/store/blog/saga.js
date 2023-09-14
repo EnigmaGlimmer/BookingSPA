@@ -13,7 +13,7 @@ import {
     BlogSearchBy,
     getBlogList as getBlogListAPI,
     postBlog as postBlogAPI,
-    updateBlog as updateBlogAPI,
+    putBlog as updateBlogAPI,
 } from '../../api';
 
 function* getBlogs({ payload }) {
@@ -43,12 +43,16 @@ function* onAddNewBlog({ payload: newBlog }) {
     }
 }
 
-function* onUpdateBlog({ payload: updatedBlog }) {
+function* onUpdateBlog({ payload: {id,data} }) {
+    console.log(id ,data)
     try {
-        const response = yield call(updateBlogAPI, updatedBlog);
-        yield put(putBlogSuccess(response?.result));
+        const response = yield call(updateBlogAPI,id, data);
+        console.log(response);
+        yield put(putBlogSuccess(response));
+        toast.success('Update Blog Success', { autoClose: 3000 });
     } catch (error) {
         yield put(putBlogError(error));
+        toast.error('Update Blog Failed', { autoClose: 3000 });
     }
 }
 

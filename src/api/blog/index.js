@@ -15,6 +15,6 @@ export const postBlog = (body, config) => {
     return api.create(url.POST_NEW_BLOG, body, config);
 };
 
-export const putBlog = (body, config) => {
-    return api.put(url.PUT_BLOG, body);
+export const putBlog = (id,body, config) => {
+    return api.put(`${url.PUT_BLOG}/${id}`, body);
 };
