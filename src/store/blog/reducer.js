@@ -42,7 +42,6 @@ const Blogs = (state = INIT_STATE, action) => {
                         ...state,
                         blogs: action.payload.error,
                     };
-
                 default:
                     return state;
             }
@@ -54,10 +53,15 @@ const Blogs = (state = INIT_STATE, action) => {
             return { ...state, error: action.payload.error };
 
         case PUT_BLOG_SUCCESS:
-            return { ...state };
+            return { 
+                ...state,
+                blogs: state.blogs.map((item) => {
+                    return item.blogId === action.payload.id ? {...item,...action.payload} : item
+                })
+            };
 
         case PUT_BLOG_FAILED:
-            return { ...state };
+            return { ...state, error: action.payload.error};
 
         case DELETE_BLOG_SUCCESS:
             return { ...state };

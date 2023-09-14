@@ -60,13 +60,21 @@ export const postBlogError = (error) => ({
 
 // 3. Update blog
 
-export const putBlog = () => ({
-    type: PUT_BLOG,
-});
+export const putBlog = (id,data) => {
+    return({
+        type: PUT_BLOG,
+        payload:{
+            id,
+            data
+        }
+    });
+} 
 
 export const putBlogSuccess = (data) => ({
     type: PUT_BLOG_SUCCESS,
-    payload: data,
+    payload: {
+        data
+    },
 });
 
 export const putBlogError = (error) => ({
