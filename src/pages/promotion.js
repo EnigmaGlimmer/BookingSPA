@@ -173,7 +173,7 @@ function Promotion() {
                         <article className="mb-5">
                             <h3>Categories</h3>
                             <ul className="text-uppercase list-style-none">
-                                {categories.map((c) => {
+                                {categories.slice(0, 3).map((c) => {
                                     return (
                                         <li className="py-2">
                                             <Link

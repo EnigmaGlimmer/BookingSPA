@@ -6,12 +6,6 @@ import ReactQuill from 'react-quill';
 // Upload Modal
 import UploadModal from '../upload-modal/upload-modal';
 
-// Formik
-import { Formik } from 'formik';
-
-// React Bootstrap
-import { Form } from 'react-bootstrap';
-
 class CustomReactQuill extends React.Component {
     constructor(props) {
         super(props);
@@ -30,16 +24,14 @@ class CustomReactQuill extends React.Component {
         return (
             <>
                 <ReactQuill
+                    value={this.props?.value}
                     onChange={(content, delta, source, editor) => {
                         this.props?.onChange?.(content);
-                        console.log(content);
-                        console.log(delta);
-                        console.log(source);
                     }}
                     modules={{
                         toolbar: {
                             container: [
-                                [{ header: [1, 2, false] }],
+                                [{ header: [1, 2, 3, 4, 5, 6, false] }],
                                 ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                                 [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
                                 [{ align: [] }],
@@ -69,9 +61,7 @@ class CustomReactQuill extends React.Component {
 
                 <UploadModal
                     show={this.state.isImageModalShow}
-                    onCopyLink={(link) => {
-                        console.log(link);
-                    }}
+                    onCopyLink={(link) => {}}
                     onHide={() => {
                         this.setState({ isImageModalShow: false });
                     }}
@@ -80,10 +70,7 @@ class CustomReactQuill extends React.Component {
                     }}
                     onSelected={(image) => {
                         if (this.quillRef.current) {
-                            console.log(this.quillRef.current);
-
                             const range = this.quillRef.current.getEditorSelection();
-                            console.log(range);
 
                             this.quillRef.current.getEditor().insertEmbed(range?.index, 'image', image);
                         }

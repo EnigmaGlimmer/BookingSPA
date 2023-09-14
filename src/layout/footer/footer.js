@@ -16,6 +16,7 @@ import FullLogo from '../logo/fulllogo';
 import './footer.css';
 import useService from '../../hooks/useServices';
 import { Link } from 'react-router-dom';
+import { useContact } from '../../hooks/useContact';
 
 const defaultProps = {
     center: {
@@ -34,6 +35,7 @@ function Footer() {
             take: 2,
         },
     });
+    const contact = useContact();
 
     return (
         <section id="footer">
@@ -85,7 +87,7 @@ function Footer() {
                             {services.map((s) => {
                                 return (
                                     <li>
-                                        <a href={`service?service=${s.serviceName}`} className="link-text">
+                                        <a href={`service?name=${s.serviceName}`} className="link-text">
                                             {s?.serviceName}
                                         </a>
                                     </li>
@@ -94,13 +96,19 @@ function Footer() {
                         </ul>
                         <Row className="mb-3" style={{ flexWrap: 'nowrap' }}>
                             <Col className="col-auto">
-                                <BiLogoFacebookCircle></BiLogoFacebookCircle>
+                                <Link to={contact?.facebook} className="link-text">
+                                    <BiLogoFacebookCircle></BiLogoFacebookCircle>
+                                </Link>
                             </Col>
                             <Col className="col-auto">
-                                <BiLogoWhatsapp></BiLogoWhatsapp>
+                                <Link to={contact?.whatsapp} className="link-text">
+                                    <BiLogoWhatsapp></BiLogoWhatsapp>
+                                </Link>
                             </Col>
                             <Col className="col-auto">
-                                <BiLogoInstagram></BiLogoInstagram>
+                                <Link to={contact?.instagram} className="link-text">
+                                    <BiLogoInstagram></BiLogoInstagram>
+                                </Link>
                             </Col>
                         </Row>
                     </Col>

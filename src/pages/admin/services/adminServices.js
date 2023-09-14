@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Components
-// Text Editor
 import { CustomReactQuill } from '../../../components';
-
-// Bootstrap components
-import { Button, Col, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
+import { Button, Col, Dropdown, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 // Form submission handlers
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-//Redux
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { getService, postService, deleteService, putService } from '../../../store/service/action';
 import moment from 'moment';
 import { FaTimes } from 'react-icons/fa';
+import { getBlogOfService, putBlogOfService } from '../../../api';
+
+// API
+
+// Purify
+import * as DOMPurify from 'dompurify';
+import { toast } from 'react-toastify';
+import useService from '../../../hooks/useServices';
 
 let serviceSchema = yup.object().shape({
     title: yup.string().required('Title is require field'),
@@ -301,103 +306,171 @@ function ServiceListTable({ showService }) {
 }
 
 function EditServicePost() {
-    const { services } = useSelector((state) => {
-        return {
-            services: state.Service.services,
-        };
+    const {
+        services,
+        blog,
+        selectedId: selectedPostId,
+        setSelectedId: setSelectedPostId,
+        setBlog,
+    } = useService({
+        request: {
+            skip: 1,
+            take: 100,
+        },
     });
 
-    const { handleChange, handleBlur, handleSubmit, setFieldValue, values, touched, errors } = useFormik({
+    const { handleChange, handleBlur, handleSubmit, setFieldValue, values, errors } = useFormik({
         initialValues: {
-            articleTitle: '',
-            articleContent: '',
+            blogContent: blog?.blogContent,
+            metaKeywords: blog?.metaKeywords,
+            metaTitle: blog?.metaTitle,
+            metaDescription: blog?.metaDescription,
         },
-        onSubmit: (values) => {},
+        enableReinitialize: true,
+        onSubmit: (values) => {
+            putBlogOfService(selectedPostId, {
+                blogContent: { value: values.blogContent },
+                metaDescription: values.metaDescription,
+                metaKeywords: values.metaKeywords,
+                metaTitle: values.metaTitle,
+                postedDate: new Date(),
+            })
+                .then((response) => {
+                    setBlog(response || blog);
+                    toast.success('Edited Post Success', {
+                        autoClose: 3000,
+                    });
+                })
+                .catch((err) => {
+                    toast.error(typeof err === 'string' ? err : 'Edited Post Failed', {
+                        autoClose: 3000,
+                    });
+                });
+        },
         validationSchema: yup.object().shape({
-            articleTitle: yup.string().required(),
-            articleContent: yup.string().required(),
-            categories: yup.string().required(),
+            blogContent: yup.string().required(),
+            metaKeywords: yup.string().required(),
+            metaTitle: yup.string().required(),
+            metaDescription: yup.string().required(),
         }),
     });
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <h3>Edit Service Posts</h3>
+        <section>
+            <Row>
+                <Col xs="12" lg="6">
+                    <Form onSubmit={handleSubmit}>
+                        <h3>Edit Service Posts</h3>
 
-            <div className="p-3 mb-3" style={{ background: '#fff' }}>
-                <Form.Group id="service-need-to-edit-post">
-                    <Form.Label>Service</Form.Label>
-                    <Form.Select className="mb-3">
-                        {(services || [])?.map((service, key) => (
-                            <option key={key} value={service?.serviceId}>
-                                {service?.serviceName}
-                            </option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
+                        <div className="p-3 mb-3" style={{ background: '#fff' }}>
+                            <Form.Group id="service-need-to-edit-post">
+                                <Form.Label>Service</Form.Label>
+                                <Form.Select
+                                    className="mb-3"
+                                    onChange={(e) => {
+                                        setSelectedPostId(e.target.value);
+                                    }}
+                                >
+                                    <option selected={selectedPostId === null}>Select Service To Edit</option>
+                                    {(services || [])?.map((service, key) => (
+                                        <option
+                                            key={key}
+                                            value={service?.serviceId}
+                                            selected={selectedPostId === service?.serviceId}
+                                        >
+                                            {service?.serviceName}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
 
-                <Form.Group id="service-post-title">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                        name="articleTitle"
-                        className="mb-3"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                    ></Form.Control>
-                </Form.Group>
+                            <Form.Group id="service-post-content">
+                                <CustomReactQuill
+                                    value={values.blogContent}
+                                    onChange={(htmlText) => {
+                                        setFieldValue('blogContent', htmlText);
+                                    }}
+                                ></CustomReactQuill>
+                            </Form.Group>
 
-                <Form.Group id="service-post-content">
-                    <CustomReactQuill
-                        onChange={(htmlText) => {
-                            setFieldValue('articleContent', htmlText);
+                            <h4 className="mt-3 font-2">Meta data</h4>
+
+                            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
+                                {/* <Tab eventKey="home" title="General Info">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Stocks</Form.Label>
+                                        <Form.Control placeholder="Enter Stocks"></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Price</Form.Label>
+                                        <Form.Control placeholder="Enter Price"></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Discount</Form.Label>
+                                        <Form.Control placeholder="Enter Discount"></Form.Control>
+                                    </Form.Group>
+                                    <Row className="mb-3">
+                                        <Col>
+                                            <Form.Label>Promotion Start</Form.Label>
+                                            <Form.Control type="date"></Form.Control>
+                                        </Col>
+                                        <Col>
+                                            <Form.Label>Promotion End</Form.Label>
+                                            <Form.Control type="date"></Form.Control>
+                                        </Col>
+                                    </Row>
+                                </Tab> */}
+                                <Tab eventKey="profile" title="Meta Data">
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Meta title</Form.Label>
+                                        <Form.Control
+                                            placeholder="Enter meta title"
+                                            name="metaTitle"
+                                            value={values.metaTitle}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        ></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Meta Keywords</Form.Label>
+                                        <Form.Control
+                                            placeholder="Enter meta keywords"
+                                            name="metaKeywords"
+                                            value={values.metaKeywords}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        ></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Meta Description</Form.Label>
+                                        <Form.Control
+                                            placeholder="Enter meta Description"
+                                            name="metaDescription"
+                                            value={values.metaDescription}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                        ></Form.Control>
+                                    </Form.Group>
+                                </Tab>
+                            </Tabs>
+
+                            <Button type="submit" variant="outline" className="btn-primary-outline">
+                                Submit
+                            </Button>
+                        </div>
+                    </Form>
+                </Col>
+                <Col xs="12" lg="6">
+                    <h2>Demo Blog of Service</h2>
+                    <article
+                        style={{ border: '1px solid var(--clr-border)', minHeight: '100%' }}
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(values?.blogContent),
                         }}
-                    ></CustomReactQuill>
-                </Form.Group>
-
-                <h4 className="mt-3 font-2">Meta data</h4>
-
-                <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="mb-3">
-                    <Tab eventKey="home" title="General Info">
-                        <Form.Group className="mb-3">
-                            <Form.Label>Stocks</Form.Label>
-                            <Form.Control placeholder="Enter Stocks"></Form.Control>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Price</Form.Label>
-                            <Form.Control placeholder="Enter Price"></Form.Control>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Discount</Form.Label>
-                            <Form.Control placeholder="Enter Discount"></Form.Control>
-                        </Form.Group>
-                        <Row className="mb-3">
-                            <Col>
-                                <Form.Label>Promotion Start</Form.Label>
-                                <Form.Control type="date"></Form.Control>
-                            </Col>
-                            <Col>
-                                <Form.Label>Promotion End</Form.Label>
-                                <Form.Control type="date"></Form.Control>
-                            </Col>
-                        </Row>
-                    </Tab>
-                    <Tab eventKey="profile" title="Meta Data">
-                        <Form.Group className="mb-3">
-                            <Form.Label>Meta title</Form.Label>
-                            <Form.Control placeholder="Enter meta title"></Form.Control>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Meta Keywords</Form.Label>
-                            <Form.Control placeholder="Enter meta keywords"></Form.Control>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Meta Description</Form.Label>
-                            <Form.Control placeholder="Enter meta Description"></Form.Control>
-                        </Form.Group>
-                    </Tab>
-                </Tabs>
-            </div>
-        </Form>
+                    ></article>
+                </Col>
+            </Row>
+        </section>
     );
 }
 

@@ -1,4 +1,5 @@
 type CustomReactQuillProps = {
+    value?: string;
     onChange: (htmlText: string) => void;
 };
 

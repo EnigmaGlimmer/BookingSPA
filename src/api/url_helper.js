@@ -18,8 +18,10 @@ export const DELETE_ASSET = '/api/asset';
 
 // 4. Service
 export const GET_SERVICE = '/api/service';
+export const GET_BLOG_SERVICE = '/api/service/blog_service';
 export const POST_SERVICE = '/api/service';
 export const PUT_SERVICE = '/api/service';
+export const PUT_BLOG_OF_SERVICE = '/api/service/post_blog';
 export const DELETE_SERVICE = '/api/service';
 
 // 5. Testimonial

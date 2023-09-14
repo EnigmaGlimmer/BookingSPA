@@ -142,6 +142,14 @@ type ServiceDTO = {
     promotion: any;
     childs: Array<ServiceDTO>;
 };
+type BlogOfServiceDTO = {
+    serviceId: number;
+    blogContent: string;
+    metaKeywords: string;
+    metaTitle: string;
+    metaDescription: string;
+    postedDate: Date;
+};
 type CreateServiceDTO = {
     serviceName: string;
     parentId: number;
@@ -167,8 +175,23 @@ type UpdateServiceDTO = {
         isDeleted: boolean;
     };
 };
+type PostBlogService = {
+    blogContent: {
+        value: string;
+    };
+    metaKeywords: string;
+    metaTitle: string;
+    metaDescription: string;
+    postedDate: Date;
+};
 export declare const getServiceList: (request: Pagination) => Promise<Array<ServiceDTO>>;
+export declare const getBlogOfService: (id: number, config?: AxiosRequestConfig) => Promise<BlogOfServiceDTO>;
 export declare const postService: (body: CreateServiceDTO) => Promise<APIResponse<ServiceDTO>>;
+export declare const putBlogOfService: (
+    id: number,
+    body: PostBlogService,
+    config?: AxiosRequestConfig,
+) => Promise<BlogOfServiceDTO>;
 export declare const putService: (
     id: number,
     body: UpdateServiceDTO,

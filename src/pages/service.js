@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import serviceBanner from '../images/serviceBanner.png';
 import serviceContent from '../images/serviceContent.png';
 import aboutDaisy1 from '../images/aboutDaisy1.png';
@@ -11,6 +11,12 @@ import './style/service.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 import service from '../config/content/service.json';
+import useService from '../hooks/useServices';
+import { useSearchParams } from 'react-router-dom';
+
+// DOMPurify
+import * as DOMPurify from 'dompurify';
+
 const listImg = [
     aboutDaisy1,
     aboutDaisy2,
@@ -23,6 +29,22 @@ const listImg = [
 ];
 
 function Service() {
+    const [searchParams] = useSearchParams();
+
+    const { blog } = useService({
+        selectedPostName: searchParams?.get?.('name'),
+        request: {
+            skip: 0,
+            take: 100,
+        },
+    });
+
+    useEffect(() => {}, [searchParams]);
+
+    if (!searchParams.get('name')) {
+        return;
+    }
+
     return (
         <div>
             {/* Service Banner */}
@@ -31,10 +53,17 @@ function Service() {
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
                 </div>
             </div>
+
             {/* Service Name */}
             <div className="service-name" id="st-serviceProduct">
-                <div className="service-name-form">
-                    <div className="service-name-title">{service?.product?.title}</div>
+                <h1 className="service-name-form mb-3">{searchParams.get('name')}</h1>
+                <div
+                    className="service-name-form"
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(blog?.blogContent),
+                    }}
+                >
+                    {/* <div className="service-name-title">{service?.product?.title}</div>
                     <p className="service-name-content">{service?.product?.content}</p>
                     <div className="service-name-content-list">
                         <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
@@ -60,7 +89,7 @@ function Service() {
                         varius sit amet. Eu ultrices vitae auctor eu augue ut lectus. Suscipit tellus mauris a diam.
                         Viverra orci sagittis eu volutpat odio facilisis etmagnis dis parturient mananis interdum arcu
                         ac tortor dignissim convallis aenean.
-                    </p>
+                    </p> */}
                 </div>
             </div>
             {/* Daisy Images */}
