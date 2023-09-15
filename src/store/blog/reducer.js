@@ -64,10 +64,10 @@ const Blogs = (state = INIT_STATE, action) => {
             return { ...state, error: action.payload.error};
 
         case DELETE_BLOG_SUCCESS:
-            return { ...state };
+            return { ...state, blogs: state.blogs.filter(item => item.blogId !== action.payload.id)};
 
         case DELETE_BLOG_FAILED:
-            return { ...state };
+            return { ...state,error: action.payload.error };
 
         default:
             return state;
