@@ -305,10 +305,14 @@ export function Step1({ setStep, validation }) {
 function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
     const { services } = useSelector((state) => {
         return {
-            services: state.Service.services,
+            services: state?.Service?.services,
         };
     });
-
+    const dispatch = useDispatch();
+    React.useEffect(()=> {
+        dispatch(getService())
+    },[dispatch])
+    console.log(services)
     return (
         <div className="intro-form">
             <div className="intro-img">
