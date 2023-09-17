@@ -70,9 +70,10 @@ export const putBlog = (id,data) => {
     });
 } 
 
-export const putBlogSuccess = (data) => ({
+export const putBlogSuccess = (id, data) => ({
     type: PUT_BLOG_SUCCESS,
     payload: {
+        id,
         data
     },
 });

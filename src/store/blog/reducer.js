@@ -56,7 +56,7 @@ const Blogs = (state = INIT_STATE, action) => {
             return { 
                 ...state,
                 blogs: state.blogs.map((item) => {
-                    return item.blogId === action.payload.id ? {...item,...action.payload} : item
+                    return item.blogId === action.payload.id ? {...item,...action.payload.data} : item
                 })
             };
 

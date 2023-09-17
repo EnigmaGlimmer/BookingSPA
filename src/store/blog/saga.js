@@ -8,13 +8,7 @@ import { getSuccess, getError, postBlogSuccess, postBlogError, putBlogSuccess, p
 import { GET_BLOG_LIST, POST_BLOG, PUT_BLOG } from './actionType';
 
 // API
-import {
-    BlogOrderBy,
-    BlogSearchBy,
-    getBlogList as getBlogListAPI,
-    postBlog as postBlogAPI,
-    putBlog as updateBlogAPI,
-} from '../../api';
+import { getBlogList as getBlogListAPI, postBlog as postBlogAPI, putBlog as updateBlogAPI } from '../../api';
 
 function* getBlogs({ payload }) {
     try {
@@ -43,12 +37,10 @@ function* onAddNewBlog({ payload: newBlog }) {
     }
 }
 
-function* onUpdateBlog({ payload: {id,data} }) {
-    console.log(id ,data)
+function* onUpdateBlog({ payload: { id, data } }) {
     try {
-        const response = yield call(updateBlogAPI,id, data);
-        console.log(response);
-        yield put(putBlogSuccess(response));
+        const response = yield call(updateBlogAPI, id, data);
+        yield put(putBlogSuccess(id, response));
         toast.success('Update Blog Success', { autoClose: 3000 });
     } catch (error) {
         yield put(putBlogError(error));

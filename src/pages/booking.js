@@ -409,6 +409,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
         </div>
     );
 }
+
 function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
     const [bookingList, setBookingList] = useState([]);
 
@@ -458,7 +459,7 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
 
     return (
         <>
-            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
+            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
             <div className="booking-component">
                 <Booking
                     activeDate={validation.values.booking.checkinDate}

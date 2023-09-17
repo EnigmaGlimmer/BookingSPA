@@ -14,7 +14,7 @@ import moment from 'moment';
 import { useSearchParams } from 'react-router-dom';
 import { BlogOrderBy, BlogSearchBy } from '../../../api/enum';
 import ReactPaginate from 'react-paginate';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import './adminBlog.css';
 
 let blogSchema = yup.object().shape({
@@ -30,16 +30,18 @@ let blogSchema = yup.object().shape({
     metaDescription: yup.string().required('This field is require field'),
     createdDate: yup.date().required(),
 });
+
 let categorySchema = yup.object().shape({
     categoryName: yup.string().required('This field is require field'),
 });
+
 function AdminBlog() {
     const [searchParams] = useSearchParams();
-    const [createBlog,setCreateBlog] = useState({
+    const [createBlog, setCreateBlog] = useState({
         show: false,
-        activeIndex: null
+        activeIndex: null,
     });
-    const [take, setTake] = useState(5);
+    const [take, setTake] = useState(2);
     const [page, setPage] = useState(1);
     const [keyword, setKeyword] = useState('');
     const [orderBy, setOrderBy] = useState(BlogOrderBy.CreatedDate);
@@ -53,6 +55,7 @@ function AdminBlog() {
             categories: state?.Category?.category,
         };
     });
+
     React.useEffect(() => {
         let query = {
             skip: page,
@@ -69,26 +72,40 @@ function AdminBlog() {
             };
         }
         dispatch(getBlogList(query));
-    }, [searchParams, take, page, keyword]);
+    }, [searchParams, take, page, keyword, orderBy, searchBy]);
 
     return (
         <section>
-            <Button onClick={()=>setCreateBlog({show:true})}>Create New Blog</Button>
-            <CreateBlog itemId={false} onHide={()=>setCreateBlog({show:false})} show={createBlog?.show} blog={posts}></CreateBlog>
-            {posts?.map((item,index) => {
-                return(
-                    <div className='admin-blog my-5' key={index}>
-                        <Button 
-                            variant='warning'
+            <Button
+                onClick={() => setCreateBlog({ show: true })}
+                variant="outline"
+                className="btn-primary-outline mb-3"
+            >
+                + Create New Blog
+            </Button>
+            <CreateBlog
+                itemId={false}
+                onHide={() => setCreateBlog({ show: false })}
+                show={createBlog?.show}
+                blog={posts}
+            ></CreateBlog>
+            {posts?.map((item, index) => {
+                return (
+                    <div className="admin-blog mb-3" key={index}>
+                        <Button
+                            variant="warning"
                             onClick={() =>
                                 setCreateBlog({
                                     show: true,
                                     activeIndex: item?.blogId,
                                 })
                             }
-                        >Update</Button>
-                        <CreateBlog 
-                            itemId={item?.blogId} 
+                        >
+                            <AiFillEdit className="me-2"></AiFillEdit>
+                            Update
+                        </Button>
+                        <CreateBlog
+                            itemId={item?.blogId}
                             onHide={() =>
                                 setCreateBlog({
                                     show: false,
@@ -96,22 +113,30 @@ function AdminBlog() {
                                 })
                             }
                             blog={posts}
-                            show={createBlog?.show && createBlog?.activeIndex === item?.blogId}></CreateBlog>
-                        <div className='admin-blog-title'>{item?.articleTitle}</div>
-                        <div className='admin-blog-date'><b>Created Date:</b>{moment(item?.createdDate).format(' yyyy - MM - DD')}</div>
-                        <div className='admin-blog-img-form'>
-                            <img src={item?.presentedImage}/>
+                            show={createBlog?.show && createBlog?.activeIndex === item?.blogId}
+                        ></CreateBlog>
+                        <div className="admin-blog-img-form">
+                            <img src={item?.presentedImage} className="w-100" />
                         </div>
-                        <div className='admin-blog-content' dangerouslySetInnerHTML={{ __html: item?.articleContent }}></div>
-                        <div className='admin-blog-seo'>
-                            <span className='admin-blog-metaDescription'>{item?.metaDescription}</span>
-                            <span className='admin-blog-metaKeywords'>{item?.metaKeywords}</span>
-                            <span className='admin-blog-metaTitle'>{item?.metaTitle}</span>
+                        <div className="admin-blog-title">{item?.articleTitle}</div>
+                        <div className="admin-blog-date">
+                            <b>Posted:</b>
+                            <i>{moment(item?.createdDate).format(' yyyy - MM - DD')}</i>
+                        </div>
+                        <div
+                            className="admin-blog-content"
+                            dangerouslySetInnerHTML={{ __html: item?.articleContent }}
+                        ></div>
+                        <div className="admin-blog-seo">
+                            <label>SEO Title:</label>
+                            <span>{item?.metaTitle}</span>|<label>SEO Keywords:</label>
+                            <span>{item?.metaKeywords}</span>|<label>SEO Description:</label>
+                            <span>{item?.metaDescription}</span>
                         </div>
                     </div>
-                )
+                );
             })}
-            {/* <ReactPaginate
+            <ReactPaginate
                 previousLabel={<AiOutlineLeft></AiOutlineLeft>}
                 nextLabel={<AiOutlineRight></AiOutlineRight>}
                 pageCount={Math.ceil(totalPost / take)}
@@ -124,12 +149,12 @@ function AdminBlog() {
                 pageClassName="px-3"
                 disabledClassName={'pagination__link--disabled'}
                 activeClassName={'pagination-item-active'}
-            ></ReactPaginate> */}
+            ></ReactPaginate>
         </section>
     );
 }
 
-const CreateBlog = ({show,onHide,itemId,blog}) => {
+const CreateBlog = ({ show, onHide, itemId, blog }) => {
     const [demo, setDemo] = useState('');
     const [modal, setModal] = useState(false);
     const [showUploadModal, setShowUploadModal] = useState(false);
@@ -138,18 +163,14 @@ const CreateBlog = ({show,onHide,itemId,blog}) => {
     const { categories } = useSelector((state) => {
         return { categories: state?.Category?.category };
     });
-    const { uploads, error } = useSelector((state) => {
-        return {
-            uploads: state.Upload.uploads,
-            error: state.Upload.error,
-        };
-    });
-    const updateBlog = blog?.find(e => e.blogId === itemId)
+
+    const updateBlog = blog?.find((e) => e.blogId === itemId);
+
     React.useEffect(() => {
         dispatch(getCategoryList());
     }, [dispatch]);
-    return(
-        <Modal  
+    return (
+        <Modal
             className="container-fluid py-3"
             style={{ width: '100%', overflow: 'unset', background: 'none' }}
             show={show}
@@ -160,7 +181,7 @@ const CreateBlog = ({show,onHide,itemId,blog}) => {
                 <Modal.Title id="contained-modal-title-vcenter">{itemId ? 'Update Model' : 'Create Model'}</Modal.Title>
             </Modal.Header>
             <Modal.Body
-                    style={{
+                style={{
                     margin: '0 auto',
                     maxWidth: 'unset',
                     background: 'white',
@@ -174,39 +195,40 @@ const CreateBlog = ({show,onHide,itemId,blog}) => {
                     <Col sm="6">
                         <h3>Edit the content</h3>
                         <Formik
-                            initialValues={itemId ? 
-                                {
-                                articleTitle: updateBlog?.articleTitle,
-                                articleContent: {
-                                    value: updateBlog?.articleContent,
-                                },
-                                categories: updateBlog?.categories?.map(e => e.categoryId),
-                                presentedImage: updateBlog?.presentedImage,
-                                status: updateBlog?.status,
-                                metaKeywords: updateBlog?.metaKeywords,
-                                metaTitle: updateBlog?.metaTitle,
-                                metaDescription: updateBlog?.metaDescription,
-                                createdDate: moment(),
+                            initialValues={
+                                itemId
+                                    ? {
+                                          articleTitle: updateBlog?.articleTitle,
+                                          articleContent: {
+                                              value: updateBlog?.articleContent,
+                                          },
+                                          categories: updateBlog?.categories?.map((e) => e.categoryId),
+                                          presentedImage: updateBlog?.presentedImage,
+                                          status: updateBlog?.status,
+                                          metaKeywords: updateBlog?.metaKeywords,
+                                          metaTitle: updateBlog?.metaTitle,
+                                          metaDescription: updateBlog?.metaDescription,
+                                          createdDate: moment(),
+                                      }
+                                    : {
+                                          articleTitle: '',
+                                          articleContent: {
+                                              value: '',
+                                          },
+                                          categories: [],
+                                          presentedImage: '',
+                                          status: 0,
+                                          metaKeywords: '',
+                                          metaTitle: '',
+                                          metaDescription: '',
+                                          createdDate: moment(),
+                                      }
                             }
-                            :
-                            {
-                                articleTitle: '',
-                                articleContent: {
-                                    value: '',
-                                },
-                                categories: [],
-                                presentedImage: '',
-                                status: 0,
-                                metaKeywords: '',
-                                metaTitle: '',
-                                metaDescription: '',
-                                createdDate: moment(),
-                            }}
                             onSubmit={(values, formikHelper) => {
                                 formikHelper.setSubmitting(false);
-                                if(itemId){
-                                    dispatch(putBlog(itemId,values))
-                                }else{
+                                if (itemId) {
+                                    dispatch(putBlog(itemId, values));
+                                } else {
                                     dispatch(postBlog(values));
                                 }
                             }}
@@ -214,7 +236,6 @@ const CreateBlog = ({show,onHide,itemId,blog}) => {
                             {({ values, handleSubmit, handleChange, handleBlur, setFieldValue }) => {
                                 return (
                                     <Form onSubmit={handleSubmit}>
-                                        <pre>{JSON.stringify(values,4,4)}</pre>
                                         <Form.Group className="mb-3">
                                             <Form.Label className="mb-3">Title</Form.Label>
                                             <Form.Control
@@ -385,8 +406,8 @@ const CreateBlog = ({show,onHide,itemId,blog}) => {
                 </Row>
             </Modal.Body>
         </Modal>
-    )
-}
+    );
+};
 
 const Category = ({ show, hide }) => {
     const dispatch = useDispatch();

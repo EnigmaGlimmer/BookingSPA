@@ -65,11 +65,6 @@ function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to={{ pathname: '/service' }} className="link-text">
-                                    Services
-                                </Link>
-                            </li>
-                            <li>
                                 <Link to={{ pathname: '/promotion' }} className="link-text">
                                     Promotion
                                 </Link>
