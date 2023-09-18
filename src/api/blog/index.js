@@ -18,3 +18,7 @@ export const postBlog = (body, config) => {
 export const putBlog = (id, body, config) => {
     return api.put(`${url.PUT_BLOG}/${id}`, body);
 };
+
+export const deleteBlog = (id) => {
+    return api.delete(`${url.DELETE_BLOG}/${id}`);
+};

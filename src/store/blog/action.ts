@@ -85,13 +85,14 @@ export const putBlogError = (error) => ({
 
 // 4. Delete blog
 
-export const deleteBlog = () => ({
+export const deleteBlog = (id) => ({
     type: DELETE_BLOG,
+    payload: {id}
 });
 
-export const deleteBlogSuccess = (data) => ({
+export const deleteBlogSuccess = (id) => ({
     type: DELETE_BLOG_SUCCESS,
-    payload: data,
+    payload: {id},
 });
 
 export const deleteBlogError = (error) => ({

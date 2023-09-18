@@ -32,6 +32,7 @@ import { assignBooking, getBookingList } from '../api';
 // Helpers
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import useService from '../hooks/useServices';
 
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
@@ -303,10 +304,11 @@ export function Step1({ setStep, validation }) {
     );
 }
 function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
-    const { services } = useSelector((state) => {
-        return {
-            services: state.Service.services,
-        };
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 2,
+        },
     });
 
     return (
@@ -314,7 +316,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
             <div className="intro-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
-                        <img alt="intro" src={introBig} width={'100%'} />
+                        <img alt="intro" src={introBig} width={'100%'} loading="lazy" />
                     </div>
                     <div className="intro-img-small">
                         <img alt="intro" src={introSmall} width={'100%'} />

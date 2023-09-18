@@ -7,7 +7,7 @@ import { FieldArray, Formik, useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import { UploadModal } from '../../../components';
-import { getBlogList, getCategoryList, postBlog, postCategory, putBlog } from '../../../store/actions';
+import { deleteBlog, getBlogList, getCategoryList, postBlog, postCategory, putBlog } from '../../../store/actions';
 import { BiEdit } from 'react-icons/bi';
 import { FaTimes } from 'react-icons/fa';
 import moment from 'moment';
@@ -72,17 +72,13 @@ function AdminBlog() {
             };
         }
         dispatch(getBlogList(query));
-    }, [searchParams, take, page, keyword, orderBy, searchBy]);
-
+    }, [searchParams, take, page, keyword, searchBy, orderBy]);
+    const handleDeleteBlog = (id) => {
+        dispatch(deleteBlog(id));
+    };
     return (
         <section>
-            <Button
-                onClick={() => setCreateBlog({ show: true })}
-                variant="outline"
-                className="btn-primary-outline mb-3"
-            >
-                + Create New Blog
-            </Button>
+            <Button onClick={() => setCreateBlog({ show: true })}>Create New Blog</Button>
             <CreateBlog
                 itemId={false}
                 onHide={() => setCreateBlog({ show: false })}
@@ -91,19 +87,23 @@ function AdminBlog() {
             ></CreateBlog>
             {posts?.map((item, index) => {
                 return (
-                    <div className="admin-blog mb-3" key={index}>
-                        <Button
-                            variant="warning"
-                            onClick={() =>
-                                setCreateBlog({
-                                    show: true,
-                                    activeIndex: item?.blogId,
-                                })
-                            }
-                        >
-                            <AiFillEdit className="me-2"></AiFillEdit>
-                            Update
-                        </Button>
+                    <div className="admin-blog my-5" key={index}>
+                        <div className="admin-blog-btn-form">
+                            <Button
+                                variant="warning"
+                                onClick={() =>
+                                    setCreateBlog({
+                                        show: true,
+                                        activeIndex: item?.blogId,
+                                    })
+                                }
+                            >
+                                Update
+                            </Button>
+                            <Button variant="danger" onClick={() => handleDeleteBlog(item?.blogId)}>
+                                Delete
+                            </Button>
+                        </div>
                         <CreateBlog
                             itemId={item?.blogId}
                             onHide={() =>

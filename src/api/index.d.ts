@@ -89,7 +89,7 @@ export declare const getSingleBlog: (
 ) => Promise<APIListResponse<SingleBlog> | SingleBlog | string>;
 export declare const postBlog: (body: CreateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
 export declare const putBlog: (id:number,body: UpdateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
-
+export const deleteBlog: (id: number) => Promise<APIResponse<number>>;
 // 2. Comment
 export declare const getCommentList: (pagination) => Promise<APIResponse<CommentResponse>>;
 export declare const postComment: (

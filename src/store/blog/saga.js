@@ -3,12 +3,28 @@ import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-import { getSuccess, getError, postBlogSuccess, postBlogError, putBlogSuccess, putBlogError } from './action';
+import {
+    getSuccess,
+    getError,
+    postBlogSuccess,
+    postBlogError,
+    putBlogSuccess,
+    putBlogError,
+    deleteBlogSuccess,
+    deleteBlogError,
+} from './action';
 
-import { GET_BLOG_LIST, POST_BLOG, PUT_BLOG } from './actionType';
+import { DELETE_BLOG, GET_BLOG_LIST, POST_BLOG, PUT_BLOG } from './actionType';
 
 // API
-import { getBlogList as getBlogListAPI, postBlog as postBlogAPI, putBlog as updateBlogAPI } from '../../api';
+import {
+    BlogOrderBy,
+    BlogSearchBy,
+    getBlogList as getBlogListAPI,
+    postBlog as postBlogAPI,
+    putBlog as updateBlogAPI,
+    deleteBlog as deleteBlogAPI,
+} from '../../api';
 
 function* getBlogs({ payload }) {
     try {
@@ -48,6 +64,17 @@ function* onUpdateBlog({ payload: { id, data } }) {
     }
 }
 
+function* onDeleteBlog({ payload: { id } }) {
+    try {
+        yield call(deleteBlogAPI, id);
+        yield put(deleteBlogSuccess(id));
+        toast.success('Delete Blog Success', { autoClose: 3000 });
+    } catch (error) {
+        yield put(deleteBlogError(error));
+        toast.error('Delete Blog Failed', { autoClose: 3000 });
+    }
+}
+
 export function* watchGetBlogs() {
     yield takeEvery(GET_BLOG_LIST, getBlogs);
 }
@@ -60,8 +87,12 @@ export function* watchUpdateBlog() {
     yield takeEvery(PUT_BLOG, onUpdateBlog);
 }
 
+export function* watchDeleteBlog() {
+    yield takeEvery(DELETE_BLOG, onDeleteBlog);
+}
+
 function* blogsaga() {
-    yield all([fork(watchGetBlogs), fork(watchPostNewBlog), fork(watchUpdateBlog)]);
+    yield all([fork(watchGetBlogs), fork(watchPostNewBlog), fork(watchUpdateBlog), fork(watchDeleteBlog)]);
 }
 
 export default blogsaga;
