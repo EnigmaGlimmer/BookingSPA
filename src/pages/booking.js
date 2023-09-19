@@ -434,7 +434,8 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
             take: 31,
         })
             .then((response) => {
-                if (!Array.isArray(response)) {
+                console.log(response);
+                if (!Array.isArray(response?.list)) {
                     response.errors.forEach((msg) => {
                         toast.error(msg, {
                             autoClose: 3000,
@@ -444,12 +445,10 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
                     return;
                 }
 
-                console.log(response);
-
-                setBookingList(response);
+                setBookingList(response?.list);
 
                 setReversed(
-                    response.map((b) => {
+                    response?.list?.map?.((b) => {
                         const [start1, end1] = b.slot.start_Hour.split(':');
                         const [start2, end2] = b.slot.end_Hour.split(':');
 
@@ -467,7 +466,6 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
 
     return (
         <>
-            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             <div className="booking-component">
                 <Booking
                     activeDate={validation?.values?.booking?.checkinDate}
