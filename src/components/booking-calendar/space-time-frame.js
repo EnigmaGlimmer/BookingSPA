@@ -36,6 +36,7 @@ const SpaceTimeFrame = ({
                     return (
                         <span
                             className="space-time-button"
+                            data-selected={selected === key}
                             data-active={hasReserved}
                             key={key}
                             onClick={() => {

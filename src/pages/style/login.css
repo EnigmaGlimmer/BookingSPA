@@ -1,0 +1,14 @@
+.login-form {
+    width: 60%;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    transform: translateY(-10%);
+}
+.login-logo-img {
+    width: 50%;
+    margin: 0 auto;
+}

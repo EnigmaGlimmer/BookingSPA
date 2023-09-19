@@ -32,7 +32,7 @@ function* getBookings() {
             orderBy: 'CheckinDate',
             searchBy: 'None',
         });
-        yield put(getBookingSuccess(GET_BOOKING, Array.isArray(response) ? response : []));
+        yield put(getBookingSuccess(GET_BOOKING, Array.isArray(response?.list) ? response?.list : []));
     } catch (error) {
         yield put(getBookingError(GET_BOOKING, error));
     }

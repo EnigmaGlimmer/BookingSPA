@@ -28,15 +28,15 @@ function AdminBooking() {
                     <th>Actions</th>
                 </thead>
                 <tbody>
-                    {(bookings || []).map((booking) => {
+                    {(bookings || [])?.map((booking, index) => {
                         return (
-                            <tr>
-                                <td>{booking.bookingId}</td>
-                                <td>{booking.customers[0].customerEmail}</td>
-                                <td>{booking.customers[0].customerPhone}</td>
-                                <td>{moment(booking.checkinDate).format('yyyy-MM-DD')}</td>
+                            <tr key={index}>
+                                <td>{booking?.bookingId}</td>
+                                <td>{booking?.customers[0]?.customerEmail}</td>
+                                <td>{booking?.customers[0]?.customerPhone}</td>
+                                <td>{moment(booking?.checkinDate).format('yyyy-MM-DD')}</td>
                                 <td>
-                                    {booking.slot.start_Hour.slice(0, 5)} - {booking.slot.end_Hour.slice(0, 5)}
+                                    {booking?.slot.start_Hour?.slice(0, 5)} - {booking?.slot.end_Hour?.slice(0, 5)}
                                 </td>
                                 <td></td>
                             </tr>
