@@ -159,6 +159,7 @@ const StepComponent = ({ step, setStep }) => {
                         toast.success('Post successfully', {
                             autoClose: 3000,
                         });
+                        setStep(4);
                     }
                 })
                 .catch((error) => {
@@ -191,7 +192,8 @@ const StepComponent = ({ step, setStep }) => {
                         onChangeTimeStart={(time) => validation.setFieldValue('booking.slot.start_Hour', time)}
                         onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
                     ></Step3>
-                )) || <BookingCompleted></BookingCompleted>}
+                )) ||
+                (step === 4 && <BookingCompleted values={validation?.values}></BookingCompleted>)}
         </Form>
     );
 };
@@ -214,7 +216,7 @@ export function Step1({ setStep, validation }) {
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
 
-                <div className="intro-content-form">
+                <div className="intro-content-form mb-2">
                     <div>
                         <h2 className="intro-title">Your Information</h2>
                     </div>
@@ -336,6 +338,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                             <Button
                                 type="button"
                                 variant="outline"
+                                style={serviceChoice ? { background: 'var(--clr-primary-yellow)' } : {}}
                                 onClick={() => {
                                     setServiceChoice(true);
                                 }}
@@ -350,6 +353,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                                 onClick={() => {
                                     setServiceChoice(false);
                                 }}
+                                style={serviceChoice ? {} : { background: 'var(--clr-primary-yellow)' }}
                                 id="booking-nails-service"
                                 className="my-btn text-uppercase btn-primary-outline btn btn-outline"
                             >
@@ -360,8 +364,8 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                         <div className="booking-list-item">
                             {serviceChoice
                                 ? (services || [])
-                                      ?.find((service) => service.serviceName === 'Nail')
-                                      ?.childs?.map((item, index) => {
+                                      ?.find?.((service) => service.serviceName === 'Nail' || service.serviceId === 1)
+                                      ?.childs?.map?.((item, index) => {
                                           return (
                                               <div
                                                   className="booking-item-form"
@@ -377,7 +381,7 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                                           );
                                       })
                                 : (services || [])
-                                      ?.find((service) => service.serviceName === 'Lash')
+                                      ?.find((service) => service.serviceName === 'Lashes' || service.serviceId === 2)
                                       ?.childs?.map((item, index) => {
                                           return (
                                               <div
@@ -461,10 +465,10 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
 
     return (
         <>
-            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
+            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             <div className="booking-component">
                 <Booking
-                    activeDate={validation.values.booking.checkinDate}
+                    activeDate={validation?.values?.booking?.checkinDate}
                     initialTimeRange={[
                         ['08:30', '09:30'],
                         ['09:30', '10:30'],
@@ -510,7 +514,13 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
         </>
     );
 }
-function BookingCompleted() {
+function BookingCompleted({ values }) {
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+        },
+    });
     return (
         <div className="completed">
             <h1 className="completed-title">Great and Thanks a lot!</h1>
@@ -522,27 +532,27 @@ function BookingCompleted() {
                 <div className="completed-item-form">
                     <div className="completed-item">
                         <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
+                        <div className="completed-item-content">
+                            {services?.find((e) => e.serviceId === values.booking.serviceId)?.serviceName}
+                        </div>
                     </div>
                     <div className="completed-item">
-                        <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
+                        <div className="completed-item-name">Date</div>
+                        <div className="completed-item-content">{values?.booking?.checkinDate}</div>
                     </div>
                     <div className="completed-item">
-                        <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
+                        <div className="completed-item-name">Time</div>
+                        <div className="completed-item-content">
+                            {values?.booking?.slot?.start_Hour} - {values?.booking?.slot?.end_Hour}
+                        </div>
                     </div>
                     <div className="completed-item">
-                        <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
+                        <div className="completed-item-name">Name</div>
+                        <div className="completed-item-content">{values?.customer?.customerName}</div>
                     </div>
                     <div className="completed-item">
-                        <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
-                    </div>
-                    <div className="completed-item">
-                        <div className="completed-item-name">Services</div>
-                        <div className="completed-item-content">Nails Services</div>
+                        <div className="completed-item-name">Phone</div>
+                        <div className="completed-item-content">{values?.customer?.customerPhone}</div>
                     </div>
                 </div>
                 <div className="completed-mess">
@@ -556,7 +566,9 @@ function BookingCompleted() {
                 </div>
                 <span className="completed-total-fee">
                     <span className="completed-total-fee-title">Your service has a price</span>
-                    <span className="completed-total-price">18$</span>
+                    <span className="completed-total-price">
+                        {services?.find((e) => e.serviceId === values.booking.serviceId)?.price}$
+                    </span>
                 </span>
             </div>
         </div>

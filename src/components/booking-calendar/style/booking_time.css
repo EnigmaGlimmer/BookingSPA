@@ -30,6 +30,9 @@
     opacity: 0.5;
     user-select: none;
 }
+.space-time-button[data-selected='true'] {
+    background-color: var(--clr-primary-yellow);
+}
 .space-time-info {
     margin: 10px 20px;
     margin-bottom: 0;

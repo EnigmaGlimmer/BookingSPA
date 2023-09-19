@@ -16,6 +16,9 @@ function AdminNavbar() {
                 <Navbar.Brand href="#">
                     <Logo></Logo>
                 </Navbar.Brand>
+                <Button variant="outline" onClick={() => localStorage.setItem('signin', false)}>
+                    Log out
+                </Button>
                 {/* <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} /> */}
                 {/* <Navbar.Offcanvas
                     id={`offcanvasNavbar-expand-lg`}

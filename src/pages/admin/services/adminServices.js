@@ -576,6 +576,7 @@ function UpdateService({ show, onHide, serviceId }) {
                             <Form.Label>Service Price</Form.Label>
                             <Form.Control
                                 name="price"
+                                type="number"
                                 placeholder="Enter service price"
                                 value={values?.price}
                                 isInvalid={touched.price && errors.price}

@@ -134,6 +134,11 @@
     justify-content: space-between;
     border-bottom: 1px solid black;
     padding: 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.booking-item-form:hover {
+    background-color: var(--clr-secondary-light);
 }
 #booking-nails-service:hover {
 }
@@ -146,9 +151,21 @@
     .booking-process {
         margin-top: 0vh;
     }
+    .intro-content-form {
+        width: 70%;
+    }
+    .completed {
+        width: 60%;
+    }
 }
 @media only screen and (max-width: 576px) {
     .booking-process {
         margin-top: 30vh;
+    }
+    .intro-form {
+        gap: 30px;
+    }
+    .completed {
+        width: 80%;
     }
 }
