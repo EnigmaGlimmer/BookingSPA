@@ -26,6 +26,8 @@ export const assignBooking = (customer, booking) => {
                 customerId: newCustomer.customerId,
             };
 
+            console.log(newCustomer, submitBooking);
+
             return postBooking(submitBooking);
         });
 };

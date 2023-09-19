@@ -68,6 +68,8 @@ function ContactInformation() {
             facebook: contact?.facebook || 'facebook.com@littlespa',
             instagram: contact?.instagram || 'sdkodfosdjf',
             whatsapp: contact?.whatsapp || '2543534543',
+            latitude: contact?.latitude || '',
+            longitude: contact?.longitude || '',
         },
         enableReinitialize: true,
         onSubmit: (values) => {
@@ -143,6 +145,32 @@ function ContactInformation() {
                             isInvalid={touched.whatsapp && !!errors?.whatsapp}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.whatsapp}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Latitude</Form.Label>
+                        <Form.Control
+                            name="latitude"
+                            value={values.latitude}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.latitude && !!errors?.latitude}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.latitude}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Longitude</Form.Label>
+                        <Form.Control
+                            name="longitude"
+                            value={values.longitude}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.longitude && !!errors?.longitude}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.longitude}</Form.Control.Feedback>
                     </Form.Group>
                 </li>
             </ul>

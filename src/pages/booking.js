@@ -91,7 +91,7 @@ function BookingPage() {
 const StepComponent = ({ step, setStep }) => {
     const [serviceChoice, setServiceChoice] = React.useState(null);
 
-    const { services, booking, newBooking, customers, newCustomer } = useSelector((state) => {
+    const { newCustomer } = useSelector((state) => {
         return {
             services: state.Service.services,
             booking: state.Booking?.booking,
@@ -443,6 +443,8 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
 
                     return;
                 }
+
+                console.log(response);
 
                 setBookingList(response);
 
