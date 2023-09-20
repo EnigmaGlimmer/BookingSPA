@@ -35,6 +35,7 @@ import BookingPage from './booking';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/settings/action';
 import { getService } from '../store/actions';
+import { Link } from 'react-router-dom';
 
 function Home() {
     document.title = 'Little Daisy - Home';
@@ -208,9 +209,11 @@ function Home() {
                             </div>
                             <div>
                                 <div className="btn-frame-dark">
-                                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
-                                        Book Now
-                                    </button>
+                                    <Link to="/booking" className="link-text">
+                                        <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
+                                            Book Now
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -243,9 +246,11 @@ function Home() {
                             </div>
                             <div>
                                 <div className="btn-frame-dark">
-                                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
-                                        Book Now
-                                    </button>
+                                    <Link to="/booking" className="link-text">
+                                        <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
+                                            Book Now
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
