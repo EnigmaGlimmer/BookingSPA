@@ -16,3 +16,7 @@
 #copyright {
     background-color: var(--clr-darker-background);
 }
+
+.footer-icon {
+    font-size: 35px;
+}

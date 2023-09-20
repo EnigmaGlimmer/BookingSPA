@@ -34,7 +34,6 @@ import BookingPage from './booking';
 // import home from '../config/content/home.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/settings/action';
-import { getService } from '../store/actions';
 import { Link } from 'react-router-dom';
 import useService from '../hooks/useServices';
 
@@ -221,7 +220,9 @@ function Home() {
                                                 {/* <p>{item.price}$</p> */}
                                                 <p>{item.price}$</p>
                                                 <div className="other-item-explain">
-                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">
+                                                        <b>{item?.serviceName}</b>
+                                                    </div>
                                                     <div className="mb-1">{item?.duration}</div>
                                                     <div className="mb-1">{item?.description}</div>
                                                 </div>
@@ -262,7 +263,9 @@ function Home() {
                                                 <div className="other-list-dashed"></div>
                                                 <p>{item.price}$</p>
                                                 <div className="other-item-explain">
-                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">
+                                                        <b>{item?.serviceName}</b>
+                                                    </div>
                                                     <div className="mb-1">{item?.duration}</div>
                                                     <div className="mb-1">{item?.description}</div>
                                                 </div>
@@ -390,6 +393,7 @@ function Home() {
                                                         src={item?.image || reviewUser}
                                                         alt="Service"
                                                         width={'100%'}
+                                                        height={'100%'}
                                                         loading="lazy"
                                                     />
                                                 </div>
@@ -437,6 +441,7 @@ function Home() {
                                                         src={item?.image || reviewUser}
                                                         alt="Service"
                                                         width={'100%'}
+                                                        height={'100%'}
                                                         loading="lazy"
                                                     />
                                                 </div>

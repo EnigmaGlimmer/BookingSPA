@@ -17,6 +17,7 @@ import * as DOMPurify from 'dompurify';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/actions';
+import { Link } from 'react-router-dom';
 
 export default function About() {
     document.title = 'Little Daisy - About';
@@ -222,12 +223,14 @@ export default function About() {
                 </div>
                 <div className="about-booking-content">
                     <div className="about-booking-title">{about?.bookingAbout?.title}</div>
-                    <Button
-                        variant="outline"
-                        className="my-btn text-uppercase btn-primary-outline btn btn-outline me-2"
-                    >
-                        Book Now
-                    </Button>
+                    <Link to={'/booking'}>
+                        <Button
+                            variant="outline"
+                            className="my-btn text-uppercase btn-primary-outline btn btn-outline me-2"
+                        >
+                            Book Now
+                        </Button>
+                    </Link>
                 </div>
             </div>
         </section>

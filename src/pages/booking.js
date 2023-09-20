@@ -65,7 +65,7 @@ function BookingPage() {
         <div className="intro my-5">
             <StepComponent step={step} setStep={setStep}></StepComponent>
             {/* Booking Process */}
-            <div className="booking-process">
+            <div className={`booking-process`}>
                 <div className="booking-process-form">
                     <div className="booking-process-line"></div>
                     <div className="booking-step-form">
@@ -345,7 +345,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                 </div>
                 <div className="intro-content-form">
                     <div>
-                        <h2 className="intro-title">Your Information</h2>
+                        <h2 className="intro-title">Your Booking</h2>
                     </div>
                     <div className="booking-input-item">
                         <div className="booking-form-input">
@@ -407,7 +407,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                         <Button
                             type="button"
                             variant="outline"
-                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
+                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4 my-3"
                             onClick={() => setStep(3)}
                         >
                             Next
@@ -416,7 +416,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                     <Button
                         type="button"
                         variant="outline"
-                        className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
+                        className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5 mx-4 my-3"
                         onClick={() => setStep(1)}
                     >
                         Back
@@ -438,7 +438,13 @@ function Step3({
 }) {
     const [selectedDate, setSelectedDate] = useState();
     const [reservedTimeRange, setReversed] = useState([]);
-
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+            flat: 0,
+        },
+    });
     useEffect(() => {
         let searchBy = 'Date';
         let keyword = moment(selectedDate).format('DD/MM/YYYY');
@@ -477,8 +483,7 @@ function Step3({
             .catch((error) => {
                 toast.error(error);
             });
-    }, [selectedDate, valueServiceId]);
-
+    }, [selectedDate, valueServiceId, services]);
     return (
         <>
             <div className="booking-component">
@@ -508,15 +513,27 @@ function Step3({
                     }}
                 ></Booking>
             </div>
+            <div className="booking-service-description">
+                <div className="mb-2">
+                    <b>
+                        {
+                            services
+                                ?.map((item) => item?.childs?.find((e) => e.serviceId === valueServiceId))
+                                ?.find((item) => item !== undefined)?.serviceName
+                        }
+                    </b>
+                </div>
+                <div>
+                    <div>
+                        {
+                            services
+                                ?.map((item) => item?.childs?.find((e) => e.serviceId === valueServiceId))
+                                ?.find((item) => item !== undefined)?.description
+                        }
+                    </div>
+                </div>
+            </div>
             <div className="booking-component-button-done">
-                <Button
-                    type="submit"
-                    variant="outline"
-                    className="my-btn text-uppercase px-5  btn-primary-outline btn btn-outline"
-                    // onClick={() => validation.handleSubmit()}
-                >
-                    Done
-                </Button>
                 <Button
                     type="button"
                     variant="outline"
@@ -524,6 +541,14 @@ function Step3({
                     onClick={() => setStep(2)}
                 >
                     Back
+                </Button>
+                <Button
+                    type="submit"
+                    variant="outline"
+                    className="my-btn text-uppercase px-5  btn-primary-outline btn btn-outline"
+                    // onClick={() => validation.handleSubmit()}
+                >
+                    Done
                 </Button>
             </div>
         </>

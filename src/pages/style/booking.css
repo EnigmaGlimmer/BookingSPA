@@ -140,6 +140,11 @@
 .booking-item-form:hover {
     background-color: var(--clr-secondary-light);
 }
+.booking-service-description {
+    width: 25vw;
+    margin: 0 auto;
+    padding: 30px;
+}
 #booking-nails-service:hover {
 }
 @media only screen and (min-width: 2200px) {

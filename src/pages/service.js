@@ -12,7 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 import service from '../config/content/service.json';
 import useService from '../hooks/useServices';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 // DOMPurify
 import * as DOMPurify from 'dompurify';
@@ -157,7 +157,9 @@ function Service() {
                 </div>
                 <div className="about-booking-content">
                     <div className="about-booking-title">{service?.serviceBooking?.title}</div>
-                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
+                    <Link to={'/booking'}>
+                        <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
+                    </Link>
                 </div>
             </div>
         </div>
