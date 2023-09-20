@@ -1,6 +1,7 @@
 import React from 'react';
 // PropTypes
 import './style/booking_time.css';
+import { toast } from 'react-toastify';
 
 const SpaceTimeFrame = ({
     initialSpaceTimes = [
@@ -12,7 +13,7 @@ const SpaceTimeFrame = ({
         {
             startTime: '1:00pm',
             endTime: '2:00pm',
-            isEnable: true,
+            isAllowed: true,
         },
     ],
     onChangeTimeStart,
@@ -29,11 +30,11 @@ const SpaceTimeFrame = ({
             </div>
             <div className="space-time-content">
                 {initialSpaceTimes.map((space, key) => {
-                    const hasReserved = reserved.some(({ startTime, endTime, isEnable }) => {
+                    const hasReserved = reserved.some(({ startTime, endTime, isAllowed }) => {
                         const start = space[0];
                         const end = space[1];
 
-                        return start === startTime && endTime === end && isEnable;
+                        return start === startTime && endTime === end && !isAllowed;
                     });
 
                     return (
@@ -43,7 +44,12 @@ const SpaceTimeFrame = ({
                             data-active={hasReserved}
                             key={key}
                             onClick={() => {
-                                if (hasReserved) return;
+                                if (hasReserved) {
+                                    toast.error('This has been reserved', {
+                                        autoClose: 3000,
+                                    });
+                                    return;
+                                }
 
                                 setSelected(key);
 

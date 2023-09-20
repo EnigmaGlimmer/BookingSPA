@@ -10,7 +10,7 @@ import {
 
 // 1. Get blog list
 
-export const getSettingList = (page) => {
+export const getSettingList = (page: SettingType) => {
     return {
         type: GET_SETTING_LIST,
         payload: {
