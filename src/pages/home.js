@@ -365,7 +365,12 @@ function Home() {
                                         {({ isActive }) => (
                                             <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
                                                 <div className="review-img">
-                                                    <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
+                                                    <img
+                                                        src={item?.image || reviewUser}
+                                                        alt="Service"
+                                                        width={'100%'}
+                                                        loading="lazy"
+                                                    />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
                                                 <div className="review-content">{item?.content}</div>
@@ -402,7 +407,12 @@ function Home() {
                                         {({ isActive }) => (
                                             <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
                                                 <div className="review-img">
-                                                    <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
+                                                    <img
+                                                        src={item?.image || reviewUser}
+                                                        alt="Service"
+                                                        width={'100%'}
+                                                        loading="lazy"
+                                                    />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
                                                 <div className="review-content">{item?.content}</div>
