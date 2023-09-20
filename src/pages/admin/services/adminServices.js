@@ -125,7 +125,7 @@ function AdminServices() {
                         <Form.Label>Service Duration</Form.Label>
                         <Form.Control
                             name="duration"
-                            placeholder="Enter service price"
+                            placeholder="Enter service duration"
                             isInvalid={touched.duration && errors.duration}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -137,7 +137,7 @@ function AdminServices() {
                         <Form.Label>Service Description</Form.Label>
                         <Form.Control
                             name="description"
-                            placeholder="Enter service price"
+                            placeholder="Enter service description"
                             isInvalid={touched.description && errors.description}
                             onChange={handleChange}
                             onBlur={handleBlur}

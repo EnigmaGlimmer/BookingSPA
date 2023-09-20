@@ -351,7 +351,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                 </div>
                 <div className="intro-content-form">
                     <div>
-                        <h2 className="intro-title">Your Information</h2>
+                        <h2 className="intro-title">Your Booking</h2>
                     </div>
                     <div className="booking-input-item">
                         <div className="booking-form-input">
