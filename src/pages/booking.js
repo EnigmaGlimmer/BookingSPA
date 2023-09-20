@@ -65,7 +65,7 @@ function BookingPage() {
         <div className="intro my-5">
             <StepComponent step={step} setStep={setStep}></StepComponent>
             {/* Booking Process */}
-            <div className={`booking-process`}>
+            <div className={`booking-process ${step === 2 ? 'my-4' : ''}`}>
                 <div className="booking-process-form">
                     <div className="booking-process-line"></div>
                     <div className="booking-step-form">
