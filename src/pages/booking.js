@@ -169,7 +169,6 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            <pre>{JSON.stringify(validation?.values, 4, 4)}</pre>
             {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2
@@ -189,6 +188,7 @@ const StepComponent = ({ step, setStep }) => {
                         setStep={setStep}
                         validation={validation}
                         valueCheckinDate={validation?.values?.booking?.checkinDate}
+                        valueServiceId={validation?.values?.booking?.serviceId}
                         parentServiceId={validation?.values?.parentServiceId}
                         onChangeDate={(date) => {
                             const value = moment(date).format('YYYY-MM-DD');
@@ -433,7 +433,15 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
     );
 }
 
-function Step3({ setStep, valueCheckinDate, parentServiceId, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
+function Step3({
+    setStep,
+    valueCheckinDate,
+    valueServiceId,
+    parentServiceId,
+    onChangeDate,
+    onChangeTimeStart,
+    onChangeTimeEnd,
+}) {
     const [selectedDate, setSelectedDate] = useState();
     const [reservedTimeRange, setReversed] = useState([]);
 
@@ -467,7 +475,7 @@ function Step3({ setStep, valueCheckinDate, parentServiceId, onChangeDate, onCha
                         return {
                             startTime: [start1, end1].join(':'),
                             endTime: [start2, end2].join(':'),
-                            isEnable: b.serviceId === parentServiceId,
+                            isAllowed: b.serviceId !== valueServiceId,
                         };
                     }),
                 );
@@ -475,7 +483,7 @@ function Step3({ setStep, valueCheckinDate, parentServiceId, onChangeDate, onCha
             .catch((error) => {
                 toast.error(error);
             });
-    }, [selectedDate, parentServiceId]);
+    }, [selectedDate, valueServiceId]);
 
     return (
         <>

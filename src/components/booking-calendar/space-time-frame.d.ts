@@ -1,6 +1,10 @@
 interface SpaceTimeFrameProps {
     initialSpaceTimes: [string, string][];
-    reserved: [string, string][];
+    reserved: {
+        startTime: string;
+        endTime: string;
+        isAllowed: boolean;
+    }[];
     onChangeTimeStart: (timeStart) => void;
     onChangeTimeEnd: (timeEnd) => void;
 }

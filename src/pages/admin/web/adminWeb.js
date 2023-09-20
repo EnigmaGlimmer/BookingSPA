@@ -4,7 +4,7 @@ import React from 'react';
 import { Button, Col, Dropdown, Form, Modal, Row } from 'react-bootstrap';
 import { Home, About, BookingPage, Promotion } from '../..';
 
-import { useFormik } from 'formik';
+import { FieldArray, Formik, FormikProvider, useFormik } from 'formik';
 import * as yup from 'yup';
 
 import { Link, useSearchParams, createSearchParams } from 'react-router-dom';
@@ -331,21 +331,14 @@ function EditTool({ sectionName, page, show, onHide }) {
     const { content } = useSelector((state) => ({
         content: state.Setting?.setting?.content?.[page],
     }));
-    const { handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue } = useFormik({
+    const validation = useFormik({
         initialValues: {
             title: content?.[sectionName]?.title,
             subtitle: content?.[sectionName]?.subtitle,
             content: content?.[sectionName]?.content,
-            child: [
-                {
-                    title: content?.[sectionName]?.child?.title,
-                    subtitle: content?.[sectionName]?.child?.subtitle,
-                    content: content?.[sectionName]?.child?.content,
-                    image: content?.[sectionName]?.child?.image,
-                },
-            ],
             images: content?.[sectionName]?.images || [],
             childImage: content?.[sectionName]?.childImage || [],
+            child: content?.[sectionName]?.child || [],
         },
         onSubmit: (values, formikHelper) => {
             formikHelper.setSubmitting(false);
@@ -362,6 +355,9 @@ function EditTool({ sectionName, page, show, onHide }) {
         },
         enableReinitialize: true,
     });
+
+    const { handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue } = validation;
+
     // Handle Images
     const [uploadModal, setUploadModal] = React.useState(false);
     const [uploadModalChild, setUploadModalChild] = React.useState(false);
@@ -387,246 +383,263 @@ function EditTool({ sectionName, page, show, onHide }) {
                     maxHeight: '75vh',
                 }}
             >
-                <Form onSubmit={handleSubmit} className="edit-form-content">
-                    <h4>
-                        #{sectionName} - {page}
-                    </h4>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control
-                            name={`title`}
-                            value={values.title}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            isInvalid={touched?.title && !!errors?.title}
-                        ></Form.Control>
-                        <Form.Control.Feedback type="invalid">{errors?.title}</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Subtitle</Form.Label>
-                        <Form.Control
-                            name={`subtitle`}
-                            value={values.subtitle}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            isInvalid={touched?.subtitle && !!errors?.subtitle}
-                        ></Form.Control>
-                        <Form.Control.Feedback type="invalid">{errors?.subtitle}</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <Form.Label>Content</Form.Label>
-                        <Form.Control
-                            name={`content`}
-                            as="textarea"
-                            value={values.content}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            isInvalid={touched?.content && !!errors?.content}
-                        ></Form.Control>
-                        <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <div className="py-4">
-                            <div className="admin-image-form-title">Image</div>
-                            <Button variant="success" onClick={() => setUploadModal(true)}>
-                                Upload your image
-                            </Button>
-                            <UploadModal
-                                show={uploadModal}
-                                onSave={(hasShown) => {}}
-                                onSelected={(selected) => {}}
-                                selected={''}
-                                onHide={() => {
-                                    setUploadModal(false);
-                                }}
-                                onCopyLink={(link) => {
-                                    setFieldValue('images', [...values.images, link]);
-                                    setUploadModal(false);
-                                }}
-                            ></UploadModal>
-                            <div className="admin-images-form">
-                                {values?.images?.map((item, index) => {
-                                    return (
-                                        <div style={{ textAlign: 'right' }} key={index}>
-                                            <FaTimes
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={() => {
-                                                    setFieldValue(
-                                                        'images',
-                                                        values.images.filter((e) => e !== values.images[index]),
-                                                    );
-                                                }}
-                                            ></FaTimes>
-                                            <img src={item} width={'100%'} />;
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                        <div className="py-4">
-                            <div className="admin-image-form-title">Child Image</div>
-                            <Button variant="success" onClick={() => setUploadModalChild(true)}>
-                                Upload your child images
-                            </Button>
-                            <UploadModal
-                                show={uploadModalChild}
-                                onSave={(hasShown) => {}}
-                                onSelected={(selected) => {}}
-                                selected={''}
-                                onHide={() => {
-                                    setUploadModalChild(false);
-                                }}
-                                onCopyLink={(link) => {
-                                    setFieldValue('childImage', [...values.childImage, link]);
-                                    setUploadModalChild(false);
-                                }}
-                            ></UploadModal>
-                            <div className="admin-images-form">
-                                {values?.childImage?.map((item, index) => {
-                                    return (
-                                        <div style={{ textAlign: 'right' }} key={index}>
-                                            <FaTimes
-                                                style={{ cursor: 'pointer' }}
-                                                onClick={() => {
-                                                    setFieldValue(
-                                                        'childImage',
-                                                        values.childImage.filter((e) => e !== values.childImage[index]),
-                                                    );
-                                                }}
-                                            ></FaTimes>
-                                            <img src={item} width={'100%'} />;
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label className="admin-image-form-title">Child Content</Form.Label>
-                        <BiAddToQueue
-                            style={{ margin: '0 10px', cursor: 'pointer', fontSize: '20px' }}
-                            onClick={() =>
-                                setFieldValue('child', [
-                                    ...values.child,
-                                    { title: '', subtitle: '', content: '', image: '' },
-                                ])
-                            }
-                        ></BiAddToQueue>
-
-                        <Swiper
-                            pagination={{
-                                type: 'fraction',
-                            }}
-                            cssMode={true}
-                            allowSlideNext={true}
-                            allowSlidePrev={true}
-                            mousewheel={true}
-                            navigation={true}
-                            keyboard={true}
-                            modules={[Pagination, Navigation, Mousewheel, Keyboard]}
-                            className="mySwiper"
-                            name="child"
-                        >
-                            {values?.child?.map((item, index) => {
-                                return (
-                                    <SwiperSlide key={index} className="child-content-swiper">
-                                        <Form.Group>
-                                            <Form.Label>Title</Form.Label>
-                                            <Form.Control
-                                                name={`child[${index}].title`}
-                                                value={item?.title}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                isInvalid={touched?.item?.title && !!errors?.item?.title}
-                                            ></Form.Control>
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors?.item?.title}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                        <Form.Group>
-                                            <Form.Label>Subtitle</Form.Label>
-                                            <Form.Control
-                                                name={`child[${index}].subtitle`}
-                                                value={item?.subtitle}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                isInvalid={touched?.item?.subtitle && !!errors?.item?.subtitle}
-                                            ></Form.Control>
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors?.item?.subtitle}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                        <Form.Group>
-                                            <Form.Label>Content</Form.Label>
-                                            <Form.Control
-                                                name={`child[${index}].content`}
-                                                as="textarea"
-                                                value={item?.content}
-                                                onChange={handleChange}
-                                                onBlur={handleBlur}
-                                                isInvalid={touched?.item?.content && !!errors?.item?.content}
-                                            ></Form.Control>
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors?.item?.content}
-                                            </Form.Control.Feedback>
-                                        </Form.Group>
-                                        <div className="py-4">
-                                            <div className="">Image</div>
-                                            <Button variant="success" onClick={() => setUploadModalChildImage(true)}>
-                                                Upload your image
-                                            </Button>
-                                            <UploadModal
-                                                show={uploadModalChildImage}
-                                                onSave={(hasShown) => {}}
-                                                onSelected={(selected) => {}}
-                                                selected={''}
-                                                onHide={() => {
-                                                    setUploadModalChildImage(false);
-                                                }}
-                                                onCopyLink={(link) => {
-                                                    setFieldValue(`child[${index}].image`, link);
-                                                    setUploadModalChildImage(false);
-                                                    console.log(index);
-                                                }}
-                                            ></UploadModal>
-                                            <div className="admin-images-form">
-                                                <div style={{ textAlign: 'right' }}>
-                                                    {item.image ? (
-                                                        <FaTimes
-                                                            style={{ cursor: 'pointer' }}
-                                                            // onClick={() => {
-                                                            //     setFieldValue(
-                                                            //         `child[${index}].image`,''),
-                                                            //     );
-                                                            // }}
-                                                            onClick={() => {
-                                                                setFieldValue(`child[${index}].image`, '');
-                                                            }}
-                                                        ></FaTimes>
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    {values?.child?.[index]?.image ? (
-                                                        <img
-                                                            key={index}
-                                                            src={values.child[index].image}
-                                                            width={'100%'}
-                                                        />
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                </div>
+                <FormikProvider value={validation}>
+                    <Form onSubmit={handleSubmit} className="edit-form-content">
+                        <h4>
+                            #{sectionName} - {page}
+                        </h4>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                name={`title`}
+                                value={values.title}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={touched?.title && !!errors?.title}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.title}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Subtitle</Form.Label>
+                            <Form.Control
+                                name={`subtitle`}
+                                value={values.subtitle}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={touched?.subtitle && !!errors?.subtitle}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.subtitle}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Content</Form.Label>
+                            <Form.Control
+                                name={`content`}
+                                as="textarea"
+                                value={values.content}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                isInvalid={touched?.content && !!errors?.content}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <div className="py-4">
+                                <div className="admin-image-form-title">Image</div>
+                                <Button variant="success" onClick={() => setUploadModal(true)}>
+                                    Upload your image
+                                </Button>
+                                <UploadModal
+                                    show={uploadModal}
+                                    onSave={(hasShown) => {}}
+                                    onSelected={(selected) => {}}
+                                    selected={''}
+                                    onHide={() => {
+                                        setUploadModal(false);
+                                    }}
+                                    onCopyLink={(link) => {
+                                        setFieldValue('images', [...values.images, link]);
+                                        setUploadModal(false);
+                                    }}
+                                ></UploadModal>
+                                <div className="admin-images-form">
+                                    {values?.images?.map((item, index) => {
+                                        return (
+                                            <div style={{ textAlign: 'right' }} key={index}>
+                                                <FaTimes
+                                                    style={{ cursor: 'pointer' }}
+                                                    onClick={() => {
+                                                        setFieldValue(
+                                                            'images',
+                                                            values.images.filter((e) => e !== values.images[index]),
+                                                        );
+                                                    }}
+                                                ></FaTimes>
+                                                <img src={item} width={'100%'} />;
                                             </div>
-                                        </div>
-                                    </SwiperSlide>
-                                );
-                            })}
-                        </Swiper>
-                    </Form.Group>
-                    <Button type="submit" variant="primary" className="my-4">
-                        Submit
-                    </Button>
-                </Form>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                            <div className="py-4">
+                                <div className="admin-image-form-title">Child Image</div>
+                                <Button variant="success" onClick={() => setUploadModalChild(true)}>
+                                    Upload your child images
+                                </Button>
+                                <UploadModal
+                                    show={uploadModalChild}
+                                    onSave={(hasShown) => {}}
+                                    onSelected={(selected) => {}}
+                                    selected={''}
+                                    onHide={() => {
+                                        setUploadModalChild(false);
+                                    }}
+                                    onCopyLink={(link) => {
+                                        setFieldValue('childImage', [...values.childImage, link]);
+                                        setUploadModalChild(false);
+                                    }}
+                                ></UploadModal>
+                                <div className="admin-images-form">
+                                    {values?.childImage?.map((item, index) => {
+                                        return (
+                                            <div style={{ textAlign: 'right' }} key={index}>
+                                                <FaTimes
+                                                    style={{ cursor: 'pointer' }}
+                                                    onClick={() => {
+                                                        setFieldValue(
+                                                            'childImage',
+                                                            values.childImage.filter(
+                                                                (e) => e !== values.childImage[index],
+                                                            ),
+                                                        );
+                                                    }}
+                                                ></FaTimes>
+                                                <img src={item} width={'100%'} />;
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </Form.Group>
+                        <FieldArray name="child">
+                            {(arrayHelpers) => (
+                                <Form.Group>
+                                    <pre>values: {JSON.stringify(values.child, 4, 4)}</pre>
+                                    <Form.Label className="admin-image-form-title">Child Content</Form.Label>
+
+                                    <BiAddToQueue
+                                        style={{ margin: '0 10px', cursor: 'pointer', fontSize: '20px' }}
+                                        onClick={() => {
+                                            arrayHelpers.push({
+                                                title: '',
+                                                subtitle: '',
+                                                content: '',
+                                                image: '',
+                                            });
+                                        }}
+                                    ></BiAddToQueue>
+                                    <Swiper
+                                        pagination={{
+                                            type: 'fraction',
+                                        }}
+                                        cssMode={true}
+                                        allowSlideNext={true}
+                                        allowSlidePrev={true}
+                                        mousewheel={true}
+                                        navigation={true}
+                                        keyboard={true}
+                                        modules={[Pagination, Navigation, Mousewheel, Keyboard]}
+                                        className="mySwiper"
+                                        name="child"
+                                    >
+                                        {values?.child?.map((item, index) => {
+                                            return (
+                                                <SwiperSlide key={index} className="child-content-swiper">
+                                                    <Form.Group>
+                                                        <Form.Label>Title</Form.Label>
+                                                        <Form.Control
+                                                            name={`child.${index}.title`}
+                                                            value={item?.title}
+                                                            // onChange={handleChange}
+                                                            // onBlur={handleBlur}
+                                                            isInvalid={
+                                                                touched?.child?.[index]?.title &&
+                                                                !!errors?.child?.[index]?.title
+                                                            }
+                                                        ></Form.Control>
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors?.child?.[index]?.title}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                    <Form.Group>
+                                                        <Form.Label>Subtitle</Form.Label>
+                                                        <Form.Control
+                                                            name={`child.${index}.subtitle`}
+                                                            value={item?.subtitle}
+                                                            // onChange={handleChange}
+                                                            // onBlur={handleBlur}
+                                                            isInvalid={
+                                                                touched?.child?.[index]?.subtitle &&
+                                                                !!errors?.child?.[index]?.subtitle
+                                                            }
+                                                        ></Form.Control>
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors?.child?.[index]?.subtitle}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                    <Form.Group>
+                                                        <Form.Label>Content</Form.Label>
+                                                        <Form.Control
+                                                            name={`child.${index}.content`}
+                                                            as="textarea"
+                                                            value={item?.content}
+                                                            // onChange={handleChange}
+                                                            // onBlur={handleBlur}
+                                                            isInvalid={
+                                                                touched?.child?.[index]?.content &&
+                                                                !!errors?.child?.[index]?.content
+                                                            }
+                                                        ></Form.Control>
+                                                        <Form.Control.Feedback type="invalid">
+                                                            {errors?.child?.[index]?.content}
+                                                        </Form.Control.Feedback>
+                                                    </Form.Group>
+                                                    <div className="py-4">
+                                                        <div className="">Image</div>
+                                                        <Button
+                                                            variant="success"
+                                                            onClick={() => setUploadModalChildImage(true)}
+                                                        >
+                                                            Upload your image
+                                                        </Button>
+                                                        <UploadModal
+                                                            show={uploadModalChildImage}
+                                                            onSave={(hasShown) => {}}
+                                                            onSelected={(selected) => {}}
+                                                            selected={''}
+                                                            onHide={() => {
+                                                                setUploadModalChildImage(false);
+                                                            }}
+                                                            onCopyLink={(link) => {
+                                                                setFieldValue(`child[${index}].image`, link);
+                                                                setUploadModalChildImage(false);
+                                                            }}
+                                                        ></UploadModal>
+                                                        <div className="admin-images-form">
+                                                            <div style={{ textAlign: 'right' }}>
+                                                                {item.image ? (
+                                                                    <FaTimes
+                                                                        style={{ cursor: 'pointer' }}
+                                                                        onClick={() => {
+                                                                            setFieldValue(`child[${index}].image`, '');
+                                                                        }}
+                                                                    ></FaTimes>
+                                                                ) : (
+                                                                    <></>
+                                                                )}
+                                                                {values?.child?.[index]?.image ? (
+                                                                    <img
+                                                                        key={index}
+                                                                        src={values.child[index].image}
+                                                                        width={'100%'}
+                                                                    />
+                                                                ) : (
+                                                                    <></>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </SwiperSlide>
+                                            );
+                                        })}
+                                    </Swiper>
+                                </Form.Group>
+                            )}
+                        </FieldArray>
+                        <Button type="submit" variant="primary" className="my-4">
+                            Submit
+                        </Button>
+                    </Form>
+                </FormikProvider>
             </Modal.Body>
         </Modal>
     );

@@ -323,7 +323,7 @@ export declare const putBooking: (
 ) => Promise<BookingDTO>;
 
 // 8. Setting
-type SettingType = 'home' | 'about' | 'booking' | 'testimonial' | 'layout';
+type SettingType = 'home' | 'about' | 'contact' | 'booking' | 'testimonial' | 'layout';
 export declare const getSetting: (
     request: {
         type: SettingType;
