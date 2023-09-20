@@ -218,11 +218,23 @@
     display: flex;
     width: 100%;
     gap: 5px;
+    cursor: pointer;
 }
 .other-list-dashed {
     flex-grow: 1;
     border-top: 1px dashed black;
     transform: translateY(25%);
+}
+.other-item-explain {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    right: 5%;
+    z-index: 200;
+}
+.other-list-item:hover .other-item-explain {
+    display: block;
 }
 /* Lashes */
 .lashes {
@@ -230,6 +242,10 @@
     position: relative;
     margin: 180px 0 60px 0;
     padding: 30px 0;
+}
+.lashes .other-item-explain {
+    left: 50%;
+    width: fit-content;
 }
 .lashes-title {
     padding-top: 30px;

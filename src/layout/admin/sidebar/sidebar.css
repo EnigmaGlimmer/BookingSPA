@@ -64,4 +64,9 @@
 .sidebar-item-2 {
     flex-grow: 1;
     padding: 20px;
+    position: relative;
+}
+.sbar-admin-form {
+    display: flex;
+    min-height: 90vh;
 }

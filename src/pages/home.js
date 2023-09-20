@@ -202,6 +202,10 @@ function Home() {
                                                 <div className="other-list-dashed"></div>
                                                 {/* <p>{item.price}$</p> */}
                                                 <p>-20%</p>
+                                                <div className="other-item-explain">
+                                                    <div>Service Name</div>
+                                                    <div>Content</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
@@ -237,6 +241,10 @@ function Home() {
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
                                                 <p>{item.price}$</p>
+                                                <div className="other-item-explain">
+                                                    <div>Service Name</div>
+                                                    <div>Content</div>
+                                                </div>
                                             </div>
                                         );
                                     })}

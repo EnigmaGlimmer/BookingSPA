@@ -169,3 +169,14 @@
         width: 80%;
     }
 }
+
+/* Admin Booking */
+.admin-booking-table {
+    width: 100%;
+}
+.admin-booking-table-form {
+    overflow-x: scroll;
+    max-width: 90vw;
+    scroll-behavior: smooth;
+    margin: 0 auto;
+}

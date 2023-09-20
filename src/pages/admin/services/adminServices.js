@@ -25,6 +25,8 @@ import useService from '../../../hooks/useServices';
 let serviceSchema = yup.object().shape({
     title: yup.string().required('Title is require field'),
     price: yup.number().required('Price is require field'),
+    duration: '',
+    description: '',
     promotion: yup
         .object()
         .nullable()
@@ -112,6 +114,18 @@ function AdminServices() {
                             onBlur={handleBlur}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Service Duration</Form.Label>
+                        <Form.Control
+                            name="duration"
+                            placeholder="Enter service price"
+                            isInvalid={touched.duration && errors.duration}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.duration}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
