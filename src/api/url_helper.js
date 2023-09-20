@@ -39,6 +39,7 @@ export const SEARCH_CUSTOMER = '/api/customer/search';
 // 7. Booking
 export const POST_BOOKING = '/api/booking';
 export const GET_BOOKING = '/api/booking';
+export const PUT_BOOKING = '/api/booking';
 
 // 8. Assign
 export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';

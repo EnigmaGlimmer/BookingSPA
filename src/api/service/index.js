@@ -8,6 +8,10 @@ export const getServiceList = (request, config) => {
     return axiosInstance;
 };
 
+export const getSingleService = (id, config) => {
+    return api.get(`${url.GET_SERVICE}/${id}`, null, config);
+};
+
 export const getBlogOfService = (id, config) => {
     return api.get(`${url.GET_BLOG_SERVICE}/${id}`, null, config);
 };

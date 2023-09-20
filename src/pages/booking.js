@@ -89,8 +89,6 @@ function BookingPage() {
 }
 
 const StepComponent = ({ step, setStep }) => {
-    const [serviceChoice, setServiceChoice] = React.useState(null);
-
     const { newCustomer } = useSelector((state) => {
         return {
             services: state.Service.services,
@@ -124,6 +122,7 @@ const StepComponent = ({ step, setStep }) => {
                     end_Hour: '',
                 },
             },
+            parentServiceId: 0,
         },
         validationSchema: bookingSchema,
         onSubmit: (values, formikHelper) => {
@@ -170,14 +169,18 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
+            <pre>{JSON.stringify(validation?.values, 4, 4)}</pre>
             {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2
                         step={step}
                         setStep={setStep}
-                        validation={validation}
-                        serviceChoice={serviceChoice}
-                        setServiceChoice={setServiceChoice}
+                        valueServiceId={validation?.values?.booking?.serviceId}
+                        isValid={!!validation?.values?.booking?.serviceId}
+                        onChangeServiceId={(serviceId) => validation.setFieldValue('booking.serviceId', serviceId)}
+                        onChangeParentServiceId={(parentServiceId) =>
+                            validation.setFieldValue('parentServiceId', parentServiceId)
+                        }
                     ></Step2>
                 )) ||
                 (step === 3 && (
@@ -185,6 +188,8 @@ const StepComponent = ({ step, setStep }) => {
                         step={step}
                         setStep={setStep}
                         validation={validation}
+                        valueCheckinDate={validation?.values?.booking?.checkinDate}
+                        parentServiceId={validation?.values?.parentServiceId}
                         onChangeDate={(date) => {
                             const value = moment(date).format('YYYY-MM-DD');
                             validation.setFieldValue('booking.checkinDate', value);
@@ -305,13 +310,28 @@ export function Step1({ setStep, validation }) {
         </div>
     );
 }
-function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
+
+function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangeParentServiceId }) {
+    const footerButtonId = 'booking-step2-button';
     const { services } = useService({
         request: {
             skip: 0,
-            take: 2,
+            take: 100,
+            flat: 0,
         },
     });
+
+    const [serviceChoice, setServiceChoice] = React.useState(null);
+
+    useEffect(() => {
+        if (isValid) {
+            const footerButtonElement = document.getElementById(footerButtonId);
+            footerButtonElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    }, [onChangeServiceId, valueServiceId]);
 
     return (
         <div className="intro-form">
@@ -335,92 +355,87 @@ function Step2({ setStep, validation, serviceChoice, setServiceChoice }) {
                     </div>
                     <div className="booking-input-item">
                         <div className="booking-form-input">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                style={serviceChoice ? { background: 'var(--clr-primary-yellow)' } : {}}
-                                onClick={() => {
-                                    setServiceChoice(true);
-                                }}
-                                id="booking-nails-service"
-                                className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                            >
-                                Nail
-                            </Button>
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => {
-                                    setServiceChoice(false);
-                                }}
-                                style={serviceChoice ? {} : { background: 'var(--clr-primary-yellow)' }}
-                                id="booking-nails-service"
-                                className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                            >
-                                Lashes
-                            </Button>
+                            {services?.map?.((s) => {
+                                return (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => {
+                                            if (!!s?.childs) {
+                                                setServiceChoice(s);
+                                            } else {
+                                                onChangeServiceId(s?.serviceId);
+                                            }
+                                        }}
+                                        style={
+                                            serviceChoice?.serviceId === s?.serviceId
+                                                ? { background: 'var(--clr-primary-yellow)' }
+                                                : null
+                                        }
+                                        id="booking-nails-service"
+                                        className="my-btn text-uppercase btn-primary-outline btn btn-outline"
+                                    >
+                                        {s?.serviceName}
+                                    </Button>
+                                );
+                            })}
                         </div>
 
                         <div className="booking-list-item">
-                            {serviceChoice
-                                ? (services || [])
-                                      ?.find?.((service) => service.serviceName === 'Nail' || service.serviceId === 1)
-                                      ?.childs?.map?.((item, index) => {
-                                          return (
-                                              <div
-                                                  className="booking-item-form"
-                                                  key={index}
-                                                  onClick={() => {
-                                                      setStep(3);
-                                                      validation.setFieldValue('booking.serviceId', item?.serviceId);
-                                                  }}
-                                              >
-                                                  <div className="booking-item-title">{item?.serviceName}</div>
-                                                  <div className="booking-item-price">{item?.price}$</div>
-                                              </div>
-                                          );
-                                      })
-                                : (services || [])
-                                      ?.find((service) => service.serviceName === 'Lashes' || service.serviceId === 2)
-                                      ?.childs?.map((item, index) => {
-                                          return (
-                                              <div
-                                                  className="booking-item-form"
-                                                  key={index}
-                                                  onClick={() => {
-                                                      setStep(3);
-                                                      validation.setFieldValue('booking.serviceId', item?.serviceId);
-                                                  }}
-                                              >
-                                                  <div className="booking-item-title">{item?.serviceName}</div>
-                                                  <div className="booking-item-price">{item?.price}$</div>
-                                              </div>
-                                          );
-                                      })}
+                            {serviceChoice?.childs?.map?.((item, index) => {
+                                return (
+                                    <div
+                                        className="booking-item-form"
+                                        key={index}
+                                        onClick={() => {
+                                            onChangeServiceId(item?.serviceId);
+                                            onChangeParentServiceId(serviceChoice?.serviceId);
+                                        }}
+                                        style={
+                                            valueServiceId === item?.serviceId
+                                                ? { background: 'var(--clr-primary-yellow)' }
+                                                : null
+                                        }
+                                    >
+                                        <div className="booking-item-title">{item?.serviceName}</div>
+                                        <div className="booking-item-price">{item?.price}$</div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
-                <Button
-                    type="button"
-                    variant="outline"
-                    className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
-                    onClick={() => setStep(1)}
-                >
-                    Back
-                </Button>
+                <div id={footerButtonId}>
+                    {isValid && (
+                        <Button
+                            type="button"
+                            variant="outline"
+                            className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
+                            onClick={() => setStep(3)}
+                        >
+                            Next
+                        </Button>
+                    )}
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5  mx-4"
+                        onClick={() => setStep(1)}
+                    >
+                        Back
+                    </Button>
+                </div>
             </div>
         </div>
     );
 }
 
-function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
-    const [bookingList, setBookingList] = useState([]);
-
+function Step3({ setStep, valueCheckinDate, parentServiceId, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) {
     const [selectedDate, setSelectedDate] = useState();
-    const [reversedTimeRange, setReversed] = useState([]);
+    const [reservedTimeRange, setReversed] = useState([]);
 
     useEffect(() => {
         let searchBy = 'Date';
@@ -434,7 +449,6 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
             take: 31,
         })
             .then((response) => {
-                console.log(response);
                 if (!Array.isArray(response?.list)) {
                     response.errors.forEach((msg) => {
                         toast.error(msg, {
@@ -445,30 +459,29 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
                     return;
                 }
 
-                setBookingList(response?.list);
-
                 setReversed(
                     response?.list?.map?.((b) => {
                         const [start1, end1] = b.slot.start_Hour.split(':');
                         const [start2, end2] = b.slot.end_Hour.split(':');
 
-                        return [[start1, end1].join(':'), [start2, end2].join(':')];
+                        return {
+                            startTime: [start1, end1].join(':'),
+                            endTime: [start2, end2].join(':'),
+                            isEnable: b.serviceId === parentServiceId,
+                        };
                     }),
                 );
-                toast.success('Got it!!', {
-                    autoClose: 3000,
-                });
             })
             .catch((error) => {
                 toast.error(error);
             });
-    }, [selectedDate]);
+    }, [selectedDate, parentServiceId]);
 
     return (
         <>
             <div className="booking-component">
                 <Booking
-                    activeDate={validation?.values?.booking?.checkinDate}
+                    activeDate={valueCheckinDate}
                     initialTimeRange={[
                         ['08:30', '09:30'],
                         ['09:30', '10:30'],
@@ -480,7 +493,7 @@ function Step3({ step, setStep, validation, onChangeDate, onChangeTimeStart, onC
                         ['16:30', '17:30'],
                         ['17:30', '18:30'],
                     ]}
-                    reserved={reversedTimeRange}
+                    reserved={reservedTimeRange}
                     onChangeDate={(date) => {
                         onChangeDate(date);
                         setSelectedDate(date);

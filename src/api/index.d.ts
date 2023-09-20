@@ -88,7 +88,11 @@ export declare const getSingleBlog: (
     config?: AxiosRequestConfig,
 ) => Promise<APIListResponse<SingleBlog> | SingleBlog | string>;
 export declare const postBlog: (body: CreateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
-export declare const putBlog: (id:number,body: UpdateBlog, config?: AxiosRequestConfig) => Promise<APIResponse<SingleBlog>>;
+export declare const putBlog: (
+    id: number,
+    body: UpdateBlog,
+    config?: AxiosRequestConfig,
+) => Promise<APIResponse<SingleBlog>>;
 export const deleteBlog: (id: number) => Promise<APIResponse<number>>;
 // 2. Comment
 export declare const getCommentList: (pagination) => Promise<APIResponse<CommentResponse>>;
@@ -185,6 +189,7 @@ type PostBlogService = {
     postedDate: Date;
 };
 export declare const getServiceList: (request: Pagination) => Promise<Array<ServiceDTO>>;
+export declare const getSingleService: (id: number, config?: AxiosRequestConfig) => Promise<ServiceDTO>;
 export declare const getBlogOfService: (id: number, config?: AxiosRequestConfig) => Promise<BlogOfServiceDTO>;
 export declare const postService: (body: CreateServiceDTO) => Promise<APIResponse<ServiceDTO>>;
 export declare const putBlogOfService: (
@@ -269,6 +274,18 @@ type BookingDTO = {
     categories: [];
 };
 
+type UpdateBookingDTO = {
+    checkinDate: Date;
+    checkoutDate: Date;
+    isCancelled: boolean;
+    serviceId: number;
+    slot: {
+        slotId: number;
+        start_Hour: string;
+        end_Hour: string;
+    };
+};
+
 type CreateBookingDTO = {
     createdDate: Date;
     isCancelled: boolean;
@@ -284,6 +301,7 @@ type BookingCustomerDTO = {
     bookingId: number;
     customerId: number;
 };
+
 type SearchBookingDTO = {
     orderBy: 'CreatedDate' | 'CheckinDate' | 'CheckoutDate' | 'IsCancelled' | 'None';
     searchBy: 'None' | 'Date' | 'Month';
@@ -297,6 +315,13 @@ export declare const assignBooking: (
 ) => Promise<APIResponse<BookingCustomerDTO>>;
 
 export declare const getBookingList: (request: SearchBookingDTO) => Promise<APIResponse<BookingDTO[]>>;
+
+export declare const putBooking: (
+    id: number,
+    body: UpdateBookingDTO,
+    config?: AxiosRequestConfig,
+) => Promise<BookingDTO>;
+
 // 8. Setting
 type SettingType = 'home' | 'about' | 'booking' | 'testimonial' | 'layout';
 export declare const getSetting: (
@@ -306,6 +331,7 @@ export declare const getSetting: (
     config: AxiosRequestConfig,
 ) => Promise<APIResponse<object>>;
 
+// 8. Setting
 export declare const postSetting: (
     body: {
         body: string;

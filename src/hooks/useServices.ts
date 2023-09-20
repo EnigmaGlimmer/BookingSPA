@@ -1,9 +1,11 @@
 import { toast } from 'react-toastify';
-import { BlogOfServiceDTO, Pagination, ServiceDTO, getBlogOfService, getServiceList } from '../api';
+import { BlogOfServiceDTO, Pagination, ServiceDTO, getBlogOfService, getServiceList, getSingleService } from '../api';
 import { useEffect, useState } from 'react';
 
 type Props = {
-    request: Pagination;
+    request: Pagination & {
+        flat?: number;
+    };
     selectedPostId?: number;
     selectedPostName?: string;
     errorBlogHtml?: string;
@@ -13,6 +15,7 @@ type Return = {
     services: ServiceDTO[];
     blog: BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent'> | null;
     selectedId: number;
+    service: ServiceDTO;
     setSelectedId: React.Dispatch<React.SetStateAction<number | null>>;
     setBlog: React.Dispatch<React.SetStateAction<BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent' | null>>>;
 };
@@ -20,6 +23,7 @@ type Return = {
 const useService: (props: Props) => Return = (props) => {
     const [services, setServices] = useState<Array<ServiceDTO>>([]);
     const [blog, setBlog] = useState<BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent'> | null>(null);
+    const [service, setSelectedService] = useState<ServiceDTO | null>(null);
     const [selectedId, setSelectedId] = useState<number | null>(props.selectedPostId);
     const errorBlog = props?.errorBlogHtml || '<h2>This Blog is not existing</h2>';
 
@@ -47,6 +51,15 @@ const useService: (props: Props) => Return = (props) => {
                         autoClose: 3000,
                     });
                 });
+            getSingleService(selectedId)
+                .then((response) => {
+                    setSelectedService(response);
+                })
+                .catch((error) => {
+                    toast.error(typeof error === 'string' ? error : 'Server Error', {
+                        autoClose: 3000,
+                    });
+                });
         }
     }, [services, selectedId]);
 
@@ -60,7 +73,11 @@ const useService: (props: Props) => Return = (props) => {
 
     return {
         services,
-        blog,
+        blog: blog || {
+            ...blog,
+            blogContent: errorBlog,
+        },
+        service,
         selectedId,
         setSelectedId,
         setBlog,

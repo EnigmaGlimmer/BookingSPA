@@ -57,9 +57,12 @@ export const postBookingError = (error) => ({
 
 // 3. Update booking
 
-export const putBooking = () => ({
+export const putBooking = (id, data) => ({
     type: PUT_BOOKING,
-    payload: {},
+    payload: {
+        id,
+        data,
+    },
 });
 
 export const putBookingSuccess = (data) => ({
