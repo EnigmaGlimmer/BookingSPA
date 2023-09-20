@@ -32,7 +32,8 @@ function Footer() {
     const { services } = useService({
         request: {
             skip: 1,
-            take: 2,
+            take: 10,
+            flat: 0,
         },
     });
     const contact = useContact();
@@ -44,6 +45,13 @@ function Footer() {
                     <Col sm="12" xl="4" className="text-sm-center text-xl-start">
                         <FullLogo></FullLogo>
                         <p className="mt-5">Little Daisy, a fabulous salon theme. Just as stunning as your nail art!</p>
+                        <p>
+                            <b>Phone: </b>+{contact?.phone}
+                        </p>
+                        <p>
+                            <b>Email: </b>
+                            {contact?.email}
+                        </p>
                     </Col>
                     <Col sm="6" md="6" xl="2">
                         <h3

@@ -26,11 +26,18 @@ export const assignBooking = (customer, booking) => {
                 customerId: newCustomer.customerId,
             };
 
+            console.log(newCustomer, submitBooking);
+
             return postBooking(submitBooking);
         });
 };
+
 export const getBookingList = (request) => {
     return api.get(url.GET_BOOKING, request);
+};
+
+export const putBooking = (id, body, config) => {
+    return api.put(`${url.PUT_BOOKING}/${id}`, body, config);
 };
 
 export const deleteBooking = (id) => {

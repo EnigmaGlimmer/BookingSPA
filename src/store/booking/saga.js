@@ -20,7 +20,7 @@ import { GET_BOOKING, POST_BOOKING, PUT_BOOKING } from './actionType';
 import {
     getBookingList as getBookingListAPI,
     postBooking as postBookingAPI,
-    updateBooking as updateBookingAPI,
+    putBooking as updateBookingAPI,
     deleteBooking as deleteBookingAPI,
 } from '../../api';
 
@@ -53,9 +53,9 @@ function* onAddNewBooking({ payload: newBooking }) {
     }
 }
 
-function* onUpdateBooking({ payload: updatedBooking }) {
+function* onUpdateBooking({ payload: { id, data: updatedBooking } }) {
     try {
-        const response = yield call(updateBookingAPI, updatedBooking);
+        const response = yield call(updateBookingAPI, id, updatedBooking);
         yield put(putBookingSuccess(response?.result));
     } catch (error) {
         yield put(putBookingError(error));

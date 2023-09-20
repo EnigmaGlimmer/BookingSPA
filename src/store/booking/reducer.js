@@ -61,16 +61,20 @@ const Booking = (state = INIT_STATE, action) => {
                 ...state,
                 bookings: action.payload.error,
             };
+
         case PUT_BOOKING_SUCCESS:
             return {
                 ...state,
-                bookings: action.payload.data,
+                bookings: state.bookings.map((item) =>
+                    item.bookingId === action.payload.data?.bookingId ? { ...item, ...action.payload.data } : item,
+                ),
             };
         case PUT_BOOKING_FAILED:
             return {
                 ...state,
                 bookings: action.payload.error,
             };
+
         case DELETE_BOOKING_SUCCESS:
             return {
                 ...state,

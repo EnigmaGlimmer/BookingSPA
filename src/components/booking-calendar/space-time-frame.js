@@ -9,8 +9,11 @@ const SpaceTimeFrame = ({
         ['5:00pm', '6:00pm'],
     ],
     reserved = [
-        ['1:00pm', '2:00pm'],
-        ['4:00pm', '5:00pm'],
+        {
+            startTime: '1:00pm',
+            endTime: '2:00pm',
+            isEnable: true,
+        },
     ],
     onChangeTimeStart,
     onChangeTimeEnd,
@@ -26,11 +29,11 @@ const SpaceTimeFrame = ({
             </div>
             <div className="space-time-content">
                 {initialSpaceTimes.map((space, key) => {
-                    const hasReserved = reserved.some(([s, e]) => {
+                    const hasReserved = reserved.some(({ startTime, endTime, isEnable }) => {
                         const start = space[0];
                         const end = space[1];
 
-                        return start === s && e === end;
+                        return start === startTime && endTime === end && isEnable;
                     });
 
                     return (
