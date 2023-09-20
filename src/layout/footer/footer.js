@@ -100,17 +100,17 @@ function Footer() {
                         <Row className="mb-3" style={{ flexWrap: 'nowrap' }}>
                             <Col className="col-auto">
                                 <Link to={contact?.facebook} className="link-text">
-                                    <BiLogoFacebookCircle></BiLogoFacebookCircle>
+                                    <BiLogoFacebookCircle className="footer-icon"></BiLogoFacebookCircle>
                                 </Link>
                             </Col>
                             <Col className="col-auto">
                                 <Link to={contact?.whatsapp} className="link-text">
-                                    <BiLogoWhatsapp></BiLogoWhatsapp>
+                                    <BiLogoWhatsapp className="footer-icon"></BiLogoWhatsapp>
                                 </Link>
                             </Col>
                             <Col className="col-auto">
                                 <Link to={contact?.instagram} className="link-text">
-                                    <BiLogoInstagram></BiLogoInstagram>
+                                    <BiLogoInstagram className="footer-icon"></BiLogoInstagram>
                                 </Link>
                             </Col>
                         </Row>

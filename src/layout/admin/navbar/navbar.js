@@ -14,7 +14,7 @@ function AdminNavbar() {
     return (
         <Navbar expand={'lg'} className="bg-main" style={{ borderBottom: '1px solid var(--clr-border)' }}>
             <Container fluid>
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/">
                     <Logo></Logo>
                 </Navbar.Brand>
                 <Button
