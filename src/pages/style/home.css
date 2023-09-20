@@ -10,6 +10,7 @@
     width: 80%;
     display: inline-block;
     text-align: center;
+    padding-top: 40px;
 }
 .banner-img-small {
     width: 31%;
@@ -444,6 +445,7 @@
     border-radius: 50%;
     width: 40%;
     overflow: hidden;
+    aspect-ratio: 1/1;
 }
 .review-slide {
     width: 33%;
