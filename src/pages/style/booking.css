@@ -142,6 +142,11 @@
 }
 #booking-nails-service:hover {
 }
+@media only screen and (min-width: 2200px) {
+    .booking-process {
+        margin-top: 20vw;
+    }
+}
 @media only screen and (max-width: 1450px) {
     .booking-process {
         margin-top: 10vh;
@@ -168,4 +173,15 @@
     .completed {
         width: 80%;
     }
+}
+
+/* Admin Booking */
+.admin-booking-table {
+    width: 100%;
+}
+.admin-booking-table-form {
+    overflow-x: scroll;
+    max-width: 90vw;
+    scroll-behavior: smooth;
+    margin: 0 auto;
 }

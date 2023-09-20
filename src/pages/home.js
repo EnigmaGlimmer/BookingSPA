@@ -36,6 +36,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/settings/action';
 import { getService } from '../store/actions';
 import { Link } from 'react-router-dom';
+import useService from '../hooks/useServices';
 
 function Home() {
     document.title = 'Little Daisy - Home';
@@ -47,20 +48,16 @@ function Home() {
         };
     });
 
-    const { services } = useSelector((state) => {
-        return {
-            services: state?.Service?.services || [],
-        };
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+            flat: 0,
+        },
     });
 
     React.useEffect(() => {
         dispatch(getSettingList('home'));
-        dispatch(
-            getService({
-                take: 100,
-                skip: 1,
-            }),
-        );
     }, [dispatch]);
 
     return (
@@ -172,7 +169,7 @@ function Home() {
                             }}
                         ></p>
                     </div>
-                    <div className="nail-care" id="st-messages3">
+                    {/* <div className="nail-care" id="st-messages3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} loading="lazy" />
                         </div>
@@ -182,7 +179,7 @@ function Home() {
                                 __html: DOMPurify.sanitize(home?.messages3?.content),
                             }}
                         ></p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* Service Quality */}
@@ -222,7 +219,12 @@ function Home() {
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
                                                 {/* <p>{item.price}$</p> */}
-                                                <p>-20%</p>
+                                                <p>{item.price}$</p>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">{item?.duration}</div>
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
@@ -250,7 +252,6 @@ function Home() {
                             <div className="lashes-list">
                                 {services
                                     ?.find?.((e) => {
-                                        console.log(e.serviceId, e.serviceName);
                                         return e.serviceId === 3 || e.serviceName === 'Lashes';
                                     })
                                     ?.childs?.slice?.(0, 5)
@@ -260,6 +261,11 @@ function Home() {
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
                                                 <p>{item.price}$</p>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">{item?.duration}</div>
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
@@ -380,7 +386,12 @@ function Home() {
                                         {({ isActive }) => (
                                             <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
                                                 <div className="review-img">
-                                                    <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
+                                                    <img
+                                                        src={item?.image || reviewUser}
+                                                        alt="Service"
+                                                        width={'100%'}
+                                                        loading="lazy"
+                                                    />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
                                                 <div
@@ -422,7 +433,12 @@ function Home() {
                                         {({ isActive }) => (
                                             <div className={`review-item ${isActive ? 'active-slide' : ''}`}>
                                                 <div className="review-img">
-                                                    <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
+                                                    <img
+                                                        src={item?.image || reviewUser}
+                                                        alt="Service"
+                                                        width={'100%'}
+                                                        loading="lazy"
+                                                    />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
                                                 <div

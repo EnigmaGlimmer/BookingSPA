@@ -145,6 +145,8 @@ type ServiceDTO = {
     createdDate: Date;
     parentId: number;
     price: number;
+    duration: string;
+    description: string;
     promotion: any;
     childs: Array<ServiceDTO>;
 };
@@ -177,6 +179,7 @@ type UpdateServiceDTO = {
     duration: string;
     parentId: number;
     price: number;
+
     promotion?: {
         promotionName: string;
         startDate: Date;

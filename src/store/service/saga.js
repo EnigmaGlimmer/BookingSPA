@@ -34,12 +34,16 @@ function* getService({ payload }) {
     }
 }
 
-function* onAddNewService({ payload: { parentId, createdDate, serviceName, price, promotion } }) {
+function* onAddNewService({
+    payload: { parentId, createdDate, serviceName, description, duration, price, promotion },
+}) {
     try {
         const response = yield call(postServiceAPI, {
             parentId,
             createdDate,
             serviceName,
+            description,
+            duration,
             price,
             promotion,
         });

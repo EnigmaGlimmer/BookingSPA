@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import './style/login.css';
 import logo from '../images/logo/index.svg';
-import login from '../store/auth/action';
+import { login } from '../store/auth/action';
 
 function Login() {
     const [formInput, setFormInput] = useState({

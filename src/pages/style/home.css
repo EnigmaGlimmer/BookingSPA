@@ -2,8 +2,8 @@
     width: 100%;
     display: block;
     text-align: center;
-    padding-bottom: 60px;
-    margin-bottom: 60px;
+    padding-bottom: 6vh;
+    margin-bottom: 6vh;
 }
 .banner-img {
     position: relative;
@@ -110,7 +110,7 @@
     justify-content: space-between;
 }
 .nail-care {
-    width: 25%;
+    width: 45%;
     text-align: center;
 }
 .nail-care-img {
@@ -218,11 +218,23 @@
     display: flex;
     width: 100%;
     gap: 5px;
+    cursor: pointer;
 }
 .other-list-dashed {
     flex-grow: 1;
     border-top: 1px dashed black;
     transform: translateY(25%);
+}
+.other-item-explain {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    right: 16%;
+    z-index: 200;
+}
+.other-list-item:hover .other-item-explain {
+    display: block;
 }
 /* Lashes */
 .lashes {
@@ -230,6 +242,10 @@
     position: relative;
     margin: 180px 0 60px 0;
     padding: 30px 0;
+}
+.lashes .other-item-explain {
+    left: 26%;
+    width: fit-content;
 }
 .lashes-title {
     padding-top: 30px;
@@ -430,6 +446,26 @@
 }
 .review-slide {
     width: 33%;
+}
+@media only screen and (min-width: 2200px) {
+    .banner {
+        padding-bottom: 20vw;
+    }
+    .intro {
+        padding-bottom: 20vw;
+    }
+    .other {
+        margin: 10vw 0 10vw 0;
+    }
+    .lashes {
+        margin: 15vw 0 15vw 0;
+    }
+    .quality-title {
+        font-size: 2vw;
+    }
+    .quality {
+        padding-top: 10vw;
+    }
 }
 @media only screen and (max-width: 1200px) {
     .review-item {

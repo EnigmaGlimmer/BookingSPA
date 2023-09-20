@@ -99,12 +99,6 @@ const StepComponent = ({ step, setStep }) => {
         };
     });
 
-    const dispatch = useDispatch();
-
-    React.useEffect(() => {
-        dispatch(getService());
-    }, []);
-
     const validation = useFormik({
         initialValues: {
             customer: {
@@ -223,7 +217,7 @@ export function Step1({ setStep, validation }) {
 
                 <div className="intro-content-form mb-2">
                     <div>
-                        <h2 className="intro-title">Your Information</h2>
+                        <h2 className="intro-title">Your Booking</h2>
                     </div>
                     <div className="booking-form-input">
                         <Form.Group>
@@ -361,7 +355,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                                         type="button"
                                         variant="outline"
                                         onClick={() => {
-                                            if (!!s?.childs) {
+                                            if (s?.childs?.length > 0) {
                                                 setServiceChoice(s);
                                             } else {
                                                 onChangeServiceId(s?.serviceId);

@@ -10,6 +10,8 @@ type Result = {
     facebook: string;
     instagram: string;
     whatsapp: string;
+    latitude: number;
+    longitude: number;
 };
 
 export const useContact: (props?: Props) => Result = (props) => {

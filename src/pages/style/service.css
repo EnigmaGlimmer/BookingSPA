@@ -1,27 +1,27 @@
-.service-banner{
+.service-banner {
     width: 100%;
 }
-.service-banner-form{
+.service-banner-form {
     width: 80%;
     margin: 0 auto;
 }
-.service-name{
+.service-name {
     width: 100%;
 }
-.service-name-form{
+.service-name-form {
     width: 60%;
     margin: 0 auto;
 }
-.service-name-title{
+.service-name-title {
     font-size: 34px;
-    padding:20px 0;
+    padding: 20px 0;
 }
-.service-name-content-list{
+.service-name-content-list {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
-.service-name-img-alt{
+.service-name-img-alt {
     text-align: center;
-    padding:20px;
+    padding: 20px;
 }
