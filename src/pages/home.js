@@ -431,7 +431,7 @@ function Home() {
                             modules={[Navigation, Pagination, Autoplay]}
                             className="review-mySwiper"
                         >
-                            {home?.testimonials?.child?.map?.((item, index) => {
+                            {home?.testimonials?.review?.map?.((item, index) => {
                                 return (
                                     <SwiperSlide className="review-slide" key={index}>
                                         {({ isActive }) => (
