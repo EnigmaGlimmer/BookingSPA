@@ -13,6 +13,7 @@ import aboutBooking from '../images/aboutBooking.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
+import * as DOMPurify from 'dompurify';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/actions';
@@ -42,7 +43,12 @@ export default function About() {
                 <div className="about-brand-content-form">
                     <div className="about-brand-content-container">
                         <div className="about-brand-title">{about?.intro?.title}</div>
-                        <div className="about-brand-content">{about?.intro?.content}</div>
+                        <div
+                            className="about-brand-content"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(about?.intro?.content),
+                            }}
+                        ></div>
                     </div>
                     <div className="about-brand-img-flower-1 booking-f">
                         <img alt="brand" src={homeFlowerDeco} width={'100%'} />
@@ -63,7 +69,12 @@ export default function About() {
                     </div>
                     <div className="about-story-item-2">
                         <div className="about-story-title">{about?.story?.title}</div>
-                        <div className="about-story-content">{about?.story?.content}</div>
+                        <div
+                            className="about-story-content"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(about?.story?.content),
+                            }}
+                        ></div>
                         <div className="about-story-img-flower booking-f">
                             <img src={homeFlowerDeco} alt="" width={'100%'} />
                         </div>
@@ -78,10 +89,13 @@ export default function About() {
                 <div className="about-image-store-form">
                     <div className="about-image-store-content">
                         <div className="about-image-store-title">{about?.listImage?.title}</div>
-                        <div className="about-image-store-address">
-                            {about?.listImage?.content}
-                            <span className="about-image-store-btn">VIEW MAPS</span>
-                        </div>
+                        <span
+                            className="about-image-store-address"
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(about?.listImage?.content),
+                            }}
+                        ></span>
+                        <span className="about-image-store-btn">VIEW MAPS</span>
                     </div>
                     <div className="about-image-store-list">
                         <Swiper
@@ -148,7 +162,11 @@ export default function About() {
                                     <div className="about-staff-item-name">{item?.title}</div>
                                     <p>{item?.subtitle}</p>
                                     <div className="about-staff-item-specialized">
-                                        <i>{item?.content}</i>
+                                        <i
+                                            dangerouslySetInnerHTML={{
+                                                __html: DOMPurify.sanitize(item?.content),
+                                            }}
+                                        ></i>
                                     </div>
                                 </div>
                             );
@@ -180,7 +198,11 @@ export default function About() {
                                             <div className="about-staff-item-name">{c?.title}</div>
                                             <p>{c?.subtitle}</p>
                                             <div className="about-staff-item-specialized">
-                                                <p>{c?.content}</p>
+                                                <p
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: DOMPurify.sanitize(c?.content),
+                                                    }}
+                                                ></p>
                                             </div>
                                         </div>
                                     </SwiperSlide>

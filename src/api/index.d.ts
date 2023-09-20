@@ -140,6 +140,8 @@ export declare const deleteAsset: (id: number, config: AxiosRequestConfig) => Pr
 type ServiceDTO = {
     serviceId: number;
     serviceName: string;
+    description: string;
+    duration: string;
     createdDate: Date;
     parentId: number;
     price: number;
@@ -156,6 +158,8 @@ type BlogOfServiceDTO = {
 };
 type CreateServiceDTO = {
     serviceName: string;
+    description: string;
+    duration: string;
     parentId: number;
     createdDate: Date;
     price: number;
@@ -169,6 +173,8 @@ type CreateServiceDTO = {
 };
 type UpdateServiceDTO = {
     serviceName: string;
+    description: string;
+    duration: string;
     parentId: number;
     price: number;
     promotion?: {

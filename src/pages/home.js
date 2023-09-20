@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DOMPurify from 'dompurify';
+import * as DOMPurify from 'dompurify';
 
 import './style/home.css';
 import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
@@ -118,10 +118,18 @@ function Home() {
                                 <h6>{home?.intro?.subtitle}</h6>
                                 <h2 className="intro-title">{home?.intro?.title}</h2>
                             </div>
-                            <p>{home?.intro?.content}</p>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(home?.intro?.content),
+                                }}
+                            ></p>
                             <div>
                                 <h5>{home?.intro?.child?.title}</h5>
-                                <p>{home?.intro?.child?.content}</p>
+                                <p
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(home?.intro?.child?.content),
+                                    }}
+                                ></p>
                             </div>
                             <div>
                                 <Button
@@ -147,21 +155,33 @@ function Home() {
                             <img src={nailCare} alt="nail care" width={'100%'} loading="lazy" />
                         </div>
                         <div className="nail-care-title">{home?.messages1?.title}</div>
-                        <p>{home?.messages1?.content}</p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(home?.messages1?.content),
+                            }}
+                        ></p>
                     </div>
                     <div className="nail-care" id="st-messages2">
                         <div className="nail-care-img">
                             <img src={nailArt} alt="nail care" width={'100%'} loading="lazy" />
                         </div>
                         <div className="nail-care-title">{home?.messages2?.title}</div>
-                        <p>{home?.messages2?.content}</p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(home?.messages2?.content),
+                            }}
+                        ></p>
                     </div>
                     <div className="nail-care" id="st-messages3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} loading="lazy" />
                         </div>
                         <div className="nail-care-title">{home?.messages3?.title}</div>
-                        <p>{home?.messages3?.content}</p>
+                        <p
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(home?.messages3?.content),
+                            }}
+                        ></p>
                     </div>
                 </div>
             </div>
@@ -363,7 +383,12 @@ function Home() {
                                                     <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
-                                                <div className="review-content">{item?.content}</div>
+                                                <div
+                                                    className="review-content"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: DOMPurify.sanitize(item?.content),
+                                                    }}
+                                                ></div>
                                             </div>
                                         )}
                                     </SwiperSlide>
@@ -400,7 +425,12 @@ function Home() {
                                                     <img src={reviewUser} alt="Service" width={'100%'} loading="lazy" />
                                                 </div>
                                                 <div className="review-user-name">{item?.title}</div>
-                                                <div className="review-content">{item?.content}</div>
+                                                <div
+                                                    className="review-content"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: DOMPurify.sanitize(item?.content),
+                                                    }}
+                                                ></div>
                                             </div>
                                         )}
                                     </SwiperSlide>

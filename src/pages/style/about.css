@@ -83,8 +83,9 @@
     font-size: 34px;
 }
 .about-image-store-btn {
-    color: var(--clr-primary);
-    border-bottom: 1px solid var(--clr-primary);
+    cursor: pointer;
+    color: var(--clr-primary-yellow);
+    border-bottom: 1px solid var(--clr-primary-yellow);
     padding: 5px;
 }
 .about-image-store-list {

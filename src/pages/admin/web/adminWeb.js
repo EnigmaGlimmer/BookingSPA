@@ -10,7 +10,9 @@ import * as yup from 'yup';
 import { Link, useSearchParams, createSearchParams } from 'react-router-dom';
 
 //Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation, Mousewheel, Keyboard } from 'swiper/modules';
+import 'swiper/css/navigation';
 
 //Icons
 import { FaTimes } from 'react-icons/fa';
@@ -20,8 +22,7 @@ import { BiAddToQueue } from 'react-icons/bi';
 import './style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList, postSetting } from '../../../store/actions';
-import { UploadModal } from '../../../components';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { CustomReactQuill, UploadModal } from '../../../components';
 import { useContact } from '../../../hooks/useContact';
 
 function AdminWeb() {
@@ -412,15 +413,13 @@ function EditTool({ sectionName, page, show, onHide }) {
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <Form.Label>Content</Form.Label>
-                            <Form.Control
-                                name={`content`}
-                                as="textarea"
-                                value={values.content}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isInvalid={touched?.content && !!errors?.content}
-                            ></Form.Control>
-                            <Form.Control.Feedback type="invalid">{errors?.content}</Form.Control.Feedback>
+                            <CustomReactQuill
+                                name="content"
+                                value={values?.content}
+                                onChange={(htmlText) => {
+                                    setFieldValue('content', htmlText);
+                                }}
+                            ></CustomReactQuill>
                         </Form.Group>
                         <Form.Group className="mb-3">
                             <div className="py-4">
@@ -503,7 +502,6 @@ function EditTool({ sectionName, page, show, onHide }) {
                         <FieldArray name="child">
                             {(arrayHelpers) => (
                                 <Form.Group>
-                                    <pre>values: {JSON.stringify(values.child, 4, 4)}</pre>
                                     <Form.Label className="admin-image-form-title">Child Content</Form.Label>
 
                                     <BiAddToQueue
@@ -539,8 +537,8 @@ function EditTool({ sectionName, page, show, onHide }) {
                                                         <Form.Control
                                                             name={`child.${index}.title`}
                                                             value={item?.title}
-                                                            // onChange={handleChange}
-                                                            // onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             isInvalid={
                                                                 touched?.child?.[index]?.title &&
                                                                 !!errors?.child?.[index]?.title
@@ -555,8 +553,8 @@ function EditTool({ sectionName, page, show, onHide }) {
                                                         <Form.Control
                                                             name={`child.${index}.subtitle`}
                                                             value={item?.subtitle}
-                                                            // onChange={handleChange}
-                                                            // onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             isInvalid={
                                                                 touched?.child?.[index]?.subtitle &&
                                                                 !!errors?.child?.[index]?.subtitle
@@ -572,8 +570,8 @@ function EditTool({ sectionName, page, show, onHide }) {
                                                             name={`child.${index}.content`}
                                                             as="textarea"
                                                             value={item?.content}
-                                                            // onChange={handleChange}
-                                                            // onBlur={handleBlur}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             isInvalid={
                                                                 touched?.child?.[index]?.content &&
                                                                 !!errors?.child?.[index]?.content
@@ -618,9 +616,9 @@ function EditTool({ sectionName, page, show, onHide }) {
                                                                 )}
                                                                 {values?.child?.[index]?.image ? (
                                                                     <img
-                                                                        key={index}
-                                                                        src={values.child[index].image}
+                                                                        src={values?.child?.[index]?.image}
                                                                         width={'100%'}
+                                                                        loading="lazy"
                                                                     />
                                                                 ) : (
                                                                     <></>
