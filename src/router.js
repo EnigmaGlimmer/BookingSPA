@@ -16,13 +16,46 @@ import {
     AdminExports,
     AdminUploads,
     AdminTestimonials,
+    Login,
 } from './pages';
 
 // List of layout
 import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
+import React from 'react';
 
 // React Icons
-
+const signin = localStorage.getItem('signin');
+const childrenAdmin = [
+    {
+        //Post Blog
+        path: 'blog',
+        element: <AdminBlog></AdminBlog>,
+    },
+    {
+        path: 'booking',
+        element: <AdminBooking></AdminBooking>,
+    },
+    {
+        path: 'services',
+        element: <AdminServices></AdminServices>,
+    },
+    {
+        path: 'web',
+        element: <AdminWeb></AdminWeb>,
+    },
+    {
+        path: 'testimonials',
+        element: <AdminTestimonials></AdminTestimonials>,
+    },
+    {
+        path: 'exports',
+        element: <AdminExports></AdminExports>,
+    },
+    {
+        path: 'uploads',
+        element: <AdminUploads></AdminUploads>,
+    },
+];
 const router = createBrowserRouter([
     {
         path: '/',
@@ -65,45 +98,22 @@ const router = createBrowserRouter([
         path: 'admin',
         element: (
             <>
-                <AdminNavbar></AdminNavbar>
-                <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
+                {signin === '456@456Aa' ? (
+                    <>
+                        <AdminNavbar></AdminNavbar>
+                        <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
+                    </>
+                ) : (
+                    <Login></Login>
+                )}
             </>
         ),
         errorElement: <NotFound></NotFound>,
-        children: [
-            {
-                //Post Blog
-                path: 'blog',
-                element: <AdminBlog></AdminBlog>,
-            },
-            {
-                path: 'booking',
-                element: <AdminBooking></AdminBooking>,
-            },
-            {
-                path: 'services',
-                element: <AdminServices></AdminServices>,
-            },
-            {
-                path: 'web',
-                element: <AdminWeb></AdminWeb>,
-            },
-            {
-                path: 'testimonials',
-                element: <AdminTestimonials></AdminTestimonials>,
-            },
-            {
-                path: 'exports',
-                element: <AdminExports></AdminExports>,
-            },
-            {
-                path: 'uploads',
-                element: <AdminUploads></AdminUploads>,
-            },
-        ],
+        children: childrenAdmin,
     },
 ]);
 
 export default function AppRouter() {
+    React.useEffect(() => {}, [localStorage.getItem('signin')]);
     return <RouterProvider router={router} />;
 }

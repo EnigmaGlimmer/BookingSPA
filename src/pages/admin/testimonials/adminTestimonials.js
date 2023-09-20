@@ -13,7 +13,7 @@ import { FaTimes } from 'react-icons/fa';
 import { UploadModal } from '../../../components';
 import { Form } from 'react-bootstrap';
 // import { postSetting } from '../../../api';
-
+import '../testimonials/testimonial.css';
 const Mode = {
     HIDE: 0,
     ADD: 1,
@@ -71,49 +71,50 @@ function AdminTestimonials() {
                 content={homeContent}
                 testimonials={testimonials}
             ></AddNew>
-
-            <Table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Comment</th>
-                        <th>Star</th>
-                        <th>Posted At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {testimonials?.map?.((item, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    {item?.title}
-                                    <img src={item?.image} alt=""></img>
-                                </td>
-                                <td>{item?.content}</td>
-                                <td>{item?.star}</td>
-                                <td>{moment(item?.date).format('MMMM DD, YYYY')}</td>
-                                <td>
-                                    <Button
-                                        variant="warning"
-                                        onClick={() => {
-                                            setMode(Mode.EDIT);
-                                            setEditIndex(index);
-                                        }}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button onClick={() => handleDelete(item)} variant="danger">
-                                        Delete
-                                    </Button>
-                                </td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </Table>
+            <div className="testimonial-admin-table-form">
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Comment</th>
+                            <th>Star</th>
+                            <th>Posted At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {testimonials?.map?.((item, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        {item?.title}
+                                        <img src={item?.image} alt=""></img>
+                                    </td>
+                                    <td>{item?.content}</td>
+                                    <td>{item?.star}</td>
+                                    <td>{moment(item?.date).format('MMMM DD, YYYY')}</td>
+                                    <td>
+                                        <Button
+                                            variant="warning"
+                                            onClick={() => {
+                                                setMode(Mode.EDIT);
+                                                setEditIndex(index);
+                                            }}
+                                        >
+                                            Edit
+                                        </Button>
+                                        <Button onClick={() => handleDelete(item)} variant="danger">
+                                            Delete
+                                        </Button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </Table>
+            </div>
         </section>
     );
 }

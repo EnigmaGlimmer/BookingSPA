@@ -43,6 +43,8 @@ export const postService = (newService: {
     parentId?: number;
     createdDate: Date;
     price: number;
+    duration: string;
+    description: string;
     promotion: any;
 }) => {
     return {

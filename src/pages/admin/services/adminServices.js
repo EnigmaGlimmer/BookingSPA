@@ -25,6 +25,8 @@ import useService from '../../../hooks/useServices';
 let serviceSchema = yup.object().shape({
     title: yup.string().required('Title is require field'),
     price: yup.number().required('Price is require field'),
+    duration: yup.string().required('Duration is require field'),
+    description: yup.string().required('Description is require field'),
     promotion: yup
         .object()
         .nullable()
@@ -50,6 +52,8 @@ function AdminServices() {
             title: '',
             parentId: null,
             price: 0,
+            duration: '',
+            description: '',
             promotion: null,
         },
         validationSchema: serviceSchema,
@@ -61,6 +65,8 @@ function AdminServices() {
                     createdDate: new Date(),
                     serviceName: values.title,
                     price: values.price,
+                    duration: values.duration,
+                    description: values.description,
                     promotion: {
                         promotionName: '',
                         startDate: new Date(),
@@ -86,6 +92,7 @@ function AdminServices() {
 
     return (
         <section className="container-fluid py-3">
+            {/* <pre>{JSON.stringify(values, 4, 4)}</pre> */}
             <h3>Create Service</h3>
             <p className="mb-3">Create a new service by yourself</p>
             <Form onSubmit={handleSubmit}>
@@ -112,6 +119,30 @@ function AdminServices() {
                             onBlur={handleBlur}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Service Duration</Form.Label>
+                        <Form.Control
+                            name="duration"
+                            placeholder="Enter service price"
+                            isInvalid={touched.duration && errors.duration}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.duration}</Form.Control.Feedback>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label>Service Description</Form.Label>
+                        <Form.Control
+                            name="description"
+                            placeholder="Enter service price"
+                            isInvalid={touched.description && errors.description}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.description}</Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group className="mb-3">
@@ -248,7 +279,7 @@ function ServiceListTable({ showService }) {
                         <th>ID</th>
                         <th>Service name</th>
                         <th>Price</th>
-                        <th>Presented Image</th>
+                        <th>Duration</th>
                         <th>Dependency</th>
                         <th>Actions</th>
                     </tr>
@@ -260,7 +291,7 @@ function ServiceListTable({ showService }) {
                                 <td>{item?.serviceId}</td>
                                 <td>{item?.serviceName}</td>
                                 <td>{item?.price}$</td>
-                                <td></td>
+                                <td>{item?.duration}</td>
                                 <td>{(services || [])?.find?.((e) => e.serviceId === item?.parentId)?.serviceName}</td>
                                 <td>
                                     <Button
@@ -521,6 +552,8 @@ function UpdateService({ show, onHide, serviceId }) {
             title: foundService?.serviceName,
             parentId: foundService?.parentId,
             price: foundService?.price,
+            duration: foundService?.duration,
+            description: foundService?.description,
             promotion: null,
         },
         validationSchema: serviceSchema,
@@ -584,6 +617,33 @@ function UpdateService({ show, onHide, serviceId }) {
                                 onBlur={handleBlur}
                             ></Form.Control>
                             <Form.Control.Feedback type="invalid">{errors?.price}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Duration</Form.Label>
+                            <Form.Control
+                                name="duration"
+                                placeholder="Enter service duration"
+                                value={values?.duration}
+                                isInvalid={touched.duration && errors.duration}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.duration}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label>Service Description</Form.Label>
+                            <Form.Control
+                                name="description"
+                                as="textarea"
+                                placeholder="Enter service description"
+                                value={values?.description}
+                                isInvalid={touched.description && errors.description}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                            ></Form.Control>
+                            <Form.Control.Feedback type="invalid">{errors?.description}</Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group className="mb-3">
@@ -712,4 +772,5 @@ function UpdateService({ show, onHide, serviceId }) {
         </Modal>
     );
 }
+
 export default AdminServices;

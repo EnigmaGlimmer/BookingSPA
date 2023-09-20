@@ -155,13 +155,13 @@ function Home() {
                         <div className="nail-care-title">{home?.messages2?.title}</div>
                         <p>{home?.messages2?.content}</p>
                     </div>
-                    <div className="nail-care" id="st-messages3">
+                    {/* <div className="nail-care" id="st-messages3">
                         <div className="nail-care-img">
                             <img src={bestLashes} alt="nail care" width={'100%'} loading="lazy" />
                         </div>
                         <div className="nail-care-title">{home?.messages3?.title}</div>
                         <p>{home?.messages3?.content}</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* Service Quality */}
@@ -202,6 +202,11 @@ function Home() {
                                                 <div className="other-list-dashed"></div>
                                                 {/* <p>{item.price}$</p> */}
                                                 <p>-20%</p>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">{item?.duration}</div>
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
@@ -237,6 +242,11 @@ function Home() {
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
                                                 <p>{item.price}$</p>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.serviceName}</div>
+                                                    <div className="mb-1">{item?.duration}</div>
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
                                             </div>
                                         );
                                     })}
