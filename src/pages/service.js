@@ -20,9 +20,11 @@ import * as DOMPurify from 'dompurify';
 const listImg = [
     'https://media.glamour.com/photos/62fc067841e2129275280833/1:1/w_894,h_894,c_limit/Untitled%20design%20(1).png',
     'https://bonsainailspalincoln.com/wp-content/uploads/2022/06/about-1-1.jpg',
+    'https://img.grouponcdn.com/deal/4RGKHMEf4BG6By9xMQcewVqExUcS/4R-2000x1200/v1/t600x362.jpg',
     'https://purespauk.com/cdn/shop/products/GelMani_c1f5c753-d706-46db-9ba8-6918d6e13bb8.jpg?v=1635170188',
     'https://s3-media0.fl.yelpcdn.com/bphoto/vk0wsuV7YLXSne612HtXPA/348s.jpg',
     'https://media-cdn.tripadvisor.com/media/photo-m/1280/20/c6/ee/00/wonderful-nail-spa.jpg',
+    'https://seydamakeupandmore.de/wp-content/uploads/2020/10/Cutie-Pie_IMG_2362.1510-500x500.jpg',
 ];
 
 function Service() {
