@@ -28,6 +28,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
 import { Button } from 'react-bootstrap';
 
+//
 import BookingPage from './booking';
 
 // Content
@@ -35,7 +36,12 @@ import BookingPage from './booking';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSettingList } from '../store/settings/action';
 import { Link } from 'react-router-dom';
+
+// Hooks
 import useService from '../hooks/useServices';
+
+// Animation
+import { animated, useSpring } from '@react-spring/web';
 
 function Home() {
     document.title = 'Little Daisy - Home';
@@ -58,6 +64,19 @@ function Home() {
     React.useEffect(() => {
         dispatch(getSettingList('home'));
     }, [dispatch]);
+
+    const [openedDescription, setOpenDescription] = React.useState({
+        open: false,
+        serviceId: null,
+    });
+
+    // Animation
+    const animatedDescription = useSpring({
+        to: {
+            maxHeight: openedDescription?.open ? '200px' : null,
+            transition: 'max-height 0.4s linear',
+        },
+    });
 
     return (
         <section>
@@ -148,7 +167,12 @@ function Home() {
                 <div className="three-form">
                     <div className="nail-care" id="st-messages1">
                         <div className="nail-care-img">
-                            <img src={nailCare} alt="nail care" width={'100%'} loading="lazy" />
+                            <img
+                                src={home?.messages1?.image?.[0] || nailArt}
+                                alt="nail care"
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                         <div className="nail-care-title">{home?.messages1?.title}</div>
                         <p
@@ -159,7 +183,12 @@ function Home() {
                     </div>
                     <div className="nail-care" id="st-messages2">
                         <div className="nail-care-img">
-                            <img src={nailArt} alt="nail care" width={'100%'} loading="lazy" />
+                            <img
+                                src={home?.messages2?.image?.[1] || nailCare}
+                                alt="nail care"
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                         <div className="nail-care-title">{home?.messages2?.title}</div>
                         <p
@@ -214,23 +243,36 @@ function Home() {
                                     ?.childs?.slice(0, 5)
                                     ?.map?.((item, index) => {
                                         return (
-                                            <div className="other-list-item" key={index}>
-                                                <p>{item.serviceName}</p>
-                                                <div className="other-list-dashed"></div>
-                                                {/* <p>{item.price}$</p> */}
-                                                <p>{item.price}$</p>
-                                                <div className="other-item-explain">
-                                                    <div className="mb-1">
-                                                        <b>{item?.serviceName}</b>
-                                                    </div>
-                                                    <div className="mb-1">{item?.duration}</div>
-                                                    <div className="mb-1">{item?.description}</div>
+                                            <>
+                                                <div
+                                                    className="other-list-item"
+                                                    key={index}
+                                                    onMouseEnter={() =>
+                                                        setOpenDescription({
+                                                            open: true,
+                                                            serviceId: item?.serviceId,
+                                                        })
+                                                    }
+                                                    onTouchStart={() =>
+                                                        setOpenDescription({
+                                                            open: true,
+                                                            serviceId: item?.serviceId,
+                                                        })
+                                                    }
+                                                >
+                                                    <p>{item.serviceName}</p>
+                                                    <div className="other-list-dashed"></div>
+                                                    <p>{item.duration}</p>
                                                 </div>
-                                            </div>
+
+                                                <animated.div style={animatedDescription}>
+                                                    <div className="my-2">{item?.description}...</div>
+                                                </animated.div>
+                                            </>
                                         );
                                     })}
                             </div>
-                            <div>
+                            <div className="mt-2">
                                 <div className="btn-frame-dark">
                                     <Link to="/booking" className="link-text">
                                         <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark">
@@ -261,7 +303,7 @@ function Home() {
                                             <div className="other-list-item" key={index}>
                                                 <p>{item.serviceName}</p>
                                                 <div className="other-list-dashed"></div>
-                                                <p>{item.price}$</p>
+                                                <p>{item.duration}</p>
                                                 <div className="other-item-explain">
                                                     <div className="mb-1">
                                                         <b>{item?.serviceName}</b>
