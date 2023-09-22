@@ -44,7 +44,7 @@ function Footer() {
                 <Row className="align-items-stretch">
                     <Col sm="12" xl="4" className="text-sm-center text-xl-start">
                         <FullLogo></FullLogo>
-                        <p className="mt-5">Little Daisy, a fabulous salon theme. Just as stunning as your nail art!</p>
+                        <p className="mt-5">Little Daisy, a fabulous salon for your beautiful Nails and Lashes</p>
                         <p>
                             <b>Phone: </b>+{contact?.phone}
                         </p>
@@ -128,9 +128,9 @@ function Footer() {
                     </Col>
                 </Row>
             </Container>
-            <div id="copyright" className="py-2 text-center">
+            {/* <div id="copyright" className="py-2 text-center">
                 <p>Fabulous salon theme. Just as stunning as your nail art! @Copyright by Catmedia</p>
-            </div>
+            </div> */}
         </section>
     );
 }

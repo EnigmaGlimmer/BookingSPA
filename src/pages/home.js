@@ -146,7 +146,7 @@ function Home() {
                                     }}
                                 ></p>
                             </div>
-                            <div>
+                            {/* <div>
                                 <Button
                                     type="button"
                                     variant="outline"
@@ -154,7 +154,7 @@ function Home() {
                                 >
                                     About Us
                                 </Button>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="intro-img-flower-bot">
                             <img alt="deco" src={homeFlowerDeco} width={'100%'} loading="lazy" />
@@ -243,32 +243,20 @@ function Home() {
                                     ?.childs?.slice(0, 5)
                                     ?.map?.((item, index) => {
                                         return (
-                                            <>
-                                                <div
-                                                    className="other-list-item"
-                                                    key={index}
-                                                    onMouseEnter={() =>
-                                                        setOpenDescription({
-                                                            open: true,
-                                                            serviceId: item?.serviceId,
-                                                        })
-                                                    }
-                                                    onTouchStart={() =>
-                                                        setOpenDescription({
-                                                            open: true,
-                                                            serviceId: item?.serviceId,
-                                                        })
-                                                    }
-                                                >
-                                                    <p>{item.serviceName}</p>
+                                            <div key={index} className="other-list-item-form">
+                                                <div className="other-list-item">
+                                                    <p>
+                                                        <b>{item.serviceName}</b>
+                                                    </p>
                                                     <div className="other-list-dashed"></div>
-                                                    <p>{item.duration}</p>
+                                                    <p>
+                                                        <b>{item.duration}</b>
+                                                    </p>
                                                 </div>
-
-                                                <animated.div style={animatedDescription}>
-                                                    <div className="my-2">{item?.description}...</div>
-                                                </animated.div>
-                                            </>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
+                                            </div>
                                         );
                                     })}
                             </div>
@@ -300,15 +288,17 @@ function Home() {
                                     ?.childs?.slice?.(0, 5)
                                     ?.map?.((item, index) => {
                                         return (
-                                            <div className="other-list-item" key={index}>
-                                                <p>{item.serviceName}</p>
-                                                <div className="other-list-dashed"></div>
-                                                <p>{item.duration}</p>
+                                            <div key={index} className="other-list-item-form">
+                                                <div className="other-list-item">
+                                                    <p>
+                                                        <b>{item.serviceName}</b>
+                                                    </p>
+                                                    <div className="other-list-dashed"></div>
+                                                    <p>
+                                                        <b>{item.duration}</b>
+                                                    </p>
+                                                </div>
                                                 <div className="other-item-explain">
-                                                    <div className="mb-1">
-                                                        <b>{item?.serviceName}</b>
-                                                    </div>
-                                                    <div className="mb-1">{item?.duration}</div>
                                                     <div className="mb-1">{item?.description}</div>
                                                 </div>
                                             </div>
@@ -341,30 +331,33 @@ function Home() {
                     </div>
                 </div>
             </div>
-            {/* Booking */}
-            <div className="booking">
-                {/* <div className="booking-form">
-                    <div className="booking-time-form">
-                        <div className="booking-intro">Dedication</div>
-                        <div className="booking-title">Working Hours</div>
-                        <div className="booking-time-frame">
-                            <div className="booking-time">
-                                <div className="booking-time-name">Frame 1</div>
-                                <div className="booking-hour">9A.M - 10A.M</div>
-                            </div>
+            <div className="home-promotion">
+                <div className="home-promotion-form">
+                    <div className="home-promotion-content">
+                        <div className="home-promotion-title">Your Perfect Spa Journey</div>
+                        <Link to="/promotion" className="link-text">
+                            <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn">
+                                Promotion
+                            </button>
+                        </Link>
+                        <div className="home-promotion-slogan">Đẹp - Chất Lượng - An Toàn</div>
+                    </div>
+                    <div className="home-promotion-img-form">
+                        <div className="home-promotion-img-nail">
+                            <img src={bannerSmall} />
+                        </div>
+                        <div className="home-promotion-img-lash">
+                            <img src={lashesServices} />
                         </div>
                     </div>
-                    <div className="booking-calendar">
-                        <div className="booking-calendar-title">Choose the right date for your service use</div>
-                        <div className="booking-calendar-module">
-                            <Booking></Booking>
-                        </div>
-                    </div>
-                </div> */}
-                <BookingPage></BookingPage>
+                </div>
             </div>
+            {/* Booking */}
+            {/* <div className="booking">
+                <BookingPage></BookingPage>
+            </div> */}
             {/* Gallery */}
-            <div className="gallery" id="st-galleries">
+            {/* <div className="gallery" id="st-galleries">
                 <div className="gallery-form">
                     <h1 className="gallery-title">Gallery</h1>
                     <div className="gallery-img-form">
@@ -398,9 +391,9 @@ function Home() {
                         <HiOutlineArrowNarrowDown></HiOutlineArrowNarrowDown>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* Comment and Review */}
-            <div className="review py-5" id="st-testimonials">
+            {/* <div className="review py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">{home?.testimonials?.subtitle}</h1>
@@ -454,9 +447,9 @@ function Home() {
                         </Swiper>
                     </div>
                 </div>
-            </div>
+            </div> */}
             {/* Comment and Review Responsive*/}
-            <div className="review-res py-5" id="st-testimonials">
+            {/* <div className="review-res py-5" id="st-testimonials">
                 <div className="review-form">
                     <div className="review-header">
                         <h1 className="review-intro">TESTEMONIALS THOUGHTS</h1>
@@ -502,7 +495,7 @@ function Home() {
                         </Swiper>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </section>
     );
 }

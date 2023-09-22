@@ -18,14 +18,11 @@ import { Link, useSearchParams } from 'react-router-dom';
 import * as DOMPurify from 'dompurify';
 
 const listImg = [
-    aboutDaisy1,
-    aboutDaisy2,
-    aboutDaisy3,
-    aboutDaisy4,
-    aboutDaisy1,
-    aboutDaisy2,
-    aboutDaisy3,
-    aboutDaisy4,
+    'https://media.glamour.com/photos/62fc067841e2129275280833/1:1/w_894,h_894,c_limit/Untitled%20design%20(1).png',
+    'https://bonsainailspalincoln.com/wp-content/uploads/2022/06/about-1-1.jpg',
+    'https://purespauk.com/cdn/shop/products/GelMani_c1f5c753-d706-46db-9ba8-6918d6e13bb8.jpg?v=1635170188',
+    'https://s3-media0.fl.yelpcdn.com/bphoto/vk0wsuV7YLXSne612HtXPA/348s.jpg',
+    'https://media-cdn.tripadvisor.com/media/photo-m/1280/20/c6/ee/00/wonderful-nail-spa.jpg',
 ];
 
 function Service() {
@@ -49,9 +46,9 @@ function Service() {
         <div>
             {/* Service Banner */}
             <div className="service-banner py-5" id="st-banner">
-                <div className="service-banner-form">
+                {/* <div className="service-banner-form">
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
-                </div>
+                </div> */}
             </div>
 
             {/* Service Name */}
@@ -62,34 +59,11 @@ function Service() {
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(blog?.blogContent),
                     }}
-                >
-                    {/* <div className="service-name-title">{service?.product?.title}</div>
-                    <p className="service-name-content">{service?.product?.content}</p>
-                    <div className="service-name-content-list">
-                        <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                        <p className="">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
-                    </div>
-                    <div className="service-name-img-form">
-                        <img src={serviceContent} alt="" width={'100%'} />
-                        <p className="service-name-img-alt">Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
-                    </div>
-                    <p className="service-name-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Eget magna done fermentum iaculis eu non diam phasellus
-                        vestibulum. Id donec ultrices tincidunt arcu. Malesuada proin libero nunc consequat interdum
-                        varius sit amet. Eu ultrices vitae auctor eu augue ut lectus. Suscipit tellus mauris a diam.
-                        Viverra orci sagittis eu volutpat odio facilisis etmagnis dis parturient mananis interdum arcu
-                        ac tortor dignissim convallis aenean.
-                    </p>
-                    <p className="service-name-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Eget magna done fermentum iaculis eu non diam phasellus
-                        vestibulum. Id donec ultrices tincidunt arcu. Malesuada proin libero nunc consequat interdum
-                        varius sit amet. Eu ultrices vitae auctor eu augue ut lectus. Suscipit tellus mauris a diam.
-                        Viverra orci sagittis eu volutpat odio facilisis etmagnis dis parturient mananis interdum arcu
-                        ac tortor dignissim convallis aenean.
-                    </p> */}
+                ></div>
+                <div style={{ textAlign: 'center' }}>
+                    <Link to={'/booking'}>
+                        <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
+                    </Link>
                 </div>
             </div>
             {/* Daisy Images */}
@@ -134,11 +108,7 @@ function Service() {
                                 return (
                                     <SwiperSlide key={index}>
                                         <div className="about-image-store-form-child">
-                                            <img src={item} alt="" width={'100%'} />
-                                            <p className="about-image-store-form-content">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor.
-                                            </p>
+                                            <img src={item} height={'100%'} width={'100%'} />
                                         </div>
                                     </SwiperSlide>
                                 );
@@ -148,7 +118,7 @@ function Service() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="about-booking" id="st-serviceBooking">
+            {/* <div className="about-booking" id="st-serviceBooking">
                 <div className="about-booking-deco booking-f">
                     <img src={homeFlowerDeco} alt="" width={'100%'} />
                 </div>
@@ -161,7 +131,7 @@ function Service() {
                         <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Book Now</button>
                     </Link>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
