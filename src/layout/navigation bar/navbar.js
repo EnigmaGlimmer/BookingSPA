@@ -68,9 +68,9 @@ function Navigation() {
                         <Nav.Link className="menu-link" data-active="false" href="/">
                             Home
                         </Nav.Link>
-                        <Nav.Link className="menu-link" data-active="false" href="/about">
+                        {/* <Nav.Link className="menu-link" data-active="false" href="/about">
                             About us
-                        </Nav.Link>
+                        </Nav.Link> */}
                         <Nav.Link
                             className="menu-link"
                             data-active="false"
