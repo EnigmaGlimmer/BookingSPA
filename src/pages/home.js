@@ -340,7 +340,7 @@ function Home() {
                                 Promotion
                             </button>
                         </Link>
-                        <div className="home-promotion-slogan">Đẹp - Chất Lượng - An Toàn</div>
+                        <div className="home-promotion-slogan">Visit to receive our promotions!</div>
                     </div>
                     <div className="home-promotion-img-form">
                         <div className="home-promotion-img-nail">
