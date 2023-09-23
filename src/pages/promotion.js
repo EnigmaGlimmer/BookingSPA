@@ -313,7 +313,7 @@ function SinglePromotionThumbnail({ id, title, postedDate, categories, content, 
                         __html: DOMPurify.sanitize(content),
                     }}
                 ></p>
-                {/* <Button
+                <Button
                     variant="outline"
                     className="text-uppercase btn-primary-outline"
                     style={{ borderRadius: 'unset' }}
@@ -326,7 +326,7 @@ function SinglePromotionThumbnail({ id, title, postedDate, categories, content, 
                     }}
                 >
                     Read More
-                </Button> */}
+                </Button>
             </div>
         </article>
     );
