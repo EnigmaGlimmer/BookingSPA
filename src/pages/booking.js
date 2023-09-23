@@ -33,6 +33,7 @@ import { assignBooking, getBookingList } from '../api';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import useService from '../hooks/useServices';
+import { Link } from 'react-router-dom';
 
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
@@ -65,7 +66,7 @@ function BookingPage() {
         <div className="intro my-5">
             <StepComponent step={step} setStep={setStep}></StepComponent>
             {/* Booking Process */}
-            <div className={`booking-process ${step === 2 ? 'my-4' : ''}`}>
+            <div className={`booking-process ${step === 3 ? 'my-4' : ''}`}>
                 <div className="booking-process-form">
                     <div className="booking-process-line"></div>
                     <div className="booking-step-form">
@@ -267,7 +268,7 @@ export function Step1({ setStep, validation }) {
                                 )}
                         </Form.Group>
                     </div>
-                    <div style={{ paddingTop: '30px' }}>
+                    {/* <div style={{ paddingTop: '30px' }}>
                         <input
                             type="text"
                             name="messenger"
@@ -279,7 +280,7 @@ export function Step1({ setStep, validation }) {
                         {validation?.touched.messenger && validation?.errors.messenger && (
                             <div className="feedback-invalid">{validation.errors?.messenger}</div>
                         )}
-                    </div>
+                    </div> */}
                     <div>
                         <Button
                             variant="outline"
@@ -612,8 +613,7 @@ function Step3({
 
     return (
         <>
-            <div className="booking-component">
-                {/* <pre>{JSON.stringify(timeRange, 4, 4)}</pre> */}
+            <div className="booking-component my-5">
                 <Booking
                     activeDate={valueCheckinDate}
                     initialTimeRange={
@@ -725,21 +725,23 @@ function BookingCompleted({ values }) {
                         <div className="completed-item-content">{values?.customer?.customerPhone}</div>
                     </div>
                 </div>
-                <div className="completed-mess">
+                {/* <div className="completed-mess">
                     <span>
                         <MdOutlineMailOutline></MdOutlineMailOutline>
                     </span>
-                    <div className="completed-mess-content">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna.
-                    </div>
-                </div>
+                    <div className="completed-mess-content">{values.customer.messenger}</div>
+                </div> */}
                 <span className="completed-total-fee">
                     <span className="completed-total-fee-title">Your service has a price</span>
                     <span className="completed-total-price">
-                        {services?.find((e) => e.serviceId === values.booking.serviceId)?.price}$
+                        <b>{services?.find((e) => e.serviceId === values.booking.serviceId)?.price}$</b>
                     </span>
                 </span>
+            </div>
+            <div className="my-3" style={{ textAlign: 'center' }}>
+                <Link to="/">
+                    <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Homepage</button>
+                </Link>
             </div>
         </div>
     );

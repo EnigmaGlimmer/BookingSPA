@@ -25,3 +25,7 @@
     text-align: center;
     padding: 20px;
 }
+.about-image-store-form-child {
+    height: 100%;
+    aspect-ratio: 1/1;
+}
