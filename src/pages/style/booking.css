@@ -12,6 +12,18 @@
 .booking-input:focus {
     outline: none;
 }
+.intro-img-flower-mid{
+    position: absolute;
+    top: 20%;
+    z-index: -1;
+    right: 17%;
+    width: 20%;
+    opacity: 0.8;
+
+}
+.booking-form-input input{
+background-color: unset;
+}
 /* Booking Process */
 .booking-process {
     margin-top: 25vh;

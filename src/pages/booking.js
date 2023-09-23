@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import introBig from '../images/introBig.png';
 import introSmall from '../images/introSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
+import singleFlower from '../images/singleFlower.svg'
 
 // Redux store
 import { useDispatch, useSelector } from 'react-redux';
@@ -298,6 +299,9 @@ export function Step1({ setStep, validation }) {
                         </Button>
                     </div>
                 </div>
+                <div className="intro-img-flower-mid">
+                    <img alt="deco" src={singleFlower} width={'100%'} />
+                </div>
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
@@ -400,6 +404,9 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                             })}
                         </div>
                     </div>
+                </div>
+                <div className="intro-img-flower-mid">
+                    <img alt="deco" src={singleFlower} width={'100%'} />
                 </div>
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -677,7 +684,7 @@ function Step3({
                     className="my-btn text-uppercase px-5 btn-primary-outline btn btn-outline"
                     // onClick={() => validation.handleSubmit()}
                 >
-                    Done
+                    Submit Your Booking
                 </Button>
             </div>
         </>
@@ -693,10 +700,9 @@ function BookingCompleted({ values }) {
     });
     return (
         <div className="completed">
-            <h1 className="completed-title">Great and Thanks a lot!</h1>
+            <h1 className="completed-title">Great and thanks for your booking!</h1>
             <p className="completed-content">
-                You have successfully booked the service of Little Daisy. Here is your bill. Our staff will contact you
-                shortly!
+                You have successfully booked the service with Little Daisy. Here is your booking information. Hope to see you then!
             </p>
             <div className="completed-form">
                 <div className="completed-item-form">
@@ -708,7 +714,7 @@ function BookingCompleted({ values }) {
                     </div>
                     <div className="completed-item">
                         <div className="completed-item-name">Date</div>
-                        <div className="completed-item-content">{values?.booking?.checkinDate}</div>
+                        <div className="completed-item-content">{moment(values?.booking?.checkinDate).format('DD-MM-yyyy')}</div>
                     </div>
                     <div className="completed-item">
                         <div className="completed-item-name">Time</div>
