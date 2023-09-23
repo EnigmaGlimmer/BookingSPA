@@ -16,6 +16,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 
 // DOMPurify
 import * as DOMPurify from 'dompurify';
+import { useContact } from '../hooks/useContact';
 
 const listImg = [
     'https://media.glamour.com/photos/62fc067841e2129275280833/1:1/w_894,h_894,c_limit/Untitled%20design%20(1).png',
@@ -38,6 +39,8 @@ function Service() {
         },
     });
 
+    const contact = useContact();
+
     useEffect(() => {}, [searchParams]);
 
     if (!searchParams.get('name')) {
@@ -47,11 +50,11 @@ function Service() {
     return (
         <div>
             {/* Service Banner */}
-            {/* <div className="service-banner container py-5" id="st-banner">
-                <div className="mx-auto">
+            <div className="service-banner container py-5" id="st-banner">
+                {/* <div className="mx-auto">
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
-                </div>
-            </div> */}
+                </div> */}
+            </div>
 
             {/* Service Name */}
             <div className="service-name container py-2" id="st-serviceProduct">
@@ -74,7 +77,7 @@ function Service() {
                     <div className="about-image-store-content">
                         <div className="about-image-store-title">{service?.listImage?.title}</div>
                         <div className="about-image-store-address">
-                            {service.listImage.content} <span className="about-image-store-btn">VIEW MAPS</span>
+                            ADD: {contact?.address} <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
                     </div>
                     {/* <div className="about-image-store-list">

@@ -236,8 +236,7 @@ function Contact() {
                 <OffCanvasLogo></OffCanvasLogo>
             </div>
             <p className="mt-5 px-4 text-center mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna.
+                Little Daisy, a fabulous salon for your beautiful Nails and Lashes
             </p>
             <div>
                 <Form className="d-flex position-relative align-items-center">
@@ -256,31 +255,32 @@ function Contact() {
 
             <br></br>
             <br></br>
-
+{/* 
             <h3 className="text-center">Lorem ipsum dolor sit, consectetur adipiscing elit</h3>
             <br></br>
-            <div className="line mb-2"></div>
+            <div className="line mb-2"></div> */}
             <Row className="justify-content-between py-3">
                 <Col>
                     <p className="text-nowrap">E: {contact?.email}</p>
                     <p>P: {contact?.phone}</p>
+                    <p>A: {contact?.address}</p>
                 </Col>
                 <Col>
-                    <h4 className="text-end">Follow us</h4>
-                    <Row className="mb-3 justify-content-end" style={{ flexWrap: 'nowrap' }}>
+                    <h4 className="text-start">Follow us</h4>
+                    <Row className="mb-3 justify-content-start" style={{ flexWrap: 'nowrap' }}>
                         <Col className="col-auto">
                             <a href={contact?.facebook} target="_blank">
-                                <BiLogoFacebookCircle></BiLogoFacebookCircle>
+                                <BiLogoFacebookCircle style={{fontSize:'25px'}}></BiLogoFacebookCircle>
                             </a>
                         </Col>
                         <Col className="col-auto">
                             <a href={contact?.whatsapp} target="_blank">
-                                <BiLogoWhatsapp></BiLogoWhatsapp>
+                                <BiLogoWhatsapp style={{fontSize:'25px'}}></BiLogoWhatsapp>
                             </a>
                         </Col>
                         <Col className="col-auto">
                             <a href={contact?.instagram} target="_blank">
-                                <BiLogoInstagram></BiLogoInstagram>
+                                <BiLogoInstagram style={{fontSize:'25px'}}></BiLogoInstagram>
                             </a>
                         </Col>
                     </Row>

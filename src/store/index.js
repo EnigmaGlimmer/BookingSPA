@@ -12,3 +12,4 @@ export function configureStore(initialState) {
     sagaMiddleware.run(rootSaga);
     return store;
 }
+
