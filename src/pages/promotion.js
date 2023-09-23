@@ -428,7 +428,7 @@ function SinglePromotion() {
                 ></article>
 
                 {/* Comment */}
-                <div>
+                {/* <div>
                     <h4>Comments</h4>
                     <Row>
                         <Col>
@@ -453,7 +453,7 @@ function SinglePromotion() {
                     <h4>Leave a Reply</h4>
                     <p>Logged in as cao tien dat. Edit your profile. Log out?</p>
                     <Form.Control as="textarea" rows={3} placeholder="Your comment *" className="w-100"></Form.Control>
-                </div>
+                </div> */}
             </article>
         </DocumentMeta>
     );
