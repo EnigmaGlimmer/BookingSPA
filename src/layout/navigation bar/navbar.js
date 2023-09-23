@@ -46,7 +46,8 @@ function Navigation() {
     const { services } = useService({
         request: {
             skip: 0,
-            take: 2,
+            take: 3,
+            flat: 0,
         },
     });
 
@@ -101,6 +102,7 @@ function Navigation() {
                                 })) || []
                         }
                         styleContainer={{
+                            boxShadow: '1px 2px 5px var(--clr-border)',
                             position: 'absolute',
                             top: navRef?.current?.getBoundingClientRect?.()?.height,
                             left: linkPosition,
@@ -195,12 +197,27 @@ function Navigation() {
                                 setShowDropdown((i) => !i);
                                 setLinkPosition(e.currentTarget.getBoundingClientRect().left);
                             }}
-                            onMouseOver={(e) => {
-                                console.log(e.currentTarget.getBoundingClientRect());
-                            }}
                         >
                             Services
+                            <DropdownMenu
+                                submenu={
+                                    services
+                                        ?.filter((s) => {
+                                            return s.parentId === 0;
+                                        })
+                                        .map?.((service) => ({
+                                            title: service?.serviceName,
+                                            link: `service?name=${service?.serviceName}`,
+                                            childs: service?.childs?.map?.((c) => ({
+                                                title: c?.serviceName,
+                                                link: `service?name=${c?.serviceName}`,
+                                            })),
+                                        })) || []
+                                }
+                                show={showDropdown}
+                            ></DropdownMenu>
                         </Nav.Link>
+
                         <Nav.Link className="px-2 menu-link" data-active="false" href="/promotion">
                             Promotion
                         </Nav.Link>

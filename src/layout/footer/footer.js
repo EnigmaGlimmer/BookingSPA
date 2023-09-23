@@ -87,9 +87,9 @@ function Footer() {
                     <Col sm="6" md="6" xl="2">
                         <h3>Services</h3>
                         <ul>
-                            {services.map((s) => {
+                            {services.map((s, index) => {
                                 return (
-                                    <li>
+                                    <li key={index}>
                                         <a href={`service?name=${s.serviceName}`} className="link-text">
                                             {s?.serviceName}
                                         </a>

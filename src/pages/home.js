@@ -147,13 +147,15 @@ function Home() {
                                 ></p>
                             </div>
                             <div>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                                >
-                                    About Us
-                                </Button>
+                                <Link to="/about" className="link-text">
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="my-btn text-uppercase btn-primary-outline btn btn-outline"
+                                    >
+                                        About Us
+                                    </Button>
+                                </Link>
                             </div>
                         </div>
                         <div className="intro-img-flower-bot">
@@ -342,7 +344,7 @@ function Home() {
                 </div>
             </div>
             {/* Booking */}
-            <div className="booking">
+            <div className="booking" id="st-booking">
                 {/* <div className="booking-form">
                     <div className="booking-time-form">
                         <div className="booking-intro">Dedication</div>
