@@ -46,7 +46,8 @@ function Footer() {
                         <FullLogo></FullLogo>
                         <p className="mt-5">Little Daisy, a fabulous salon for your beautiful Nails and Lashes</p>
                         <p>
-                            <b>Phone: </b>+{contact?.phone}
+                            <b>Phone: </b>
+                            {contact?.phone}
                         </p>
                         <p>
                             <b>Email: </b>
