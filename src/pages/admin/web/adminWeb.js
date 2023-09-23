@@ -71,6 +71,7 @@ function ContactInformation() {
             whatsapp: contact?.whatsapp || '2543534543',
             latitude: contact?.latitude || '',
             longitude: contact?.longitude || '',
+            address: contact?.address || '',
         },
         enableReinitialize: true,
         onSubmit: (values) => {
@@ -172,6 +173,19 @@ function ContactInformation() {
                             isInvalid={touched.longitude && !!errors?.longitude}
                         ></Form.Control>
                         <Form.Control.Feedback type="invalid">{errors?.longitude}</Form.Control.Feedback>
+                    </Form.Group>
+                </li>
+                <li>
+                    <Form.Group>
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                            name="address"
+                            value={values.address}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            isInvalid={touched.address && !!errors?.address}
+                        ></Form.Control>
+                        <Form.Control.Feedback type="invalid">{errors?.address}</Form.Control.Feedback>
                     </Form.Group>
                 </li>
             </ul>

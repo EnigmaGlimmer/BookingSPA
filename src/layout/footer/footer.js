@@ -46,11 +46,16 @@ function Footer() {
                         <FullLogo></FullLogo>
                         <p className="mt-5">Little Daisy, a fabulous salon for your beautiful Nails and Lashes</p>
                         <p>
-                            <b>Phone: </b>+{contact?.phone}
+                            <b>Phone: </b>
+                            {contact?.phone}
                         </p>
                         <p>
                             <b>Email: </b>
                             {contact?.email}
+                        </p>
+                        <p>
+                            <b>Address: </b>
+                            {contact?.address}
                         </p>
                     </Col>
                     <Col sm="6" md="6" xl="2">

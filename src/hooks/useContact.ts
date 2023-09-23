@@ -12,6 +12,7 @@ type Result = {
     whatsapp: string;
     latitude: number;
     longitude: number;
+    address: string;
 };
 
 export const useContact: (props?: Props) => Result = (props) => {

@@ -16,6 +16,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 
 // DOMPurify
 import * as DOMPurify from 'dompurify';
+import { useContact } from '../hooks/useContact';
 
 const listImg = [
     'https://media.glamour.com/photos/62fc067841e2129275280833/1:1/w_894,h_894,c_limit/Untitled%20design%20(1).png',
@@ -37,6 +38,8 @@ function Service() {
             take: 100,
         },
     });
+
+    const contact = useContact();
 
     useEffect(() => {}, [searchParams]);
 
@@ -74,7 +77,7 @@ function Service() {
                     <div className="about-image-store-content">
                         <div className="about-image-store-title">{service?.listImage?.title}</div>
                         <div className="about-image-store-address">
-                            {service.listImage.content} <span className="about-image-store-btn">VIEW MAPS</span>
+                            ADD: {contact?.address} <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
                     </div>
                     <div className="about-image-store-list">
