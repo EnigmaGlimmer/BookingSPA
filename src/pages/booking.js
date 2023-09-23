@@ -731,12 +731,12 @@ function BookingCompleted({ values }) {
                     </span>
                     <div className="completed-mess-content">{values.customer.messenger}</div>
                 </div> */}
-                <span className="completed-total-fee">
+                {/* <span className="completed-total-fee">
                     <span className="completed-total-fee-title">Your service has a price</span>
                     <span className="completed-total-price">
                         <b>{services?.find((e) => e.serviceId === values.booking.serviceId)?.price}$</b>
                     </span>
-                </span>
+                </span> */}
             </div>
             <div className="my-3" style={{ textAlign: 'center' }}>
                 <Link to="/">

@@ -149,7 +149,7 @@ function Home() {
                 </div>
             </div>
             {/* Three Service */}
-            <div className="three">
+            {/* <div className="three">
                 <div className="three-form">
                     <div className="nail-care" id="st-messages1">
                         <div className="nail-care-img">
@@ -183,19 +183,8 @@ function Home() {
                             }}
                         ></p>
                     </div>
-                    {/* <div className="nail-care" id="st-messages3">
-                        <div className="nail-care-img">
-                            <img src={bestLashes} alt="nail care" width={'100%'} loading="lazy" />
-                        </div>
-                        <div className="nail-care-title">{home?.messages3?.title}</div>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(home?.messages3?.content),
-                            }}
-                        ></p>
-                    </div> */}
                 </div>
-            </div>
+            </div> */}
             {/* Service Quality */}
             <div className="quality" id="st-introServices">
                 <div className="quality-form">
@@ -226,19 +215,20 @@ function Home() {
                             <div className="other-list">
                                 {services
                                     ?.find?.((e) => e.serviceId === 1 || e.serviceName === 'Nail')
-                                    ?.childs?.slice(0, 5)
-                                    ?.map?.((item, index) => {
+                                    ?.childs?.map?.((item, index) => {
                                         return (
                                             <div key={index} className="other-list-item-form">
-                                                <div className="other-list-item">
-                                                    <p>
-                                                        <b>{item.serviceName}</b>
-                                                    </p>
-                                                    <div className="other-list-dashed"></div>
-                                                    <p>
-                                                        <b>{item.duration}</b>
-                                                    </p>
-                                                </div>
+                                                <Link to={`/service?name=${item?.serviceName}`}>
+                                                    <div className="other-list-item">
+                                                        <p>
+                                                            <b>{item.serviceName}</b>
+                                                        </p>
+                                                        <div className="other-list-dashed"></div>
+                                                        <p>
+                                                            <b>{item.duration}</b>
+                                                        </p>
+                                                    </div>
+                                                </Link>
                                                 <div className="other-item-explain">
                                                     <div className="mb-1">{item?.description}</div>
                                                 </div>
@@ -271,19 +261,20 @@ function Home() {
                                     ?.find?.((e) => {
                                         return e.serviceId === 3 || e.serviceName === 'Lashes';
                                     })
-                                    ?.childs?.slice?.(0, 5)
-                                    ?.map?.((item, index) => {
+                                    ?.childs?.map?.((item, index) => {
                                         return (
                                             <div key={index} className="other-list-item-form">
-                                                <div className="other-list-item">
-                                                    <p>
-                                                        <b>{item.serviceName}</b>
-                                                    </p>
-                                                    <div className="other-list-dashed"></div>
-                                                    <p>
-                                                        <b>{item.duration}</b>
-                                                    </p>
-                                                </div>
+                                                <Link to={`/service?name=${item?.serviceName}`}>
+                                                    <div className="other-list-item">
+                                                        <p>
+                                                            <b>{item.serviceName}</b>
+                                                        </p>
+                                                        <div className="other-list-dashed"></div>
+                                                        <p>
+                                                            <b>{item.duration}</b>
+                                                        </p>
+                                                    </div>
+                                                </Link>
                                                 <div className="other-item-explain">
                                                     <div className="mb-1">{item?.description}</div>
                                                 </div>
@@ -326,7 +317,7 @@ function Home() {
                                 Promotion
                             </button>
                         </Link>
-                        <div className="home-promotion-slogan">Visit to receive our promotions!</div>
+                        <div className="home-promotion-slogan">Access to explore our special offers</div>
                     </div>
                     <div className="home-promotion-img-form">
                         <div className="home-promotion-img-nail">

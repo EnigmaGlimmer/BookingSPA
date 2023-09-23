@@ -53,6 +53,10 @@ function Footer() {
                             <b>Email: </b>
                             {contact?.email}
                         </p>
+                        <p>
+                            <b>Address: </b>
+                            {contact?.address}
+                        </p>
                     </Col>
                     <Col sm="6" md="6" xl="2">
                         <h3
