@@ -1,7 +1,6 @@
 import { call, put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import { toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 
 import {
     getSuccess,

@@ -8,12 +8,14 @@ import 'swiper/css/pagination';
 import AppRouter from './router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Event } from './layout';
 
 function App() {
     return (
         <>
             <AppRouter></AppRouter>
             <ToastContainer />
+            <Event></Event>
         </>
     );
 }

@@ -3,33 +3,19 @@ import React from 'react';
 import * as DOMPurify from 'dompurify';
 
 import './style/home.css';
-import { HiOutlineArrowNarrowDown } from 'react-icons/hi';
+
 import bannerSmall from '../images/bannerSmall.png';
 import bannerBig from '../images/bannerBig.png';
 import introBig from '../images/introBig.png';
 import introSmall from '../images/introSmall.png';
 import nailCare from '../images/nailCare.png';
 import nailArt from '../images/nailArt.png';
-import bestLashes from '../images/bestLashes.png';
-import nailService from '../images/nailService.png';
+
 import lashesServices from '../images/lashesService.png';
 import lahesSercviceBottom from '../images/lashesServiceBottom.png';
 import otherBig from '../images/otherBig.png';
 import otherSmall from '../images/otherSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
-import galleryFirst1 from '../images/galleryFirst1.png';
-import galleryFirst2 from '../images/galleryFirst2.png';
-import gallerySecond1 from '../images/gallerySecond1.png';
-import gallerySecond2 from '../images/gallerySecond2.png';
-import galleryThird1 from '../images/galleryThird1.png';
-import galleryThird2 from '../images/galleryThird2.png';
-import reviewUser from '../images/reviewUser.png';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Navigation, Autoplay } from 'swiper/modules';
-import { Button } from 'react-bootstrap';
-
-//
-import BookingPage from './booking';
 
 // Content
 // import home from '../config/content/home.json';
@@ -41,7 +27,7 @@ import { Link } from 'react-router-dom';
 import useService from '../hooks/useServices';
 
 // Animation
-import { animated, useSpring } from '@react-spring/web';
+import { useSpring } from '@react-spring/web';
 
 function Home() {
     document.title = 'Little Daisy - Home';

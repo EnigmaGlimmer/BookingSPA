@@ -50,17 +50,17 @@ function Service() {
     return (
         <div>
             {/* Service Banner */}
-            <div className="service-banner py-5" id="st-banner">
-                {/* <div className="service-banner-form">
+            {/* <div className="service-banner container py-5" id="st-banner">
+                <div className="mx-auto">
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
-                </div> */}
-            </div>
+                </div>
+            </div> */}
 
             {/* Service Name */}
-            <div className="service-name" id="st-serviceProduct">
-                <h1 className="service-name-form mb-3">{searchParams.get('name')}</h1>
+            <div className="service-name container py-2" id="st-serviceProduct">
+                <h1 className="mb-3">{searchParams.get('name')}</h1>
                 <div
-                    className="service-name-form"
+                    style={{ textAlign: 'justify' }}
                     dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(blog?.blogContent),
                     }}
@@ -80,7 +80,7 @@ function Service() {
                             ADD: {contact?.address} <span className="about-image-store-btn">VIEW MAPS</span>
                         </div>
                     </div>
-                    <div className="about-image-store-list">
+                    {/* <div className="about-image-store-list">
                         <Swiper
                             slidesPerView={1}
                             spaceBetween={30}
@@ -119,7 +119,7 @@ function Service() {
                                 );
                             })}
                         </Swiper>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* Booking */}

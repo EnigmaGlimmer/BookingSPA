@@ -350,9 +350,10 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                     </div>
                     <div className="booking-input-item">
                         <div className="booking-form-input">
-                            {services?.map?.((s) => {
+                            {services?.map?.((s, index) => {
                                 return (
                                     <Button
+                                        key={index}
                                         type="button"
                                         variant="outline"
                                         onClick={() => {
@@ -393,7 +394,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                                         }
                                     >
                                         <div className="booking-item-title">{item?.serviceName}</div>
-                                        <div className="booking-item-price">{item?.price}$</div>
+                                        <div className="booking-item-price">{item?.duration}</div>
                                     </div>
                                 );
                             })}
@@ -436,9 +437,30 @@ function Step3({
     onChangeDate,
     onChangeTimeStart,
     onChangeTimeEnd,
+    hourMorningWorkStart = 9,
+    minuteMorningWorkStart = 0,
+    hourMorningWorkEnd = 12,
+    minuteMorningWorkEnd = 30,
+    hourAfternoonWorkStart = 13,
+    minuteAfternoonWorkStart = 0,
+    hourAfternoonWorkEnd = 17,
+    minuteAfternoonWorkEnd = 0,
 }) {
+    // let hourMorningWorkStart = 9;
+    // let minuteMorningWorkStart = 0;
+    // let hourMorningWorkEnd = 12;
+    // let minuteMorningWorkEnd = 30;
+
+    // let hourAfternoonWorkStart = 13;
+    // let minuteAfternoonWorkStart = 0;
+    // let hourAfternoonWorkEnd = 17;
+    // let minuteAfternoonWorkEnd = 0;
+
     const [selectedDate, setSelectedDate] = useState();
     const [reservedTimeRange, setReversed] = useState([]);
+    const [timeOffset, setTimeOffset] = useState(1);
+    const [timeRange, setTimeRange] = useState([]);
+
     const { services } = useService({
         request: {
             skip: 0,
@@ -446,6 +468,7 @@ function Step3({
             flat: 0,
         },
     });
+
     useEffect(() => {
         let searchBy = 'Date';
         let keyword = moment(selectedDate).format('DD/MM/YYYY');
@@ -485,22 +508,127 @@ function Step3({
                 toast.error(error);
             });
     }, [selectedDate, valueServiceId, services]);
+
+    useEffect(() => {
+        if (services.length > 0) {
+            let selectedDuration = services
+                ?.reduce((pre, cur) => [...pre, cur, ...cur.childs], [])
+                ?.find?.((item) => item.serviceId === valueServiceId)?.duration;
+            if (selectedDuration) {
+                let array = selectedDuration?.includes?.('-')
+                    ? selectedDuration?.split('-')?.map?.((time) => {
+                          const number = Number(time.match(/\d+/g)[0]);
+
+                          return time.includes('hours') || time.includes('hour') ? number * 60 : number;
+                      })
+                    : (() => {
+                          console.log(selectedDuration);
+                          const number = Number(selectedDuration.match(/\d+/g)[0]);
+
+                          return [
+                              selectedDuration.includes('hours') || selectedDuration.includes('hour')
+                                  ? number * 60
+                                  : number,
+                          ];
+                      })();
+
+                console.log(array);
+
+                let timeOffset = Math.max(...array);
+
+                // let timeOffset = Math.max(selectedDuration.match(/\d+/g));
+                console.log(selectedDuration, timeOffset);
+                setTimeOffset(timeOffset);
+            }
+        }
+    }, [services, valueServiceId]);
+
+    useEffect(() => {
+        console.log(timeOffset);
+        function calcTimeRanges(timeOffset) {
+            let h = hourMorningWorkStart;
+            let m = minuteMorningWorkStart;
+
+            let morningTimeArray = [];
+            let afternoonTimeArray = [];
+
+            while (h <= hourAfternoonWorkEnd) {
+                let range;
+
+                if (h >= hourMorningWorkStart && h < hourMorningWorkEnd) {
+                    range = [
+                        `${h.toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}:${m.toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}`,
+                        `${(h + Math.floor((m + timeOffset) / 60)).toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}:${(h + Math.floor((m + timeOffset) / 60) === hourMorningWorkEnd
+                            ? Math.min((m + timeOffset) % 60, minuteMorningWorkEnd)
+                            : (m + timeOffset) % 60
+                        ).toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}`,
+                    ];
+                    morningTimeArray = [...morningTimeArray, range];
+                } else if (h >= hourAfternoonWorkStart && h < hourAfternoonWorkEnd) {
+                    range = [
+                        `${h.toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}:${m.toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}`,
+                        `${(h + Math.floor((m + timeOffset) / 60)).toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}:${(h + Math.floor((m + timeOffset) / 60) === hourAfternoonWorkEnd
+                            ? Math.min((m + timeOffset) % 60, minuteAfternoonWorkEnd)
+                            : (m + timeOffset) % 60
+                        ).toLocaleString('en-US', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false,
+                        })}`,
+                    ];
+                    afternoonTimeArray = [...afternoonTimeArray, range];
+                }
+
+                h = h + Math.floor((m + timeOffset) / 60);
+                m = (m + timeOffset) % 60;
+            }
+
+            return [...morningTimeArray, ...afternoonTimeArray];
+        }
+
+        let range = calcTimeRanges(timeOffset);
+
+        setTimeRange(range);
+    }, [timeOffset]);
+
     return (
         <>
             <div className="booking-component my-5">
                 <Booking
                     activeDate={valueCheckinDate}
-                    initialTimeRange={[
-                        ['08:30', '09:30'],
-                        ['09:30', '10:30'],
-                        ['10:30', '11:30'],
-                        ['11:30', '12:30'],
-                        ['13:30', '14:30'],
-                        ['14:30', '15:30'],
-                        ['15:30', '16:30'],
-                        ['16:30', '17:30'],
-                        ['17:30', '18:30'],
-                    ]}
+                    initialTimeRange={
+                        timeRange || [
+                            ['08:30', '09:30'],
+                            ['09:30', '10:30'],
+                            ['10:30', '11:30'],
+                            ['11:30', '12:30'],
+                            ['13:30', '14:30'],
+                            ['14:30', '15:30'],
+                            ['15:30', '16:30'],
+                            ['16:30', '17:30'],
+                            ['17:30', '18:30'],
+                        ]
+                    }
                     reserved={reservedTimeRange}
                     onChangeDate={(date) => {
                         onChangeDate(date);
@@ -546,7 +674,7 @@ function Step3({
                 <Button
                     type="submit"
                     variant="outline"
-                    className="my-btn text-uppercase px-5  btn-primary-outline btn btn-outline"
+                    className="my-btn text-uppercase px-5 btn-primary-outline btn btn-outline"
                     // onClick={() => validation.handleSubmit()}
                 >
                     Done
@@ -555,6 +683,7 @@ function Step3({
         </>
     );
 }
+
 function BookingCompleted({ values }) {
     const { services } = useService({
         request: {

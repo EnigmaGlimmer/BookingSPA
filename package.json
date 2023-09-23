@@ -7,6 +7,7 @@
         "@cloudinary/react": "^1.11.2",
         "@cloudinary/url-gen": "^1.11.1",
         "@demark-pro/react-booking-calendar": "^3.0.5",
+        "@react-google-maps/api": "^2.19.2",
         "@react-spring/web": "^9.7.3",
         "@reduxjs/toolkit": "^1.9.5",
         "@syncfusion/ej2-react-schedule": "^22.1.38",
