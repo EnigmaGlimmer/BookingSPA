@@ -281,6 +281,30 @@ function Home() {
                                             </div>
                                         );
                                     })}
+                                    {services
+                                    ?.find?.((e) => {
+                                        return e.serviceId === 32 || e.serviceName === 'Eyebrow';
+                                    })
+                                    ?.childs?.map?.((item, index) => {
+                                        return (
+                                            <div key={index} className="other-list-item-form">
+                                                <Link to={`/service?name=${item?.serviceName}`}>
+                                                    <div className="other-list-item">
+                                                        <p>
+                                                            <b>{item.serviceName}</b>
+                                                        </p>
+                                                        <div className="other-list-dashed"></div>
+                                                        <p>
+                                                            <b>{item.duration}</b>
+                                                        </p>
+                                                    </div>
+                                                </Link>
+                                                <div className="other-item-explain">
+                                                    <div className="mb-1">{item?.description}</div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                             </div>
                             <div>
                                 <div className="btn-frame-dark">
@@ -314,7 +338,7 @@ function Home() {
                         <div className="home-promotion-title">Your Perfect Spa Journey</div>
                         <Link to="/promotion" className="link-text">
                             <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn">
-                                Promotion
+                                start here
                             </button>
                         </Link>
                         <div className="home-promotion-slogan">Access to explore our special offers</div>
