@@ -135,13 +135,25 @@ function Footer() {
                     </Col>
                     <Col sm="12" xl="4">
                         <div style={{ height: '100%', minHeight: '220px', width: '100%' }}>
-                            <GoogleMapReact
+                            {/* <GoogleMapReact
                                 bootstrapURLKeys={{ key: '' }}
                                 defaultCenter={defaultProps.center}
                                 defaultZoom={defaultProps.zoom}
                             >
                                 <AnyReactComponent lat={contact?.latitude} lng={contact?.longitude} text="My Marker" />
-                            </GoogleMapReact>
+                            </GoogleMapReact> */}
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3529.8036160342012!2d153.24845617542178!3d-27.78502463021494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b9114d885e4b223%3A0xefdd05d77f169d55!2s11c%2F3%20Vaughan%20Dr%2C%20Ormeau%20QLD%204208%2C%20Australia!5e0!3m2!1sen!2sus!4v1695542549952!5m2!1sen!2sus"
+                                width="100%"
+                                height="auto"
+                                style={{
+                                    minHeight: '320px',
+                                    border: 0,
+                                }}
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"
+                            ></iframe>
                         </div>
                     </Col>
                 </Row>
