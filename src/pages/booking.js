@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import introBig from '../images/introBig.png';
 import introSmall from '../images/introSmall.png';
 import homeFlowerDeco from '../images/home/flower.svg';
-import singleFlower from '../images/singleFlower.svg'
+import singleFlower from '../images/singleFlower.svg';
 
 // Redux store
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,7 @@ import { getService } from '../store/service/action';
 import './style/booking.css';
 
 // Bootstrap component
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
 // Component
 import Booking from '../components/booking-calendar/booking';
 
@@ -35,6 +35,7 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import useService from '../hooks/useServices';
 import { Link } from 'react-router-dom';
+import { AiFillWarning } from 'react-icons/ai';
 
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
@@ -451,18 +452,8 @@ function Step3({
     hourAfternoonWorkStart = 13,
     minuteAfternoonWorkStart = 0,
     hourAfternoonWorkEnd = 17,
-    minuteAfternoonWorkEnd = 0,
+    minuteAfternoonWorkEnd = 30,
 }) {
-    // let hourMorningWorkStart = 9;
-    // let minuteMorningWorkStart = 0;
-    // let hourMorningWorkEnd = 12;
-    // let minuteMorningWorkEnd = 30;
-
-    // let hourAfternoonWorkStart = 13;
-    // let minuteAfternoonWorkStart = 0;
-    // let hourAfternoonWorkEnd = 17;
-    // let minuteAfternoonWorkEnd = 0;
-
     const [selectedDate, setSelectedDate] = useState();
     const [reservedTimeRange, setReversed] = useState([]);
     const [timeOffset, setTimeOffset] = useState(1);
@@ -618,6 +609,8 @@ function Step3({
         setTimeRange(range);
     }, [timeOffset]);
 
+    const timeFrameContent = ``;
+
     return (
         <>
             <div className="booking-component my-5">
@@ -647,6 +640,13 @@ function Step3({
                     onChangeTimeEnd={(time) => {
                         onChangeTimeEnd(time);
                     }}
+                    onOverBook={() => {
+                        toast.error("We're not working on the weekend", {
+                            autoClose: 3000,
+                        });
+                    }}
+                    title="Choose your time frame to send your request of booking to us"
+                    content={timeFrameContent}
                 ></Booking>
             </div>
             <div className="booking-service-description">
@@ -669,6 +669,22 @@ function Step3({
                     </div>
                 </div>
             </div>
+            {/* <Row className="container mx-auto gap-5">
+                <Col className="booking-service-description">
+                    <div className="mb-2">
+                        <span className="me-2">
+                            <AiFillWarning></AiFillWarning>
+                        </span>
+                        <b>Attention:</b>
+                    </div>
+                    <div>
+                        <b>Monday - Saturday</b> (9:00am - 5:30pm)
+                    </div>
+                    <div>
+                        <b>Sunday</b> (Closed)
+                    </div>
+                </Col>
+            </Row> */}
             <div className="booking-component-button-done">
                 <Button
                     type="button"
@@ -702,7 +718,8 @@ function BookingCompleted({ values }) {
         <div className="completed">
             <h1 className="completed-title">Great and thanks for your booking!</h1>
             <p className="completed-content">
-                You have successfully booked the service with Little Daisy. Here is your booking information. Hope to see you then!
+                You have successfully booked the service with Little Daisy. Here is your booking information. Hope to
+                see you then!
             </p>
             <div className="completed-form">
                 <div className="completed-item-form">
@@ -714,7 +731,9 @@ function BookingCompleted({ values }) {
                     </div>
                     <div className="completed-item">
                         <div className="completed-item-name">Date</div>
-                        <div className="completed-item-content">{moment(values?.booking?.checkinDate).format('DD-MM-yyyy')}</div>
+                        <div className="completed-item-content">
+                            {moment(values?.booking?.checkinDate).format('DD-MM-yyyy')}
+                        </div>
                     </div>
                     <div className="completed-item">
                         <div className="completed-item-name">Time</div>

@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 // PropTypes
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 // React Booking Calendar
 import { Calendar } from '@demark-pro/react-booking-calendar';
 
 // Custom
-import { DayCellFooter } from './day-cell-footer';
+// import { DayCellFooter } from './day-cell-footer';
 
 // Space Time Frame
-import SpaceTimeFrame from './space-time-frame';
+// import SpaceTimeFrame from './space-time-frame';
 
 // Css
 import './style/booking.css';
+import moment from 'moment';
 
-// let reserved = [
-//     {
-//         startDate: new Date(),
-//         endDate: new Date(2023, 12, 5),
-//     },
-// ];
-function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate }) {
+function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate, onOverbook }) {
     return (
         <section className="calendar-root">
             <div className="calendar-frame">
@@ -28,23 +23,20 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
                     selected={[initialDate]}
                     onChange={(value) => {
                         const date = value[0];
-                        console.log(date);
+
                         onChangeDate(date);
                     }}
                     onOverbook={(e, error) => {
-                        console.log(e);
-                        console.log(error);
+                        onOverbook();
                     }}
                     components={{
                         CalendarContainer: ({ innerProps, children }) => {
                             return <div {...innerProps}>{children}</div>;
                         },
                     }}
-                    // disabled={(date, state) => {
-                    //     console.log(date);
-                    //     console.log(state);
-                    //     return !state.isPast;
-                    // }}
+                    disabled={(date) => {
+                        return moment(date).get('weekday') === 0;
+                    }}
                     reserved={reserved}
                     variant="booking"
                     dateFnsOptions={{ weekStartsOn: 1 }}

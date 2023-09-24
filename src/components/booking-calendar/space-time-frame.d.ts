@@ -9,4 +9,9 @@ interface SpaceTimeFrameProps {
     onChangeTimeEnd: (timeEnd) => void;
 }
 
-export declare const SpaceTimeFrame: React.FunctionComponent<SpaceTimeFrameProps>;
+type SpaceTimeContentPanel = {
+    title?: string;
+    content?: string;
+};
+
+export declare const SpaceTimeFrame: React.FunctionComponent<SpaceTimeFrameProps & SpaceTimeContentPanel>;

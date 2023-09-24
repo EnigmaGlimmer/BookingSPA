@@ -57,6 +57,19 @@ function Footer() {
                             <b>Address: </b>
                             {contact?.address}
                         </p>
+                        <div className="row justify-content-between">
+                            <div className="col-auto">
+                                <b>Opening hours: </b>
+                            </div>
+                            <ul className="col">
+                                <div>
+                                    <b>Monday - Saturday</b> (9:00am - 5:30pm)
+                                </div>
+                                <div>
+                                    <b>Sunday</b> (Closed)
+                                </div>
+                            </ul>
+                        </div>
                     </Col>
                     <Col sm="6" md="6" xl="2">
                         <h3

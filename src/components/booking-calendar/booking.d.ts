@@ -8,12 +8,19 @@ type BookingProps = {
         endTime: string;
         isEnable: boolean;
     }[];
-} & BookingEvents;
+} & BookingEvents &
+    BookingTimeFrameContent;
 
 type BookingEvents = {
     onChangeDate: (date: Date) => void;
     onChangeTimeStart: (timeStart: string) => void;
     onChangeTimeEnd: (timeEnd: string) => void;
+    onOverBook: () => void;
+};
+
+type BookingTimeFrameContent = {
+    title: string;
+    content: string;
 };
 
 declare const Booking: React.FunctionComponent<BookingProps>;
