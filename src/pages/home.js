@@ -63,7 +63,7 @@ function Home() {
             transition: 'max-height 0.4s linear',
         },
     });
-
+    console.log(home);
     return (
         <section>
             {/* Banner */}
@@ -78,19 +78,14 @@ function Home() {
 
                 <div className="banner-img">
                     <div className="banner-img-big">
-                        <img alt="banner" src={home?.hero?.images?.[0] || bannerBig} width={'100%'} loading="lazy" />
+                        <img alt="banner" src={bannerBig} width={'100%'} loading="lazy" />
                     </div>
                     <div className="banner-img-extra">
                         <div className="banner-img-flower">
                             <img alt="banner" src={homeFlowerDeco} width={'100%'} loading="lazy" />
                         </div>
                         <div className="banner-img-small">
-                            <img
-                                alt="banner"
-                                src={home?.hero?.childImage?.[0] || bannerSmall}
-                                width={'100%'}
-                                loading="lazy"
-                            />
+                            <img alt="banner" src={bannerSmall} width={'100%'} loading="lazy" />
                         </div>
                     </div>
                 </div>
@@ -281,7 +276,7 @@ function Home() {
                                             </div>
                                         );
                                     })}
-                                    {services
+                                {services
                                     ?.find?.((e) => {
                                         return e.serviceId === 32 || e.serviceName === 'Eyebrow';
                                     })
