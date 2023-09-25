@@ -8,11 +8,11 @@
     "intro": {
         "subtitle": "About Little Daisy",
         "title": "Perfect beauty service",
-        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.",
+        "content": "",
         "child": [
             {
-                "title": "Lorem ipsum dolor sit amet",
-                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+                "title": "",
+                "content": ""
             }
         ],
         "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
