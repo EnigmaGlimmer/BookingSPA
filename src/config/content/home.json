@@ -1,6 +1,6 @@
 {
     "hero": {
-        "title": "Lorem ipsum dolor sit, consectetur adipiscing elit",
+        "title": "",
         "subtitle": "",
         "content": "",
         "images": ["../images/bannerBig.png", "../images/bannerSmall.png"]
