@@ -3,6 +3,9 @@ import React from 'react';
 import './style/booking_time.css';
 import { toast } from 'react-toastify';
 
+//
+import * as DOMPurify from 'dompurify';
+
 const SpaceTimeFrame = ({
     initialSpaceTimes = [
         ['1:00pm', '2:00pm'],
@@ -18,14 +21,21 @@ const SpaceTimeFrame = ({
     ],
     onChangeTimeStart,
     onChangeTimeEnd,
+    ...contentProps
 }) => {
     const [selected, setSelected] = React.useState(null);
 
+    const { title, content } = contentProps;
+
     return (
         <div className="space-time">
-            <h4 className="space-time-title">Choice Time</h4>
+            <h4 className="space-time-title">{title}</h4>
             <div className="space-time-info">
-                <p>Choose your service hours on the</p>
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(content),
+                    }}
+                ></div>
                 <div className="space-time-date"></div>
             </div>
             <div className="space-time-content">

@@ -50,11 +50,11 @@ function Service() {
     return (
         <div>
             {/* Service Banner */}
-            {/* <div className="service-banner container py-5" id="st-banner">
-                <div className="mx-auto">
+            <div className="service-banner container py-5" id="st-banner">
+                {/* <div className="mx-auto">
                     <img src={serviceBanner} alt="service-banner" width={'100%'} />
-                </div>
-            </div> */}
+                </div> */}
+            </div>
 
             {/* Service Name */}
             <div className="service-name container py-2" id="st-serviceProduct">

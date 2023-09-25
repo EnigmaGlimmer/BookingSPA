@@ -153,7 +153,8 @@ function Navigation() {
                             <Offcanvas.Header closeButton></Offcanvas.Header>
                             <Offcanvas.Body
                                 style={{
-                                    overflow: 'hidden',
+                                    overflowX: 'hidden',
+                                    overflowY: 'scroll',
                                 }}
                             >
                                 <Contact></Contact>
@@ -236,8 +237,7 @@ function Contact() {
                 <OffCanvasLogo></OffCanvasLogo>
             </div>
             <p className="mt-5 px-4 text-center mb-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna.
+                Little Daisy, a fabulous salon for your beautiful Nails and Lashes
             </p>
             <div>
                 <Form className="d-flex position-relative align-items-center">
@@ -256,44 +256,57 @@ function Contact() {
 
             <br></br>
             <br></br>
-
+            {/* 
             <h3 className="text-center">Lorem ipsum dolor sit, consectetur adipiscing elit</h3>
             <br></br>
-            <div className="line mb-2"></div>
+            <div className="line mb-2"></div> */}
             <Row className="justify-content-between py-3">
                 <Col>
                     <p className="text-nowrap">E: {contact?.email}</p>
                     <p>P: {contact?.phone}</p>
+                    <p>A: {contact?.address}</p>
                 </Col>
                 <Col>
-                    <h4 className="text-end">Follow us</h4>
-                    <Row className="mb-3 justify-content-end" style={{ flexWrap: 'nowrap' }}>
+                    <h4 className="text-start">Follow us</h4>
+                    <Row className="mb-3 justify-content-start" style={{ flexWrap: 'nowrap' }}>
                         <Col className="col-auto">
                             <a href={contact?.facebook} target="_blank">
-                                <BiLogoFacebookCircle></BiLogoFacebookCircle>
+                                <BiLogoFacebookCircle style={{ fontSize: '25px' }}></BiLogoFacebookCircle>
                             </a>
                         </Col>
                         <Col className="col-auto">
                             <a href={contact?.whatsapp} target="_blank">
-                                <BiLogoWhatsapp></BiLogoWhatsapp>
+                                <BiLogoWhatsapp style={{ fontSize: '25px' }}></BiLogoWhatsapp>
                             </a>
                         </Col>
                         <Col className="col-auto">
                             <a href={contact?.instagram} target="_blank">
-                                <BiLogoInstagram></BiLogoInstagram>
+                                <BiLogoInstagram style={{ fontSize: '25px' }}></BiLogoInstagram>
                             </a>
                         </Col>
                     </Row>
                 </Col>
             </Row>
             <div style={{ height: '100%', maxHeight: '220px', width: '100%' }}>
-                <GoogleMapReact
+                {/* <GoogleMapReact
                     bootstrapURLKeys={{ key: '' }}
                     defaultCenter={defaultProps.center}
                     defaultZoom={defaultProps.zoom}
                 >
                     <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-                </GoogleMapReact>
+                </GoogleMapReact> */}
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3529.8036160342012!2d153.24845617542178!3d-27.78502463021494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b9114d885e4b223%3A0xefdd05d77f169d55!2s11c%2F3%20Vaughan%20Dr%2C%20Ormeau%20QLD%204208%2C%20Australia!5e0!3m2!1sen!2sus!4v1695542549952!5m2!1sen!2sus"
+                    width="100%"
+                    height="auto"
+                    style={{
+                        minHeight: '320px',
+                        border: 0,
+                    }}
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
             </div>
         </>
     );

@@ -8,7 +8,17 @@ import { default as Calendar } from './calendar';
 // Space Time Frame
 import { default as SpaceTimeFrame } from './space-time-frame';
 
-const Booking = ({ initialTimeRange, reserved, activeDate, onChangeDate, onChangeTimeStart, onChangeTimeEnd }) => {
+const Booking = ({
+    initialTimeRange,
+    reserved,
+    activeDate,
+    onChangeDate,
+    onChangeTimeStart,
+    onChangeTimeEnd,
+    onOverBook,
+    title,
+    content,
+}) => {
     const [selectedDate, setSelectedDate] = useState();
 
     useEffect(() => {
@@ -19,7 +29,11 @@ const Booking = ({ initialTimeRange, reserved, activeDate, onChangeDate, onChang
         <div className="booking-root">
             <div className="booking-root-date">
                 {/* <h2>Booking</h2> */}
-                <Calendar initialDate={activeDate} onChangeDate={(date) => setSelectedDate(date)}></Calendar>
+                <Calendar
+                    initialDate={activeDate}
+                    onChangeDate={(date) => setSelectedDate(date)}
+                    onOverbook={onOverBook}
+                ></Calendar>
             </div>
             <div className="booking-root-time">
                 <div className="calendar-space-time-frame">
@@ -29,6 +43,8 @@ const Booking = ({ initialTimeRange, reserved, activeDate, onChangeDate, onChang
                             reserved={reserved}
                             onChangeTimeStart={onChangeTimeStart}
                             onChangeTimeEnd={onChangeTimeEnd}
+                            title={title}
+                            content={content}
                         ></SpaceTimeFrame>
                     )}
                 </div>
