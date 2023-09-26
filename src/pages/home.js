@@ -333,7 +333,7 @@ function Home() {
                         <div className="home-promotion-title">Your Perfect Spa Journey</div>
                         <Link to="/promotion" className="link-text">
                             <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn">
-                                start here
+                                starts here
                             </button>
                         </Link>
                         <div className="home-promotion-slogan">Access to explore our special offers</div>
