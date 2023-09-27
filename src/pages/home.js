@@ -331,11 +331,14 @@ function Home() {
                 <div className="home-promotion-form">
                     <div className="home-promotion-content">
                         <div className="home-promotion-title">Your Perfect Spa Journey</div>
-                        <Link to="/promotion" className="link-text">
+                        <a
+                            href="https://drive.google.com/file/d/1cYuShpGJQmVB90rxETGrvRFXgSU9gfrG/view"
+                            className="link-text"
+                        >
                             <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn">
-                                starts here
+                                Our Menu
                             </button>
-                        </Link>
+                        </a>
                         <div className="home-promotion-slogan">Access to explore our special offers</div>
                     </div>
                     <div className="home-promotion-img-form">
