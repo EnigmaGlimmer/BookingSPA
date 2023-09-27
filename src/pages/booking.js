@@ -35,7 +35,6 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import useService from '../hooks/useServices';
 import { Link } from 'react-router-dom';
-import { AiFillWarning } from 'react-icons/ai';
 
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
@@ -478,9 +477,9 @@ function Step3({
             skip: 0,
             take: 31,
         })
-            .then((response) => {
-                if (!Array.isArray(response?.list)) {
-                    response.errors.forEach((msg) => {
+            .then((bookings) => {
+                if (!Array.isArray(bookings?.list)) {
+                    bookings.errors.forEach((msg) => {
                         toast.error(msg, {
                             autoClose: 3000,
                         });
@@ -490,7 +489,7 @@ function Step3({
                 }
 
                 setReversed(
-                    response?.list?.map?.((b) => {
+                    bookings?.list?.map?.((b) => {
                         const [start1, end1] = b.slot.start_Hour.split(':');
                         const [start2, end2] = b.slot.end_Hour.split(':');
 

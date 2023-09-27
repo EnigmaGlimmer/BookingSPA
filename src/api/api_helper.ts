@@ -75,8 +75,8 @@ class APIClient {
     /**
      * post given data to url
      */
-    create = (url: string, data: any) => {
-        return axios.post(url, data);
+    create = (url: string, data: any, config?: AxiosRequestConfig) => {
+        return axios.post(url, data, config);
     };
     /**
      * Updates data
@@ -91,8 +91,8 @@ class APIClient {
     /**
      * Delete
      */
-    delete = (url: string, config: AxiosRequestConfig) => {
-        return axios.delete(url, { ...config });
+    delete = (url: string, config?: AxiosRequestConfig) => {
+        return axios.delete(url, config);
     };
 }
 const getLoggedinUser = () => {

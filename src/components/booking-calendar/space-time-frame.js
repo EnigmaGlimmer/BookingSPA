@@ -47,6 +47,8 @@ const SpaceTimeFrame = ({
                         return start === startTime && endTime === end && !isAllowed;
                     });
 
+                    const [start] = space;
+
                     return (
                         <span
                             className="space-time-button"
@@ -72,7 +74,8 @@ const SpaceTimeFrame = ({
                                 onChangeTimeEnd(endTime);
                             }}
                         >
-                            {space.join(' - ')}
+                            {/* {space.join(' - ')} */}
+                            {start}
                         </span>
                     );
                 })}

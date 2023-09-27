@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { Pagination } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
@@ -45,10 +46,13 @@ export const getAssetFailed = (error) => ({
     payload: error,
 });
 
-export const postAsset = (asset) => ({
-    type: POST_ASSET,
-    payload: asset,
-});
+export const postAsset = (asset: File | null, config?: AxiosRequestConfig) => {
+    console.log(asset, config);
+    return {
+        type: POST_ASSET,
+        payload: { asset, config },
+    };
+};
 
 export const postAssetSuccess = (asset) => ({
     type: POST_ASSET_SUCCESS,

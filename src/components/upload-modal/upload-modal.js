@@ -30,6 +30,7 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
     });
 
     let uploadInputRef = useRef(null);
+    const [progressPercent, setProgressPercent] = useState(0);
 
     const validation = useFormik({
         enableReinitialize: true,
@@ -60,7 +61,17 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
             url: yup.string().required(),
         }),
         onSubmit: (values) => {
-            dispatch(postAsset(values.file));
+            dispatch(
+                postAsset(values.file, {
+                    onUploadProgress: (event) => {
+                        console.log('Uploaded ', event);
+                        setProgressPercent(Math.round(100 * event.loaded) / event.total);
+                    },
+                    onDownloadProgress: (event) => {
+                        console.log('Downloaded ', event);
+                    },
+                }),
+            );
         },
     });
 
@@ -180,7 +191,6 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                 </div>
 
                                 <p className="my-2">Maximum upload file size: 1.8GB</p>
-
                                 <Form.Control
                                     type="file"
                                     className="d-none"
@@ -208,7 +218,15 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
 
                                             fileReader.readAsDataURL(file);
 
-                                            dispatch(postAsset(file));
+                                            dispatch(
+                                                postAsset(file, {
+                                                    onUploadProgress: (event) => {
+                                                        setProgressPercent(
+                                                            Math.round(100 * event.loaded) / event.total,
+                                                        );
+                                                    },
+                                                }),
+                                            );
                                         }
                                     }}
                                     isInvalid={validation.touched.file && validation.values.file}
@@ -216,6 +234,7 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                 <Form.Control.Feedback type="invalid">
                                     Error: {validation.errors.file}
                                 </Form.Control.Feedback>
+
                                 <Row className="justify-content-between">
                                     {recents &&
                                         recents.map((o, index) => {
@@ -237,7 +256,11 @@ function UploadModal({ onCopyLink, show, onHide, onSave, selected, onSelected })
                                                         </Col>
 
                                                         <Col sm="3" className="d-inline-block p-2">
-                                                            <ProgressBar now={60} />
+                                                            <ProgressBar
+                                                                now={progressPercent}
+                                                                label={`${progressPercent}%`}
+                                                                animated
+                                                            />
                                                         </Col>
                                                     </Row>
                                                 </Col>

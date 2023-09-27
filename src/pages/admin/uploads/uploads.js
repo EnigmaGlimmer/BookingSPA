@@ -39,10 +39,14 @@ function Uploads() {
 
     return (
         <div>
-            <article className="my-3">
+            <article className="my-3 d-flex justify-content-between">
                 <h3 className="d-inline">Your Assets</h3>
-                <Button variant="outlet" className="btn ms-auto mb-2" onClick={() => setShowUploadModal(true)}>
-                    Upload new assets
+                <Button
+                    variant="outline"
+                    className="btn ms-auto mb-2 btn-primary-outline"
+                    onClick={() => setShowUploadModal(true)}
+                >
+                    + Upload new assets
                 </Button>
             </article>
             <UploadModal

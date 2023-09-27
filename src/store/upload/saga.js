@@ -52,11 +52,16 @@ function* onGetAssets({ payload }) {
 //     }
 // }
 
-function* onAddNewAsset({ payload: newAsset }) {
+function* onAddNewAsset({ payload: { asset: newAsset, config } }) {
+    console.log(newAsset, config);
     try {
-        const response = yield call(postAsset, {
-            file: newAsset,
-        });
+        const response = yield call(
+            postAsset,
+            {
+                file: newAsset,
+            },
+            config,
+        );
         yield put(postAssetSuccess(response));
     } catch (error) {
         yield put(postAssetFailed(error));
