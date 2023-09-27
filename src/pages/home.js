@@ -333,11 +333,21 @@ function Home() {
                 <div className="home-promotion-form">
                     <div className="home-promotion-content">
                         <div className="home-promotion-title">Your Perfect Spa Journey</div>
+                        <div>
+                            <Link to={'/promotion'}>
+                                <button
+                                    onClick={() => setMenu(true)}
+                                    className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn"
+                                >
+                                    Starts Here
+                                </button>
+                            </Link>
+                        </div>
                         <button
                             onClick={() => setMenu(true)}
                             className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn"
                         >
-                            Starts Here
+                            our menu
                         </button>
                         <Menu show={menu} hide={() => setMenu(false)} />
                         <div className="home-promotion-slogan">Access to explore our special offers or our menu</div>
