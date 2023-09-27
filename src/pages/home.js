@@ -28,8 +28,10 @@ import useService from '../hooks/useServices';
 
 // Animation
 import { useSpring } from '@react-spring/web';
+import { Modal } from 'react-bootstrap';
 
 function Home() {
+    const [menu, setMenu] = React.useState(false);
     document.title = 'Little Daisy - Home';
     const dispatch = useDispatch();
 
@@ -331,15 +333,14 @@ function Home() {
                 <div className="home-promotion-form">
                     <div className="home-promotion-content">
                         <div className="home-promotion-title">Your Perfect Spa Journey</div>
-                        <a
-                            href="https://drive.google.com/file/d/1cYuShpGJQmVB90rxETGrvRFXgSU9gfrG/view"
-                            className="link-text"
+                        <button
+                            onClick={() => setMenu(true)}
+                            className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn"
                         >
-                            <button className="my-btn text-uppercase btn-primary-outline btn btn-outline btn-dark home-promotion-btn">
-                                Our Menu
-                            </button>
-                        </a>
-                        <div className="home-promotion-slogan">Access to explore our special offers</div>
+                            Starts Here
+                        </button>
+                        <Menu show={menu} hide={() => setMenu(false)} />
+                        <div className="home-promotion-slogan">Access to explore our special offers or our menu</div>
                     </div>
                     <div className="home-promotion-img-form">
                         <div className="home-promotion-img-nail">
@@ -499,4 +500,38 @@ function Home() {
     );
 }
 
+function Menu({ show, hide }) {
+    return (
+        <>
+            <Modal
+                style={{ width: '100%', overflow: 'unset', background: 'none' }}
+                show={show}
+                onHide={hide}
+                aria-labelledby="contained-modal-title-vcenter"
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header style={{ margin: '0 auto', width: '80%', background: 'white' }} closeButton>
+                    <Modal.Title>Menu</Modal.Title>
+                </Modal.Header>
+                <Modal.Body
+                    style={{
+                        margin: '0 auto',
+                        maxWidth: 'unset',
+                        background: 'white',
+                        width: '80%',
+                        overflow: 'scroll',
+                        height: '80vh',
+                    }}
+                >
+                    <iframe
+                        src="https://drive.google.com/file/d/1cYuShpGJQmVB90rxETGrvRFXgSU9gfrG/preview"
+                        width={'100%'}
+                        height={'100%'}
+                    ></iframe>
+                </Modal.Body>
+            </Modal>
+        </>
+    );
+}
 export default Home;
