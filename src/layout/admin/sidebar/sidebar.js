@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 
 // style
 import './sidebar.css';
@@ -8,10 +8,24 @@ import { AiFillLeftCircle, AiFillRightCircle } from 'react-icons/ai';
 
 function Sidebar({ children }) {
     const [toggle, setToggle] = React.useState(true);
+    const leftSidebar = useRef(null);
+    let [rightContentStyle, setRightContentStyle] = React.useState(null);
+
+    useEffect(() => {
+        if (leftSidebar.current) {
+            rightContentStyle = {
+                width: `calc(100% - ${leftSidebar.current.getBoundingClientRect().width}px)`,
+                overflowX: 'scroll',
+            };
+
+            setRightContentStyle(rightContentStyle);
+        }
+    }, [leftSidebar.current]);
+
     return (
         <div>
             <div className="sbar-admin-form" style={{ flexWrap: 'nowrap', maxWidth: '100vw' }}>
-                <span className="" id="sidebar">
+                <span className="" id="sidebar" ref={leftSidebar}>
                     <div className={toggle ? `list-link-admin` : `list-link-admin sidebar-hide`}>
                         <div onClick={() => setToggle((e) => !e)} style={{ cursor: 'pointer' }}>
                             <AiFillLeftCircle
@@ -38,7 +52,9 @@ function Sidebar({ children }) {
                         </Link>
                     </div>
                 </span>
-                <span className="sidebar-item-2">{children}</span>
+                <span className="sidebar-item-2" style={rightContentStyle}>
+                    {children}
+                </span>
             </div>
         </div>
     );
