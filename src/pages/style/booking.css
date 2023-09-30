@@ -12,17 +12,16 @@
 .booking-input:focus {
     outline: none;
 }
-.intro-img-flower-mid{
+.intro-img-flower-mid {
     position: absolute;
     top: 20%;
     z-index: -1;
     right: 17%;
     width: 20%;
     opacity: 0.8;
-
 }
-.booking-form-input input{
-background-color: unset;
+.booking-form-input input {
+    background-color: unset;
 }
 /* Booking Process */
 .booking-process {
@@ -162,13 +161,13 @@ background-color: unset;
 }
 @media only screen and (min-width: 2000px) {
     .booking-process {
-        margin-top: 20vw;
+        /* margin-top: 20vw; */
     }
 }
 
 @media only screen and (min-width: 1250px) {
     .booking-process {
-        margin-top: 50vh;
+        /* margin-top: 50vh; */
     }
 }
 @media only screen and (max-width: 1024px) {
@@ -187,7 +186,6 @@ background-color: unset;
 }
 @media only screen and (max-width: 576px) {
     .booking-process {
-        margin-top: 50vh;
     }
     .intro-form {
         gap: 30px;
@@ -198,6 +196,9 @@ background-color: unset;
     .booking-service-description {
         width: 70vw;
     }
+    .booking-form-img {
+        margin-bottom: 100px;
+    }
 }
 
 /* Admin Booking */
@@ -206,7 +207,7 @@ background-color: unset;
 }
 .admin-booking-table-form {
     overflow-x: scroll;
-    max-width: 90vw;
+    max-width: 100%;
     scroll-behavior: smooth;
     margin: 0 auto;
 }

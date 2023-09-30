@@ -255,6 +255,7 @@ type CreateCustomerDTO = {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
+    networks: [];
 };
 type SearchCustomerDTO = {
     email: string;
