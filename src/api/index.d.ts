@@ -249,13 +249,14 @@ type CustomerDTO = {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
+    howtoknow: [];
     isDeleted: boolean;
 };
 type CreateCustomerDTO = {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
-    networks: [];
+    howtoknow: [];
 };
 type SearchCustomerDTO = {
     email: string;
