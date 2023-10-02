@@ -109,7 +109,7 @@ const StepComponent = ({ step, setStep }) => {
                 customerName: '',
                 customerEmail: '',
                 customerPhone: '',
-                networks: [],
+                howtoknow: [],
             },
             booking: {
                 customerId: newCustomer?.customerid,
@@ -132,6 +132,7 @@ const StepComponent = ({ step, setStep }) => {
                     customerName: values.customer.customerName,
                     customerEmail: values.customer.customerEmail,
                     customerPhone: values.customer.customerPhone,
+                    howtoknow: values.customer.howtoknow,
                 },
                 {
                     // customerId: newCustomer.customerId,
@@ -283,7 +284,7 @@ export function Step1({ setStep, validation }) {
                                         <Form.Check
                                             inline
                                             label={item}
-                                            name={'customer.networks'}
+                                            name={'customer.howtoknow'}
                                             value={item}
                                             onChange={validation?.handleChange}
                                             type={'checkbox'}
