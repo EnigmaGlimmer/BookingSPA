@@ -61,7 +61,11 @@ function BookingPage() {
         } else if (step > theStep) {
             return <GrFormCheckmark className="booking-dot"></GrFormCheckmark>;
         }
-        return <></>;
+        return (
+            <article>
+                <h2>This page is not existing</h2>
+            </article>
+        );
     }
     return (
         <div className="intro my-5">
@@ -519,7 +523,6 @@ function Step3({
                           return time.includes('hours') || time.includes('hour') ? number * 60 : number;
                       })
                     : (() => {
-                          console.log(selectedDuration);
                           const number = Number(selectedDuration.match(/\d+/g)[0]);
 
                           return [
@@ -529,19 +532,16 @@ function Step3({
                           ];
                       })();
 
-                console.log(array);
-
                 let timeOffset = Math.max(...array);
 
                 // let timeOffset = Math.max(selectedDuration.match(/\d+/g));
-                console.log(selectedDuration, timeOffset);
+
                 setTimeOffset(timeOffset);
             }
         }
     }, [services, valueServiceId]);
 
     useEffect(() => {
-        console.log(timeOffset);
         function calcTimeRanges(timeOffset) {
             let h = hourMorningWorkStart;
             let m = minuteMorningWorkStart;
