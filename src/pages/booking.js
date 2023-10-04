@@ -36,6 +36,8 @@ import moment from 'moment';
 import useService from '../hooks/useServices';
 import { Link } from 'react-router-dom';
 
+const arrayNetwork = ['Facebook', 'Instagram', 'Google', 'Letter', 'Walked past', 'Friend'];
+
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
         customerName: yup.string().required('Customer Name is required field'),
@@ -71,7 +73,7 @@ function BookingPage() {
         <div className="intro my-5">
             <StepComponent step={step} setStep={setStep}></StepComponent>
             {/* Booking Process */}
-            <div className={`booking-process ${step === 3 ? 'my-4' : ''}`}>
+            <div className={`booking-process`}>
                 <div className="booking-process-form">
                     <div className="booking-process-line"></div>
                     <div className="booking-step-form">
@@ -111,6 +113,7 @@ const StepComponent = ({ step, setStep }) => {
                 customerName: '',
                 customerEmail: '',
                 customerPhone: '',
+                howtoknow: [],
             },
             booking: {
                 customerId: newCustomer?.customerid,
@@ -133,6 +136,7 @@ const StepComponent = ({ step, setStep }) => {
                     customerName: values.customer.customerName,
                     customerEmail: values.customer.customerEmail,
                     customerPhone: values.customer.customerPhone,
+                    howtoknow: values.customer.howtoknow,
                 },
                 {
                     // customerId: newCustomer.customerId,
@@ -172,6 +176,7 @@ const StepComponent = ({ step, setStep }) => {
             {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2
+                        className="mb-4"
                         step={step}
                         setStep={setStep}
                         valueServiceId={validation?.values?.booking?.serviceId}
@@ -206,7 +211,8 @@ const StepComponent = ({ step, setStep }) => {
 export function Step1({ setStep, validation }) {
     return (
         <div className="intro-form">
-            <div className="intro-img">
+            {/* <pre>{JSON.stringify(validation, 4, 4)}</pre> */}
+            <div className="intro-img booking-form-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
                         <img alt="intro" src={introBig} width={'100%'} />
@@ -271,6 +277,25 @@ export function Step1({ setStep, validation }) {
                                         {validation?.errors?.customer?.customerEmail}
                                     </div>
                                 )}
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>
+                                <b>How did you know about us?</b>
+                            </Form.Label>
+                            {arrayNetwork.map((item) => {
+                                return (
+                                    <div className="my-3">
+                                        <Form.Check
+                                            inline
+                                            label={item}
+                                            name={'customer.howtoknow'}
+                                            value={item}
+                                            onChange={validation?.handleChange}
+                                            type={'checkbox'}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </Form.Group>
                     </div>
                     {/* <div style={{ paddingTop: '30px' }}>
@@ -338,7 +363,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
 
     return (
         <div className="intro-form">
-            <div className="intro-img">
+            <div className="intro-img booking-form-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
                         <img alt="intro" src={introBig} width={'100%'} loading="lazy" />

@@ -37,6 +37,11 @@ function AdminBooking() {
         dispatch(putBooking(id, booking));
     }
 
+    const colStyle = {
+        wordWrap: 'break-word',
+        maxWidth: '100px',
+    };
+
     return (
         <section>
             <h3>Booking</h3>
@@ -49,13 +54,15 @@ function AdminBooking() {
                     style={{ borderColor: 'var(--clr-border)' }}
                 >
                     <thead>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
-                        <th>Booking Date</th>
-                        <th>Booking Time</th>
-                        <th>Service</th>
-                        <th>Actions</th>
+                        <tr>
+                            <th>ID</th>
+                            <th style={colStyle}>Email</th>
+                            <th style={colStyle}>Phone Number</th>
+                            <th style={colStyle}>Booking Date</th>
+                            <th style={colStyle}>Booking Time</th>
+                            <th style={colStyle}>Service</th>
+                            <th style={colStyle}>Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {bookings?.map?.((booking, index) => {
