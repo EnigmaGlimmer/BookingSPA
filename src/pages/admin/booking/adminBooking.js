@@ -61,6 +61,7 @@ function AdminBooking() {
                             <th style={colStyle}>Booking Date</th>
                             <th style={colStyle}>Booking Time</th>
                             <th style={colStyle}>Service</th>
+                            <th style={colStyle}>How to know us?</th>
                             <th style={colStyle}>Actions</th>
                         </tr>
                     </thead>
@@ -76,6 +77,7 @@ function AdminBooking() {
                                         {booking?.slot.start_Hour?.slice(0, 5)} - {booking?.slot.end_Hour?.slice(0, 5)}
                                     </td>
                                     <td>{services?.find?.((s) => s.serviceId === booking?.serviceId)?.serviceName}</td>
+                                    <td className="text-nowrap">{booking?.customers[0]?.howtoknow}</td>
                                     <td>
                                         <Button
                                             variant="outline"

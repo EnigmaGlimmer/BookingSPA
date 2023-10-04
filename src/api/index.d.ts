@@ -252,11 +252,12 @@ type CustomerDTO = {
     howtoknow: [];
     isDeleted: boolean;
 };
+type Howtoknow = 'Facebook' | 'Instagram' | 'Google' | 'Letter' | 'Walkedpast' | 'Friend';
 type CreateCustomerDTO = {
     customerName: string;
     customerEmail: string;
     customerPhone: string;
-    howtoknow: [];
+    howtoknow: Howtoknow[];
 };
 type SearchCustomerDTO = {
     email: string;
