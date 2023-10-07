@@ -14,7 +14,7 @@ import { getService } from '../store/service/action';
 import './style/booking.css';
 
 // Bootstrap component
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 // Component
 import Booking from '../components/booking-calendar/booking';
 
@@ -102,6 +102,7 @@ const StepComponent = ({ step, setStep }) => {
             newCustomer: state.Customer.new,
         };
     });
+    const [loading, setLoading] = useState(false);
 
     const validation = useFormik({
         initialValues: {
@@ -126,7 +127,7 @@ const StepComponent = ({ step, setStep }) => {
         validationSchema: bookingSchema,
         onSubmit: (values, formikHelper) => {
             formikHelper.setSubmitting(false);
-
+            setLoading(true);
             assignBooking(
                 {
                     customerName: values.customer.customerName,
@@ -147,6 +148,7 @@ const StepComponent = ({ step, setStep }) => {
                 },
             )
                 .then((response) => {
+                    setLoading(false);
                     if (response?.data?.isSuccess === false) {
                         response?.data?.errors?.forEach?.((msg) => {
                             toast.error(msg, {
@@ -162,6 +164,7 @@ const StepComponent = ({ step, setStep }) => {
                     }
                 })
                 .catch((error) => {
+                    setLoading(false);
                     toast.error(error);
                 });
         },
@@ -169,7 +172,8 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            {(step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
+            {(loading && <Spinner></Spinner>) ||
+                (step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
                     <Step2
                         className="mb-4"
