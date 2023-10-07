@@ -63,11 +63,7 @@ function BookingPage() {
         } else if (step > theStep) {
             return <GrFormCheckmark className="booking-dot"></GrFormCheckmark>;
         }
-        return (
-            <article>
-                <h2>This page is not existing</h2>
-            </article>
-        );
+        return null;
     }
     return (
         <div className="intro my-5">
@@ -203,7 +199,7 @@ const StepComponent = ({ step, setStep }) => {
                         onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
                     ></Step3>
                 )) ||
-                (step === 4 && <BookingCompleted values={validation?.values}></BookingCompleted>)}
+                (step === 4 && <BookingCompleted values={validation?.values} setStep={setStep}></BookingCompleted>)}
         </Form>
     );
 };
@@ -289,7 +285,7 @@ export function Step1({ setStep, validation }) {
                                             inline
                                             label={item}
                                             name={'customer.howtoknow'}
-                                            value={item}
+                                            value={item.replace(/\s/g, '')}
                                             onChange={validation?.handleChange}
                                             type={'checkbox'}
                                         />
@@ -731,7 +727,7 @@ function Step3({
     );
 }
 
-function BookingCompleted({ values }) {
+function BookingCompleted({ values, setStep }) {
     const { services } = useService({
         request: {
             skip: 0,
@@ -787,7 +783,14 @@ function BookingCompleted({ values }) {
                     </span>
                 </span> */}
             </div>
-            <div className="my-3" style={{ textAlign: 'center' }}>
+            <div className="my-3 d-flex gap-2 justify-content-center" style={{ textAlign: 'center' }}>
+                <button
+                    className="my-btn text-uppercase btn-primary-outline btn btn-outline"
+                    onClick={() => setStep(1)}
+                >
+                    Book Again
+                </button>
+
                 <Link to="/">
                     <button className="my-btn text-uppercase btn-primary-outline btn btn-outline">Homepage</button>
                 </Link>

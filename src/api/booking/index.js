@@ -10,11 +10,13 @@ export const postBooking = (body) => {
 };
 
 export const assignBooking = (customer, booking) => {
-    return postCustomer(customer)
+    return postCustomer({ ...customer, isDeleted: false })
         .then((response) => {
+            console.log(response);
             if (!!response.data.errors) {
                 return searchCustomer({
                     email: customer?.customerEmail,
+                    phone: customer?.phone,
                 });
             }
 

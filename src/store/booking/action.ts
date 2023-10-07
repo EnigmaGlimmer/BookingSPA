@@ -1,3 +1,4 @@
+import { SearchBookingDTO } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -14,8 +15,9 @@ import {
 } from './actionType';
 
 // 1. Get booking
-export const getBookings = () => ({
+export const getBookings = (request: SearchBookingDTO) => ({
     type: GET_BOOKING,
+    payload: request,
 });
 
 export const getBookingSuccess = (actionType, data) => ({

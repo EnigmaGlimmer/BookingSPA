@@ -24,15 +24,22 @@ import {
     deleteBooking as deleteBookingAPI,
 } from '../../api';
 
-function* getBookings() {
+function* getBookings({ payload: request }) {
     try {
         const response = yield call(getBookingListAPI, {
             skip: 0,
             take: 60,
             orderBy: 'CheckinDate',
             searchBy: 'None',
+            ...request,
         });
-        yield put(getBookingSuccess(GET_BOOKING, Array.isArray(response?.list) ? response?.list : []));
+
+        yield put(
+            getBookingSuccess(GET_BOOKING, {
+                list: Array.isArray(response?.list) ? response?.list : [],
+                total: response.total,
+            }),
+        );
     } catch (error) {
         yield put(getBookingError(GET_BOOKING, error));
     }

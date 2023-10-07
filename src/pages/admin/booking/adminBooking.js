@@ -5,12 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBookings, getService, putBooking } from '../../../store/actions';
 import useService from '../../../hooks/useServices';
 import ReactPaginate from 'react-paginate';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 
 function AdminBooking() {
     const dispatch = useDispatch();
-    const { bookings } = useSelector((state) => {
+    const [take] = React.useState(10);
+    const [page, setPage] = React.useState(1);
+
+    const { bookings, bookingTotal } = useSelector((state) => {
         return {
             bookings: state.Booking.bookings,
+            bookingTotal: state.Booking.total,
         };
     });
 
@@ -23,7 +28,6 @@ function AdminBooking() {
     });
 
     React.useEffect(() => {
-        dispatch(getBookings());
         dispatch(
             getService({
                 skip: 0,
@@ -32,8 +36,16 @@ function AdminBooking() {
         );
     }, [dispatch]);
 
+    React.useEffect(() => {
+        dispatch(
+            getBookings({
+                skip: page,
+                take,
+            }),
+        );
+    }, [dispatch, take, page]);
+
     function handleCancelBooking(id, booking) {
-        // console.log(id, booking);
         dispatch(putBooking(id, booking));
     }
 
@@ -56,9 +68,10 @@ function AdminBooking() {
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th style={colStyle}>Name</th>
                             <th style={colStyle}>Email</th>
                             <th style={colStyle}>Phone Number</th>
-                            <th style={colStyle}>Booking Date</th>
+                            <th style={colStyle}>Check-in date</th>
                             <th style={colStyle}>Booking Time</th>
                             <th style={colStyle}>Service</th>
                             <th style={colStyle}>How to know us?</th>
@@ -70,8 +83,9 @@ function AdminBooking() {
                             return (
                                 <tr key={index}>
                                     <td>{booking?.bookingId}</td>
-                                    <td>{booking?.customers[0]?.customerEmail}</td>
-                                    <td>{booking?.customers[0]?.customerPhone}</td>
+                                    <td>{booking?.customers?.[0]?.customerName}</td>
+                                    <td>{booking?.customers?.[0]?.customerEmail}</td>
+                                    <td>{booking?.customers?.[0]?.customerPhone}</td>
                                     <td className="text-nowrap">{moment(booking?.checkinDate).format('yyyy-MM-DD')}</td>
                                     <td className="text-nowrap">
                                         {booking?.slot.start_Hour?.slice(0, 5)} - {booking?.slot.end_Hour?.slice(0, 5)}
@@ -99,7 +113,20 @@ function AdminBooking() {
                 </Table>
             </div>
 
-            {/* <ReactPaginate pageCount={5}></ReactPaginate> */}
+            <ReactPaginate
+                previousLabel={<AiOutlineLeft></AiOutlineLeft>}
+                nextLabel={<AiOutlineRight></AiOutlineRight>}
+                pageCount={Math.ceil(bookingTotal / take)}
+                onPageChange={({ selected }) => {
+                    setPage(selected + 1);
+                }}
+                containerClassName={'pagination'}
+                previousLinkClassName={'pagination-arrow-hover'}
+                nextLinkClassName={'pagination-arrow-hover'}
+                pageClassName="px-3"
+                disabledClassName={'pagination__link--disabled'}
+                activeClassName={'pagination-item-active'}
+            ></ReactPaginate>
         </section>
     );
 }

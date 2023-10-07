@@ -16,6 +16,7 @@ import {
 const INIT_STATE = {
     bookings: [],
     new: null,
+    total: 0,
     error: null,
     loading: false,
 };
@@ -27,7 +28,8 @@ const Booking = (state = INIT_STATE, action) => {
                 case GET_BOOKING:
                     return {
                         ...state,
-                        bookings: action.payload.data,
+                        bookings: action.payload.data.list,
+                        total: action.payload.data.total,
                     };
 
                 default:
@@ -76,9 +78,11 @@ const Booking = (state = INIT_STATE, action) => {
             };
 
         case DELETE_BOOKING_SUCCESS:
+            let newBookings = state.bookings.filter((item) => item.bookingId !== action.payload.id);
+
             return {
                 ...state,
-                bookings: state.bookings.filter((item) => item.bookingId !== action.payload.id),
+                bookings: newBookings,
             };
         case DELETE_BOOKING_FAILED:
             return {
