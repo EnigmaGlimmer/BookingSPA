@@ -65,7 +65,7 @@ function Home() {
             transition: 'max-height 0.4s linear',
         },
     });
-    console.log(home);
+
     return (
         <section>
             {/* Banner */}

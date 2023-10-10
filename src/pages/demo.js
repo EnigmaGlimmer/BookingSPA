@@ -17,12 +17,9 @@ function Demo() {
 
                     const imageLinkRx = /src\s*=\s*"(.+?)"/g;
 
-                    // console.log(output.match(imageLinkRx));
                     while ((m = imageLinkRx.exec(output))) {
                         urls.push(m[1]);
                     }
-
-                    console.log(urls);
                 }}
                 modules={{
                     toolbar: [

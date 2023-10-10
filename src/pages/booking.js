@@ -174,7 +174,7 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
+            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
             {(loading && <Spinner></Spinner>) ||
                 (step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
@@ -396,7 +396,6 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                                             if (s?.childs?.length > 0) {
                                                 setServiceChoice(s);
                                             } else {
-                                                console.log(s);
                                                 onChangeServiceId(s?.serviceId);
                                             }
                                         }}
