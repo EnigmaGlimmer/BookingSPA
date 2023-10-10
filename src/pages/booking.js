@@ -65,6 +65,7 @@ function BookingPage() {
         }
         return null;
     }
+
     return (
         <div className="intro my-5">
             <StepComponent step={step} setStep={setStep}></StepComponent>
@@ -138,7 +139,8 @@ const StepComponent = ({ step, setStep }) => {
                 {
                     // customerId: newCustomer.customerId,
                     createdDate: new Date(),
-                    serviceId: values.booking.serviceId,
+                    // serviceId: values.booking.serviceId,
+                    serviceId: values.parentServiceId,
                     isCancelled: false,
                     checkinDate: values.booking.checkinDate,
                     slot: {
@@ -172,6 +174,7 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
+            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             {(loading && <Spinner></Spinner>) ||
                 (step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
@@ -393,6 +396,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                                             if (s?.childs?.length > 0) {
                                                 setServiceChoice(s);
                                             } else {
+                                                console.log(s);
                                                 onChangeServiceId(s?.serviceId);
                                             }
                                         }}
@@ -495,6 +499,7 @@ function Step3({
         },
     });
 
+    // Calculate the reversed time
     useEffect(() => {
         let searchBy = 'Date';
         let keyword = moment(selectedDate).format('DD/MM/YYYY');
@@ -519,13 +524,14 @@ function Step3({
 
                 setReversed(
                     bookings?.list?.map?.((b) => {
-                        const [start1, end1] = b.slot.start_Hour.split(':');
-                        const [start2, end2] = b.slot.end_Hour.split(':');
+                        const [hourStart, minuteStart] = b.slot.start_Hour.split(':');
+                        const [hourEnd, minuteEnd] = b.slot.end_Hour.split(':');
 
                         return {
-                            startTime: [start1, end1].join(':'),
-                            endTime: [start2, end2].join(':'),
-                            isAllowed: b.serviceId !== valueServiceId,
+                            startTime: [hourStart, minuteStart].join(':'),
+                            endTime: [hourEnd, minuteEnd].join(':'),
+                            // isAllowed: b.serviceId !== valueServiceId,
+                            isAllowed: b.serviceId !== parentServiceId,
                         };
                     }),
                 );
@@ -533,8 +539,9 @@ function Step3({
             .catch((error) => {
                 toast.error(error);
             });
-    }, [selectedDate, valueServiceId, services]);
+    }, [selectedDate, valueServiceId, parentServiceId, services]);
 
+    // Calculate the time offset
     useEffect(() => {
         if (services.length > 0) {
             let selectedDuration = services
@@ -566,6 +573,7 @@ function Step3({
         }
     }, [services, valueServiceId]);
 
+    // Create the array of time range
     useEffect(() => {
         function calcTimeRanges(timeOffset) {
             let h = hourMorningWorkStart;
@@ -693,22 +701,7 @@ function Step3({
                     </div>
                 </div>
             </div>
-            {/* <Row className="container mx-auto gap-5">
-                <Col className="booking-service-description">
-                    <div className="mb-2">
-                        <span className="me-2">
-                            <AiFillWarning></AiFillWarning>
-                        </span>
-                        <b>Attention:</b>
-                    </div>
-                    <div>
-                        <b>Monday - Saturday</b> (9:00am - 5:30pm)
-                    </div>
-                    <div>
-                        <b>Sunday</b> (Closed)
-                    </div>
-                </Col>
-            </Row> */}
+
             <div className="booking-component-button-done">
                 <Button
                     type="button"

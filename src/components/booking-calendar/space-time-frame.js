@@ -6,6 +6,24 @@ import { toast } from 'react-toastify';
 //
 import * as DOMPurify from 'dompurify';
 
+function equalifyUnit(args) {
+    // timeString: "HH:MM"
+    let { timeString = null, hour = null, minute = null } = args;
+    let uniformedUnit = 0;
+
+    if (!!timeString) {
+        let timeRanges = timeString.split(':');
+        hour = timeRanges[0];
+        minute = timeRanges[1];
+    }
+
+    if (!!hour && !!minute) {
+        uniformedUnit = Number(hour) * 60 + Number(minute);
+    }
+
+    return uniformedUnit;
+}
+
 const SpaceTimeFrame = ({
     initialSpaceTimes = [
         ['1:00pm', '2:00pm'],
@@ -14,8 +32,8 @@ const SpaceTimeFrame = ({
     ],
     reserved = [
         {
-            startTime: '1:00pm',
-            endTime: '2:00pm',
+            startTime: '13:00',
+            endTime: '14:00',
             isAllowed: true,
         },
     ],
@@ -44,7 +62,22 @@ const SpaceTimeFrame = ({
                         const start = space[0];
                         const end = space[1];
 
-                        return start === startTime && endTime === end && !isAllowed;
+                        let [totalStartSpaceUnit, totalEndSpaceUnit] = [
+                            equalifyUnit({ timeString: start }),
+                            equalifyUnit({ timeString: end }),
+                        ];
+                        let [totalStartReservedUnit, totalEndReservedUnit] = [
+                            equalifyUnit({ timeString: startTime }),
+                            equalifyUnit({ timeString: endTime }),
+                        ];
+
+                        return (
+                            ((totalStartReservedUnit >= totalStartSpaceUnit &&
+                                totalStartReservedUnit <= totalEndSpaceUnit) ||
+                                (totalEndReservedUnit > totalStartSpaceUnit &&
+                                    totalEndReservedUnit <= totalEndSpaceUnit)) &&
+                            !isAllowed
+                        );
                     });
 
                     const [start] = space;
@@ -74,7 +107,6 @@ const SpaceTimeFrame = ({
                                 onChangeTimeEnd(endTime);
                             }}
                         >
-                            {/* {space.join(' - ')} */}
                             {start}
                         </span>
                     );
