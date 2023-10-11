@@ -73,7 +73,7 @@ const SpaceTimeFrame = ({
 
                         return (
                             ((totalStartReservedUnit >= totalStartSpaceUnit &&
-                                totalStartReservedUnit <= totalEndSpaceUnit) ||
+                                totalStartReservedUnit < totalEndSpaceUnit) ||
                                 (totalEndReservedUnit > totalStartSpaceUnit &&
                                     totalEndReservedUnit <= totalEndSpaceUnit)) &&
                             !isAllowed
