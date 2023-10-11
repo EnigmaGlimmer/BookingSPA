@@ -116,6 +116,7 @@ const StepComponent = ({ step, setStep }) => {
             booking: {
                 customerId: newCustomer?.customerid,
                 serviceId: 0,
+                serviceName: '',
                 checkinDate: '',
                 createdDate: new Date(),
                 slot: {
@@ -141,6 +142,7 @@ const StepComponent = ({ step, setStep }) => {
                     createdDate: new Date(),
                     // serviceId: values.booking.serviceId,
                     serviceId: values.parentServiceId,
+                    serviceName: values.booking.serviceName,
                     isCancelled: false,
                     checkinDate: values.booking.checkinDate,
                     slot: {
@@ -174,7 +176,7 @@ const StepComponent = ({ step, setStep }) => {
 
     return (
         <Form onSubmit={validation.handleSubmit}>
-            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
+            <pre>{JSON.stringify(validation.values, 4, 4)}</pre>
             {(loading && <Spinner></Spinner>) ||
                 (step === 1 && <Step1 step={step} setStep={setStep} validation={validation}></Step1>) ||
                 (step === 2 && (
@@ -187,6 +189,9 @@ const StepComponent = ({ step, setStep }) => {
                         onChangeServiceId={(serviceId) => validation.setFieldValue('booking.serviceId', serviceId)}
                         onChangeParentServiceId={(parentServiceId) =>
                             validation.setFieldValue('parentServiceId', parentServiceId)
+                        }
+                        onChangeServiceName={(serviceName) =>
+                            validation.setFieldValue('booking.serviceName', serviceName)
                         }
                     ></Step2>
                 )) ||
@@ -214,7 +219,6 @@ const StepComponent = ({ step, setStep }) => {
 export function Step1({ setStep, validation }) {
     return (
         <div className="intro-form">
-            {/* <pre>{JSON.stringify(validation, 4, 4)}</pre> */}
             <div className="intro-img booking-form-img">
                 <div className="intro-img-form">
                     <div className="intro-img-big">
@@ -225,6 +229,7 @@ export function Step1({ setStep, validation }) {
                     </div>
                 </div>
             </div>
+
             <div className="intro-content">
                 <div className="intro-img-flower-top">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
@@ -331,9 +336,11 @@ export function Step1({ setStep, validation }) {
                         </Button>
                     </div>
                 </div>
+
                 <div className="intro-img-flower-mid">
                     <img alt="deco" src={singleFlower} width={'100%'} />
                 </div>
+
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
@@ -342,7 +349,7 @@ export function Step1({ setStep, validation }) {
     );
 }
 
-function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangeParentServiceId }) {
+function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangeParentServiceId, onChangeServiceName }) {
     const footerButtonId = 'booking-step2-button';
     const { services } = useService({
         request: {
@@ -422,6 +429,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                                         onClick={() => {
                                             onChangeServiceId(item?.serviceId);
                                             onChangeParentServiceId(serviceChoice?.serviceId);
+                                            onChangeServiceName(item?.serviceName);
                                         }}
                                         style={
                                             valueServiceId === item?.serviceId
@@ -498,6 +506,14 @@ function Step3({
         },
     });
 
+    const { services: childServices } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+            flat: 1,
+        },
+    });
+
     // Calculate the reversed time
     useEffect(() => {
         let searchBy = 'Date';
@@ -526,11 +542,14 @@ function Step3({
                         const [hourStart, minuteStart] = b.slot.start_Hour.split(':');
                         const [hourEnd, minuteEnd] = b.slot.end_Hour.split(':');
 
+                        let comparedServiceId =
+                            childServices?.find?.((s) => s.serviceId === b.serviceId)?.parentId || b.serviceId;
+
                         return {
                             startTime: [hourStart, minuteStart].join(':'),
                             endTime: [hourEnd, minuteEnd].join(':'),
                             // isAllowed: b.serviceId !== valueServiceId,
-                            isAllowed: b.serviceId !== parentServiceId,
+                            isAllowed: comparedServiceId !== parentServiceId,
                         };
                     }),
                 );
@@ -691,13 +710,11 @@ function Step3({
                     </b>
                 </div>
                 <div>
-                    <div>
-                        {
-                            services
-                                ?.map((item) => item?.childs?.find((e) => e.serviceId === valueServiceId))
-                                ?.find((item) => item !== undefined)?.description
-                        }
-                    </div>
+                    {
+                        services
+                            ?.map((item) => item?.childs?.find((e) => e.serviceId === valueServiceId))
+                            ?.find((item) => item !== undefined)?.description
+                    }
                 </div>
             </div>
 

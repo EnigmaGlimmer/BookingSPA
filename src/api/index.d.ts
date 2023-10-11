@@ -302,6 +302,7 @@ type CreateBookingDTO = {
     createdDate: Date;
     isCancelled: boolean;
     serviceId: number;
+    serviceName: string;
     checkinDate: string;
     slot: {
         start_Hour: string;

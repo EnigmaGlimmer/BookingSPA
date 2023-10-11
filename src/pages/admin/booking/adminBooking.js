@@ -26,6 +26,13 @@ function AdminBooking() {
             flat: 1,
         },
     });
+    const { services: parentServices } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+            flat: 0,
+        },
+    });
 
     React.useEffect(() => {
         dispatch(
@@ -72,8 +79,9 @@ function AdminBooking() {
                             <th style={colStyle}>Email</th>
                             <th style={colStyle}>Phone Number</th>
                             <th style={colStyle}>Check-in date</th>
+                            <th style={colStyle}>Created date</th>
                             <th style={colStyle}>Booking Time</th>
-                            <th style={colStyle}>Service</th>
+                            <th style={colStyle}>Service - Name</th>
                             <th style={colStyle}>How to know us?</th>
                             <th style={colStyle}>Actions</th>
                         </tr>
@@ -87,10 +95,16 @@ function AdminBooking() {
                                     <td>{booking?.customers?.[0]?.customerEmail}</td>
                                     <td>{booking?.customers?.[0]?.customerPhone}</td>
                                     <td className="text-nowrap">{moment(booking?.checkinDate).format('yyyy-MM-DD')}</td>
+                                    <td className="text-nowrap">{moment(booking?.createdDate).format('yyyy-MM-DD')}</td>
                                     <td className="text-nowrap">
                                         {booking?.slot.start_Hour?.slice(0, 5)} - {booking?.slot.end_Hour?.slice(0, 5)}
                                     </td>
-                                    <td>{services?.find?.((s) => s.serviceId === booking?.serviceId)?.serviceName}</td>
+                                    <td>
+                                        {parentServices?.find?.((s) => s.serviceId === booking?.serviceId)
+                                            ?.serviceName ||
+                                            services?.find?.((s) => s.serviceId === booking?.serviceId)?.serviceName}
+                                        - {booking?.serviceName}
+                                    </td>
                                     <td className="text-nowrap">{booking?.customers[0]?.howtoknow}</td>
                                     <td>
                                         <Button

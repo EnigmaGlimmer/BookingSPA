@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 // UI
-import { Button, Col, Row } from 'react-bootstrap';
 import { UploadModal } from '../../../components';
+import { Button, Col, Row } from 'react-bootstrap';
 import ReactPaginate from 'react-paginate';
 
 // Icon
