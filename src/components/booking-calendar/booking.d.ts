@@ -3,6 +3,7 @@ import React from 'react';
 type BookingProps = {
     initialTimeRange: Array<[string, string]>;
     activeDate: Date;
+    timeFrameLoading?: boolean;
     reserved: {
         startTime: string;
         endTime: string;

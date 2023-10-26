@@ -5,6 +5,7 @@ interface SpaceTimeFrameProps {
         endTime: string;
         isAllowed: boolean;
     }[];
+    loading: boolean;
     onChangeTimeStart: (timeStart) => void;
     onChangeTimeEnd: (timeEnd) => void;
 }

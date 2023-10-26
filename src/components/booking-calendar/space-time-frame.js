@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 //
 import * as DOMPurify from 'dompurify';
+import { Spinner } from 'react-bootstrap';
 
 function equalifyUnit(args) {
     // timeString: "HH:MM"
@@ -37,6 +38,7 @@ const SpaceTimeFrame = ({
             isAllowed: true,
         },
     ],
+    loading,
     onChangeTimeStart,
     onChangeTimeEnd,
     ...contentProps
@@ -57,60 +59,77 @@ const SpaceTimeFrame = ({
                 <div className="space-time-date"></div>
             </div>
             <div className="space-time-content">
-                {initialSpaceTimes.map((space, key) => {
-                    const hasReserved = reserved.some(({ startTime, endTime, isAllowed }) => {
-                        const start = space[0];
-                        const end = space[1];
+                {(loading && (
+                    <div className="d-flex align-items-center justify-content-center p-5">
+                        <Spinner></Spinner>
+                    </div>
+                )) ||
+                    initialSpaceTimes.map((space, key) => {
+                        const hasReserved = reserved.some(({ startTime, endTime, isAllowed }) => {
+                            const start = space[0];
+                            const end = space[1];
 
-                        let [totalStartSpaceUnit, totalEndSpaceUnit] = [
-                            equalifyUnit({ timeString: start }),
-                            equalifyUnit({ timeString: end }),
-                        ];
-                        let [totalStartReservedUnit, totalEndReservedUnit] = [
-                            equalifyUnit({ timeString: startTime }),
-                            equalifyUnit({ timeString: endTime }),
-                        ];
+                            let [totalStartSpaceUnit, totalEndSpaceUnit] = [
+                                equalifyUnit({ timeString: start }),
+                                equalifyUnit({ timeString: end }),
+                            ];
+                            let [totalStartReservedUnit, totalEndReservedUnit] = [
+                                equalifyUnit({ timeString: startTime }),
+                                equalifyUnit({ timeString: endTime }),
+                            ];
+                            console.log('Dot', space);
+                            console.log(totalStartSpaceUnit, totalEndSpaceUnit);
+                            console.log(totalStartReservedUnit, totalEndReservedUnit);
+                            console.log(
+                                'Has reversed',
+                                (totalStartReservedUnit >= totalStartSpaceUnit &&
+                                    totalStartReservedUnit < totalEndSpaceUnit) ||
+                                    (totalEndReservedUnit > totalStartSpaceUnit &&
+                                        totalEndReservedUnit <= totalEndSpaceUnit),
+                            );
+
+                            return (
+                                ((totalStartReservedUnit >= totalStartSpaceUnit &&
+                                    totalStartReservedUnit < totalEndSpaceUnit) ||
+                                    (totalEndReservedUnit > totalStartSpaceUnit &&
+                                        totalEndReservedUnit <= totalEndSpaceUnit) ||
+                                    (totalStartReservedUnit <= totalStartSpaceUnit &&
+                                        totalEndReservedUnit >= totalEndSpaceUnit)) &&
+                                !isAllowed
+                            );
+                        });
+
+                        const [start] = space;
 
                         return (
-                            ((totalStartReservedUnit >= totalStartSpaceUnit &&
-                                totalStartReservedUnit < totalEndSpaceUnit) ||
-                                (totalEndReservedUnit > totalStartSpaceUnit &&
-                                    totalEndReservedUnit <= totalEndSpaceUnit)) &&
-                            !isAllowed
+                            <span
+                                className="space-time-button"
+                                data-selected={selected === key}
+                                data-active={hasReserved}
+                                key={key}
+                                onClick={() => {
+                                    if (hasReserved) {
+                                        toast.error('This has been reserved', {
+                                            autoClose: 3000,
+                                        });
+                                        return;
+                                    }
+
+                                    setSelected(key);
+
+                                    let startTime = space[0];
+
+                                    onChangeTimeStart(startTime);
+
+                                    let endTime = space[1];
+
+                                    onChangeTimeEnd(endTime);
+                                }}
+                            >
+                                {start}
+                            </span>
                         );
-                    });
-
-                    const [start] = space;
-
-                    return (
-                        <span
-                            className="space-time-button"
-                            data-selected={selected === key}
-                            data-active={hasReserved}
-                            key={key}
-                            onClick={() => {
-                                if (hasReserved) {
-                                    toast.error('This has been reserved', {
-                                        autoClose: 3000,
-                                    });
-                                    return;
-                                }
-
-                                setSelected(key);
-
-                                let startTime = space[0];
-
-                                onChangeTimeStart(startTime);
-
-                                let endTime = space[1];
-
-                                onChangeTimeEnd(endTime);
-                            }}
-                        >
-                            {start}
-                        </span>
-                    );
-                })}
+                    })}
             </div>
         </div>
     );

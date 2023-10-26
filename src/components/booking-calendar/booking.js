@@ -11,6 +11,7 @@ import { default as SpaceTimeFrame } from './space-time-frame';
 const Booking = ({
     initialTimeRange,
     reserved,
+    timeFrameLoading,
     activeDate,
     onChangeDate,
     onChangeTimeStart,
@@ -28,7 +29,6 @@ const Booking = ({
     return (
         <div className="booking-root">
             <div className="booking-root-date">
-                {/* <h2>Booking</h2> */}
                 <Calendar
                     initialDate={activeDate}
                     onChangeDate={(date) => setSelectedDate(date)}
@@ -37,16 +37,18 @@ const Booking = ({
             </div>
             <div className="booking-root-time">
                 <div className="calendar-space-time-frame">
-                    {selectedDate && (
-                        <SpaceTimeFrame
-                            initialSpaceTimes={initialTimeRange}
-                            reserved={reserved}
-                            onChangeTimeStart={onChangeTimeStart}
-                            onChangeTimeEnd={onChangeTimeEnd}
-                            title={title}
-                            content={content}
-                        ></SpaceTimeFrame>
-                    )}
+                    {(timeFrameLoading && <></>) ||
+                        (selectedDate && (
+                            <SpaceTimeFrame
+                                initialSpaceTimes={initialTimeRange}
+                                reserved={reserved}
+                                loading={!!timeFrameLoading}
+                                onChangeTimeStart={onChangeTimeStart}
+                                onChangeTimeEnd={onChangeTimeEnd}
+                                title={title}
+                                content={content}
+                            ></SpaceTimeFrame>
+                        ))}
                 </div>
             </div>
         </div>

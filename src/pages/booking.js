@@ -496,6 +496,7 @@ function Step3({
     const [reservedTimeRange, setReversed] = useState([]);
     const [timeOffset, setTimeOffset] = useState(1);
     const [timeRange, setTimeRange] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const { services } = useService({
         request: {
@@ -517,7 +518,7 @@ function Step3({
     useEffect(() => {
         let searchBy = 'Date';
         let keyword = moment(selectedDate).format('DD/MM/YYYY');
-
+        setLoading(true);
         getBookingList({
             orderBy: 'CreatedDate',
             searchBy: searchBy,
@@ -552,9 +553,12 @@ function Step3({
                         };
                     }),
                 );
+
+                setLoading(false);
             })
             .catch((error) => {
                 toast.error(error);
+                setLoading(false);
             });
     }, [selectedDate, valueServiceId, parentServiceId, services]);
 
@@ -679,6 +683,7 @@ function Step3({
                         ]
                     }
                     reserved={reservedTimeRange}
+                    timeFrameLoading={loading}
                     onChangeDate={(date) => {
                         onChangeDate(date);
                         setSelectedDate(date);
