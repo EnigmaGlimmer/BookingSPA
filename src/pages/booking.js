@@ -7,8 +7,7 @@ import homeFlowerDeco from '../images/home/flower.svg';
 import singleFlower from '../images/singleFlower.svg';
 
 // Redux store
-import { useDispatch, useSelector } from 'react-redux';
-import { getService } from '../store/service/action';
+import { useSelector } from 'react-redux';
 
 // Custom style
 import './style/booking.css';
@@ -117,7 +116,7 @@ const StepComponent = ({ step, setStep }) => {
                 customerId: newCustomer?.customerid,
                 serviceId: 0,
                 serviceName: '',
-                checkinDate: '',
+                checkinDate: moment().format('YYYY-MM-DD'),
                 createdDate: new Date(),
                 slot: {
                     start_Hour: '',
@@ -174,6 +173,16 @@ const StepComponent = ({ step, setStep }) => {
         },
     });
 
+    const [eventDateDuration, setEventDateDuration] = useState(['10/12/2023', '24/12/2023']);
+
+    let isBetweenDate = moment(validation.values?.booking?.checkinDate, 'YYYY-MM-DD').isBetween(
+        moment(eventDateDuration[0], 'DD/MM/YYYY'),
+        moment(eventDateDuration[1], 'DD/MM/YYYY'),
+    );
+
+    console.log(moment(eventDateDuration[0], 'DD/MM/YYYY'), moment(eventDateDuration[1], 'DD/MM/YYYY'));
+    console.log(moment(validation.values?.booking?.checkinDate, 'YYYY-MM-DD'), isBetweenDate);
+
     return (
         <Form onSubmit={validation.handleSubmit}>
             {(loading && <Spinner></Spinner>) ||
@@ -208,6 +217,14 @@ const StepComponent = ({ step, setStep }) => {
                         }}
                         onChangeTimeStart={(time) => validation.setFieldValue('booking.slot.start_Hour', time)}
                         onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
+                        hourMorningWorkStart={isBetweenDate ? 8 : 9}
+                        minuteMorningWorkStart={isBetweenDate ? 0 : 0}
+                        hourMorningWorkEnd={isBetweenDate ? 12 : 12}
+                        minuteMorningWorkEnd={isBetweenDate ? 30 : 30}
+                        hourAfternoonWorkStart={isBetweenDate ? 13 : 13}
+                        minuteAfternoonWorkStart={isBetweenDate ? 0 : 0}
+                        hourAfternoonWorkEnd={isBetweenDate ? 20 : 20}
+                        minuteAfternoonWorkEnd={isBetweenDate ? 0 : 0}
                     ></Step3>
                 )) ||
                 (step === 4 && <BookingCompleted values={validation?.values} setStep={setStep}></BookingCompleted>)}
@@ -514,6 +531,8 @@ function Step3({
         },
     });
 
+    //
+
     // Calculate the reversed time
     useEffect(() => {
         let searchBy = 'Date';
@@ -660,7 +679,17 @@ function Step3({
         let range = calcTimeRanges(timeOffset);
 
         setTimeRange(range);
-    }, [timeOffset]);
+    }, [
+        timeOffset,
+        hourMorningWorkStart,
+        minuteMorningWorkStart,
+        hourMorningWorkEnd,
+        minuteMorningWorkEnd,
+        hourAfternoonWorkStart,
+        minuteAfternoonWorkStart,
+        hourAfternoonWorkEnd,
+        minuteAfternoonWorkEnd,
+    ]);
 
     const timeFrameContent = ``;
 

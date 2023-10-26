@@ -77,16 +77,6 @@ const SpaceTimeFrame = ({
                                 equalifyUnit({ timeString: startTime }),
                                 equalifyUnit({ timeString: endTime }),
                             ];
-                            console.log('Dot', space);
-                            console.log(totalStartSpaceUnit, totalEndSpaceUnit);
-                            console.log(totalStartReservedUnit, totalEndReservedUnit);
-                            console.log(
-                                'Has reversed',
-                                (totalStartReservedUnit >= totalStartSpaceUnit &&
-                                    totalStartReservedUnit < totalEndSpaceUnit) ||
-                                    (totalEndReservedUnit > totalStartSpaceUnit &&
-                                        totalEndReservedUnit <= totalEndSpaceUnit),
-                            );
 
                             return (
                                 ((totalStartReservedUnit >= totalStartSpaceUnit &&
