@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 //
 import * as DOMPurify from 'dompurify';
 import { Spinner } from 'react-bootstrap';
+import { allIntersect } from '../../ultilies/intersection';
 
 function equalifyUnit(args) {
     // timeString: "HH:MM"
@@ -59,35 +60,55 @@ const SpaceTimeFrame = ({
                 <div className="space-time-date"></div>
             </div>
             <div className="space-time-content">
+                {/* <pre>{JSON.stringify(reserved, 4, 4)}</pre> */}
                 {(loading && (
                     <div className="d-flex align-items-center justify-content-center p-5">
                         <Spinner></Spinner>
                     </div>
                 )) ||
                     initialSpaceTimes.map((space, key) => {
-                        const hasReserved = reserved.some(({ startTime, endTime, isAllowed }) => {
-                            const start = space[0];
-                            const end = space[1];
+                        const hasReserved = reserved.some(
+                            ({ startTime: startBookedTime, endTime: endBookedTime, isAllowed }) => {
+                                const [startCalendarTime, endCalendarTime] = space;
 
-                            let [totalStartSpaceUnit, totalEndSpaceUnit] = [
-                                equalifyUnit({ timeString: start }),
-                                equalifyUnit({ timeString: end }),
-                            ];
-                            let [totalStartReservedUnit, totalEndReservedUnit] = [
-                                equalifyUnit({ timeString: startTime }),
-                                equalifyUnit({ timeString: endTime }),
-                            ];
+                                let [totalStartCalendarUnit, totalEndCalendarUnit] = [
+                                    equalifyUnit({ timeString: startCalendarTime }),
+                                    equalifyUnit({ timeString: endCalendarTime }),
+                                ];
+                                let [totalStartReservedUnit, totalEndReservedUnit] = [
+                                    equalifyUnit({ timeString: startBookedTime }),
+                                    equalifyUnit({ timeString: endBookedTime }),
+                                ];
 
-                            return (
-                                ((totalStartReservedUnit >= totalStartSpaceUnit &&
-                                    totalStartReservedUnit < totalEndSpaceUnit) ||
-                                    (totalEndReservedUnit > totalStartSpaceUnit &&
-                                        totalEndReservedUnit <= totalEndSpaceUnit) ||
-                                    (totalStartReservedUnit <= totalStartSpaceUnit &&
-                                        totalEndReservedUnit >= totalEndSpaceUnit)) &&
-                                !isAllowed
-                            );
-                        });
+                                let hasIntersect = allIntersect([
+                                    { min: totalStartCalendarUnit, max: totalEndCalendarUnit },
+                                    { min: totalStartReservedUnit, max: totalEndReservedUnit },
+                                ]);
+
+                                {
+                                    /* if (hasIntersect) {
+                                    console.log(
+                                        `Calendar: ${space} 
+                                    \nTotal calendar: ${totalStartCalendarUnit} - ${totalEndCalendarUnit}`,
+                                        `\nReversed: ${startBookedTime} - ${endBookedTime} 
+                                    \nTotal reversed: ${totalStartReservedUnit} - ${totalEndReservedUnit}
+                                    \nis start time Between: ${
+                                        totalStartCalendarUnit >= totalStartReservedUnit &&
+                                        totalStartCalendarUnit <= totalEndReservedUnit
+                                    }\nis end time Between: ${
+                                            totalEndCalendarUnit >= totalStartReservedUnit ||
+                                            totalEndCalendarUnit <= totalEndReservedUnit
+                                        }\nisAllowed: ${isAllowed}`,
+                                    );
+                                } */
+                                }
+
+                                return hasIntersect && !isAllowed;
+                            },
+                        );
+                        {
+                            /* console.log(`=====> calendar: ${space} has reversed: ${hasReserved}`); */
+                        }
 
                         const [start] = space;
 
@@ -116,7 +137,7 @@ const SpaceTimeFrame = ({
                                     onChangeTimeEnd(endTime);
                                 }}
                             >
-                                {start}
+                                {start} - {space[1]}
                             </span>
                         );
                     })}

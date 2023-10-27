@@ -180,9 +180,6 @@ const StepComponent = ({ step, setStep }) => {
         moment(eventDateDuration[1], 'DD/MM/YYYY'),
     );
 
-    console.log(moment(eventDateDuration[0], 'DD/MM/YYYY'), moment(eventDateDuration[1], 'DD/MM/YYYY'));
-    console.log(moment(validation.values?.booking?.checkinDate, 'YYYY-MM-DD'), isBetweenDate);
-
     return (
         <Form onSubmit={validation.handleSubmit}>
             {(loading && <Spinner></Spinner>) ||
@@ -223,8 +220,8 @@ const StepComponent = ({ step, setStep }) => {
                         minuteMorningWorkEnd={isBetweenDate ? 30 : 30}
                         hourAfternoonWorkStart={isBetweenDate ? 13 : 13}
                         minuteAfternoonWorkStart={isBetweenDate ? 0 : 0}
-                        hourAfternoonWorkEnd={isBetweenDate ? 20 : 20}
-                        minuteAfternoonWorkEnd={isBetweenDate ? 0 : 0}
+                        hourAfternoonWorkEnd={isBetweenDate ? 20 : 17}
+                        minuteAfternoonWorkEnd={isBetweenDate ? 0 : 30}
                     ></Step3>
                 )) ||
                 (step === 4 && <BookingCompleted values={validation?.values} setStep={setStep}></BookingCompleted>)}
@@ -615,17 +612,28 @@ function Step3({
 
     // Create the array of time range
     useEffect(() => {
+        // timeOffset has unit of minute
         function calcTimeRanges(timeOffset) {
-            let h = hourMorningWorkStart;
-            let m = minuteMorningWorkStart;
+            let totalWorkingTimeUnit = hourMorningWorkStart * 60 + minuteMorningWorkStart;
 
             let morningTimeArray = [];
             let afternoonTimeArray = [];
 
-            while (h <= hourAfternoonWorkEnd) {
+            while (totalWorkingTimeUnit <= hourAfternoonWorkEnd * 60 + minuteAfternoonWorkEnd) {
                 let range;
+                let h = Math.floor(totalWorkingTimeUnit / 60);
+                let m = totalWorkingTimeUnit % 60;
 
-                if (h >= hourMorningWorkStart && h < hourMorningWorkEnd) {
+                let nexth = Math.floor((totalWorkingTimeUnit + timeOffset - 1) / 60);
+                let nextm = (totalWorkingTimeUnit + timeOffset - 1) % 60;
+                let totalNextWorkingTimeUnit = nexth * 60 + nextm;
+
+                if (
+                    totalWorkingTimeUnit >= hourMorningWorkStart * 60 + minuteMorningWorkStart &&
+                    totalWorkingTimeUnit < hourMorningWorkEnd * 60 + minuteMorningWorkEnd &&
+                    totalNextWorkingTimeUnit >= hourMorningWorkStart * 60 + minuteMorningWorkStart &&
+                    totalNextWorkingTimeUnit < hourMorningWorkEnd * 60 + minuteMorningWorkEnd
+                ) {
                     range = [
                         `${h.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
@@ -634,19 +642,21 @@ function Step3({
                             minimumIntegerDigits: 2,
                             useGrouping: false,
                         })}`,
-                        `${(h + Math.floor((m + timeOffset) / 60)).toLocaleString('en-US', {
+                        `${nexth.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
                             useGrouping: false,
-                        })}:${(h + Math.floor((m + timeOffset) / 60) === hourMorningWorkEnd
-                            ? Math.min((m + timeOffset) % 60, minuteMorningWorkEnd)
-                            : (m + timeOffset) % 60
-                        ).toLocaleString('en-US', {
+                        })}:${nextm.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
                             useGrouping: false,
                         })}`,
                     ];
                     morningTimeArray = [...morningTimeArray, range];
-                } else if (h >= hourAfternoonWorkStart && h < hourAfternoonWorkEnd) {
+                } else if (
+                    totalWorkingTimeUnit >= hourAfternoonWorkStart * 60 + minuteAfternoonWorkStart &&
+                    totalWorkingTimeUnit < hourAfternoonWorkEnd * 60 + minuteAfternoonWorkEnd &&
+                    totalNextWorkingTimeUnit >= hourAfternoonWorkStart * 60 + minuteAfternoonWorkStart &&
+                    totalNextWorkingTimeUnit < hourAfternoonWorkEnd * 60 + minuteAfternoonWorkEnd
+                ) {
                     range = [
                         `${h.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
@@ -655,13 +665,10 @@ function Step3({
                             minimumIntegerDigits: 2,
                             useGrouping: false,
                         })}`,
-                        `${(h + Math.floor((m + timeOffset) / 60)).toLocaleString('en-US', {
+                        `${nexth.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
                             useGrouping: false,
-                        })}:${(h + Math.floor((m + timeOffset) / 60) === hourAfternoonWorkEnd
-                            ? Math.min((m + timeOffset) % 60, minuteAfternoonWorkEnd)
-                            : (m + timeOffset) % 60
-                        ).toLocaleString('en-US', {
+                        })}:${nextm.toLocaleString('en-US', {
                             minimumIntegerDigits: 2,
                             useGrouping: false,
                         })}`,
@@ -669,8 +676,7 @@ function Step3({
                     afternoonTimeArray = [...afternoonTimeArray, range];
                 }
 
-                h = h + Math.floor((m + timeOffset) / 60);
-                m = (m + timeOffset) % 60;
+                totalWorkingTimeUnit = totalWorkingTimeUnit + timeOffset;
             }
 
             return [...morningTimeArray, ...afternoonTimeArray];
