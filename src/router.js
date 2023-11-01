@@ -22,6 +22,7 @@ import {
 // List of layout
 import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
 import React from 'react';
+import { ScrollToTop } from './components';
 
 // React Icons
 const signin = localStorage.getItem('signin');
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
                 <Navbar></Navbar>
                 <Outlet />
                 <Footer></Footer>
+                <ScrollToTop />
             </>
         ),
         errorElement: <NotFound></NotFound>,
@@ -106,6 +108,7 @@ const router = createBrowserRouter([
                 ) : (
                     <Login></Login>
                 )}
+                <ScrollToTop />
             </>
         ),
         errorElement: <NotFound></NotFound>,

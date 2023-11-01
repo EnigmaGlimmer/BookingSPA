@@ -7,3 +7,5 @@ export { default as Pagination } from './pagination/pagination';
 export { default as CustomReactQuill } from './custom-react-quill/custom-react-quill';
 
 export { default as UploadModal } from './upload-modal/upload-modal';
+
+export { default as ScrollToTop } from './scrollToTop/index';

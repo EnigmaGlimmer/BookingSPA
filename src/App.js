@@ -9,6 +9,7 @@ import AppRouter from './router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Event } from './layout';
+import { ScrollToTop } from './components';
 
 function App() {
     return (
