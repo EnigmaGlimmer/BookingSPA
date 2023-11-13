@@ -80,14 +80,24 @@ function Home() {
 
                 <div className="banner-img">
                     <div className="banner-img-big">
-                        <img alt="banner" src={bannerBig} width={'100%'} loading="lazy" />
+                        <img alt="banner" src={home?.hero?.images?.[0] || bannerBig} width={'100%'} loading="lazy" />
                     </div>
                     <div className="banner-img-extra">
                         <div className="banner-img-flower">
-                            <img alt="banner" src={homeFlowerDeco} width={'100%'} loading="lazy" />
+                            <img
+                                alt="banner"
+                                src={home?.hero?.images?.[1] || homeFlowerDeco}
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                         <div className="banner-img-small">
-                            <img alt="banner" src={bannerSmall} width={'100%'} loading="lazy" />
+                            <img
+                                alt="banner"
+                                src={home?.hero?.images?.[2] || bannerSmall}
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                     </div>
                 </div>
@@ -100,16 +110,31 @@ function Home() {
                     <div className="intro-img">
                         <div className="intro-img-form">
                             <div className="intro-img-big">
-                                <img alt="intro" src={introBig} width={'100%'} loading="lazy" />
+                                <img
+                                    alt="intro"
+                                    src={home?.intro?.images?.[0] || introBig}
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                             </div>
                             <div className="intro-img-small">
-                                <img alt="intro" src={introSmall} width={'100%'} loading="lazy" />
+                                <img
+                                    alt="intro"
+                                    src={home?.intro?.images?.[1] || introSmall}
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                             </div>
                         </div>
                     </div>
                     <div className="intro-content">
                         <div className="intro-img-flower-top">
-                            <img alt="deco" src={homeFlowerDeco} width={'100%'} loading="lazy" />
+                            <img
+                                alt="deco"
+                                src={home?.intro?.images?.[2] || homeFlowerDeco}
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                         <div className="intro-content-form">
                             <div>
@@ -140,48 +165,16 @@ function Home() {
                             </div> */}
                         </div>
                         <div className="intro-img-flower-bot">
-                            <img alt="deco" src={homeFlowerDeco} width={'100%'} loading="lazy" />
+                            <img
+                                alt="deco"
+                                src={home?.intro?.images?.[3] || homeFlowerDeco}
+                                width={'100%'}
+                                loading="lazy"
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-            {/* Three Service */}
-            {/* <div className="three">
-                <div className="three-form">
-                    <div className="nail-care" id="st-messages1">
-                        <div className="nail-care-img">
-                            <img
-                                src={home?.messages1?.image?.[0] || nailArt}
-                                alt="nail care"
-                                width={'100%'}
-                                loading="lazy"
-                            />
-                        </div>
-                        <div className="nail-care-title">{home?.messages1?.title}</div>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(home?.messages1?.content),
-                            }}
-                        ></p>
-                    </div>
-                    <div className="nail-care" id="st-messages2">
-                        <div className="nail-care-img">
-                            <img
-                                src={home?.messages2?.image?.[1] || nailCare}
-                                alt="nail care"
-                                width={'100%'}
-                                loading="lazy"
-                            />
-                        </div>
-                        <div className="nail-care-title">{home?.messages2?.title}</div>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: DOMPurify.sanitize(home?.messages2?.content),
-                            }}
-                        ></p>
-                    </div>
-                </div>
-            </div> */}
             {/* Service Quality */}
             <div className="quality" id="st-introServices">
                 <div className="quality-form">
@@ -192,17 +185,32 @@ function Home() {
             <div className="other" id="st-nailService">
                 <div className="other-bg">
                     <div className="other-img-flower">
-                        <img alt="deco" src={homeFlowerDeco} width={'100%'} loading="lazy" />
+                        <img
+                            alt="deco"
+                            src={home?.introServices?.images?.[0] || homeFlowerDeco}
+                            width={'100%'}
+                            loading="lazy"
+                        />
                     </div>
                 </div>
                 <div className="other-form">
                     <div className="other-img">
                         <div className="other-img-form">
                             <div className="other-img-big">
-                                <img src={otherBig} alt="Service" width={'100%'} loading="lazy" />
+                                <img
+                                    src={home?.introServices?.images?.[1] || otherBig}
+                                    alt="Service"
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                             </div>
                             <div className="other-img-small">
-                                <img src={otherSmall} alt="Service" width={'100%'} loading="lazy" />
+                                <img
+                                    src={home?.introServices?.images?.[2] || otherSmall}
+                                    alt="Service"
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                             </div>
                         </div>
                     </div>
@@ -317,12 +325,27 @@ function Home() {
                     <div className="lashes-img">
                         <div className="lashes-img-form">
                             <div className="lashes-img-big">
-                                <img src={lashesServices} alt="Service" width={'100%'} loading="lazy" />
+                                <img
+                                    src={home?.lashesService?.images?.[0] || lashesServices}
+                                    alt="Service"
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                             </div>
                             <div className="lashes-img-small">
-                                <img src={lahesSercviceBottom} alt="Service" width={'100%'} loading="lazy" />
+                                <img
+                                    src={home?.lashesService?.images?.[1] || lahesSercviceBottom}
+                                    alt="Service"
+                                    width={'100%'}
+                                    loading="lazy"
+                                />
                                 <div className="lashes-img-flower">
-                                    <img alt="deco" src={homeFlowerDeco} width={'100%'} loading="lazy" />
+                                    <img
+                                        alt="deco"
+                                        src={home?.lashesService?.images?.[2] || homeFlowerDeco}
+                                        width={'100%'}
+                                        loading="lazy"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -354,18 +377,15 @@ function Home() {
                     </div>
                     <div className="home-promotion-img-form">
                         <div className="home-promotion-img-nail">
-                            <img src={bannerSmall} />
+                            <img src={home?.lashesService?.images?.[3] || bannerSmall} />
                         </div>
                         <div className="home-promotion-img-lash">
-                            <img src={lashesServices} />
+                            <img src={home?.lashesService?.images?.[4] || lashesServices} />
                         </div>
                     </div>
                 </div>
             </div>
-            {/* Booking */}
-            {/* <div className="booking">
-                <BookingPage></BookingPage>
-            </div> */}
+
             {/* Gallery */}
             {/* <div className="gallery" id="st-galleries">
                 <div className="gallery-form">
