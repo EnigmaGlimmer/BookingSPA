@@ -187,7 +187,7 @@ function Home() {
                     <div className="other-img-flower">
                         <img
                             alt="deco"
-                            src={home?.introServices?.images?.[0] || homeFlowerDeco}
+                            src={home?.nailService?.images?.[0] || homeFlowerDeco}
                             width={'100%'}
                             loading="lazy"
                         />
@@ -198,7 +198,7 @@ function Home() {
                         <div className="other-img-form">
                             <div className="other-img-big">
                                 <img
-                                    src={home?.introServices?.images?.[1] || otherBig}
+                                    src={home?.nailService?.images?.[1] || otherBig}
                                     alt="Service"
                                     width={'100%'}
                                     loading="lazy"
@@ -206,7 +206,7 @@ function Home() {
                             </div>
                             <div className="other-img-small">
                                 <img
-                                    src={home?.introServices?.images?.[2] || otherSmall}
+                                    src={home?.nailService?.images?.[2] || otherSmall}
                                     alt="Service"
                                     width={'100%'}
                                     loading="lazy"
