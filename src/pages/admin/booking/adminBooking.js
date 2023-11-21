@@ -61,6 +61,8 @@ function AdminBooking() {
         maxWidth: '100px',
     };
 
+    const [selectedBooking, setSelectedBooking] = React.useState([]);
+
     return (
         <section>
             <h3>Booking</h3>
@@ -74,6 +76,9 @@ function AdminBooking() {
                 >
                     <thead>
                         <tr>
+                            <th>
+                                <input type="checkbox" checked={selectedBooking.length === bookings.length} />
+                            </th>
                             <th>ID</th>
                             <th style={colStyle}>Name</th>
                             <th style={colStyle}>Email</th>
@@ -90,6 +95,12 @@ function AdminBooking() {
                         {bookings?.map?.((booking, index) => {
                             return (
                                 <tr key={index}>
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            checked={bookings.some((b) => b.bookingId === booking.bookingId)}
+                                        />
+                                    </td>
                                     <td>{booking?.bookingId}</td>
                                     <td>{booking?.customers?.[0]?.customerName}</td>
                                     <td>{booking?.customers?.[0]?.customerEmail}</td>
@@ -109,7 +120,7 @@ function AdminBooking() {
                                     <td>
                                         <Button
                                             variant="outline"
-                                            className="btn-primary-outline"
+                                            className="btn-primary-outline me-2"
                                             onClick={() =>
                                                 handleCancelBooking(booking?.bookingId, {
                                                     ...booking,
@@ -118,6 +129,9 @@ function AdminBooking() {
                                             }
                                         >
                                             Cancel booking
+                                        </Button>
+                                        <Button variant="outline" className="btn-primary-outline" onClick={() => {}}>
+                                            Cancel By Filter
                                         </Button>
                                     </td>
                                 </tr>

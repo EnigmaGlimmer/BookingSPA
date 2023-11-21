@@ -12,6 +12,9 @@ import {
     DELETE_BOOKING,
     DELETE_BOOKING_SUCCESS,
     DELETE_BOOKING_FAILED,
+    DELETE_MANY_BOOKING,
+    DELETE_MANY_BOOKING_SUCCESS,
+    DELETE_MANY_BOOKING_FAILED,
 } from './actionType';
 
 // 1. Get booking
@@ -82,7 +85,6 @@ export const putBookingError = (error) => ({
 });
 
 // 4. Delete booking
-
 export const deleteBooking = () => ({
     type: DELETE_BOOKING,
     payload: {},
@@ -100,4 +102,19 @@ export const deleteBookingError = (error) => ({
     payload: {
         error,
     },
+});
+
+export const deleteManyBookings = (deleteIds = []) => ({
+    type: DELETE_MANY_BOOKING,
+    payload: deleteIds,
+});
+
+export const deleteManyBookingsSuccess = (deleteIds = []) => ({
+    type: DELETE_MANY_BOOKING_SUCCESS,
+    payload: deleteIds,
+});
+
+export const deleteManyBookingsFailed = (error) => ({
+    type: DELETE_MANY_BOOKING_FAILED,
+    payload: error,
 });

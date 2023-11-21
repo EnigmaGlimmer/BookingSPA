@@ -11,6 +11,9 @@ import {
     DELETE_BOOKING,
     DELETE_BOOKING_SUCCESS,
     DELETE_BOOKING_FAILED,
+    DELETE_MANY_BOOKING,
+    DELETE_MANY_BOOKING_SUCCESS,
+    DELETE_MANY_BOOKING_FAILED,
 } from './actionType';
 
 const INIT_STATE = {
@@ -22,6 +25,7 @@ const INIT_STATE = {
 };
 
 const Booking = (state = INIT_STATE, action) => {
+    let newBookings;
     switch (action.type) {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
@@ -78,7 +82,7 @@ const Booking = (state = INIT_STATE, action) => {
             };
 
         case DELETE_BOOKING_SUCCESS:
-            let newBookings = state.bookings.filter((item) => item.bookingId !== action.payload.id);
+            newBookings = state.bookings.filter((item) => item.bookingId !== action.payload.id);
 
             return {
                 ...state,
@@ -88,6 +92,17 @@ const Booking = (state = INIT_STATE, action) => {
             return {
                 error: action.payload.error,
             };
+
+        case DELETE_MANY_BOOKING_SUCCESS:
+            let deleteIds = action.payload;
+            newBookings = state.bookings.filter((item) => deleteIds.includes(item.bookingId));
+            return {
+                ...state,
+                bookings: newBookings,
+            };
+        case DELETE_MANY_BOOKING_FAILED:
+            return { state, error: action.payload };
+
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 // Assets
 import introBig from '../images/introBig.png';
@@ -34,6 +34,7 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import useService from '../hooks/useServices';
 import { Link } from 'react-router-dom';
+import { ScrollToTop } from '../components';
 
 const arrayNetwork = ['Facebook', 'Instagram', 'Google', 'Letter', 'Walked past', 'Friend'];
 
@@ -464,7 +465,7 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                 <div className="intro-img-flower-bot">
                     <img alt="deco" src={homeFlowerDeco} width={'100%'} />
                 </div>
-                <div id={footerButtonId}>
+                <div className="d-flex gap-1 position-relative" style={{ zIndex: 1 }} id={footerButtonId}>
                     {isValid && (
                         <Button
                             type="button"
@@ -511,6 +512,7 @@ function Step3({
     const [timeOffset, setTimeOffset] = useState(1);
     const [timeRange, setTimeRange] = useState([]);
     const [loading, setLoading] = useState(false);
+    const sectionRef = useRef(null);
 
     const { services } = useService({
         request: {
@@ -697,11 +699,20 @@ function Step3({
         minuteAfternoonWorkEnd,
     ]);
 
+    // Scroll to top
+    useEffect(() => {
+        if (sectionRef.current) {
+            window.scrollTo({
+                top: sectionRef.current.offsetTop - 10,
+            });
+        }
+    }, []);
+
     const timeFrameContent = ``;
 
     return (
         <>
-            <div className="booking-component my-5">
+            <div className="booking-component my-5" id="booking_step3" ref={sectionRef}>
                 <Booking
                     activeDate={valueCheckinDate}
                     initialTimeRange={

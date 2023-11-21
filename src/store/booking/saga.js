@@ -12,9 +12,11 @@ import {
     putBookingError,
     deleteBookingSuccess,
     deleteBookingError,
+    deleteManyBookingsSuccess,
+    deleteManyBookingsFailed,
 } from './action';
 
-import { GET_BOOKING, POST_BOOKING, PUT_BOOKING } from './actionType';
+import { DELETE_MANY_BOOKING, GET_BOOKING, POST_BOOKING, PUT_BOOKING } from './actionType';
 
 // API
 import {
@@ -76,6 +78,19 @@ function* onDeleteBooking({ payload: { id } }) {
         yield put(deleteBookingError(error));
     }
 }
+function* onDeleteManyBooking({ payload: deleteIds = [] }) {
+    try {
+        const promiseAll = Promise.all(deleteIds.map((id) => deleteBookingAPI(id)));
+        yield call(promiseAll);
+        toast.success(`Deleted ${deleteIds.length} items success`);
+        yield put(deleteManyBookingsSuccess(deleteIds));
+    } catch (error) {
+        toast.error('Delete failed');
+        yield put(deleteManyBookingsFailed('Delete failed'));
+    }
+}
+
+// Watcher
 export function* watchGetBooking() {
     yield takeEvery(GET_BOOKING, getBookings);
 }
@@ -92,8 +107,17 @@ export function* watchDeleteBooking() {
     yield takeEvery(PUT_BOOKING, onDeleteBooking);
 }
 
+export function* watchDeleteManyBookings() {
+    yield takeEvery(DELETE_MANY_BOOKING, onDeleteManyBooking);
+}
 function* bookingsaga() {
-    yield all([fork(watchGetBooking), fork(watchPostNewBooking), fork(watchUpdateBooking), fork(watchDeleteBooking)]);
+    yield all([
+        fork(watchGetBooking),
+        fork(watchPostNewBooking),
+        fork(watchUpdateBooking),
+        fork(watchDeleteBooking),
+        fork(watchDeleteManyBookings),
+    ]);
 }
 
 export default bookingsaga;
