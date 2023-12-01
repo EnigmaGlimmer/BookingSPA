@@ -1,9 +1,15 @@
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import usePrefetchContext from 'hooks/usePrefetchContext';
+import useService from 'hooks/useServices';
 
 function BookingCompleted({ values, setStep }) {
-    const { services } = usePrefetchContext();
+    const { services } = useService({
+        request: {
+            skip: 0,
+            take: 100,
+            flat: 0,
+        },
+    });
 
     return (
         <div className="completed">
