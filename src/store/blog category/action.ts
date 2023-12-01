@@ -1,4 +1,3 @@
-import { SingleBlog } from '../../api';
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,

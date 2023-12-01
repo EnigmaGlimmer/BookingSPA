@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -9,12 +9,15 @@ import AppRouter from './router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Event } from './layout';
-import { ScrollToTop } from './components';
+import Preloading from 'components/loading/preloading';
 
 function App() {
     return (
         <>
-            <AppRouter></AppRouter>
+            <Suspense fallback={<Preloading></Preloading>}>
+                <AppRouter></AppRouter>
+            </Suspense>
+
             <ToastContainer />
             <Event></Event>
         </>

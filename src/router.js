@@ -23,6 +23,8 @@ import {
 import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
 import React from 'react';
 import { ScrollToTop } from './components';
+import PrefetchAdmin from './context/prefetch';
+import ModalContainer from './context/modalContext';
 
 // React Icons
 const signin = localStorage.getItem('signin');
@@ -61,12 +63,12 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: (
-            <>
+            <ModalContainer>
                 <Navbar></Navbar>
                 <Outlet />
                 <Footer></Footer>
                 <ScrollToTop />
-            </>
+            </ModalContainer>
         ),
         errorElement: <NotFound></NotFound>,
         children: [
@@ -101,10 +103,10 @@ const router = createBrowserRouter([
         element: (
             <>
                 {signin === '456@456Aa' ? (
-                    <>
+                    <PrefetchAdmin>
                         <AdminNavbar></AdminNavbar>
                         <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
-                    </>
+                    </PrefetchAdmin>
                 ) : (
                     <Login></Login>
                 )}

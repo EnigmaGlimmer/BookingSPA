@@ -80,8 +80,8 @@ function* onDeleteBooking({ payload: { id } }) {
 }
 function* onDeleteManyBooking({ payload: deleteIds = [] }) {
     try {
-        const promiseAll = Promise.all(deleteIds.map((id) => deleteBookingAPI(id)));
-        yield call(promiseAll);
+        // const promiseAll = Promise.all(deleteIds.map((id) => deleteBookingAPI(id)));
+        // yield call(promiseAll);
         toast.success(`Deleted ${deleteIds.length} items success`);
         yield put(deleteManyBookingsSuccess(deleteIds));
     } catch (error) {

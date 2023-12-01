@@ -282,6 +282,7 @@ function ServiceListTable({ showService }) {
                         <th>Duration</th>
                         <th>Dependency</th>
                         <th style={{ maxWidth: '60px' }}>Description</th>
+                        <th>Blocked</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -298,6 +299,7 @@ function ServiceListTable({ showService }) {
                                     {item?.description?.substring(0, 120)}
                                     {item?.description?.length > 120 && '...'}
                                 </td>
+                                <td>{item?.isBlocked ? 'True' : 'False'}</td>
                                 <td className="d-flex">
                                     <Button
                                         variant="outline"

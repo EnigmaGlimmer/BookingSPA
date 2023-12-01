@@ -18,8 +18,6 @@ import { DELETE_BLOG, GET_BLOG_LIST, POST_BLOG, PUT_BLOG } from './actionType';
 
 // API
 import {
-    BlogOrderBy,
-    BlogSearchBy,
     getBlogList as getBlogListAPI,
     postBlog as postBlogAPI,
     putBlog as updateBlogAPI,

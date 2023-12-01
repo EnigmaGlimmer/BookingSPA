@@ -36,9 +36,9 @@
 .modal-dialog {
     max-width: unset;
 }
-.modal-content {
+/* .modal-content {
     background: none;
-}
+} */
 .child-content-swiper {
     padding: 0 20px;
     padding-bottom: 40px;

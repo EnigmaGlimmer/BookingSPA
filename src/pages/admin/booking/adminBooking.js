@@ -1,72 +1,42 @@
 import moment from 'moment';
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { getBookings, getService, putBooking } from '../../../store/actions';
-import useService from '../../../hooks/useServices';
+
 import ReactPaginate from 'react-paginate';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import FilterBookingBox from '../../../components/filter/BookingFilterBox';
+import useBookingFilter from '../../../hooks/useBookingFilter';
 
 function AdminBooking() {
-    const dispatch = useDispatch();
-    const [take] = React.useState(10);
-    const [page, setPage] = React.useState(1);
-
-    const { bookings, bookingTotal } = useSelector((state) => {
-        return {
-            bookings: state.Booking.bookings,
-            bookingTotal: state.Booking.total,
-        };
-    });
-
-    const { services } = useService({
-        request: {
-            skip: 0,
-            take: 100,
-            flat: 1,
-        },
-    });
-    const { services: parentServices } = useService({
-        request: {
-            skip: 0,
-            take: 100,
-            flat: 0,
-        },
-    });
-
-    React.useEffect(() => {
-        dispatch(
-            getService({
-                skip: 0,
-                take: 100,
-            }),
-        );
-    }, [dispatch]);
-
-    React.useEffect(() => {
-        dispatch(
-            getBookings({
-                skip: page,
-                take,
-            }),
-        );
-    }, [dispatch, take, page]);
-
-    function handleCancelBooking(id, booking) {
-        dispatch(putBooking(id, booking));
-    }
-
     const colStyle = {
         wordWrap: 'break-word',
         maxWidth: '100px',
     };
-
-    const [selectedBooking, setSelectedBooking] = React.useState([]);
+    const {
+        isAllSelected,
+        unselectAllBooking,
+        selectAllBooking,
+        selectedBooking,
+        selectBooking,
+        handleCancelBooking,
+        services,
+        bookingTotal,
+        parentServices,
+        setPage,
+        take,
+    } = useBookingFilter();
 
     return (
         <section>
             <h3>Booking</h3>
+
             <div className="admin-booking-table-form">
+                <FilterBookingBox></FilterBookingBox>
+                <div className="d-flex mb-3">
+                    <Button variant="outline" className="btn-primary-outline" onClick={() => {}}>
+                        Cancel By Filter
+                    </Button>
+                </div>
                 <Table
                     striped
                     bordered
@@ -77,7 +47,15 @@ function AdminBooking() {
                     <thead>
                         <tr>
                             <th>
-                                <input type="checkbox" checked={selectedBooking.length === bookings.length} />
+                                <input
+                                    type="checkbox"
+                                    checked={isAllSelected()}
+                                    onChange={() => {
+                                        if (isAllSelected()) {
+                                            unselectAllBooking();
+                                        } else selectAllBooking();
+                                    }}
+                                />
                             </th>
                             <th>ID</th>
                             <th style={colStyle}>Name</th>
@@ -92,13 +70,14 @@ function AdminBooking() {
                         </tr>
                     </thead>
                     <tbody>
-                        {bookings?.map?.((booking, index) => {
+                        {selectedBooking?.map?.((booking, index) => {
                             return (
                                 <tr key={index}>
                                     <td>
                                         <input
                                             type="checkbox"
-                                            checked={bookings.some((b) => b.bookingId === booking.bookingId)}
+                                            checked={booking.selected}
+                                            onChange={() => selectBooking(booking.bookingId)}
                                         />
                                     </td>
                                     <td>{booking?.bookingId}</td>
@@ -117,6 +96,7 @@ function AdminBooking() {
                                         - {booking?.serviceName}
                                     </td>
                                     <td className="text-nowrap">{booking?.customers[0]?.howtoknow}</td>
+
                                     <td>
                                         <Button
                                             variant="outline"
@@ -129,9 +109,6 @@ function AdminBooking() {
                                             }
                                         >
                                             Cancel booking
-                                        </Button>
-                                        <Button variant="outline" className="btn-primary-outline" onClick={() => {}}>
-                                            Cancel By Filter
                                         </Button>
                                     </td>
                                 </tr>

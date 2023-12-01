@@ -4,29 +4,16 @@ import { toast } from 'react-toastify';
 import {
     getAssetListSuccess,
     getAssetListFailed,
-    getAssetSuccess,
-    getAssetFailed,
-    putAssetSuccess,
-    putAssetFailed,
     deleteAssetSuccess,
     deleteAssetFailed,
     postAssetSuccess,
     postAssetFailed,
 } from './action';
 
-import {
-    GET_ASSET_LIST,
-    GET_ASSET_SUCCESS,
-    GET_ASSET_FAILED,
-    POST_ASSET,
-    POST_ASSET_SUCCESS,
-    PUT_ASSET,
-    POST_ASSET_FAILED,
-    DELETE_ASSET,
-} from './actionType';
+import { GET_ASSET_LIST, POST_ASSET, DELETE_ASSET } from './actionType';
 
 // API
-import { getAssets, postAsset, putAsset, deleteAsset } from '../../api';
+import { getAssets, postAsset, deleteAsset } from '../../api';
 
 function* onGetAssets({ payload }) {
     try {
@@ -43,15 +30,6 @@ function* onGetAssets({ payload }) {
     }
 }
 
-// function* onGetAsset({ payload: id }) {
-//     try {
-//         const response = yield call(getAsset, id);
-//         yield put(getAssetSuccess());
-//     } catch (error) {
-//         yield put(getAssetFailed(error));
-//     }
-// }
-
 function* onAddNewAsset({ payload: { asset: newAsset, config } }) {
     console.log(newAsset, config);
     try {
@@ -66,15 +44,6 @@ function* onAddNewAsset({ payload: { asset: newAsset, config } }) {
     } catch (error) {
         yield put(postAssetFailed(error));
     }
-}
-
-function* onUpdateAsset({ payload: updatedAsset }) {
-    // try {
-    //     const response = yield call(putAsset);
-    //     yield put(putAssetSuccess(updatedAsset));
-    // } catch (error) {
-    //     yield put(putAssetFailed(error));
-    // }
 }
 
 function* onDeleteAsset({ payload: { id } }) {
@@ -100,16 +69,12 @@ export function* watchPostNewAsset() {
     yield takeEvery(POST_ASSET, onAddNewAsset);
 }
 
-export function* watchUpdateAsset() {
-    yield takeEvery(PUT_ASSET, onUpdateAsset);
-}
-
 export function* watchDeleteAsset() {
     yield takeEvery(DELETE_ASSET, onDeleteAsset);
 }
 
 function* uploadsaga() {
-    yield all([fork(watchGetAssets), fork(watchPostNewAsset), fork(watchUpdateAsset), fork(watchDeleteAsset)]);
+    yield all([fork(watchGetAssets), fork(watchPostNewAsset), fork(watchDeleteAsset)]);
 }
 
 export default uploadsaga;

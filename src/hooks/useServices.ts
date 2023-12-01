@@ -16,6 +16,7 @@ type Return = {
     blog: BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent'> | null;
     selectedId: number;
     service: ServiceDTO;
+    bannedServices: number[] | null;
     setSelectedId: React.Dispatch<React.SetStateAction<number | null>>;
     setBlog: React.Dispatch<React.SetStateAction<BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent' | null>>>;
 };
@@ -25,6 +26,7 @@ const useService: (props: Props) => Return = (props) => {
     const [blog, setBlog] = useState<BlogOfServiceDTO | Pick<BlogOfServiceDTO, 'blogContent'> | null>(null);
     const [service, setSelectedService] = useState<ServiceDTO | null>(null);
     const [selectedId, setSelectedId] = useState<number | null>(props.selectedPostId);
+    const [bannedServices, setBannedServices] = useState<number[] | null>(null);
     const errorBlog = props?.errorBlogHtml || '<h2>This Blog is not existing</h2>';
 
     useEffect(() => {
@@ -79,6 +81,7 @@ const useService: (props: Props) => Return = (props) => {
         },
         service,
         selectedId,
+        bannedServices,
         setSelectedId,
         setBlog,
     };

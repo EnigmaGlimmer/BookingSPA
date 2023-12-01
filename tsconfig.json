@@ -21,8 +21,10 @@
             "text-editor": ["./src/components/text-editor"]
         },
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "baseUrl": "./src"
     },
+    "include": ["./src"],
     // "include": ["src/components/*", "src/components/**/*"],
     "exclude": ["node_modules"],
     "compileOnSave": false,
