@@ -182,6 +182,10 @@ img {
     transform: scale(2) translateY(-200px);
 }
 
+.ant-picker-dropdown {
+    z-index: 10000;
+}
+
 @media (max-width: 576px) {
     #promotion-content #promotion-post-list-sidebar {
         order: 2;

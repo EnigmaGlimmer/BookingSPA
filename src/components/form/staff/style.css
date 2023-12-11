@@ -1,0 +1,13 @@
+.form-staff__input-group {
+    position: relative;
+    animation: slide-left 0.4s ease-in-out;
+}
+
+@keyframes slide-left {
+    0% {
+        left: 120px;
+    }
+    100% {
+        left: 0;
+    }
+}

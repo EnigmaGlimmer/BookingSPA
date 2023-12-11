@@ -231,6 +231,7 @@ function Step3({
             <div className="booking-component my-5" id="booking_step3" ref={sectionRef}>
                 <Booking
                     activeDate={valueCheckinDate}
+                    allowDatesToBook={[moment('2023-12-24').toDate()]}
                     initialTimeRange={
                         timeRange || [
                             ['08:30', '09:30'],

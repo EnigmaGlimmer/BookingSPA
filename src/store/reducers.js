@@ -21,6 +21,9 @@ import Setting from './settings/reducer';
 //7. Category
 import Category from './blog category/reducer';
 
+// 8. User
+import User from './user/reducer';
+
 const rootReducer = combineReducers({
     Blog,
     Upload,
@@ -29,6 +32,7 @@ const rootReducer = combineReducers({
     Booking,
     Setting,
     Category,
+    User,
 });
 
 export default rootReducer;

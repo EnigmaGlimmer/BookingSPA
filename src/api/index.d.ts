@@ -375,3 +375,25 @@ type SearchCategoryDTO = {
 };
 export declare const postCategory: (body: CreateCategoryDTO) => Promise<APIResponse<CategoryDTO>>;
 export declare const getCategoryList: (request: SearchCategoryDTO) => Promise<APIResponse<CategoryDTO>>;
+
+// 10. Auth
+type StaffDto = {
+    age: number;
+    experience: number;
+    field: string;
+    avatar: string;
+    id: string;
+    username: string;
+    email: string;
+    createdAt: Date;
+    role?: string;
+};
+export declare const getStaffList: (query?: Pagination) => Promise<APIListResponse<StaffDto>>;
+// export declare const registerNewStaff: () => Promise<API>;
+
+// 11. Staff
+interface WorkingHourDTO {}
+export declare const addWorkingHour: (body, config) => Promise<APIResponse<number>>;
+
+export const getWorkingHourList: (query, config) => Promise<APIListResponse<WorkingHourDTO>>;
+export const assignStaffToService: (body, config) => Promise<APIResponse<string>>;

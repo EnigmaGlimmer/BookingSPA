@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 // List of pages
 import {
@@ -16,6 +16,7 @@ import {
     AdminExports,
     AdminUploads,
     AdminTestimonials,
+    AdminStaff,
     Login,
 } from './pages';
 
@@ -29,6 +30,10 @@ import ModalContainer from './context/modalContext';
 // React Icons
 const signin = localStorage.getItem('signin');
 const childrenAdmin = [
+    {
+        path: '',
+        element: <Navigate to="booking" relative="true"></Navigate>,
+    },
     {
         //Post Blog
         path: 'blog',
@@ -58,6 +63,7 @@ const childrenAdmin = [
         path: 'uploads',
         element: <AdminUploads></AdminUploads>,
     },
+    { path: 'staff', element: <AdminStaff></AdminStaff> },
 ];
 const router = createBrowserRouter([
     {
@@ -101,7 +107,7 @@ const router = createBrowserRouter([
     {
         path: 'admin',
         element: (
-            <>
+            <ModalContainer>
                 {signin === '456@456Aa' ? (
                     <PrefetchAdmin>
                         <AdminNavbar></AdminNavbar>
@@ -111,7 +117,7 @@ const router = createBrowserRouter([
                     <Login></Login>
                 )}
                 <ScrollToTop />
-            </>
+            </ModalContainer>
         ),
         errorElement: <NotFound></NotFound>,
         children: childrenAdmin,

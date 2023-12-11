@@ -110,7 +110,7 @@ export function* watchDeleteBooking() {
 export function* watchDeleteManyBookings() {
     yield takeEvery(DELETE_MANY_BOOKING, onDeleteManyBooking);
 }
-function* bookingsaga() {
+function* bookingSaga() {
     yield all([
         fork(watchGetBooking),
         fork(watchPostNewBooking),
@@ -120,4 +120,4 @@ function* bookingsaga() {
     ]);
 }
 
-export default bookingsaga;
+export default bookingSaga;

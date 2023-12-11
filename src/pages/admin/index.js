@@ -5,3 +5,4 @@ export { default as AdminServices } from './services/adminServices';
 export { default as AdminWeb } from './web/adminWeb';
 export { default as AdminUploads } from './uploads/uploads';
 export { default as AdminTestimonials } from './testimonials/adminTestimonials';
+export { default as AdminStaff } from './staff/adminStaff';

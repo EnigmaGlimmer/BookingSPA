@@ -60,7 +60,6 @@ const SpaceTimeFrame = ({
                 <div className="space-time-date"></div>
             </div>
             <div className="space-time-content">
-                {/* <pre>{JSON.stringify(reserved, 4, 4)}</pre> */}
                 {(loading && (
                     <div className="d-flex align-items-center justify-content-center p-5">
                         <Spinner></Spinner>
@@ -85,30 +84,9 @@ const SpaceTimeFrame = ({
                                     { min: totalStartReservedUnit, max: totalEndReservedUnit },
                                 ]);
 
-                                {
-                                    /* if (hasIntersect) {
-                                    console.log(
-                                        `Calendar: ${space} 
-                                    \nTotal calendar: ${totalStartCalendarUnit} - ${totalEndCalendarUnit}`,
-                                        `\nReversed: ${startBookedTime} - ${endBookedTime} 
-                                    \nTotal reversed: ${totalStartReservedUnit} - ${totalEndReservedUnit}
-                                    \nis start time Between: ${
-                                        totalStartCalendarUnit >= totalStartReservedUnit &&
-                                        totalStartCalendarUnit <= totalEndReservedUnit
-                                    }\nis end time Between: ${
-                                            totalEndCalendarUnit >= totalStartReservedUnit ||
-                                            totalEndCalendarUnit <= totalEndReservedUnit
-                                        }\nisAllowed: ${isAllowed}`,
-                                    );
-                                } */
-                                }
-
                                 return hasIntersect && !isAllowed;
                             },
                         );
-                        {
-                            /* console.log(`=====> calendar: ${space} has reversed: ${hasReserved}`); */
-                        }
 
                         const [start] = space;
 

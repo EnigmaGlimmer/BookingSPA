@@ -37,11 +37,13 @@ const Assign = (state = INIT_STATE, action) => {
                 default:
                     return state;
             }
+
         case PUT_SERVICE_SUCCESS:
             return {
                 ...state,
                 assign: action.payload.data,
             };
+        
         case PUT_SERVICE_FAILED:
             return {
                 ...state,

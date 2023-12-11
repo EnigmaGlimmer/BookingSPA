@@ -50,6 +50,9 @@ function Sidebar({ children }) {
                         <Link className="link-text" to="/admin/booking">
                             Booking
                         </Link>
+                        <Link className="link-text" to="/admin/staff">
+                            Staff
+                        </Link>
                     </div>
                 </span>
                 <span className="sidebar-item-2" style={rightContentStyle}>

@@ -15,7 +15,13 @@ import { Calendar } from '@demark-pro/react-booking-calendar';
 import './style/booking.css';
 import moment from 'moment';
 
-function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChangeDate, onOverbook }) {
+function ReactBookingCalendar({
+    initialDate = new Date(),
+    allowDatesToBook = [],
+    reserved = [],
+    onChangeDate,
+    onOverbook,
+}) {
     return (
         <section className="calendar-root">
             <div className="calendar-frame">
@@ -35,7 +41,10 @@ function ReactBookingCalendar({ initialDate = new Date(), reserved = [], onChang
                         },
                     }}
                     disabled={(date) => {
-                        return moment(date).get('weekday') === 0;
+                        return (
+                            moment(date).get('weekday') === 0 &&
+                            !allowDatesToBook.some((allowDate) => moment(allowDate).isSame(date))
+                        );
                     }}
                     reserved={reserved}
                     variant="booking"

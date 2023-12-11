@@ -7,8 +7,23 @@ const ModalContainer = function ({ children }) {
     const [isModalShown, setIsModalShown] = React.useState(false);
     const [body, setBody] = React.useState(null);
     const [footer, setFooter] = React.useState(null);
+    const [modalProps, setModalProps] = React.useState({
+        dialogClassName: 'modal-90w',
+        size: 'lg',
+    });
+    function openModal({ bodyComponent, footerComponent, modalProps }) {
+        if (bodyComponent) {
+            setBody(bodyComponent);
+        }
 
-    function openModal() {
+        if (footerComponent) {
+            setFooter(footerComponent);
+        }
+
+        if (modalProps) {
+            setModalProps(modalProps);
+        }
+
         setIsModalShown(true);
     }
     function closeModal() {
@@ -20,7 +35,7 @@ const ModalContainer = function ({ children }) {
         <ModalContext.Provider value={value}>
             {children}
             {/* Modal */}
-            <Modal show={isModalShown} onHide={closeModal} dialogClassName="modal-90w" size="lg">
+            <Modal show={isModalShown} onHide={closeModal} {...modalProps}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>{body}</Modal.Body>
                 <Modal.Footer>{footer}</Modal.Footer>

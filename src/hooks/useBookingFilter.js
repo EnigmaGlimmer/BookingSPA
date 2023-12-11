@@ -16,6 +16,9 @@ function useBookingFilter() {
     const { bookings, bookingTotal } = state;
     const [take] = React.useState(10);
     const [page, setPage] = React.useState(1);
+    const [orderBy, setOrderBy] = React.useState(null);
+    const [searchBy, setSearchBy] = React.useState(null);
+    const [keyword, setKeyword] = React.useState(null);
 
     const [selectedBooking, setSelectedBooking] = React.useState([]);
 
@@ -44,13 +47,22 @@ function useBookingFilter() {
     }, [dispatch]);
 
     React.useEffect(() => {
-        dispatch(
-            getBookings({
-                skip: page,
-                take,
-            }),
-        );
-    }, [dispatch, take, page]);
+        let query = {
+            skip: page,
+            take,
+        };
+
+        if (orderBy) {
+            query.orderBy = orderBy;
+        }
+
+        if (keyword && searchBy) {
+            query.keyword = keyword;
+            query.searchBy = searchBy;
+        }
+
+        dispatch(getBookings(query));
+    }, [dispatch, take, page, orderBy, searchBy, keyword]);
 
     function handleCancelBooking(id, booking) {
         dispatch(putBooking(id, booking));
@@ -89,6 +101,12 @@ function useBookingFilter() {
         parentServices,
         setPage,
         take,
+        orderBy,
+        setOrderBy,
+        searchBy,
+        setSearchBy,
+        keyword,
+        setKeyword,
     };
 }
 

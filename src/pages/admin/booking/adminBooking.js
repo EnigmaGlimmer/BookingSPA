@@ -24,6 +24,12 @@ function AdminBooking() {
         parentServices,
         setPage,
         take,
+        orderBy,
+        setOrderBy,
+        searchBy,
+        setSearchBy,
+        keyword,
+        setKeyword,
     } = useBookingFilter();
 
     return (
@@ -31,7 +37,22 @@ function AdminBooking() {
             <h3>Booking</h3>
 
             <div className="admin-booking-table-form">
-                <FilterBookingBox></FilterBookingBox>
+                <FilterBookingBox
+                    onFilterChange={(filterVal, type) => {
+                        const matchSearch = moment(filterVal, 'yyyy-MM-DD').format('dd/MM/yyyy');
+                        // console.log(filterVal, type);
+                        // console.log(matchSearch);
+                        setSearchBy(type);
+                        setKeyword(matchSearch);
+                    }}
+                    onSearchChange={(keyword, type) => {
+                        setSearchBy(type);
+                        setKeyword(keyword);
+                    }}
+                    onSortChange={(sortType) => {
+                        setOrderBy(sortType);
+                    }}
+                ></FilterBookingBox>
                 <div className="d-flex mb-3">
                     <Button variant="outline" className="btn-primary-outline" onClick={() => {}}>
                         Cancel By Filter

@@ -23,6 +23,7 @@ export const POST_SERVICE = '/api/service';
 export const PUT_SERVICE = '/api/service';
 export const PUT_BLOG_OF_SERVICE = '/api/service/post_blog';
 export const DELETE_SERVICE = '/api/service';
+export const BLOCK_UNLOCK_SERVICE = '/api/service/blockOrUnblock';
 
 // 5. Testimonial
 export const GET_TESTIMONIAL_LIST = '/api/testimonial/list';
@@ -55,3 +56,13 @@ export const GET_CATEGORY_LIST = '/api/category/list';
 export const POST_CATEGORY = '/api/category';
 export const PUT_CATEGORY = '/api/category';
 export const DELETE_CATEGORY = '/api/category';
+
+// 11. Auth
+export const GET_STAFF_LIST = '/api/auth/staffs';
+export const REGISTER_NEW_STAFF = '/api/auth/register_staff';
+export const GET_SINGLE_STAFF = '/api/auth/staff';
+
+// 12. Staff
+export const GET_WORKING_HOUR_LIST = '/api/staff/working_hours';
+export const ADD_NEW_WORKING_HOUR = '/api/staff/add_working_hour';
+export const ASSIGN_STAFF_TO_SERVICE = '/api/staff/assign_staff_service';
