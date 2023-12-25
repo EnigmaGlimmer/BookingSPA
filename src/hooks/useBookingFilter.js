@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBookings, getService, putBooking, deleteManyBookings } from '../store/actions';
+import { getBookings, getService, putBooking } from '../store/actions';
 import useService from './useServices';
+import { deleteBookings } from 'api/booking';
+import { toast } from 'react-toastify';
 
 function useBookingFilter() {
     const dispatch = useDispatch();
@@ -17,6 +19,7 @@ function useBookingFilter() {
     const [take] = React.useState(10);
     const [page, setPage] = React.useState(1);
     const [orderBy, setOrderBy] = React.useState(null);
+    const [orderType, setOrderType] = React.useState('asc');
     const [searchBy, setSearchBy] = React.useState(null);
     const [keyword, setKeyword] = React.useState(null);
 
@@ -47,6 +50,10 @@ function useBookingFilter() {
     }, [dispatch]);
 
     React.useEffect(() => {
+        getBookingList();
+    }, [dispatch, take, page, orderBy, searchBy, keyword, setKeyword, setSearchBy, orderType]);
+
+    function getBookingList() {
         let query = {
             skip: page,
             take,
@@ -61,27 +68,52 @@ function useBookingFilter() {
             query.searchBy = searchBy;
         }
 
+        if (orderType) {
+            query.orderType = orderType;
+        }
+
         dispatch(getBookings(query));
-    }, [dispatch, take, page, orderBy, searchBy, keyword]);
+    }
 
     function handleCancelBooking(id, booking) {
         dispatch(putBooking(id, booking));
     }
 
     function handleCancelByFilter() {
-        dispatch(deleteManyBookings(selectedBooking.filter((b) => b.selected).map((b) => b.bookingId)));
+        let cancelBookingIds = selectedBooking.filter((b) => b.selected).map((b) => b.bookingId);
+
+        deleteBookings(cancelBookingIds)
+            .then(() => {
+                toast.success(`Deleted ${cancelBookingIds.length} items`);
+                setKeyword(null);
+                setSearchBy(null);
+            })
+            .catch(() => {
+                toast.error('Failed to delete');
+            });
     }
     function selectAllBooking() {
         setSelectedBooking(bookings.map((b) => ({ ...b, selected: true })));
     }
     function unselectAllBooking() {
-        setSelectedBooking(bookings.map((b) => ({ ...b, selected: false })));
+        if (bookings) {
+            setSelectedBooking(bookings.map((b) => ({ ...b, selected: false })));
+        }
     }
     function selectBooking(id) {
-        setSelectedBooking((b) => (b.bookingId === id ? { ...b, selected: !b.selected } : b));
+        setSelectedBooking((bookings) => {
+            return bookings.map((b) => {
+                let result = b.bookingId === id ? { ...b, selected: !b.selected } : b;
+
+                return result;
+            });
+        });
     }
     function isAllSelected() {
         return !selectedBooking.some((b) => !b.selected);
+    }
+    function hasAnySelected() {
+        return selectedBooking.some((b) => b.selected);
     }
 
     React.useEffect(() => {
@@ -95,7 +127,9 @@ function useBookingFilter() {
         selectAllBooking,
         selectedBooking,
         selectBooking,
+        hasAnySelected,
         handleCancelBooking,
+        handleCancelByFilter,
         services,
         bookingTotal,
         parentServices,
@@ -103,6 +137,8 @@ function useBookingFilter() {
         take,
         orderBy,
         setOrderBy,
+        orderType,
+        setOrderType,
         searchBy,
         setSearchBy,
         keyword,

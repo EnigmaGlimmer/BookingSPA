@@ -27,6 +27,7 @@ import Step1 from '../components/booking/step1';
 import Step2 from '../components/booking/step2';
 import Step3 from '../components/booking/step3';
 import BookingCompleted from '../components/booking/completed';
+import BookingFormContainer from 'context/bookingFormContext';
 
 let bookingSchema = yup.object().shape({
     customer: yup.object().shape({
@@ -192,28 +193,20 @@ const StepComponent = ({ step, setStep }) => {
                     ></Step2>
                 )) ||
                 (step === 3 && (
-                    <Step3
-                        step={step}
-                        setStep={setStep}
-                        validation={validation}
-                        valueCheckinDate={validation?.values?.booking?.checkinDate}
-                        valueServiceId={validation?.values?.booking?.serviceId}
-                        parentServiceId={validation?.values?.parentServiceId}
-                        onChangeDate={(date) => {
-                            const value = moment(date).format('YYYY-MM-DD');
-                            validation.setFieldValue('booking.checkinDate', value);
-                        }}
-                        onChangeTimeStart={(time) => validation.setFieldValue('booking.slot.start_Hour', time)}
-                        onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
-                        hourMorningWorkStart={isBetweenDate ? 8 : 9}
-                        minuteMorningWorkStart={isBetweenDate ? 0 : 0}
-                        hourMorningWorkEnd={isBetweenDate ? 12 : 12}
-                        minuteMorningWorkEnd={isBetweenDate ? 30 : 30}
-                        hourAfternoonWorkStart={isBetweenDate ? 13 : 13}
-                        minuteAfternoonWorkStart={isBetweenDate ? 0 : 0}
-                        hourAfternoonWorkEnd={isBetweenDate ? 20 : 17}
-                        minuteAfternoonWorkEnd={isBetweenDate ? 0 : 30}
-                    ></Step3>
+                    <BookingFormContainer>
+                        <Step3
+                            setStep={setStep}
+                            validation={validation}
+                            valueCheckinDate={validation?.values?.booking?.checkinDate}
+                            valueServiceId={validation?.values?.booking?.serviceId}
+                            onChangeDate={(date) => {
+                                const value = moment(date).format('YYYY-MM-DD');
+                                validation.setFieldValue('booking.checkinDate', value);
+                            }}
+                            onChangeTimeStart={(time) => validation.setFieldValue('booking.slot.start_Hour', time)}
+                            onChangeTimeEnd={(time) => validation.setFieldValue('booking.slot.end_Hour', time)}
+                        ></Step3>
+                    </BookingFormContainer>
                 )) ||
                 (step === 4 && <BookingCompleted values={validation?.values} setStep={setStep}></BookingCompleted>)}
         </Form>

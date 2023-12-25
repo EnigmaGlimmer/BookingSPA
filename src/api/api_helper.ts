@@ -34,6 +34,8 @@ axios.interceptors.response.use(
             default:
                 message = error.message || error;
         }
+        if (axios.isCancel(error)) return Promise.reject('Cancelled');
+
         return Promise.reject(message);
     },
 );

@@ -20,11 +20,10 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
 
     const [serviceChoice, setServiceChoice] = useState(null);
 
-    const { setBody: setModalBody, openModal } = useModalContext();
+    const { openModal } = useModalContext();
 
     function handleBlockedServiceClick() {
-        setModalBody(<Image src={blockedServiceImage}></Image>);
-        openModal();
+        openModal({ bodyComponent: <Image src={blockedServiceImage}></Image> });
     }
 
     useEffect(() => {

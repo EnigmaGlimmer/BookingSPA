@@ -1,5 +1,5 @@
 import { FormikProvider, useFormik } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import MultiStep from 'react-multistep';
 import StepOne from './step-one';
@@ -10,7 +10,6 @@ import { registerNewStaff } from 'api/auth';
 import { toast } from 'react-toastify';
 import { addWorkingHour } from 'api';
 import StepFour from './step-four';
-import { assignStaffToService } from 'api';
 
 function StaffForm({ onAfterSubmitting }) {
     const validation = useFormik({
@@ -24,7 +23,7 @@ function StaffForm({ onAfterSubmitting }) {
             age: 18,
             experience: 0,
             field: 'Nail',
-            serviceIds: null,
+            serviceIds: [],
             avatar: '',
 
             workingHours: [
@@ -39,7 +38,7 @@ function StaffForm({ onAfterSubmitting }) {
         onSubmit: (values) => {
             const { workingHours, ...accountInfo } = values;
 
-            registerNewStaff({ ...accountInfo, serviceIds: accountInfo.serviceIds.map((id) => id.value) })
+            registerNewStaff({ ...accountInfo, serviceIds: accountInfo.serviceIds })
                 .then((response) => {
                     toast.success('Registered new staff account successfully!');
 
@@ -63,21 +62,17 @@ function StaffForm({ onAfterSubmitting }) {
         },
     });
 
-    const { values, handleSubmit } = validation;
-
-    useEffect(() => console.log(values), [values]);
     return (
         <FormikProvider value={validation}>
-            <Form onSubmit={handleSubmit} className="mb-3">
+            <Form onSubmit={validation.handleSubmit} className="mb-3">
                 <MultiStep activeStep={0} prevButton={<Button className="mb-3">Prev</Button>}>
                     <StepOne title="Account" validation={validation} />
                     <StepTwo title="Profile" validation={validation} />
                     <StepThree title="Working Hours" validation={validation}></StepThree>
                     <StepFour title="Completed"></StepFour>
                 </MultiStep>
-                {/* <pre>{JSON.stringify(values, 4, 4)}</pre>
-                <pre>{JSON.stringify(errors, 4, 4)}</pre> */}
             </Form>
+            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
         </FormikProvider>
     );
 }

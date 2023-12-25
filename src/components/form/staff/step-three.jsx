@@ -7,8 +7,11 @@ import { FaCheck } from 'react-icons/fa6';
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 import { FaTimes } from 'react-icons/fa';
+import useModalContext from 'hooks/useModalContext';
+import { deleteWorkingHour } from 'api';
+import { toast } from 'react-toastify';
 
-function StepThree({ validation }) {
+function StepThree({ validation, updateMode }) {
     const { values, setFieldValue } = validation;
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const shifts = [
@@ -35,15 +38,33 @@ function StepThree({ validation }) {
         },
     ];
     const [selectedWorkingHourIndex, setSelectedWorkingHourIndex] = React.useState(0);
+    const { openDialog, closeDialog } = useModalContext();
 
-    function afterDeleteWorkingHour(id) {
-        if (values.workingHours.length <= 1) {
-            setSelectedWorkingHourIndex(null);
+    function afterDeleteWorkingHour(id, identity) {
+        function handleAfterDeleteOnUI(id) {
+            if (values.workingHours.length <= 1) {
+                setSelectedWorkingHourIndex(null);
+            }
+            if (id === selectedWorkingHourIndex) {
+                setSelectedWorkingHourIndex(id - 1 < 0 ? id + 1 : id - 1);
+            }
         }
-        if (id === selectedWorkingHourIndex) {
-            setSelectedWorkingHourIndex(id - 1 < 0 ? id + 1 : id - 1);
+
+        if (updateMode) {
+            deleteWorkingHour(identity)
+                .then(() => {
+                    toast.success('Removed working hour');
+                    handleAfterDeleteOnUI(id);
+                    closeDialog();
+                })
+                .catch(() => {
+                    toast.error('Removed Failed');
+                });
+        } else {
+            handleAfterDeleteOnUI(id);
         }
     }
+
     return (
         <>
             <Row className="mb-3 gap-2 ">
@@ -73,8 +94,22 @@ function StepThree({ validation }) {
                                             </div>
                                             <div
                                                 onClick={() => {
-                                                    arrayHelpers.remove(index);
-                                                    afterDeleteWorkingHour(index);
+                                                    if (updateMode) {
+                                                        openDialog({
+                                                            body: <p>Do you want to delete this</p>,
+                                                            title: 'Delete Confirmation',
+                                                            dialogProps: {
+                                                                onClickDialogSuccess: () => {
+                                                                    arrayHelpers.remove(index);
+                                                                    console.log(workingHour);
+                                                                    afterDeleteWorkingHour(index, workingHour.id);
+                                                                },
+                                                            },
+                                                        });
+                                                    } else {
+                                                        arrayHelpers.remove(index);
+                                                        afterDeleteWorkingHour(index);
+                                                    }
                                                 }}
                                             >
                                                 <FaTimes></FaTimes>
@@ -171,18 +206,19 @@ function StepThree({ validation }) {
                                 label: daysOfWeek[day],
                                 value: day,
                             }))}
+                            hasSelectAll={false}
                             options={daysOfWeek?.map?.((day, id) => ({
                                 label: day,
                                 value: id,
                                 disabled: values.workingHours.some(
                                     ({ daysOfWeek }, index) =>
-                                        selectedWorkingHourIndex !== index && daysOfWeek.includes(day),
+                                        selectedWorkingHourIndex !== index && daysOfWeek.includes(id),
                                 ),
                             }))}
-                            onChange={(values) => {
+                            onChange={(options) => {
                                 setFieldValue(
                                     `workingHours.[${selectedWorkingHourIndex}].daysOfWeek`,
-                                    values.map((v) => v.value),
+                                    options.map((v) => v.value),
                                 );
                             }}
                         ></MultiSelect>

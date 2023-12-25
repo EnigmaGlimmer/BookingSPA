@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import * as DOMPurify from 'dompurify';
 import { Spinner } from 'react-bootstrap';
 import { allIntersect } from '../../ultilies/intersection';
+import moment from 'moment';
 
 function equalifyUnit(args) {
     // timeString: "HH:MM"
@@ -26,28 +27,10 @@ function equalifyUnit(args) {
     return uniformedUnit;
 }
 
-const SpaceTimeFrame = ({
-    initialSpaceTimes = [
-        ['1:00pm', '2:00pm'],
-        ['3:00pm', '4:00pm'],
-        ['5:00pm', '6:00pm'],
-    ],
-    reserved = [
-        {
-            startTime: '13:00',
-            endTime: '14:00',
-            isAllowed: true,
-        },
-    ],
-    loading,
-    onChangeTimeStart,
-    onChangeTimeEnd,
-    ...contentProps
-}) => {
+const SpaceTimeFrame = ({ initialSpaceTimes, loading, onChangeTimeStart, onChangeTimeEnd, ...contentProps }) => {
     const [selected, setSelected] = React.useState(null);
 
     const { title, content } = contentProps;
-
     return (
         <div className="space-time">
             <h4 className="space-time-title">{title}</h4>
@@ -60,35 +43,16 @@ const SpaceTimeFrame = ({
                 <div className="space-time-date"></div>
             </div>
             <div className="space-time-content">
-                {(loading && (
+                {(!!loading && (
                     <div className="d-flex align-items-center justify-content-center p-5">
                         <Spinner></Spinner>
                     </div>
                 )) ||
                     initialSpaceTimes.map((space, key) => {
-                        const hasReserved = reserved.some(
-                            ({ startTime: startBookedTime, endTime: endBookedTime, isAllowed }) => {
-                                const [startCalendarTime, endCalendarTime] = space;
-
-                                let [totalStartCalendarUnit, totalEndCalendarUnit] = [
-                                    equalifyUnit({ timeString: startCalendarTime }),
-                                    equalifyUnit({ timeString: endCalendarTime }),
-                                ];
-                                let [totalStartReservedUnit, totalEndReservedUnit] = [
-                                    equalifyUnit({ timeString: startBookedTime }),
-                                    equalifyUnit({ timeString: endBookedTime }),
-                                ];
-
-                                let hasIntersect = allIntersect([
-                                    { min: totalStartCalendarUnit, max: totalEndCalendarUnit },
-                                    { min: totalStartReservedUnit, max: totalEndReservedUnit },
-                                ]);
-
-                                return hasIntersect && !isAllowed;
-                            },
-                        );
-
-                        const [start] = space;
+                        const { startTime, endTime, isDisabled } = space;
+                        let hasReserved = isDisabled;
+                        let displayedStartTime = moment(startTime, 'hh:mm:ss').format('kk:mm');
+                        let displayedEndTime = moment(endTime, 'hh:mm:ss').format('kk:mm');
 
                         return (
                             <span
@@ -103,19 +67,12 @@ const SpaceTimeFrame = ({
                                         });
                                         return;
                                     }
-
                                     setSelected(key);
-
-                                    let startTime = space[0];
-
-                                    onChangeTimeStart(startTime);
-
-                                    let endTime = space[1];
-
-                                    onChangeTimeEnd(endTime);
+                                    onChangeTimeStart(displayedStartTime);
+                                    onChangeTimeEnd(displayedEndTime);
                                 }}
                             >
-                                {start} - {space[1]}
+                                {displayedStartTime}-{displayedEndTime}
                             </span>
                         );
                     })}

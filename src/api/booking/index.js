@@ -41,3 +41,17 @@ export const putBooking = (id, body, config) => {
 export const deleteBooking = (id) => {
     return api.delete(`${url.DELETE_BOOKING}/${id}`);
 };
+
+export const deleteBookings = (ids, config) => {
+    return api.create(
+        `${url.DELETE_BOOKINGS}`,
+        {
+            bookingIds: ids,
+        },
+        config,
+    );
+};
+
+export const getTimeFrames = (params, config) => {
+    return api.get(url.GET_TIME_FRAMES, params, config);
+};

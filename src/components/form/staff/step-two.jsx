@@ -6,8 +6,11 @@ import { MultiSelect } from 'react-multi-select-component';
 
 function StepTwo({ validation }) {
     const { values, handleChange, setFieldValue } = validation;
-    const { parentServices, services } = usePrefetchContext();
+    const { parentServices } = usePrefetchContext();
     const [isUploadModalOpened, setIsUploadModalOpened] = React.useState(false);
+
+    let serviceList = (parentServices || []).reduce((p, c) => [...p, ...c.childs], []) || [];
+
     return (
         <Form.Group>
             <Form.Group className="mb-3">
@@ -53,17 +56,27 @@ function StepTwo({ validation }) {
                 <Form.Label>Position</Form.Label>
                 <MultiSelect
                     name="serviceId"
-                    value={values?.serviceIds || []}
-                    options={parentServices
-                        .reduce((p, c) => [...p, ...c.childs], [])
-                        .map((s) => {
-                            return {
+                    value={
+                        serviceList
+                            .filter((s) => {
+                                return values?.serviceIds.includes(s.serviceId);
+                            })
+                            .map((s) => ({
                                 label: s.serviceName,
                                 value: s.serviceId,
-                            };
-                        })}
-                    onChange={(option) => {
-                        setFieldValue('serviceIds', option);
+                            })) || []
+                    }
+                    options={serviceList.map((s) => {
+                        return {
+                            label: s.serviceName,
+                            value: s.serviceId,
+                        };
+                    })}
+                    onChange={(options) => {
+                        setFieldValue(
+                            'serviceIds',
+                            options.map((opt) => opt.value),
+                        );
                     }}
                 ></MultiSelect>
             </Form.Group>

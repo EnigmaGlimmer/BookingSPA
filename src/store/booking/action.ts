@@ -105,7 +105,6 @@ export const deleteBookingError = (error) => ({
 });
 
 export const deleteManyBookings = (deleteIds = []) => {
-    console.log(deleteIds);
     return {
         type: DELETE_MANY_BOOKING,
         payload: deleteIds,

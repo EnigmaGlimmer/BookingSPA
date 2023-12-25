@@ -14,3 +14,7 @@ export const getSingleStaff = (id, config) => {
 export const registerNewStaff = (body, config) => {
     return api.create(url.REGISTER_NEW_STAFF, body, config);
 };
+
+export const updateStaff = (id, body, config) => {
+    return api.put(`${url.UPDATE_SINGLE_STAFF}`, body, { params: { userId: id }, config });
+};

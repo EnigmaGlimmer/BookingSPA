@@ -39,18 +39,17 @@ const Booking = ({
             </div>
             <div className="booking-root-time">
                 <div className="calendar-space-time-frame">
-                    {(timeFrameLoading && <></>) ||
-                        (selectedDate && (
-                            <SpaceTimeFrame
-                                initialSpaceTimes={initialTimeRange}
-                                reserved={reserved}
-                                loading={!!timeFrameLoading}
-                                onChangeTimeStart={onChangeTimeStart}
-                                onChangeTimeEnd={onChangeTimeEnd}
-                                title={title}
-                                content={content}
-                            ></SpaceTimeFrame>
-                        ))}
+                    {selectedDate && (
+                        <SpaceTimeFrame
+                            initialSpaceTimes={initialTimeRange}
+                            reserved={reserved}
+                            loading={timeFrameLoading}
+                            onChangeTimeStart={onChangeTimeStart}
+                            onChangeTimeEnd={onChangeTimeEnd}
+                            title={title}
+                            content={content}
+                        ></SpaceTimeFrame>
+                    )}
                 </div>
             </div>
         </div>

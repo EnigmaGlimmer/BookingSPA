@@ -107,17 +107,19 @@ const router = createBrowserRouter([
     {
         path: 'admin',
         element: (
-            <ModalContainer>
-                {signin === '456@456Aa' ? (
-                    <PrefetchAdmin>
-                        <AdminNavbar></AdminNavbar>
-                        <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
-                    </PrefetchAdmin>
-                ) : (
-                    <Login></Login>
-                )}
-                <ScrollToTop />
-            </ModalContainer>
+            <PrefetchAdmin>
+                <ModalContainer>
+                    {signin === '456@456Aa' ? (
+                        <>
+                            <AdminNavbar></AdminNavbar>
+                            <AdminSidebar children={<Outlet></Outlet>}></AdminSidebar>
+                        </>
+                    ) : (
+                        <Login></Login>
+                    )}
+                    <ScrollToTop />
+                </ModalContainer>
+            </PrefetchAdmin>
         ),
         errorElement: <NotFound></NotFound>,
         children: childrenAdmin,

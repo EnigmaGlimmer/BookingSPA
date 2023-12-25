@@ -25,6 +25,7 @@ import {
     putBooking as updateBookingAPI,
     deleteBooking as deleteBookingAPI,
 } from '../../api';
+import { deleteBookings } from 'api';
 
 function* getBookings({ payload: request }) {
     try {
@@ -80,9 +81,10 @@ function* onDeleteBooking({ payload: { id } }) {
 }
 function* onDeleteManyBooking({ payload: deleteIds = [] }) {
     try {
-        // const promiseAll = Promise.all(deleteIds.map((id) => deleteBookingAPI(id)));
-        // yield call(promiseAll);
+        yield call(deleteBookings, deleteIds);
+
         toast.success(`Deleted ${deleteIds.length} items success`);
+
         yield put(deleteManyBookingsSuccess(deleteIds));
     } catch (error) {
         toast.error('Delete failed');

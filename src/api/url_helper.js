@@ -41,10 +41,12 @@ export const SEARCH_CUSTOMER = '/api/customer/search';
 export const POST_BOOKING = '/api/booking';
 export const GET_BOOKING = '/api/booking';
 export const PUT_BOOKING = '/api/booking';
+export const DELETE_BOOKING = '/api/booking';
+export const DELETE_BOOKINGS = '/api/booking/delete_bookings';
+export const GET_TIME_FRAMES = '/api/booking/time_frames';
 
 // 8. Assign
 export const ASSIGN_BOOKING_CUSTOMER = '/api/booking/assign';
-export const DELETE_BOOKING = '/api/booking';
 
 // 9. Setting
 export const GET_SETTING = '/api/settings';
@@ -61,8 +63,12 @@ export const DELETE_CATEGORY = '/api/category';
 export const GET_STAFF_LIST = '/api/auth/staffs';
 export const REGISTER_NEW_STAFF = '/api/auth/register_staff';
 export const GET_SINGLE_STAFF = '/api/auth/staff';
+export const UPDATE_SINGLE_STAFF = '/api/auth/staff';
 
 // 12. Staff
 export const GET_WORKING_HOUR_LIST = '/api/staff/working_hours';
 export const ADD_NEW_WORKING_HOUR = '/api/staff/add_working_hour';
+export const ADD_NEW_WORKING_HOURS = '/api/staff/add_working_hours';
 export const ASSIGN_STAFF_TO_SERVICE = '/api/staff/assign_staff_service';
+export const UPDATE_WORKING_HOURS = '/api/staff/update_working_hours';
+export const DELETE_WORKING_HOUR = '/api/staff/delete_working_hour';

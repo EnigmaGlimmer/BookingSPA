@@ -1,6 +1,6 @@
 import moment from 'moment';
 import React from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Col, Row, Table } from 'react-bootstrap';
 
 import ReactPaginate from 'react-paginate';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
@@ -10,26 +10,26 @@ import useBookingFilter from '../../../hooks/useBookingFilter';
 function AdminBooking() {
     const colStyle = {
         wordWrap: 'break-word',
-        maxWidth: '100px',
+        width: 'auto',
     };
     const {
         isAllSelected,
+        hasAnySelected,
         unselectAllBooking,
         selectAllBooking,
         selectedBooking,
         selectBooking,
         handleCancelBooking,
+        handleCancelByFilter,
         services,
         bookingTotal,
         parentServices,
         setPage,
         take,
-        orderBy,
         setOrderBy,
-        searchBy,
         setSearchBy,
-        keyword,
         setKeyword,
+        setOrderType,
     } = useBookingFilter();
 
     return (
@@ -39,25 +39,46 @@ function AdminBooking() {
             <div className="admin-booking-table-form">
                 <FilterBookingBox
                     onFilterChange={(filterVal, type) => {
-                        const matchSearch = moment(filterVal, 'yyyy-MM-DD').format('dd/MM/yyyy');
-                        // console.log(filterVal, type);
-                        // console.log(matchSearch);
+                        let matchSearch;
+
+                        if (type.toLowerCase() === 'date') {
+                            matchSearch = moment(filterVal, 'yyyy-MM-DD').format('DD/MM/yyyy');
+                        } else if (type.toLowerCase() === 'month') {
+                            matchSearch = moment(filterVal, 'yyyy-MM').format('MM/yyyy');
+                        } else if (type.toLowerCase() === 'year') {
+                            matchSearch = moment(filterVal, 'yyyy').format('yyyy');
+                        }
+
                         setSearchBy(type);
                         setKeyword(matchSearch);
                     }}
                     onSearchChange={(keyword, type) => {
+                        console.log(keyword, type);
                         setSearchBy(type);
                         setKeyword(keyword);
                     }}
-                    onSortChange={(sortType) => {
-                        setOrderBy(sortType);
+                    onSortChange={(sortValue) => {
+                        setOrderBy(sortValue);
+                    }}
+                    onSortTypeChange={(sortType) => {
+                        setOrderType(sortType);
                     }}
                 ></FilterBookingBox>
-                <div className="d-flex mb-3">
-                    <Button variant="outline" className="btn-primary-outline" onClick={() => {}}>
-                        Cancel By Filter
-                    </Button>
-                </div>
+                {hasAnySelected() && (
+                    <div className="mb-3">
+                        <h3 className="mb-3">Actions</h3>
+
+                        <Button
+                            variant="outline"
+                            className="btn-primary-outline"
+                            onClick={() => {
+                                handleCancelByFilter();
+                            }}
+                        >
+                            Cancel By Filter
+                        </Button>
+                    </div>
+                )}
                 <Table
                     striped
                     bordered
@@ -82,10 +103,19 @@ function AdminBooking() {
                             <th style={colStyle}>Name</th>
                             <th style={colStyle}>Email</th>
                             <th style={colStyle}>Phone Number</th>
-                            <th style={colStyle}>Check-in date</th>
-                            <th style={colStyle}>Created date</th>
-                            <th style={colStyle}>Booking Time</th>
-                            <th style={colStyle}>Service - Name</th>
+                            <th style={colStyle} className="text-nowrap">
+                                Check-in date
+                            </th>
+                            <th style={colStyle} className="text-nowrap">
+                                Created date
+                            </th>
+                            <th style={colStyle} className="text-nowrap">
+                                Booking Time
+                            </th>
+                            <th style={colStyle} className="text-nowrap">
+                                Service - Name
+                            </th>
+                            <th style={colStyle}>Staff</th>
                             <th style={colStyle}>How to know us?</th>
                             <th style={colStyle}>Actions</th>
                         </tr>
@@ -111,13 +141,19 @@ function AdminBooking() {
                                         {booking?.slot.start_Hour?.slice(0, 5)} - {booking?.slot.end_Hour?.slice(0, 5)}
                                     </td>
                                     <td>
-                                        {parentServices?.find?.((s) => s.serviceId === booking?.serviceId)
-                                            ?.serviceName ||
-                                            services?.find?.((s) => s.serviceId === booking?.serviceId)?.serviceName}
-                                        - {booking?.serviceName}
+                                        <Row className="flex-nowrap">
+                                            <Col>
+                                                {parentServices?.find?.((s) => s.serviceId === booking?.serviceId)
+                                                    ?.serviceName ||
+                                                    services?.find?.((s) => s.serviceId === booking?.serviceId)
+                                                        ?.serviceName}
+                                                :
+                                            </Col>
+                                            <Col className="text-nowrap text-start">{booking?.serviceName}</Col>
+                                        </Row>
                                     </td>
+                                    <td className="text-nowrap">{booking?.staffs.map((s) => s.fullName).join(' ,')}</td>
                                     <td className="text-nowrap">{booking?.customers[0]?.howtoknow}</td>
-
                                     <td>
                                         <Button
                                             variant="outline"

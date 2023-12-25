@@ -27,6 +27,7 @@ const Booking = (state = INIT_STATE, action) => {
         case API_RESPONSE_SUCCESS:
             switch (action.payload.actionType) {
                 case GET_BOOKING:
+                    console.log(action.payload.data);
                     return {
                         ...state,
                         bookings: action.payload.data.list,
@@ -85,6 +86,7 @@ const Booking = (state = INIT_STATE, action) => {
                 ...state,
                 bookings: newBookings,
             };
+
         case DELETE_BOOKING_FAILED:
             return {
                 error: action.payload.error,
@@ -92,7 +94,8 @@ const Booking = (state = INIT_STATE, action) => {
 
         case DELETE_MANY_BOOKING_SUCCESS:
             let deleteIds = action.payload;
-            newBookings = state.bookings.filter((item) => deleteIds.includes(item.bookingId));
+            newBookings = state.bookings.filter((item) => !deleteIds.includes(item.bookingId));
+            console.log(newBookings);
             return {
                 ...state,
                 bookings: newBookings,
