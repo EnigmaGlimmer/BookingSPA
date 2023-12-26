@@ -1,3 +1,4 @@
+import React from 'react';
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 // List of pages
@@ -22,13 +23,13 @@ import {
 
 // List of layout
 import { AdminNavbar, AdminSidebar, Footer, Navbar } from './layout';
-import React from 'react';
 import { ScrollToTop } from './components';
 import PrefetchAdmin from './context/prefetch';
 import ModalContainer from './context/modalContext';
 
 // React Icons
 const signin = localStorage.getItem('signin');
+const NotFoundPage = React.lazy(() => import('./pages/errors/400'));
 const childrenAdmin = [
     {
         path: '',
@@ -92,7 +93,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'booking',
-                element: <BookingPage />,
+                element: <NotFoundPage></NotFoundPage>,
+                // element: <BookingPage></BookingPage>,
             },
             {
                 path: 'promotion',

@@ -10,6 +10,7 @@ function BookingFormContainer({ children }) {
     const [state, setState] = React.useState({
         bookingDay: moment().format('YYYY-MM-DD'),
         serviceId: null,
+        duration: 0,
     });
 
     const [startWorkingTime, setStartWorkingTime] = React.useState('8:00');
@@ -48,8 +49,8 @@ function BookingFormContainer({ children }) {
         };
     }, [state.bookingDay, state.serviceId]);
 
-    function handleChange(bookingDay, serviceId) {
-        setState((i) => ({ ...i, bookingDay, serviceId }));
+    function handleChange(bookingDay, serviceId, duration) {
+        setState((i) => ({ ...i, bookingDay, serviceId, duration }));
     }
 
     let values = {

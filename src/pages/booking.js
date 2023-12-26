@@ -167,11 +167,6 @@ const StepComponent = ({ step, setStep }) => {
 
     const [eventDateDuration, setEventDateDuration] = useState(['10/12/2023', '24/12/2023']);
 
-    let isBetweenDate = moment(validation.values?.booking?.checkinDate, 'YYYY-MM-DD').isBetween(
-        moment(eventDateDuration[0], 'DD/MM/YYYY'),
-        moment(eventDateDuration[1], 'DD/MM/YYYY'),
-    );
-
     return (
         <Form onSubmit={validation.handleSubmit}>
             {(loading && <Spinner></Spinner>) ||
