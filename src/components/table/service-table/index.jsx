@@ -1,7 +1,9 @@
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteService } from 'api';
+// import { deleteService } from 'api';
+
+import { deleteService } from 'store/service/action';
 import UpdateService from 'components/form/service/update-service';
 import useModalContext from 'hooks/useModalContext';
 
@@ -58,7 +60,7 @@ function ServiceListTable() {
                                     {item?.description?.length > 120 && '...'}
                                 </td>
                                 <td>{item?.isBlocked ? 'True' : 'False'}</td>
-                                <td className="d-flex">
+                                <td>
                                     <Button
                                         variant="outline"
                                         className="btn-primary-outline m-2"

@@ -89,7 +89,28 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
 
                         <div className="booking-list-item">
                             {serviceChoice?.childs?.map?.((item, index) => {
-                                return (
+                                return item?.serviceId === 10 ? (
+                                    <div
+                                        className="booking-item-form"
+                                        key={index}
+                                        onClick={() => {
+                                            if (item?.isBlocked) {
+                                                handleBlockedServiceClick();
+                                            } else {
+                                                onChangeServiceId(item?.serviceId);
+                                                onChangeParentServiceId(serviceChoice?.serviceId);
+                                                onChangeServiceName(item?.serviceName);
+                                            }
+                                        }}
+                                        style={
+                                            valueServiceId === item?.serviceId
+                                                ? { background: 'var(--clr-primary-yellow)' }
+                                                : null
+                                        }
+                                    >
+                                        <div className="booking-item-title">{item?.serviceName}</div>
+                                    </div>
+                                ) : (
                                     <div
                                         className="booking-item-form"
                                         key={index}

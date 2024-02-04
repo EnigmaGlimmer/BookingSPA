@@ -93,8 +93,8 @@ const router = createBrowserRouter([
             },
             {
                 path: 'booking',
-                element: <NotFoundPage></NotFoundPage>,
-                // element: <BookingPage></BookingPage>,
+                // element: <NotFoundPage></NotFoundPage>,
+                element: <BookingPage></BookingPage>,
             },
             {
                 path: 'promotion',

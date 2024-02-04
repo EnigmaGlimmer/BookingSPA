@@ -98,8 +98,8 @@ export function* watchDeleteService() {
     yield takeEvery(DELETE_SERVICE, onDeleteService);
 }
 
-function* servicesaga() {
+function* serviceSaga() {
     yield all([fork(watchGetService), fork(watchPostNewService), fork(watchUpdateService), fork(watchDeleteService)]);
 }
 
-export default servicesaga;
+export default serviceSaga;

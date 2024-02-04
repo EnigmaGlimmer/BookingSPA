@@ -1,0 +1,103 @@
+.label-list__form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.label-list__form .label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding: 4px;
+}
+
+.label-list__form .label[data-color='red'] {
+    background-color: red;
+    color: #fff;
+}
+
+.label-list__form .label[data-color='yellow'] {
+    background-color: yellow;
+    color: #010101;
+}
+
+.label-list__form .label[data-color='blue'] {
+    background-color: blue;
+    color: #fff;
+}
+
+.label-list__form .label[data-color='green'] {
+    background-color: green;
+    color: #fff;
+}
+
+.label-list__form .label[data-color='brown'] {
+    background-color: brown;
+    color: #fff;
+}
+
+.label-list__form .label .label__text {
+    text-wrap: nowrap;
+    margin: 0;
+}
+
+.label-list__form .label .label__badge {
+    background-color: black;
+    color: #fff;
+    padding: 4px;
+}
+
+.label-list__form .label .label__dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: #141414;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.label-list__form .label .label__dropdown li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    padding: 4px 20px;
+    color: #fff;
+}
+
+.label-list__form .label .label__dropdown li:hover {
+    background-color: #010101;
+}
+
+.label-list__form .label .label__dropdown[data-opened='false'] {
+    opacity: 0;
+    display: none;
+    visibility: hidden;
+    transition: all 0.3s linear;
+}
+
+.label-list__form .label .label__dropdown[data-opened='true'] {
+    opacity: 1;
+}
+
+.label-list__form .label-input {
+    display: flex;
+    gap: 3px;
+}
+
+.label-list__form .label-input .label-input__badge {
+    max-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.label-list__form .label-input .label-input__badge input {
+    background: none;
+    outline: none;
+    border: none;
+    width: 100%;
+}

@@ -13,12 +13,19 @@ const token = JSON.parse(sessionStorage.getItem('authUser'))
     : null;
 if (token) axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
+interface ResponseError {
+    errors: string[];
+}
+
 // intercepting to capture errors
 axios.interceptors.response.use(
     function (response: AxiosResponse) {
         return response?.data?.isSuccess ? response.data?.result : response;
     },
     function (error: AxiosError) {
+        var axiosErrorResponse = error?.response as AxiosResponse<ResponseError>;
+
+        if (!!axiosErrorResponse?.data?.errors?.length) return Promise.reject(axiosErrorResponse?.data?.errors);
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         let message;
         switch (error.status) {
@@ -34,6 +41,7 @@ axios.interceptors.response.use(
             default:
                 message = error.message || error;
         }
+
         if (axios.isCancel(error)) return Promise.reject('Cancelled');
 
         return Promise.reject(message);

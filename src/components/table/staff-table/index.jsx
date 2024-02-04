@@ -3,7 +3,7 @@ import useModalContext from 'hooks/useModalContext';
 import usePrefetchContext from 'hooks/usePrefetchContext';
 import moment from 'moment';
 import React from 'react';
-import { Button, Col, Image, Table } from 'react-bootstrap';
+import { Badge, Button, Col, Image, Table } from 'react-bootstrap';
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -39,7 +39,7 @@ function StaffTable({ data }) {
                         field,
                         username,
                         workingHours,
-                        services: serviceIds,
+                        services: serviceListData,
                         id,
                     } = s;
 
@@ -94,12 +94,28 @@ function StaffTable({ data }) {
                                 })}
                             </td>
                             <td>
-                                <ul>
-                                    {services
-                                        .filter((s) => serviceIds.includes(s.serviceId))
-                                        .map((s) => (
-                                            <li key={s.serviceId}>{s.serviceName}</li>
-                                        ))}
+                                <ul style={{ padding: 0 }}>
+                                    {serviceListData.map((sldI, index) => {
+                                        return (
+                                            <li
+                                                key={index}
+                                                className="d-flex mb-3"
+                                                style={{
+                                                    alignItems: 'baseline',
+                                                    justifyContent: 'space-between',
+                                                    gap: '12px',
+                                                }}
+                                            >
+                                                <span>
+                                                    {
+                                                        services.find((sI) => sI.serviceId === sldI.serviceId)
+                                                            ?.serviceName
+                                                    }
+                                                </span>
+                                                <Badge>{sldI.order}</Badge>
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                             </td>
                             <td>{experience}</td>
@@ -122,7 +138,7 @@ function StaffTable({ data }) {
                                                         age,
                                                         experience,
                                                         field,
-                                                        serviceIds,
+                                                        services: serviceListData,
                                                         avatar,
                                                     }}
                                                     workingHours={workingHours.map((wh) => ({

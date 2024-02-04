@@ -6,26 +6,26 @@ import { toast } from 'react-toastify';
 //
 import * as DOMPurify from 'dompurify';
 import { Spinner } from 'react-bootstrap';
-import { allIntersect } from '../../ultilies/intersection';
+// import { allIntersect } from '../../ultilies/intersection';
 import moment from 'moment';
 
-function equalifyUnit(args) {
-    // timeString: "HH:MM"
-    let { timeString = null, hour = null, minute = null } = args;
-    let uniformedUnit = 0;
+// function equalifyUnit(args) {
+//     // timeString: "HH:MM"
+//     let { timeString = null, hour = null, minute = null } = args;
+//     let uniformedUnit = 0;
 
-    if (!!timeString) {
-        let timeRanges = timeString.split(':');
-        hour = timeRanges[0];
-        minute = timeRanges[1];
-    }
+//     if (!!timeString) {
+//         let timeRanges = timeString.split(':');
+//         hour = timeRanges[0];
+//         minute = timeRanges[1];
+//     }
 
-    if (!!hour && !!minute) {
-        uniformedUnit = Number(hour) * 60 + Number(minute);
-    }
+//     if (!!hour && !!minute) {
+//         uniformedUnit = Number(hour) * 60 + Number(minute);
+//     }
 
-    return uniformedUnit;
-}
+//     return uniformedUnit;
+// }
 
 const SpaceTimeFrame = ({ initialSpaceTimes, loading, onChangeTimeStart, onChangeTimeEnd, ...contentProps }) => {
     const [selected, setSelected] = React.useState(null);

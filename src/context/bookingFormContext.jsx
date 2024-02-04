@@ -2,7 +2,6 @@ import React from 'react';
 import { getTimeFrames } from 'api/booking';
 import moment from 'moment';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 const BookingContext = React.createContext();
 
 function BookingFormContainer({ children }) {
@@ -13,8 +12,8 @@ function BookingFormContainer({ children }) {
         duration: 0,
     });
 
-    const [startWorkingTime, setStartWorkingTime] = React.useState('8:00');
-    const [endWorkingTime, setEndWorkingTime] = React.useState('18:00');
+    // const [startWorkingTime, setStartWorkingTime] = React.useState('8:00');
+    // const [endWorkingTime, setEndWorkingTime] = React.useState('18:00');
     const [loading, setLoading] = React.useState(false);
 
     const controller = new AbortController();
@@ -26,7 +25,7 @@ function BookingFormContainer({ children }) {
             const signal = controller.signal;
 
             getTimeFrames(
-                { bookingDay: state.bookingDay, serviceId: state.serviceId, startWorkingTime, endWorkingTime },
+                { bookingDay: state.bookingDay, serviceId: state.serviceId },
                 {
                     signal,
                 },
@@ -35,9 +34,14 @@ function BookingFormContainer({ children }) {
                     setTimeFrames(response);
                 })
                 .catch((error) => {
-                    if (error !== 'Cancelled') {
+                    if (Array.isArray(error)) {
+                        error.forEach((e) => toast.error(e));
+                    }
+                    if (error !== 'Cancelled' && !Array.isArray(error)) {
                         toast.error('Failed to get time frames');
                     }
+
+                    setTimeFrames([]);
                 })
                 .finally(() => {
                     setLoading(false);

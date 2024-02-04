@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 // Components
 import { CustomReactQuill } from '../../../components';
-import { Button, Col, Dropdown, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row, Tab, Table, Tabs } from 'react-bootstrap';
 
 // Form submission handlers
 import { useFormik } from 'formik';
@@ -10,7 +10,7 @@ import * as yup from 'yup';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getService, postService, deleteService, putService } from '../../../store/service/action';
+import { getService, postService, putService } from '../../../store/service/action';
 import moment from 'moment';
 
 import { getBlogOfService, putBlogOfService } from '../../../api';

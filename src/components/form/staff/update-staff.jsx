@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { addWorkingHours } from 'api';
 
 function UpdateStaffForm({ userId, staffAccount, staffProfile, workingHours }) {
+    console.log(staffProfile);
     const validation = useFormik({
         initialValues: {
             userId: userId,
@@ -23,16 +24,16 @@ function UpdateStaffForm({ userId, staffAccount, staffProfile, workingHours }) {
             age: staffProfile.age,
             experience: staffProfile.experience,
             field: staffProfile.field,
-            serviceIds: staffProfile.serviceIds,
+            services: staffProfile.services,
             avatar: staffProfile.avatar,
 
             workingHours: workingHours,
         },
         enableReinitialize: true,
         onSubmit: (values) => {
-            const { workingHours, serviceIds, ...accountInfo } = values;
+            const { workingHours, services, ...accountInfo } = values;
 
-            updateStaff(values.userId, { ...accountInfo, services: serviceIds })
+            updateStaff(values.userId, { ...accountInfo, services })
                 .then(() => {
                     toast.success('Update Staff Success');
 

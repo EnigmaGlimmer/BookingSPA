@@ -23,7 +23,7 @@ function StaffForm({ onAfterSubmitting }) {
             age: 18,
             experience: 0,
             field: 'Nail',
-            serviceIds: [],
+            services: [],
             avatar: '',
 
             workingHours: [
@@ -72,7 +72,6 @@ function StaffForm({ onAfterSubmitting }) {
                     <StepFour title="Completed"></StepFour>
                 </MultiStep>
             </Form>
-            {/* <pre>{JSON.stringify(validation.values, 4, 4)}</pre> */}
         </FormikProvider>
     );
 }
