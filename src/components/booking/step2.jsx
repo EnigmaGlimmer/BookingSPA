@@ -88,52 +88,37 @@ function Step2({ setStep, valueServiceId, isValid, onChangeServiceId, onChangePa
                         </div>
 
                         <div className="booking-list-item">
-                            {serviceChoice?.childs?.map?.((item, index) => {
-                                return item?.serviceId === 10 ? (
-                                    <div
-                                        className="booking-item-form"
-                                        key={index}
-                                        onClick={() => {
-                                            if (item?.isBlocked) {
-                                                handleBlockedServiceClick();
-                                            } else {
-                                                onChangeServiceId(item?.serviceId);
-                                                onChangeParentServiceId(serviceChoice?.serviceId);
-                                                onChangeServiceName(item?.serviceName);
+                            {serviceChoice?.childs
+                                ?.sort((a, b) =>
+                                    a.serviceId === 10 ? 1 : b.serviceId === 10 ? -1 : a.serviceId - b.serviceId,
+                                )
+                                ?.map?.((item, index) => {
+                                    return (
+                                        <div
+                                            className="booking-item-form"
+                                            key={index}
+                                            onClick={() => {
+                                                if (item?.isBlocked) {
+                                                    handleBlockedServiceClick();
+                                                } else {
+                                                    onChangeServiceId(item?.serviceId);
+                                                    onChangeParentServiceId(serviceChoice?.serviceId);
+                                                    onChangeServiceName(item?.serviceName);
+                                                }
+                                            }}
+                                            style={
+                                                valueServiceId === item?.serviceId
+                                                    ? { background: 'var(--clr-primary-yellow)' }
+                                                    : null
                                             }
-                                        }}
-                                        style={
-                                            valueServiceId === item?.serviceId
-                                                ? { background: 'var(--clr-primary-yellow)' }
-                                                : null
-                                        }
-                                    >
-                                        <div className="booking-item-title">{item?.serviceName}</div>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="booking-item-form"
-                                        key={index}
-                                        onClick={() => {
-                                            if (item?.isBlocked) {
-                                                handleBlockedServiceClick();
-                                            } else {
-                                                onChangeServiceId(item?.serviceId);
-                                                onChangeParentServiceId(serviceChoice?.serviceId);
-                                                onChangeServiceName(item?.serviceName);
-                                            }
-                                        }}
-                                        style={
-                                            valueServiceId === item?.serviceId
-                                                ? { background: 'var(--clr-primary-yellow)' }
-                                                : null
-                                        }
-                                    >
-                                        <div className="booking-item-title">{item?.serviceName}</div>
-                                        <div className="booking-item-price">{item?.duration}</div>
-                                    </div>
-                                );
-                            })}
+                                        >
+                                            <div className="booking-item-title">{item?.serviceName}</div>
+                                            {item?.serviceId !== 10 && (
+                                                <div className="booking-item-price">{item?.duration}</div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>

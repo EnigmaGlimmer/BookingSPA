@@ -36,6 +36,7 @@ export function Step1({ setStep, validation }) {
                                 name="customer.customerName"
                                 className="booking-input"
                                 placeholder="Full Name"
+                                value={validation.values.customer.customerName}
                                 onChange={validation?.handleChange}
                                 onBlur={validation?.handleBlur}
                             />
@@ -50,6 +51,7 @@ export function Step1({ setStep, validation }) {
                                 name="customer.customerPhone"
                                 className="booking-input"
                                 placeholder="Phone Number"
+                                value={validation.values.customer.customerPhone}
                                 onChange={validation?.handleChange}
                                 onBlur={validation?.handleBlur}
                             />
@@ -66,6 +68,7 @@ export function Step1({ setStep, validation }) {
                                 name="customer.customerEmail"
                                 className="booking-input"
                                 placeholder="Email"
+                                value={validation.values.customer.customerEmail}
                                 onChange={validation?.handleChange}
                                 onBlur={validation?.handleBlur}
                             />
@@ -87,6 +90,7 @@ export function Step1({ setStep, validation }) {
                                             inline
                                             label={item}
                                             name={'customer.howtoknow'}
+                                            checked={validation.values.customer.howtoknow.includes(item)}
                                             value={item.replace(/\s/g, '')}
                                             onChange={validation?.handleChange}
                                             type={'checkbox'}

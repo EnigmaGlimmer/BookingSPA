@@ -96,9 +96,11 @@ const StepComponent = ({ step, setStep }) => {
     });
     const [loading, setLoading] = useState(false);
 
+    const customer = JSON.parse(localStorage.getItem('old_customer'));
+
     const validation = useFormik({
         initialValues: {
-            customer: {
+            customer: customer || {
                 customerName: '',
                 customerEmail: '',
                 customerPhone: '',
@@ -121,6 +123,8 @@ const StepComponent = ({ step, setStep }) => {
         onSubmit: (values, formikHelper) => {
             formikHelper.setSubmitting(false);
             setLoading(true);
+
+            localStorage.setItem('old_customer', JSON.stringify(values.customer));
             assignBooking(
                 {
                     customerName: values.customer.customerName,

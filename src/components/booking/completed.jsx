@@ -63,7 +63,7 @@ function BookingCompleted({ values, setStep }) {
             <div className="my-3 d-flex gap-2 justify-content-center" style={{ textAlign: 'center' }}>
                 <button
                     className="my-btn text-uppercase btn-primary-outline btn btn-outline"
-                    onClick={() => setStep(1)}
+                    onClick={() => setStep(2)}
                 >
                     Book Again
                 </button>
