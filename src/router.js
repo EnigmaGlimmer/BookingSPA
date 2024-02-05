@@ -91,11 +91,10 @@ const router = createBrowserRouter([
                 path: 'contact',
                 element: <Contact />,
             },
-            {
-                path: 'booking',
-                // element: <NotFoundPage></NotFoundPage>,
-                element: <BookingPage></BookingPage>,
-            },
+            // {
+            //     path: 'booking',
+            //     element: <BookingPage></BookingPage>,
+            // },
             {
                 path: 'promotion',
                 element: <Promotion />,
@@ -103,6 +102,10 @@ const router = createBrowserRouter([
             {
                 path: 'service',
                 element: <Service />,
+            },
+            {
+                path: '*',
+                element: <NotFoundPage></NotFoundPage>,
             },
         ],
     },
