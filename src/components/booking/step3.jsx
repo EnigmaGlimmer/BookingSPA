@@ -45,6 +45,12 @@ function Step3({
                 <Booking
                     activeDate={valueCheckinDate}
                     allowDatesToBook={[moment('2023-12-24').toDate()]}
+                    notAllowDatesToBook={[
+                        {
+                            startDate: moment('2024-02-09').toDate(),
+                            endDate: moment('2024-02-11').toDate(),
+                        },
+                    ]}
                     initialTimeRange={timeFrames}
                     timeFrameLoading={loading}
                     onChangeDate={(date) => {

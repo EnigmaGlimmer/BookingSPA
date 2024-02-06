@@ -22,6 +22,7 @@ function ReactBookingCalendar({
     onChangeDate,
     onOverbook,
 }) {
+    console.log(reserved);
     return (
         <section className="calendar-root">
             <div className="calendar-frame">
@@ -46,6 +47,7 @@ function ReactBookingCalendar({
                             !allowDatesToBook.some((allowDate) => moment(allowDate).isSame(date))
                         );
                     }}
+                    // reserved={reserved}
                     reserved={reserved}
                     variant="booking"
                     dateFnsOptions={{ weekStartsOn: 1 }}

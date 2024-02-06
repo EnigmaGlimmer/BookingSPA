@@ -11,6 +11,7 @@ import { default as SpaceTimeFrame } from './space-time-frame';
 const Booking = ({
     initialTimeRange,
     allowDatesToBook = [],
+    notAllowDatesToBook,
     reserved,
     timeFrameLoading,
     activeDate,
@@ -33,6 +34,7 @@ const Booking = ({
                 <Calendar
                     initialDate={activeDate}
                     allowDatesToBook={allowDatesToBook}
+                    reserved={notAllowDatesToBook}
                     onChangeDate={(date) => setSelectedDate(date)}
                     onOverbook={onOverBook}
                 ></Calendar>
