@@ -54,6 +54,12 @@ const Booking = ({
                     )}
                 </div>
             </div>
+            <div>
+                <p>
+                    If you don't see your preferred spot, please contact us directly at our hotline 0481 32 62 69 to see
+                    any cancellations or reorganizations
+                </p>
+            </div>
         </div>
     );
 };
