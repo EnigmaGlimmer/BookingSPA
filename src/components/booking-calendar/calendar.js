@@ -22,7 +22,6 @@ function ReactBookingCalendar({
     onChangeDate,
     onOverbook,
 }) {
-    console.log(reserved);
     return (
         <section className="calendar-root">
             <div className="calendar-frame">

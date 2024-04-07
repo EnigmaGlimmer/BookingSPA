@@ -35,7 +35,7 @@ function Step3({
                 top: sectionRef.current.offsetTop - 10,
             });
         }
-    }, []);
+    }, [valueCheckinDate, onChangeDate]);
 
     const timeFrameContent = ``;
 
@@ -95,7 +95,7 @@ function Step3({
                 <Button
                     type="button"
                     variant="outline"
-                    className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5 mx-4"
+                    className="my-btn text-uppercase btn-primary-outline btn btn-outline px-5"
                     onClick={() => setStep(2)}
                 >
                     Back

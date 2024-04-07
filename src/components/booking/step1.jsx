@@ -3,10 +3,19 @@ import homeFlowerDeco from 'images/home/flower.svg';
 import introBig from 'images/introBig.png';
 import introSmall from 'images/introSmall.png';
 import singleFlower from 'images/singleFlower.svg';
+import { useEffect, useRef } from 'react';
 
 const arrayNetwork = ['Facebook', 'Instagram', 'Google', 'Letter', 'Walked past', 'Friend'];
 
 export function Step1({ setStep, validation }) {
+    const scrolledElementOnRerender = useRef();
+    useEffect(() => {
+        if (scrolledElementOnRerender?.current) {
+            scrolledElementOnRerender.current.style.scrollMarginTop = '120px';
+            scrolledElementOnRerender.current.scrollIntoView();
+        }
+    }, []);
+
     return (
         <div className="intro-form">
             <div className="intro-img booking-form-img">
@@ -26,7 +35,7 @@ export function Step1({ setStep, validation }) {
                 </div>
 
                 <div className="intro-content-form mb-2">
-                    <div>
+                    <div ref={scrolledElementOnRerender}>
                         <h2 className="intro-title">Your Booking</h2>
                     </div>
                     <div className="booking-form-input">

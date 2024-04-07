@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import './style/bookingCpn.css';
 
@@ -22,11 +22,20 @@ const Booking = ({
     title,
     content,
 }) => {
-    const [selectedDate, setSelectedDate] = useState();
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const scrolledElementOnChoice = useRef(null);
 
     useEffect(() => {
         onChangeDate(selectedDate);
     }, [selectedDate]);
+
+    useEffect(() => {
+        if (scrolledElementOnChoice?.current && initialTimeRange) {
+            window.scrollTo({
+                top: scrolledElementOnChoice.current.scrollHeight,
+            });
+        }
+    }, [scrolledElementOnChoice, initialTimeRange, selectedDate, reserved]);
 
     return (
         <div className="booking-root">
@@ -40,7 +49,7 @@ const Booking = ({
                 ></Calendar>
             </div>
             <div className="booking-root-time">
-                <div className="calendar-space-time-frame">
+                <div className="calendar-space-time-frame" ref={scrolledElementOnChoice}>
                     {selectedDate && (
                         <SpaceTimeFrame
                             initialSpaceTimes={initialTimeRange}
@@ -53,12 +62,12 @@ const Booking = ({
                         ></SpaceTimeFrame>
                     )}
                 </div>
-            </div>
-            <div>
-                <p>
-                    If you don't see your preferred spot, please contact us directly at our hotline 0481 32 62 69 to see
-                    any cancellations or reorganizations
-                </p>
+                <div className="my-3">
+                    <p>
+                        If you don't see your preferred spot, please contact us directly at our hotline 0481 32 62 69 to
+                        see any cancellations or reorganizations=
+                    </p>
+                </div>
             </div>
         </div>
     );

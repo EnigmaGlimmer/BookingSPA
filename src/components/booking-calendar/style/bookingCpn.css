@@ -1,15 +1,17 @@
-.booking-root{
+.booking-root {
     display: flex;
     gap: 40px;
 }
-.booking-root-date{
-    width: 50%
+.booking-root-date {
+    flex-basis: calc(50% - 40px);
 }
-.booking-root-time{
-    width: 50%;
+.booking-root-time {
+    flex-basis: calc(50% - 40px);
+    min-width: 220px;
+    max-width: 520px;
 }
 @media only screen and (max-width: 990px) {
     .booking-root {
-            flex-direction: column;
+        flex-direction: column;
     }
 }

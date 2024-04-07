@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // React Bootstrap Components
 import { Button, Col, Container, Form, Nav, Navbar, Offcanvas, Row } from 'react-bootstrap';
@@ -7,21 +7,18 @@ import { Button, Col, Container, Form, Nav, Navbar, Offcanvas, Row } from 'react
 import DropdownMenu from './dropdown';
 
 // Google Map
-import GoogleMapReact from 'google-map-react';
 
 // logo
 import { default as Logo } from '../logo/logo';
 
 // css
-import './navbar.css';
 import OffCanvasLogo from '../logo/offCanvasLogo';
+import './navbar.css';
 
 // icon
 import { BiLogoFacebookCircle, BiLogoInstagram, BiLogoWhatsapp } from 'react-icons/bi';
 
 // store
-import { useDispatch, useSelector } from 'react-redux';
-import { getService } from '../../store/actions';
 import { useContact } from '../../hooks/useContact';
 import useService from '../../hooks/useServices';
 
@@ -32,8 +29,6 @@ const defaultProps = {
     },
     zoom: 11,
 };
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 function Navigation() {
     const navRef = React.useRef(null);
@@ -218,9 +213,13 @@ function Navigation() {
                                 show={showDropdown}
                             ></DropdownMenu>
                         </Nav.Link>
-
                         <Nav.Link className="px-2 menu-link" data-active="false" href="/promotion">
                             Promotion
+                        </Nav.Link>
+                        <Nav.Link className="px-2 menu-link" data-active="false" href="/booking">
+                            <Button variant="outline" className="text-uppercase btn-primary-outline">
+                                Book Now
+                            </Button>
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
